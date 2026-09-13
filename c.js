@@ -1,0 +1,22 @@
+(function(){
+var D={Ford:{"C-Max":[2013,2015,"Standard"],Edge:[2011,2015,"Recessed"],Escape:[2013,2015,"Standard"],Expedition:[2015,2015,"Standard"],Explorer:[2011,2016,"Recessed"],"F-150":[2013,2015,"F150"],"F-250":[2013,2015,"Recessed"],"F-350":[2013,2015,"Recessed"],"F-450":[2013,2015,"Recessed"],Fiesta:[2013,2015,"Special"],Flex:[2014,2015,"Recessed"],Focus:[2012,2015,"Standard"],Fusion:[2013,2016,"Standard"],Mustang:[2015,2015,"Standard"],Taurus:[2013,2015,"Recessed"],Transit:[2015,2015,"Special"]},Lincoln:{MKC:[2015,2015,"Standard"],MKS:[2013,2015,"Recessed"],MKT:[2013,2015,"Recessed"],MKX:[2011,2015,"Recessed"],MKZ:[2013,2016,"Standard"]}};
+var P="https://simplymichigan.co/products/",U={n:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-without-navigation",y:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with-navigation",s:P+"ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit",g:"https://support.simplymichigan.co/articles/104443-4-to-8-conversion-overview",c:"https://simplymichigan.co/contact-us"};
+function init(){
+ var f=document.getElementById("sm-fit-form");if(!f||f.dataset.ready)return;f.dataset.ready=1;
+ var b=document.getElementById("sm-fit-brand"),m=document.getElementById("sm-fit-model"),l=document.getElementById("sm-fit-models"),y=document.getElementById("sm-fit-year"),s=document.getElementById("sm-fit-system"),r=document.getElementById("sm-fit-result");
+ function key(){var a=D[b.value]||{},v=m.value.toLowerCase();return Object.keys(a).find(function(k){return k.toLowerCase()===v})}
+ function models(){l.innerHTML="";m.value="";years();Object.keys(D[b.value]||{}).forEach(function(k){var o=document.createElement("option");o.value=k;l.appendChild(o)})}
+ function years(){var k=key(),a=k&&D[b.value][k];y.innerHTML='<option value="">Select model year</option>';y.disabled=!a;if(a)for(var i=a[1];i>=a[0];i--){var o=document.createElement("option");o.value=o.textContent=i;y.appendChild(o)}}
+ function buttons(a){return '<div class="sm-fit__actions">'+a.map(function(x){return '<a'+(x[2]?' class="sm-fit__secondary"':'')+' href="'+x[1]+'">'+x[0]+'</a>'}).join("")+'</div>'}
+ function show(t,p,a,n){r.className="sm-fit__result"+(n?" sm-fit__result--notice":"");r.innerHTML="<h4>"+t+"</h4><p>"+p+"</p>"+(a?buttons(a):"");r.hidden=false}
+ b.addEventListener("change",models);m.addEventListener("input",years);
+ f.addEventListener("submit",function(e){e.preventDefault();var k=key(),a=k&&D[b.value][k],v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a brand, model, year and current system.",0,1);return}
+ if(z==="4"){show("This may be convertible","A factory 4-inch system needs additional hardware and programming. Review the conversion guide or send us a dashboard photo.",[["Read the 4-inch to 8-inch Guide",U.g],["Ask Us to Verify",U.c,1]],1);return}
+ if(z==="3"){show("You already have Sync 3","You do not need a complete conversion kit. We can help identify the right replacement or upgrade.",[["Contact Us",U.c]],1);return}
+ if(z==="u"){show("We can identify it for you","Send us a clear dashboard photo and your model year, and we will identify your system.",[["Send Us Your Details",U.c]],1);return}
+ var t=a[2]==="F150"?(v===2015?"Standard":"Recessed"):a[2];if(t==="Special"){show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" uses our dedicated 6.5-inch Fiesta/Transit Sync 3 upgrade kit.",[["View the Correct Kit",U.s]]);return}
+ show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" requires the <strong>"+t.toLowerCase()+" display</strong>. Choose whether you want factory navigation; both kits include Apple CarPlay and Android Auto.",[["Shop Without Navigation",U.n],["Shop With Navigation",U.y,1]])
+ });
+}
+init();new MutationObserver(init).observe(document.documentElement,{childList:true,subtree:true});
+})();
