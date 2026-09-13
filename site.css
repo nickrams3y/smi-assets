@@ -1,3 +1,172 @@
+/* Dashed border */
+hr.dashed {
+  border-top: 3px dashed #bbb;
+}
+
+/* Dotted border */
+hr.dotted {
+  border-top: 3px dotted #bbb;
+}
+
+/* Solid border */
+hr.solid {
+  border-top: 3px solid #bbb;
+}
+
+/* Rounded border */
+hr.rounded {
+  border-top: 8px solid #bbb;
+  border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+  .hc-reviews-overview__column-4 {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .hc-product-tab--actions {
+    width: 100% !important;
+    margin-top: 12px !important;
+  }
+
+  .hc-product-tab--actions .hc-modal-target {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+  }
+}
+
+/* /// CHECKOUT COUPON HIGHLIGHT START /// */
+
+/* Highlight the coupon/gift-card area on desktop and mobile. */
+.ec-cart__credits-and-coupons {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: #fff7ed;
+  border: 1px solid #f3d2bd;
+  border-left: 4px solid #f15a24;
+  border-radius: 8px;
+}
+
+.ec-cart__credits-and-coupons--title {
+  margin-bottom: 10px;
+  color: #222;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+/* Keep the description and Redeem button comfortably spaced. */
+.ec-cart__credits-and-coupons .ec-cart-coupon__text {
+  align-items: center;
+  gap: 8px;
+}
+
+.ec-cart__credits-and-coupons .ec-cart-coupon__text > span:last-child {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Turn the small Redeem link into a prominent button. */
+.ec-cart__credits-and-coupons .ec-cart-coupon__text .ec-link {
+  display: inline-flex !important;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 14px;
+  color: #fff !important;
+  background: #f15a24;
+  border: 1px solid #f15a24;
+  border-radius: 6px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none !important;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ec-cart__credits-and-coupons .ec-cart-coupon__text .ec-link:hover,
+.ec-cart__credits-and-coupons .ec-cart-coupon__text .ec-link:focus {
+  color: #fff !important;
+  background: #d94a1f;
+  border-color: #d94a1f;
+}
+
+@media (max-width: 480px) {
+  .ec-cart__credits-and-coupons {
+    padding: 14px;
+  }
+
+  .ec-cart__credits-and-coupons--title {
+    font-size: 17px;
+  }
+
+  .ec-cart__credits-and-coupons .ec-cart-coupon__text > span:last-child {
+    flex-wrap: wrap;
+  }
+}
+
+/* /// CHECKOUT COUPON HIGHLIGHT END /// */
+
+/* Enlarge and center the gift icon */
+.ec-cart__credits-and-coupons .ec-cart-coupon__icon {
+  display: inline-flex;
+  flex: 0 0 26px;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin: 0 6px 0 0;
+  transform: translateY(4px);
+}
+
+.ec-cart__credits-and-coupons .ec-cart-coupon__icon svg {
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+
+/* Place the homepage hero behind the transparent header */
+.ins-tile--header.ins-tile--has-opacity + .ins-tile--slider {
+  padding-top: 0 !important;
+}
+
+/* Give the transparent header a dark background on blog pages */
+.ins-tile--header.ins-tile--has-opacity:has(+ .ins-tile__blog-posts-collection) .ins-header,
+.ins-tile--header.ins-tile--has-opacity:has(+ [id^="tile-blog-post-intro-"]) .ins-header {
+  background-color: #191919 !important;
+}
+
+/* Prevent sideways page scrolling on mobile */
+@media (max-width: 767px) {
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  @supports (overflow-x: clip) {
+    html,
+    body {
+      overflow-x: clip !important;
+    }
+  }
+}
+
+/* Slide-in offer title */
+#InApp_slide_in h3 {
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  line-height: 1.25 !important;
+}
+
 /*
  * Simply Michigan Infotainment — streamlined Ecwid product options
  * Activated only when ecwid-streamlined-product-options.js recognizes an
