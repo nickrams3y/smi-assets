@@ -1,0 +1,690 @@
+/*
+ * Simply Michigan Infotainment — streamlined Ecwid product options
+ * Activated only when ecwid-streamlined-product-options.js recognizes an
+ * approved product URL and adds .sm-product-options-active to <html>.
+ */
+
+/*
+ * Sync 2 to Sync 3 landing page: its description supplies the customer-facing
+ * heading, so hide only Ecwid's duplicate category title.
+ */
+.ec-store__category-page--39980905 .ec-page-title {
+  display: none !important;
+}
+
+/* Sync 2 to Sync 3 landing-page compatibility checker. */
+.ec-store__category-page--39980905 .sm-fit {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  margin: 28px auto 0;
+  padding: 22px;
+  border: 1px solid #dfe3e8;
+  border-top: 4px solid #2f8f4e;
+  border-radius: 12px;
+  background: #f7f9f8;
+  color: #222;
+  font-family: inherit;
+  text-align: left;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+}
+
+.ec-store__category-page--39980905 .sm-fit__heading {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.ec-store__category-page--39980905 .sm-fit__icon {
+  display: inline-flex;
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #2f8f4e;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.ec-store__category-page--39980905 .sm-fit h3 {
+  margin: 0 0 3px;
+  color: #222;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.ec-store__category-page--39980905 .sm-fit__heading p,
+.ec-store__category-page--39980905 .sm-fit__privacy {
+  margin: 0;
+  color: #626a73;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ec-store__category-page--39980905 .sm-fit__form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ec-store__category-page--39980905 .sm-fit__field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  color: #222;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ec-store__category-page--39980905 .sm-fit__field--wide,
+.ec-store__category-page--39980905 .sm-fit__submit {
+  grid-column: 1 / -1;
+}
+
+.ec-store__category-page--39980905 .sm-fit input,
+.ec-store__category-page--39980905 .sm-fit select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 46px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #b9c0c7;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  font-weight: 400;
+}
+
+.ec-store__category-page--39980905 .sm-fit input:focus,
+.ec-store__category-page--39980905 .sm-fit select:focus {
+  border-color: #2f8f4e;
+  outline: 3px solid rgba(47, 143, 78, 0.16);
+}
+
+.ec-store__category-page--39980905 .sm-fit__submit {
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: #222;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.ec-store__category-page--39980905 .sm-fit__submit:hover {
+  background: #3a3a3a;
+}
+
+.ec-store__category-page--39980905 .sm-fit__result {
+  margin-top: 18px;
+  padding: 17px;
+  border: 1px solid #bddac7;
+  border-left: 4px solid #2f8f4e;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.ec-store__category-page--39980905 .sm-fit__result--notice {
+  border-color: #f3d2bd;
+  border-left-color: #f15a24;
+  background: #fffaf7;
+}
+
+.ec-store__category-page--39980905 .sm-fit__result h4 {
+  margin: 0 0 6px;
+  color: #222;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.ec-store__category-page--39980905 .sm-fit__result p {
+  margin: 0 0 12px;
+}
+
+.ec-store__category-page--39980905 .sm-fit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.ec-store__category-page--39980905 .sm-fit__actions a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border: 1px solid #222;
+  border-radius: 7px;
+  background: #222;
+  color: #fff !important;
+  font-size: 14px;
+  font-weight: 750;
+  line-height: 1.35;
+  text-decoration: none !important;
+}
+
+.ec-store__category-page--39980905 .sm-fit__actions a.sm-fit__secondary {
+  background: #fff;
+  color: #222 !important;
+}
+
+.ec-store__category-page--39980905 .sm-fit__privacy {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
+}
+
+@media (max-width: 560px) {
+  .ec-store__category-page--39980905 .sm-fit {
+    padding: 18px 15px;
+  }
+
+  .ec-store__category-page--39980905 .sm-fit__form {
+    grid-template-columns: 1fr;
+  }
+
+  .ec-store__category-page--39980905 .sm-fit__field--wide,
+  .ec-store__category-page--39980905 .sm-fit__submit {
+    grid-column: auto;
+  }
+
+  .ec-store__category-page--39980905 .sm-fit__actions {
+    flex-direction: column;
+  }
+}
+
+html.sm-product-options-active .details-product-options {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  width: 100% !important;
+  margin-top: 22px !important;
+}
+
+html.sm-product-options-active .sm-po-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0 0;
+  color: #202124;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+html.sm-product-options-active .sm-po-section-heading:first-child {
+  margin-top: 0;
+}
+
+html.sm-product-options-active .sm-po-section-intro {
+  margin: -5px 0 2px !important;
+  color: #626a73 !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+}
+
+/* Ecwid currently requests white PayPal Pay Later text on the white page. */
+html.sm-product-options-active .ec-paypal-pay-later-message {
+  box-sizing: border-box !important;
+  padding: 10px 12px !important;
+  border-radius: 8px !important;
+  background: #173b63 !important;
+}
+
+html.sm-product-options-active .sm-po-section-intro::before {
+  content: "Choose your vehicle details, then add only the upgrades you want.";
+}
+
+html.sm-product-options-active .sm-po-step-number {
+  display: inline-flex;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f15a24;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+html.sm-product-options-active .details-product-option.sm-po-card {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 14px !important;
+  border: 1px solid #dfe3e8 !important;
+  border-radius: 10px !important;
+  background: #fff !important;
+}
+
+html.sm-product-options-active .details-product-option.sm-po-card[data-sm-po-kind="required"] {
+  border-left: 4px solid #f15a24 !important;
+}
+
+html.sm-product-options-active .details-product-option.sm-po-card[data-sm-po-kind="optional"] {
+  background: #f7f9fb !important;
+}
+
+html.sm-product-options-active .details-product-option.sm-po-card[data-sm-po-kind="conditional"] {
+  border-left: 1px solid #dfe3e8 !important;
+  background: #f7f9fb !important;
+}
+
+html.sm-product-options-active .sm-po-title-row {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  width: 100% !important;
+  margin: 0 0 8px !important;
+}
+
+html.sm-product-options-active .sm-po-title-row .details-product-option__title {
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  color: #202124 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.42 !important;
+}
+
+html.sm-product-options-active .details-product-option:not(.sm-po-has-title-row) .details-product-option__title {
+  margin-bottom: 8px !important;
+  color: #202124 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  line-height: 1.42 !important;
+}
+
+html.sm-product-options-active .details-product-option[data-sm-note="vehicle"] .details-product-option__title::after,
+html.sm-product-options-active .details-product-option[data-sm-note="vin"] .details-product-option__title::after,
+html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title::after,
+html.sm-product-options-active .details-product-option[data-sm-note="vin-photo"] .details-product-option__title::after {
+  display: block;
+  margin-top: 3px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+html.sm-product-options-active .details-product-option[data-sm-note="vehicle"] .details-product-option__title::after {
+  content: "Your required display type is shown beside your vehicle model in the menu.";
+}
+
+html.sm-product-options-active .details-product-option[data-sm-note="vin"] .details-product-option__title::after {
+  content: "Used to program the system for your exact vehicle";
+}
+
+html.sm-product-options-active .details-product-option[data-sm-note="vin-photo"] .details-product-option__title::after {
+  content: "Optional, but helps prevent delays caused by typos";
+}
+
+html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title::after {
+  width: 100%;
+  content: "Check out our USB-C hub upgrade with built-in wireless Apple CarPlay and Android Auto, plus 30W fast charging";
+}
+
+html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title {
+  display: block !important;
+  min-width: 0 !important;
+  position: relative !important;
+  padding-right: 38px !important;
+}
+
+html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title > .sm-po-help-button {
+  position: absolute !important;
+  top: -1px !important;
+  right: 0 !important;
+  margin: 0 !important;
+}
+
+html.sm-product-options-active .sm-po-help-button {
+  display: inline-flex !important;
+  flex: 0 0 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: -1px 0 0 6px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #f15a24 !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  vertical-align: middle !important;
+  cursor: pointer !important;
+}
+
+/* Keep long option titles and their help buttons on the same row. */
+html.sm-product-options-active .details-product-option__title:has(> .sm-po-help-button) {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+}
+
+html.sm-product-options-active .details-product-option__title > .sm-po-help-button {
+  flex: 0 0 24px !important;
+  margin: -1px 0 0 auto !important;
+}
+
+html.sm-product-options-active .sm-po-help-button:hover {
+  background: #d94b18 !important;
+}
+
+html.sm-product-options-active .sm-po-help-button:focus-visible {
+  outline: 3px solid rgba(241, 90, 36, 0.28) !important;
+  outline-offset: 2px !important;
+}
+
+html.sm-product-options-active .details-product-option select,
+html.sm-product-options-active .details-product-option input[type="text"],
+html.sm-product-options-active .details-product-option input[type="email"],
+html.sm-product-options-active .details-product-option input[type="tel"],
+html.sm-product-options-active .details-product-option textarea,
+html.sm-product-options-active .details-product-option .form-control__select,
+html.sm-product-options-active .details-product-option .form-control__text,
+html.sm-product-options-active .details-product-option .form-control__textarea {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: 46px !important;
+  border-radius: 8px !important;
+}
+
+html.sm-product-options-active .details-product-option textarea,
+html.sm-product-options-active .details-product-option .form-control__textarea {
+  min-height: 96px !important;
+}
+
+html.sm-product-options-active .details-product-option select:focus,
+html.sm-product-options-active .details-product-option input:focus,
+html.sm-product-options-active .details-product-option textarea:focus,
+html.sm-product-options-active .details-product-option .form-control__select:focus-within,
+html.sm-product-options-active .details-product-option .form-control__text:focus-within,
+html.sm-product-options-active .details-product-option .form-control__textarea:focus-within {
+  border-color: #f15a24 !important;
+  outline: 3px solid rgba(241, 90, 36, 0.18) !important;
+  outline-offset: 1px !important;
+}
+
+html.sm-product-options-active .details-product-option input[type="file"] {
+  max-width: 100% !important;
+}
+
+html.sm-po-modal-open {
+  overflow: hidden !important;
+}
+
+.sm-po-dialog {
+  box-sizing: border-box;
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(760px, calc(100dvh - 32px));
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  color: #202124;
+}
+
+.sm-po-dialog::backdrop {
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.sm-po-dialog[open] {
+  animation: smPoDialogIn 160ms ease-out;
+}
+
+.sm-po-dialog__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 20px 14px;
+  border-bottom: 1px solid #e7e9ed;
+}
+
+.sm-po-dialog__title {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.sm-po-dialog__close {
+  display: inline-flex;
+  flex: 0 0 36px;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  margin: -7px -7px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f3f5;
+  color: #202124;
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.sm-po-dialog__body {
+  padding: 18px 20px 22px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.sm-po-dialog__body p {
+  margin: 0 0 14px;
+}
+
+.sm-po-dialog__body ul {
+  margin: 0 0 14px;
+  padding-left: 22px;
+}
+
+.sm-po-dialog__body li + li {
+  margin-top: 9px;
+}
+
+.sm-po-dialog__body strong,
+.sm-po-dialog__body b {
+  color: #111827;
+}
+
+.sm-po-dialog__body .sm-po-copy {
+  display: none;
+}
+
+.sm-po-dialog[data-help="d"] .sm-po-copy:nth-child(1),
+.sm-po-dialog[data-help="s"] .sm-po-copy:nth-child(-n + 3),
+.sm-po-dialog[data-help="c"] .sm-po-copy:nth-child(-n + 3),
+.sm-po-dialog[data-help="v"] .sm-po-copy:nth-child(1),
+.sm-po-dialog[data-help="u"] .sm-po-copy:nth-child(-n + 3),
+.sm-po-dialog[data-help="r"] .sm-po-copy:nth-child(1) {
+  display: block;
+}
+
+.sm-po-dialog[data-help="d"] .sm-po-copy:nth-child(1) {
+  font-weight: 400;
+}
+
+.sm-po-dialog[data-help="d"] .sm-po-copy:nth-child(1) span::before {
+  content: "Choose the display type indicated next to your vehicle model that you selected above. If you're still unsure please refer to the screen fitment guide in the product description.";
+}
+
+.sm-po-dialog[data-help="s"] .sm-po-copy:nth-child(1) b::before {
+  content: "SimplyCare: ";
+}
+
+.sm-po-dialog[data-help="s"] .sm-po-copy:nth-child(1) span::before {
+  content: "Adds an additional 2 years to the included warranty for a total of 3 years.";
+}
+
+.sm-po-dialog[data-help="s"] .sm-po-copy:nth-child(2) b::before {
+  content: "SimplyCare+: ";
+}
+
+.sm-po-dialog[data-help="s"] .sm-po-copy:nth-child(2) span::before {
+  content: "Includes the additional warranty plus upgrades your shipping speed to UPS Ground, includes a tempered glass screen protector and you get two free software/maps updates.";
+}
+
+.sm-po-dialog[data-help="s"] .sm-po-copy:nth-child(3) span::before {
+  content: "Please review the SimplyCare section in the product description for more information.";
+}
+
+.sm-po-dialog[data-help="c"] .sm-po-copy:nth-child(1) b::before {
+  content: "USB-C Upgrade with built-in Wireless Apple CarPlay and Android Auto: ";
+}
+
+.sm-po-dialog[data-help="c"] .sm-po-copy:nth-child(1) span::before {
+  content: "Includes a USB-C and USB-A port, has wireless connectivity built in and it also fast charges your device at 30W. No dongle/adapter needed.";
+}
+
+.sm-po-dialog[data-help="c"] .sm-po-copy:nth-child(2) b::before {
+  content: "Ford OEM USB-C Hub: ";
+}
+
+.sm-po-dialog[data-help="c"] .sm-po-copy:nth-child(2) span::before {
+  content: "Authentic Ford OEM USB-C hub which includes a USB-C and USB-A port, charges at normal speed, includes custom bezel. Select vehicles only, not all vehicles are eligible, please check compatibility.";
+}
+
+.sm-po-dialog[data-help="c"] .sm-po-copy:nth-child(3) b::before {
+  content: "Wireless Apple CarPlay/Android Auto USB Adapter: ";
+}
+
+.sm-po-dialog[data-help="c"] .sm-po-copy:nth-child(3) span::before {
+  content: "Plugs into your USB port and provides wireless functionality.";
+}
+
+.sm-po-dialog[data-help="v"] .sm-po-copy:nth-child(1) span::before {
+  content: "By adding additional programming you're confirming that you also read our 4\" to 8\" conversion overview on our support website and understand the entire process. Includes additional programming for ACM, FCIM and/or HVAC modules - FORScan needed. This is for additional programming only; no additional hardware included.";
+}
+
+.sm-po-dialog[data-help="u"] .sm-po-copy:nth-child(1) b::before {
+  content: "8\" Sync 3 System: ";
+}
+
+.sm-po-dialog[data-help="u"] .sm-po-copy:nth-child(1) span::before {
+  content: "Select the standard 8\" to 12\" kit, nothing else is needed.";
+}
+
+.sm-po-dialog[data-help="u"] .sm-po-copy:nth-child(2) b::before {
+  content: "4\" Base Sync 3 System: ";
+}
+
+.sm-po-dialog[data-help="u"] .sm-po-copy:nth-child(2) span::before {
+  content: "Select one of the two Sync 3 (4\") upgrade kits. FORScan is required.";
+}
+
+.sm-po-dialog[data-help="u"] .sm-po-copy:nth-child(3) b::before {
+  content: "2015 F-150 with Sync 2: ";
+}
+
+.sm-po-dialog[data-help="u"] .sm-po-copy:nth-child(3) span::before {
+  content: "Select one of the two Sync 3 (8\") upgrade kits. FORScan is not required.";
+}
+
+.sm-po-dialog[data-help="r"] .sm-po-copy:nth-child(1) span::before {
+  content: "Send us a photo of your dash via e-mail and we'll advise you on the correct color to choose";
+}
+
+.sm-po-dialog__note {
+  margin-top: 16px !important;
+  padding: 13px 14px;
+  border-left: 4px solid #f15a24;
+  border-radius: 8px;
+  background: #fff7ed;
+}
+
+.sm-po-dialog__link {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 2px;
+  padding: 10px 17px;
+  border-radius: 999px;
+  background: #202124;
+  color: #fff !important;
+  font-weight: 700;
+  text-decoration: none !important;
+}
+
+.sm-po-dialog[data-help="v"] .sm-po-dialog__link {
+  display: inline-flex;
+}
+
+html.sm-product-options-active .sm-po-required-note {
+  margin: 9px 0 0 !important;
+  padding-left: 9px !important;
+  border-left: 3px solid #f15a24 !important;
+  color: #626a73 !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+}
+
+html.sm-product-options-active .sm-po-required-note::before {
+  content: "Required selections are marked with an orange accent.";
+}
+
+@keyframes smPoDialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 600px) {
+  html.sm-product-options-active .details-product-option.sm-po-card {
+    padding: 13px !important;
+  }
+
+  .sm-po-dialog {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    border-radius: 14px;
+  }
+
+  .sm-po-dialog__header {
+    padding: 18px 17px 13px;
+  }
+
+  .sm-po-dialog__body {
+    padding: 16px 17px 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sm-po-dialog[open] {
+    animation: none;
+  }
+}
