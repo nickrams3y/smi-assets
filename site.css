@@ -529,6 +529,7 @@ html.sm-faq-modal-open {
   width: 28px !important;
   height: 28px !important;
   font-size: 17px !important;
+  transform: translateX(-4px);
 }
 
 .ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child > strong {
