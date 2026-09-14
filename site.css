@@ -1070,6 +1070,7 @@ html.sm-product-options-active .details-product-option:not(.sm-po-has-title-row)
 
 html.sm-product-options-active .details-product-option[data-sm-note="vehicle"] .details-product-option__title::after,
 html.sm-product-options-active .details-product-option[data-sm-note="vin"] .details-product-option__title::after,
+html.sm-product-options-active .details-product-option[data-sm-note="display"] .details-product-option__title::after,
 html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title::after,
 html.sm-product-options-active .details-product-option[data-sm-note="vin-photo"] .details-product-option__title::after {
   display: block;
@@ -1092,11 +1093,17 @@ html.sm-product-options-active .details-product-option[data-sm-note="vin-photo"]
   content: "Optional, but helps prevent delays caused by typos";
 }
 
+html.sm-product-options-active .details-product-option[data-sm-note="display"] .details-product-option__title::after {
+  width: 100%;
+  content: 'Optional 8.46" Sync 4 HD display upgrade available';
+}
+
 html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title::after {
   width: 100%;
   content: "Check out our USB-C hub upgrade with built-in wireless Apple CarPlay and Android Auto, plus 30W fast charging";
 }
 
+html.sm-product-options-active .details-product-option[data-sm-note="display"] .details-product-option__title,
 html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title {
   display: block !important;
   min-width: 0 !important;
@@ -1104,6 +1111,7 @@ html.sm-product-options-active .details-product-option[data-sm-note="connectivit
   padding-right: 38px !important;
 }
 
+html.sm-product-options-active .details-product-option[data-sm-note="display"] .details-product-option__title > .sm-po-help-button,
 html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title > .sm-po-help-button {
   position: absolute !important;
   top: -1px !important;
