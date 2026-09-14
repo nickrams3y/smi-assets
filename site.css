@@ -537,6 +537,11 @@ html.sm-faq-modal-open {
   line-height: 1.3 !important;
 }
 
+.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child {
+  flex: 1 1 auto !important;
+  text-align: center !important;
+}
+
 .ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child > span {
   font-size: 13px !important;
   line-height: 1.4 !important;
@@ -577,8 +582,8 @@ html.sm-faq-modal-open {
 }
 
 .ec-store__category-page--39980905 .sm-contact-card__icon svg {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   fill: none;
   stroke: currentColor;
   stroke-linecap: round;
