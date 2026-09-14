@@ -6,6 +6,29 @@ var D={Ford:{"C-Max":[2013,2015,"Standard"],Edge:[2011,2015,"Recessed"],Escape:[
 var P="https://simplymichigan.co/products/",U={n:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-without-navigation",y:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with-navigation",t:P+"ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit",s:P+"ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit",f4:P+"2018-2020-f-150-4-to-8-complete-sync-3-upgrade-kit",sd4:P+"2020-2022-f-250-350-super-duty-4-to-8-complete-sync-3-upgrade-kit",m4:P+"2019-2022-mustang-4-to-8-complete-sync-3-upgrade-kit",an:P+"ford-lincoln-sync-3-apim-replacement-with-navigation",ax:P+"ford-lincoln-sync-3-apim-replacement-without-navigation",ds:P+"sync-3-display-screen-replacement-standard",dr:P+"sync-3-display-screen-replacement-recessed",d4:P+"sync-4-8-46-display-with-sync-3-conversion-bracket",acm:P+"audio-control-module-acm-receiver",g:"https://support.simplymichigan.co/articles/104443-4-to-8-conversion-overview",e:"https://simplymichigan.co/upgrade_guide",c:"https://simplymichigan.co/contact-us"};
 function display(a,v){return a[2]==="F150"?(v>=2015?"Standard":"Recessed"):a[2]}
 function replacements(t,twelve,sync4){var q=[];if(twelve)q.push(['Shop 12&quot; Upgrade',U.t]);q.push(["APIM (Navigation)",U.an],["APIM (Non-Navigation)",U.ax]);if(t==="Special"){q.push(["Contact Us About a Display",U.c],["ACM Replacement",U.acm]);return q}q.push(['Sync 3 8.0&quot; Screen',t==="Standard"?U.ds:U.dr]);if(sync4)q.push(['Sync 4 8.46&quot; Screen Upgrade',U.d4]);q.push(["ACM Replacement",U.acm]);return q}
+var HKEY="smVehicleHandoffV1",HMAX=30*60*1000;
+function clean(s){return (s||"").replace(/\s+/g," ").trim().toLowerCase()}
+function remember(e){
+ var link=e.target.closest(".sm-home-fit__actions a,.sm-fit__actions a");if(!link)return;var u=new URL(link.href,location.href);if(u.origin!==location.origin||!/^\/products\//.test(u.pathname))return;
+ var home=!!link.closest(".sm-home-fit__actions"),p=home?"sm-home-fit-":"sm-fit-",b=document.getElementById(p+"brand"),m=document.getElementById(p+"model"),y=document.getElementById(p+"year"),s=document.getElementById(p+"system");if(!b||!m||!y||!s||!b.value||!m.value||!y.value||!s.value)return;
+ var a=(D[b.value]||{})[m.value],v=+y.value,h={make:b.value,model:m.value,year:v,system:s.value,display:a?display(a,v):"",target:u.pathname.replace(/\/$/,""),created:Date.now()};try{sessionStorage.setItem(HKEY,JSON.stringify(h))}catch(x){}
+}
+function saved(){try{var h=JSON.parse(sessionStorage.getItem(HKEY)||"null");if(!h||Date.now()-h.created>HMAX){sessionStorage.removeItem(HKEY);return null}return h}catch(x){return null}}
+function choose(row,test){var s=row.querySelector("select");if(!s)return false;var o=[].find.call(s.options,function(x){return x.value!=="Please choose"&&test(clean(x.textContent))});if(!o)return false;if(s.value!==o.value){s.value=o.value;s.dispatchEvent(new Event("input",{bubbles:true}));s.dispatchEvent(new Event("change",{bubbles:true}))}return true}
+var prefillWait;
+function applyPrefill(h,box){
+ if(!box.isConnected||box.dataset.smPrefilled)return;var done=[];
+ box.querySelectorAll(":scope > .details-product-option").forEach(function(row){var t=clean((row.querySelector(".details-product-option__title")||row.querySelector("label")||{}).textContent),wanted=clean(h.make+" "+h.model),ok=false;
+  if(/^(vehicle model|model|truck model)$/.test(t))ok=choose(row,function(x){return x===wanted||x.indexOf(wanted+" (")===0});
+  else if(t==="model year")ok=choose(row,function(x){return new RegExp("^"+h.year+"(?:\\s|\\(|$)").test(x)});
+  else if(/choose your display/.test(t)&&h.display!=="Special")ok=choose(row,function(x){return x.indexOf(clean(h.display)+" 8.0")===0});
+  else if(/choose your upgrade path/.test(t)&&h.system==="3")ok=choose(row,function(x){return x.indexOf('sync 3 (8")')===0});
+  if(ok)done.push(t)
+ });
+ if(!done.length)return;box.dataset.smPrefilled="1";try{sessionStorage.removeItem(HKEY)}catch(x){}var old=document.querySelector(".sm-prefill-notice");if(old)old.remove();var n=document.createElement("div");n.className="sm-prefill-notice";n.setAttribute("role","status");n.innerHTML="<strong>Vehicle details added:</strong> "+h.year+" "+h.make+" "+h.model+". Please verify the selections before ordering.";box.insertAdjacentElement("beforebegin",n)
+}
+function prefill(){var h=saved();if(!h||location.pathname.replace(/\/$/,"")!==h.target)return;var box=document.querySelector(".details-product-options");if(!box||box.dataset.smPrefilled)return;clearTimeout(prefillWait);prefillWait=setTimeout(function(){applyPrefill(h,box)},1000)}
+if(!document.documentElement.dataset.smVehicleHandoff){document.documentElement.dataset.smVehicleHandoff="1";document.addEventListener("click",remember,true)}
 function landing(){var c=document.getElementById("sm-fit-checker");if(!c)return;var title="Let's Find Your System",copy="Our plug and play upgrade kits make it easy for you to upgrade your vehicle to the faster, more modern Sync 3 system, complete with Apple CarPlay and Android Auto. Just enter your vehicle's information below to find the right kit for your vehicle.",t=document.getElementById("sm-fit-title"),top=c.previousElementSibling;if(t&&t.textContent!==title)t.textContent=title;if(top){var x=top.querySelector('[aria-label="Three steps to choose a Sync 3 conversion kit"]'),p=[].find.call(top.querySelectorAll("p"),function(z){return /Our plug and play upgrade kits/.test(z.textContent)});if(x)x.remove();if(p&&p.textContent!==copy)p.textContent=copy}}
 function faq(){
  var box=document.querySelector(".ec-store__category-page--39980905 .sm-upgrade-single-column");if(!box||box.dataset.smFaq)return;box.querySelectorAll("li").forEach(function(x){x.textContent=x.textContent.replace(/^2013-2015 Ford F-(250|350|450)$/, "2013-2016 Ford F-$1")});box.dataset.smFaq="1";var wrap=box.parentElement,h=[].find.call(wrap.children,function(x){return x.tagName==="H3"}),p=[].find.call(wrap.children,function(x){return x.tagName==="P"}),b=document.createElement("button"),d=document.createElement("dialog");
@@ -40,6 +63,7 @@ function home(){
  });
 }
 function init(){
+ prefill();
  landing();
  faq();
  support();

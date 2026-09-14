@@ -895,6 +895,23 @@ html.sm-product-options-active .details-product-options {
   margin-top: 22px !important;
 }
 
+.sm-prefill-notice {
+  box-sizing: border-box;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  color: #21313a;
+  background: #eef6fb;
+  border: 1px solid #c9e0ee;
+  border-left: 4px solid #3f86ad;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.sm-prefill-notice strong {
+  color: #18242b;
+}
+
 html.sm-product-options-active .sm-po-section-heading {
   display: flex;
   align-items: center;
