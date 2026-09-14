@@ -144,6 +144,13 @@ hr.rounded {
   --slider-height: clamp(440px, 52svh, 560px) !important;
 }
 
+@media (min-width: 700px) {
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__slide-content-inner {
+    padding-top: 155px !important;
+    padding-bottom: 65px !important;
+  }
+}
+
 @media (max-width: 699px) {
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen {
     --slider-height: clamp(300px, 36vh, 350px) !important;
@@ -151,8 +158,31 @@ hr.rounded {
   }
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__slide-content-inner {
-    padding-top: 82px !important;
-    padding-bottom: 38px !important;
+    padding-top: 96px !important;
+    padding-bottom: 30px !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title {
+    font-size: clamp(24px, 7vw, 29px) !important;
+    line-height: 1.12 !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__description {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button .ins-control__button {
+    min-height: 38px !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button .ins-control__wrap {
+    padding: 8px 14px !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button .ins-control__text {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
   }
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title + .ins-tile__button,
