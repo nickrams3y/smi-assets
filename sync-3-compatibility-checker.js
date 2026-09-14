@@ -15,7 +15,7 @@ function init(){
  if(z==="3"){show("You already have Sync 3","You do not need a complete conversion kit. We can help identify the right replacement or upgrade.",[["Contact Us",U.c]],1);return}
  if(z==="u"){show("We can identify it for you","Send us a clear dashboard photo and your model year, and we will identify your system.",[["Send Us Your Details",U.c]],1);return}
  var t=a[2]==="F150"?(v===2015?"Standard":"Recessed"):a[2];if(t==="Special"){show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" uses our dedicated 6.5-inch Fiesta/Transit Sync 3 upgrade kit.",[["View the Correct Kit",U.s]]);return}
- var q=[["Shop Without Navigation",U.n],["Shop With Navigation",U.y]];if(b.value==="Ford"&&k==="F-150"&&v===2015)q.push(["Shop 12-Inch Upgrade",U.t]);show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" requires the <strong>"+t.toLowerCase()+" display</strong>. Choose your system with or without factory navigation; both kits include Apple CarPlay and Android Auto.",q)
+ var q=[["Shop Without Navigation",U.n],["Shop With Navigation",U.y]];if(b.value==="Ford"&&k==="F-150"&&v===2015)q.push(['12&quot; Upgrade Kit',U.t]);show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" requires the <strong>"+t.toLowerCase()+" display</strong>. Choose your system with or without factory navigation; both kits include Apple CarPlay and Android Auto.",q)
  });
 }
 init();new MutationObserver(init).observe(document.documentElement,{childList:true,subtree:true});
