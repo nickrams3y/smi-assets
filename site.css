@@ -369,6 +369,7 @@ hr.rounded {
   font-size: 14px;
   font-weight: 750;
   line-height: 1.35;
+  text-align: center;
   text-decoration: none !important;
 }
 
@@ -836,6 +837,18 @@ html.sm-faq-modal-open {
 .ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child > span {
   font-size: 13px !important;
   line-height: 1.4 !important;
+}
+
+.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] .sm-eligibility-contact {
+  display: block !important;
+  margin-top: 4px !important;
+}
+
+.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] .sm-eligibility-contact a {
+  color: #d94a1f !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
 }
 
 .ec-store__category-page--39980905 .sm-contact-card {
