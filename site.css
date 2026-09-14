@@ -138,6 +138,39 @@ hr.rounded {
   padding-top: 0 !important;
 }
 
+/* Keep the homepage promotion and vehicle checker together above the fold. */
+.ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen {
+  --slider-height: clamp(440px, 52vh, 560px) !important;
+  --slider-height: clamp(440px, 52svh, 560px) !important;
+}
+
+@media (max-width: 699px) {
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen {
+    --slider-height: clamp(320px, 40vh, 390px) !important;
+    --slider-height: clamp(320px, 40svh, 390px) !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__slide-content-inner {
+    padding-top: 90px !important;
+    padding-bottom: 42px !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title {
+    font-size: clamp(28px, 8vw, 34px) !important;
+    line-height: 1.12 !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__description {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title + .ins-tile__button,
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__description + .ins-tile__button {
+    margin-top: 15px !important;
+  }
+}
+
 /* Give the transparent header a dark background on blog pages */
 .ins-tile--header.ins-tile--has-opacity:has(+ .ins-tile__blog-posts-collection) .ins-header,
 .ins-tile--header.ins-tile--has-opacity:has(+ [id^="tile-blog-post-intro-"]) .ins-header {
@@ -627,7 +660,7 @@ hr.rounded {
 
 @media (max-width: 640px) {
   #sm-home-fit-checker {
-    padding: 14px 10px 18px;
+    padding: 8px 10px 10px;
   }
 
   #tile-custom-code-EU4sza + #tile-category-products-r5kGz9 .section__container {
@@ -635,8 +668,8 @@ hr.rounded {
   }
 
   #sm-home-fit-checker .sm-home-fit__inner {
-    gap: 16px;
-    padding: 16px;
+    gap: 12px;
+    padding: 12px;
     border-radius: 10px;
   }
 
@@ -645,17 +678,32 @@ hr.rounded {
   }
 
   #sm-home-fit-checker .sm-home-fit__heading h2 {
-    font-size: 21px !important;
+    font-size: 20px !important;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__heading p {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
   }
 
   #sm-home-fit-checker .sm-home-fit__form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 8px;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__form label {
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__form select {
+    height: 42px !important;
   }
 
   #sm-home-fit-checker .sm-home-fit__form button {
     grid-column: 1 / -1;
     width: 100%;
+    min-height: 42px;
   }
 
   #sm-home-fit-checker .sm-home-fit__result {
