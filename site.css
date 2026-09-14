@@ -237,11 +237,12 @@ hr.rounded {
    beside it on desktop and on its own line on mobile. */
 .product-details__product-price-row .product-details-module__content:has(.sm-price-promo) {
   display: grid !important;
-  grid-template-columns: max-content max-content minmax(0, 1fr);
+  grid-template-columns: max-content minmax(0, 1fr);
   grid-template-areas:
-    "sale-label sale-label sale-label"
-    "price comparison promotion"
-    "paypal paypal paypal";
+    "sale-label sale-label"
+    "price comparison"
+    "promotion promotion"
+    "paypal paypal";
   align-items: center;
   column-gap: 12px;
   row-gap: 7px;
@@ -270,44 +271,46 @@ hr.rounded {
   width: 100%;
 }
 
-.sm-price-promo {
+.product-details__product-price-row .sm-price-promo {
   grid-area: promotion;
-  display: inline-flex;
-  width: fit-content;
-  max-width: 100%;
-  align-items: center;
-  gap: 8px;
-  justify-self: start;
-  padding: 7px 9px 7px 12px;
-  color: #222;
-  background: #f3f4f6;
-  border: 1px solid #d7d9dd;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.25;
+  display: inline-flex !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  align-items: center !important;
+  gap: 8px !important;
+  justify-self: start !important;
+  padding: 7px 9px 7px 12px !important;
+  color: #222 !important;
+  background: #f3f4f6 !important;
+  border: 1px solid #d7d9dd !important;
+  border-radius: 999px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
 }
 
-.sm-price-promo__text {
+.product-details__product-price-row .sm-price-promo__text {
   white-space: nowrap;
 }
 
-.sm-price-promo__copy {
-  appearance: none;
-  min-height: 28px;
-  padding: 4px 9px;
-  color: #222;
-  background: #fff;
-  border: 1px solid #b9bdc4;
-  border-radius: 999px;
-  font: inherit;
-  font-size: 12px;
+.product-details__product-price-row .sm-price-promo__copy {
+  appearance: none !important;
+  flex: 0 0 auto !important;
+  min-height: 28px !important;
+  padding: 4px 9px !important;
+  color: #222 !important;
+  background: #fff !important;
+  border: 1px solid #b9bdc4 !important;
+  border-radius: 999px !important;
+  font: inherit !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
   cursor: pointer;
 }
 
-.sm-price-promo__copy:hover,
-.sm-price-promo__copy:focus-visible {
-  border-color: #222;
+.product-details__product-price-row .sm-price-promo__copy:hover,
+.product-details__product-price-row .sm-price-promo__copy:focus-visible {
+  border-color: #222 !important;
   outline: none;
 }
 
@@ -334,8 +337,8 @@ hr.rounded {
     column-gap: 10px;
   }
 
-  .sm-price-promo {
-    margin-top: 2px;
+  .product-details__product-price-row .sm-price-promo {
+    margin-top: 2px !important;
   }
 }
 
