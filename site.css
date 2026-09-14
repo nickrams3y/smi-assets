@@ -593,6 +593,10 @@ html.sm-faq-modal-open {
 }
 
 @media (max-width: 560px) {
+  .ec-store__category-page--39980905 .sm-faq-launcher {
+    margin-bottom: 9px !important;
+  }
+
   .ec-store__category-page--39980905 .sm-support-row {
     grid-template-columns: 1fr;
     gap: 9px;
