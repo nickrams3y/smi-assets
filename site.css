@@ -380,9 +380,20 @@ hr.rounded {
 #sm-home-fit-checker {
   width: 100%;
   box-sizing: border-box;
-  padding: 22px 18px;
+  padding: 22px 18px 12px;
+  background: #f4f3f2;
+  background: oklch(0.9594 0.00254 48.72);
   color: #222;
   font-family: inherit;
+}
+
+#tile-custom-code-EU4sza {
+  background: #f4f3f2;
+  background: oklch(0.9594 0.00254 48.72);
+}
+
+#tile-custom-code-EU4sza + #tile-category-products-r5kGz9 .section__container {
+  margin-top: 32px !important;
 }
 
 #sm-home-fit-checker .sm-home-fit__inner {
@@ -393,9 +404,10 @@ hr.rounded {
   margin: 0 auto;
   padding: 22px;
   border: 1px solid #dedede;
-  border-left: 5px solid #f15a24;
+  border-left: 1px solid #dedede;
   border-radius: 12px;
-  background: #fff;
+  background: #f4f3f2;
+  background: oklch(0.9594 0.00254 48.72);
   box-sizing: border-box;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
 }
@@ -433,7 +445,7 @@ hr.rounded {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #f15a24;
+  background: #222;
   color: #fff;
 }
 
@@ -520,14 +532,24 @@ hr.rounded {
   border-color: #d94a1f !important;
 }
 
+#sm-home-fit-checker .sm-home-fit__actions a {
+  border-color: #222 !important;
+  background: #222 !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__actions a:hover {
+  border-color: #444 !important;
+  background: #444 !important;
+}
+
 #sm-home-fit-checker .sm-home-fit__result {
   grid-column: 1 / -1;
   box-sizing: border-box;
   padding: 14px 16px;
   border: 1px solid #dedede;
-  border-left: 4px solid #f15a24;
+  border-top: 4px solid #f15a24;
   border-radius: 8px;
-  background: #f7f7f7;
+  background: #fff;
 }
 
 #sm-home-fit-checker .sm-home-fit__result[hidden] {
@@ -537,7 +559,7 @@ hr.rounded {
 #sm-home-fit-checker .sm-home-fit__result--notice {
   background: #fff7ed;
   border-color: #f3d2bd;
-  border-left-color: #f15a24;
+  border-top-color: #f15a24;
 }
 
 #sm-home-fit-checker .sm-home-fit__result h3 {
@@ -579,7 +601,11 @@ hr.rounded {
 
 @media (max-width: 640px) {
   #sm-home-fit-checker {
-    padding: 14px 10px;
+    padding: 14px 10px 8px;
+  }
+
+  #tile-custom-code-EU4sza + #tile-category-products-r5kGz9 .section__container {
+    margin-top: 24px !important;
   }
 
   #sm-home-fit-checker .sm-home-fit__inner {
