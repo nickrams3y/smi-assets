@@ -320,6 +320,31 @@ hr.rounded {
   line-height: 1.35;
 }
 
+.ec-store__category-page--39980905 .sm-fit__result--eligible h4,
+#sm-home-fit-checker .sm-home-fit__result--eligible h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ec-store__category-page--39980905 .sm-fit__result--eligible h4::before,
+#sm-home-fit-checker .sm-home-fit__result--eligible h3::before {
+  content: "✓";
+  display: inline-flex;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #2f8f4e;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1;
+}
+
 .ec-store__category-page--39980905 .sm-fit__result p {
   margin: 0 0 12px;
 }
