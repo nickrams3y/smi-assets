@@ -228,11 +228,9 @@ hr.rounded {
   }
 }
 
-/* Slide-in offer title */
-#InApp_slide_in h3 {
-  font-weight: 700 !important;
-  font-size: 20px !important;
-  line-height: 1.25 !important;
+/* The coupon now appears beside product pricing instead of in a slide-in. */
+#InApp_slide_in {
+  display: none !important;
 }
 
 /* Keep Ecwid's sale pricing intact and add the active announcement-bar code
