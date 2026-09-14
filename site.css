@@ -172,16 +172,22 @@ hr.rounded {
     line-height: 1.35 !important;
   }
 
-  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button .ins-control__button {
-    min-height: 34px !important;
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button > .ins-control--button {
+    --button-font-size: 12px !important;
+    --button-height-scale: 2.75 !important;
+    --button-min-width: 96px !important;
+    min-width: 96px !important;
+    height: 33px !important;
   }
 
-  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button .ins-control__wrap {
-    padding: 6px 11px !important;
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button .ins-control__button {
+    min-height: 0 !important;
+    height: 100% !important;
   }
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button .ins-control__text {
-    font-size: 12px !important;
+    padding: 0 12px !important;
+    font-size: inherit !important;
     line-height: 1.2 !important;
   }
 
