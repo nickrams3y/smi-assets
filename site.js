@@ -18,21 +18,22 @@ function home(){
  function max(a){return (X[b.value]||{})[m.value]||a[1]}
  function models(){m.innerHTML='<option value="">Select model</option>';years();Object.keys(D[b.value]||{}).forEach(function(k){var o=document.createElement("option");o.value=o.textContent=k;m.appendChild(o)});m.disabled=!b.value}
  function years(){var a=base();y.innerHTML='<option value="">Select year</option>';y.disabled=!a;if(a)for(var i=a[0];i<=max(a);i++){var o=document.createElement("option");o.value=o.textContent=i;y.appendChild(o)}}
+ function has12(k,v){return b.value==="Ford"&&((k==="F-150"&&v>=2015&&v<=2020)||((k==="F-250"||k==="F-350")&&v>=2017&&v<=2022))}
  function actions(a){return '<div class="sm-home-fit__actions">'+a.map(function(x){return '<a href="'+x[1]+'">'+x[0]+'</a>'}).join("")+'</div>'}
  function show(t,p,a,n){r.className="sm-home-fit__result"+(n?" sm-home-fit__result--notice":"");r.innerHTML="<h3>"+t+"</h3><p>"+p+"</p>"+(a?actions(a):"");r.hidden=false}
  b.addEventListener("change",models);m.addEventListener("change",years);
  f.addEventListener("submit",function(e){e.preventDefault();var k=m.value,a=base(),v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a brand, model, year and current system.",0,1);return}
   if(z==="4"){
-   if(b.value==="Ford"&&k==="F-150"&&v>=2018&&v<=2020){show("We have a complete kit for your F-150","This kit includes the hardware and programming needed to upgrade your factory 4-inch system to Sync 3.",[["View the F-150 Kit",U.f4]]);return}
-   if(b.value==="Ford"&&(k==="F-250"||k==="F-350")&&v>=2020&&v<=2022){show("We have a complete kit for your Super Duty","This kit includes the hardware and programming needed to upgrade your factory 4-inch system to Sync 3.",[["View the Super Duty Kit",U.sd4]]);return}
-   if(b.value==="Ford"&&k==="Mustang"&&v>=2019&&v<=2022){show("We have a complete kit for your Mustang","This kit includes the hardware and programming needed to upgrade your factory 4-inch system to Sync 3.",[["View the Mustang Kit",U.m4]]);return}
+   if(b.value==="Ford"&&k==="F-150"&&v>=2018&&v<=2020){show("We have a complete kit for your F-150","This kit includes all of the hardware and programming needed to upgrade your factory 4&quot; system to Sync 3.",[["View the F-150 Kit",U.f4],["Shop 12&quot; Upgrade",U.t]]);return}
+   if(b.value==="Ford"&&(k==="F-250"||k==="F-350")&&v>=2020&&v<=2022){show("We have a complete kit for your Super Duty","This kit includes all of the hardware and programming needed to upgrade your factory 4&quot; system to Sync 3.",[["View the Super Duty Kit",U.sd4],["Shop 12&quot; Upgrade",U.t]]);return}
+   if(b.value==="Ford"&&k==="Mustang"&&v>=2019&&v<=2022){show("We have a complete kit for your Mustang","This kit includes all of the hardware and programming needed to upgrade your factory 4&quot; system to Sync 3.",[["View the Mustang Kit",U.m4]]);return}
    show("This vehicle may be convertible","A factory 4-inch system needs additional hardware and programming. Review the conversion guide or contact us and we will help identify what you need.",[["Read the 4-inch to 8-inch Guide",U.g],["Contact Us",U.c]],1);return
   }
-  if(z==="3"){show("You already have Sync 3","You do not need a complete conversion kit. We can help identify the right replacement or upgrade.",[["Contact Us",U.c]],1);return}
+  if(z==="3"){if(has12(k,v)){show('Your vehicle is eligible for a 12&quot; upgrade','Upgrade your existing 8&quot; Sync 3 system to the larger 12&quot; OEM-style display.',[["Shop 12&quot; Upgrade",U.t],["Contact Us",U.c]]);return}show("You already have Sync 3","You do not need a complete conversion kit. We can help identify the right replacement or upgrade.",[["Contact Us",U.c]],1);return}
   if(z==="u"){show("We can identify it for you","Send us a clear dashboard photo and your model year, and we will identify your system.",[["Contact Us",U.c]],1);return}
   if(v<a[0]||v>a[1]){show("Let’s verify this combination","That model year was not normally equipped with Sync 2. Contact us and we will confirm what is currently installed.",[["Contact Us",U.c]],1);return}
   var t=a[2]==="F150"?(v===2015?"Standard":"Recessed"):a[2];if(t==="Special"){show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" uses our dedicated Fiesta/Transit Sync 3 upgrade kit.",[["View the Correct Kit",U.s]]);return}
-  var q=[["Without Navigation",U.n],["With Navigation",U.y]];if(b.value==="Ford"&&k==="F-150"&&v===2015)q.push(['12-inch Upgrade',U.t]);show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" requires the <strong>"+t.toLowerCase()+" display</strong>. Choose your preferred navigation option; every kit includes Apple CarPlay and Android Auto.",q)
+  var q=[["Without Navigation",U.n],["With Navigation",U.y]];if(has12(k,v))q.push(['Shop 12&quot; Upgrade',U.t]);show("Your vehicle is eligible","Your "+v+" "+b.value+" "+k+" requires the <strong>"+t.toLowerCase()+" display</strong>. Choose your preferred navigation option; every kit includes Apple CarPlay and Android Auto.",q)
  });
 }
 function init(){
