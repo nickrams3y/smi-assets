@@ -516,7 +516,7 @@ html.sm-faq-modal-open {
 
 .ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] {
   flex-direction: row !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   justify-content: flex-start !important;
   gap: 8px !important;
   margin: 0 !important;
