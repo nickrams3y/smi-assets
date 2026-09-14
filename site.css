@@ -146,28 +146,18 @@ hr.rounded {
 
 @media (max-width: 699px) {
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen {
-    --slider-height: clamp(320px, 40vh, 390px) !important;
-    --slider-height: clamp(320px, 40svh, 390px) !important;
+    --slider-height: clamp(300px, 36vh, 350px) !important;
+    --slider-height: clamp(300px, 36svh, 350px) !important;
   }
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__slide-content-inner {
-    padding-top: 90px !important;
-    padding-bottom: 42px !important;
-  }
-
-  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title {
-    font-size: clamp(28px, 8vw, 34px) !important;
-    line-height: 1.12 !important;
-  }
-
-  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__description {
-    font-size: 15px !important;
-    line-height: 1.35 !important;
+    padding-top: 82px !important;
+    padding-bottom: 38px !important;
   }
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title + .ins-tile__button,
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__description + .ins-tile__button {
-    margin-top: 15px !important;
+    margin-top: 13px !important;
   }
 }
 
