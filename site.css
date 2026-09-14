@@ -177,6 +177,10 @@ hr.rounded {
     line-height: 1.35 !important;
   }
 
+  .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title + .ins-tile__description {
+    margin-top: 7px !important;
+  }
+
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__button > .ins-control--button {
     --button-font-size: 12px !important;
     --button-height-scale: 2.75 !important;
