@@ -380,7 +380,7 @@ hr.rounded {
 #sm-home-fit-checker {
   width: 100%;
   box-sizing: border-box;
-  padding: 22px 18px 12px;
+  padding: 22px 18px 24px;
   background: #f4f3f2;
   background: oklch(0.9594 0.00254 48.72);
   color: #222;
@@ -601,7 +601,7 @@ hr.rounded {
 
 @media (max-width: 640px) {
   #sm-home-fit-checker {
-    padding: 14px 10px 8px;
+    padding: 14px 10px 18px;
   }
 
   #tile-custom-code-EU4sza + #tile-category-products-r5kGz9 .section__container {
