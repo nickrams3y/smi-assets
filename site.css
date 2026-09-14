@@ -376,6 +376,245 @@ hr.rounded {
   }
 }
 
+/* Compact vehicle compatibility checker used on the home page. */
+#sm-home-fit-checker {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 22px 18px;
+  color: #222;
+  font-family: inherit;
+}
+
+#sm-home-fit-checker .sm-home-fit__inner {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.75fr) minmax(620px, 2.25fr);
+  gap: 18px 24px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 22px;
+  border: 1px solid #dedede;
+  border-left: 5px solid #f15a24;
+  border-radius: 12px;
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+}
+
+#sm-home-fit-checker .sm-home-fit__heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+#sm-home-fit-checker .sm-home-fit__heading > span:last-child {
+  min-width: 0;
+}
+
+#sm-home-fit-checker .sm-home-fit__heading h2 {
+  margin: 0 0 4px !important;
+  color: #222 !important;
+  font-size: 23px !important;
+  line-height: 1.2 !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__heading p {
+  margin: 0 !important;
+  color: #5a5a5a !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__icon {
+  display: inline-flex;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #f15a24;
+  color: #fff;
+}
+
+#sm-home-fit-checker .sm-home-fit__icon svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+#sm-home-fit-checker .sm-home-fit__form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(105px, 1fr)) minmax(145px, auto);
+  gap: 10px;
+  align-items: end;
+  min-width: 0;
+  margin: 0 !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__form label {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  color: #333;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+#sm-home-fit-checker .sm-home-fit__form select {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 44px !important;
+  margin: 0 !important;
+  padding: 0 32px 0 11px !important;
+  border: 1px solid #cfcfcf !important;
+  border-radius: 7px !important;
+  background-color: #fff !important;
+  color: #222 !important;
+  font: inherit !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__form select:focus {
+  border-color: #f15a24 !important;
+  outline: 2px solid rgba(241, 90, 36, 0.18) !important;
+  outline-offset: 1px;
+}
+
+#sm-home-fit-checker .sm-home-fit__form select:disabled {
+  background-color: #f1f1f1 !important;
+  color: #777 !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__form button,
+#sm-home-fit-checker .sm-home-fit__actions a {
+  display: inline-flex !important;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 10px 16px !important;
+  border: 1px solid #f15a24 !important;
+  border-radius: 7px !important;
+  background: #f15a24 !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 750 !important;
+  line-height: 1.25 !important;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+#sm-home-fit-checker .sm-home-fit__form button:hover,
+#sm-home-fit-checker .sm-home-fit__actions a:hover {
+  background: #d94a1f !important;
+  border-color: #d94a1f !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__result {
+  grid-column: 1 / -1;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  border: 1px solid #dedede;
+  border-left: 4px solid #f15a24;
+  border-radius: 8px;
+  background: #f7f7f7;
+}
+
+#sm-home-fit-checker .sm-home-fit__result[hidden] {
+  display: none !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__result--notice {
+  background: #fff7ed;
+  border-color: #f3d2bd;
+  border-left-color: #f15a24;
+}
+
+#sm-home-fit-checker .sm-home-fit__result h3 {
+  margin: 0 0 4px !important;
+  color: #222 !important;
+  font-size: 18px !important;
+  line-height: 1.3 !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__result p {
+  margin: 0 !important;
+  color: #444 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 11px;
+}
+
+@media (max-width: 1040px) {
+  #sm-home-fit-checker .sm-home-fit__inner {
+    grid-template-columns: 1fr;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__form {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  #sm-home-fit-checker .sm-home-fit__form button {
+    grid-column: 1 / -1;
+    width: min(220px, 100%);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  #sm-home-fit-checker {
+    padding: 14px 10px;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__inner {
+    gap: 16px;
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__heading {
+    align-items: flex-start;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__heading h2 {
+    font-size: 21px !important;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__form button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__result {
+    padding: 13px 14px;
+  }
+
+  #sm-home-fit-checker .sm-home-fit__actions {
+    flex-direction: column;
+  }
+}
+
 /* Compact FAQ launcher and modal for the Sync 2 to Sync 3 landing page. */
 .ec-store__category-page--39980905 .sm-faq-launcher {
   display: flex;
