@@ -164,7 +164,7 @@ hr.rounded {
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__title {
     font-size: clamp(21px, 6.2vw, 25px) !important;
-    line-height: 1.12 !important;
+    line-height: 1.02 !important;
   }
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__description {
