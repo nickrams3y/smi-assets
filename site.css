@@ -153,8 +153,8 @@ hr.rounded {
 
 @media (max-width: 699px) {
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen {
-    --slider-height: clamp(300px, 36vh, 350px) !important;
-    --slider-height: clamp(300px, 36svh, 350px) !important;
+    --slider-height: clamp(340px, 42vh, 400px) !important;
+    --slider-height: clamp(340px, 42svh, 400px) !important;
   }
 
   .ins-tile--header.ins-tile--has-opacity + .ins-tile--slider.ins-tile--fullscreen .ins-tile__slide-content-inner {
