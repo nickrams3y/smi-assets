@@ -15,19 +15,20 @@ function remember(e){
 }
 function saved(){try{var h=JSON.parse(sessionStorage.getItem(HKEY)||"null");if(!h||Date.now()-h.created>HMAX){sessionStorage.removeItem(HKEY);return null}return h}catch(x){return null}}
 function choose(row,test){var s=row.querySelector("select");if(!s)return false;var o=[].find.call(s.options,function(x){return x.value!=="Please choose"&&test(clean(x.textContent))});if(!o)return false;if(s.value!==o.value){s.value=o.value;s.dispatchEvent(new Event("input",{bubbles:true}));s.dispatchEvent(new Event("change",{bubbles:true}))}return true}
-var prefillWait;
+var prefillWait,lastPrefill;
+function showPrefillNotice(h,box){if(box.querySelector(".sm-prefill-notice"))return;var old=document.querySelector(".sm-prefill-notice");if(old)old.remove();var n=document.createElement("div");n.className="sm-prefill-notice";n.setAttribute("role","status");n.innerHTML='<span class="sm-prefill-notice__copy"><strong>Vehicle details added</strong><span>'+h.year+" "+h.make+" "+h.model+". Please verify the selections before ordering.</span></span>";box.insertBefore(n,box.firstChild)}
 function applyPrefill(h,box){
  if(!box.isConnected||box.dataset.smPrefilled)return;var done=[];
  box.querySelectorAll(":scope > .details-product-option").forEach(function(row){var t=clean((row.querySelector(".details-product-option__title")||row.querySelector("label")||{}).textContent),wanted=clean(h.make+" "+h.model),ok=false;
-  if(/^(vehicle model|model|truck model)$/.test(t))ok=choose(row,function(x){return x===wanted||x.indexOf(wanted+" (")===0});
+  if(/^(vehicle model|model|truck model)$/.test(t))ok=choose(row,function(x){var match=x===wanted||x.indexOf(wanted+" (")===0;if(!match)return false;return t!=="vehicle model"||!/^(standard|recessed)$/i.test(h.display)||x.indexOf(clean(h.display)+" display")!==-1});
   else if(t==="model year")ok=choose(row,function(x){return new RegExp("^"+h.year+"(?:\\s|\\(|$)").test(x)});
   else if(/choose your display/.test(t)&&h.display!=="Special")ok=choose(row,function(x){return x.indexOf(clean(h.display)+" 8.0")===0});
   else if(/choose your upgrade path/.test(t)&&h.system==="3")ok=choose(row,function(x){return x.indexOf('sync 3 (8")')===0});
   if(ok)done.push(t)
  });
- if(!done.length)return;box.dataset.smPrefilled="1";try{sessionStorage.removeItem(HKEY)}catch(x){}var old=document.querySelector(".sm-prefill-notice");if(old)old.remove();var n=document.createElement("div");n.className="sm-prefill-notice";n.setAttribute("role","status");n.innerHTML="<strong>Vehicle details added:</strong> "+h.year+" "+h.make+" "+h.model+". Please verify the selections before ordering.";box.insertAdjacentElement("beforebegin",n)
+ if(!done.length)return;box.dataset.smPrefilled="1";lastPrefill={make:h.make,model:h.model,year:h.year,system:h.system,display:h.display,target:h.target,appliedAt:Date.now()};try{sessionStorage.removeItem(HKEY)}catch(x){}showPrefillNotice(lastPrefill,box)
 }
-function prefill(){var h=saved();if(!h||location.pathname.replace(/\/$/,"")!==h.target)return;var box=document.querySelector(".details-product-options");if(!box||box.dataset.smPrefilled)return;clearTimeout(prefillWait);prefillWait=setTimeout(function(){applyPrefill(h,box)},1000)}
+function prefill(){var path=location.pathname.replace(/\/$/,""),box=document.querySelector(".details-product-options");if(lastPrefill&&path===lastPrefill.target&&box){if(!box.dataset.smPrefilled&&Date.now()-lastPrefill.appliedAt<10000){applyPrefill(lastPrefill,box);return}showPrefillNotice(lastPrefill,box)}var h=saved();if(!h||path!==h.target||!box||box.dataset.smPrefilled)return;clearTimeout(prefillWait);prefillWait=setTimeout(function(){applyPrefill(h,box)},1000)}
 if(!document.documentElement.dataset.smVehicleHandoff){document.documentElement.dataset.smVehicleHandoff="1";document.addEventListener("click",remember,true)}
 function landing(){var c=document.getElementById("sm-fit-checker");if(!c)return;var title="Let's Find Your System",copy="Our plug and play upgrade kits make it easy for you to upgrade your vehicle to the faster, more modern Sync 3 system, complete with Apple CarPlay and Android Auto. Just enter your vehicle's information below to find the right kit for your vehicle.",t=document.getElementById("sm-fit-title"),top=c.previousElementSibling;if(t&&t.textContent!==title)t.textContent=title;if(top){var x=top.querySelector('[aria-label="Three steps to choose a Sync 3 conversion kit"]'),p=[].find.call(top.querySelectorAll("p"),function(z){return /Our plug and play upgrade kits/.test(z.textContent)});if(x)x.remove();if(p&&p.textContent!==copy)p.textContent=copy}}
 function faq(){
