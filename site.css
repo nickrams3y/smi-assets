@@ -1211,6 +1211,48 @@ html.sm-product-options-active .details-product-option input[type="file"] {
   max-width: 100% !important;
 }
 
+.sm-fitment-alert {
+  display: inline-flex !important;
+  flex: 0 0 22px !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  height: 22px !important;
+  min-height: 22px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #f15a24 !important;
+  color: #fff !important;
+  font: 800 14px/1 Arial, sans-serif !important;
+  cursor: pointer;
+  box-shadow: none !important;
+  appearance: none;
+}
+
+.sm-fitment-alert:hover,
+.sm-fitment-alert:focus-visible {
+  background: #d94a1f !important;
+}
+
+.sm-fitment-alert:focus-visible {
+  outline: 3px solid rgba(241, 90, 36, 0.25);
+  outline-offset: 2px;
+}
+
+.sm-fitment-dialog .sm-po-dialog__body a {
+  color: #d94a1f !important;
+  font-weight: 700;
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+.sm-fitment-dialog .sm-po-dialog__body p:last-child {
+  margin-bottom: 0;
+}
+
 html.sm-po-modal-open {
   overflow: hidden !important;
 }

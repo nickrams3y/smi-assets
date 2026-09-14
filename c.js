@@ -34,6 +34,11 @@ function faq(){
  b.addEventListener("click",function(){document.documentElement.classList.add("sm-faq-modal-open");d.showModal()});d.querySelector(".sm-faq-dialog__close").addEventListener("click",function(){d.close()});d.addEventListener("click",function(e){if(e.target===d)d.close()});d.addEventListener("close",function(){document.documentElement.classList.remove("sm-faq-modal-open")});box.querySelectorAll("details").forEach(function(x){x.addEventListener("toggle",function(){if(x.open)box.querySelectorAll("details").forEach(function(z){if(z!==x)z.open=false})})});
 }
 function support(){var n=document.querySelector('.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"]');if(!n)return;var g=n.querySelector("a");if(g)g.href=U.e;var row=n.closest(".sm-support-row");if(row){row.parentNode.insertBefore(n,row);row.remove()}if(n.querySelector(".sm-eligibility-contact"))return;var holder=n.querySelector(":scope > span:last-child")||n,q=document.createElement("span");q.className="sm-eligibility-contact";q.innerHTML='Questions? <a href="'+U.c+'">Contact us</a>';holder.appendChild(q)}
+function fitmentAlert(){
+ if(document.documentElement.dataset.smFitmentAlert)return;document.documentElement.dataset.smFitmentAlert="1";
+ document.addEventListener("click",function(e){var b=e.target.closest(".sm-fitment-alert");if(!b)return;e.preventDefault();e.stopPropagation();var d=document.querySelector(".sm-fitment-dialog");if(!d){d=document.createElement("dialog");d.className="sm-po-dialog sm-fitment-dialog";document.body.appendChild(d);d.addEventListener("click",function(x){if(x.target===d)d.close()});d.addEventListener("close",function(){document.documentElement.classList.remove("sm-po-modal-open")})}d.innerHTML='<div class="sm-po-dialog__header"><h2 class="sm-po-dialog__title">Lincoln MKZ and MKC Screen Fitment</h2><button type="button" class="sm-po-dialog__close" aria-label="Close">&times;</button></div><div class="sm-po-dialog__body"><p>Due to a redesigned display, MKZ and MKC vehicles will require bracket modification to complete the installation, as described <a href="https://support.simplymichigan.co/articles/104288-screen-fitment-and-converting-mkc-and-mkz-vehicles">here</a>. If we have brackets in stock, your conversion kit will include replacement brackets. Please verify with us before purchase to ensure that we have these brackets stocked if you\'re depending on them to complete your installation.</p></div>';document.documentElement.classList.add("sm-po-modal-open");if(!d.open)d.showModal()});
+ document.addEventListener("click",function(e){var c=e.target.closest(".sm-fitment-dialog .sm-po-dialog__close");if(c){var d=c.closest("dialog");if(d.open)d.close()}})
+}
 function home(){
  var f=document.getElementById("sm-home-fit-form");if(!f||f.dataset.ready)return;f.dataset.ready="1";
  var b=document.getElementById("sm-home-fit-brand"),m=document.getElementById("sm-home-fit-model"),y=document.getElementById("sm-home-fit-year"),s=document.getElementById("sm-home-fit-system"),r=document.getElementById("sm-home-fit-result"),X={Ford:{"F-150":2020,"F-250":2022,"F-350":2022,Mustang:2022}},bl=b.closest("label").querySelector("span"),bo=b.querySelector('option[value=""]'),o8=s.querySelector('option[value="8"]'),o3=s.querySelector('option[value="3"]');if(bl)bl.textContent="Make";if(bo)bo.textContent="Select make";if(o3)o3.textContent='8" Sync 3 (touch screen)';if(o8&&o3)s.insertBefore(o3,o8.nextSibling);
@@ -61,6 +66,7 @@ function home(){
  });
 }
 function init(){
+ fitmentAlert();
  prefill();
  landing();
  faq();
