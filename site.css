@@ -454,6 +454,13 @@ hr.rounded {
   outline: 3px solid rgba(47, 143, 78, 0.16);
 }
 
+.ec-store__category-page--39980905 .sm-fit select:disabled {
+  border-color: #cfcfcf;
+  background: #f1f1f1;
+  color: #777;
+  opacity: 1;
+}
+
 .ec-store__category-page--39980905 .sm-fit__submit {
   min-height: 48px;
   padding: 12px 18px;
