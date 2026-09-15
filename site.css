@@ -985,6 +985,12 @@ hr.rounded {
   font-size: 16px;
 }
 
+.ec-store__category-page--39980905 .sm-system-picker__chevron {
+  top: 50%;
+  margin: 0;
+  transform: translateY(-65%) rotate(45deg) !important;
+}
+
 .sm-system-dialog {
   width: min(760px, calc(100vw - 32px));
   max-width: none;
