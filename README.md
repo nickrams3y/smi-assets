@@ -17,3 +17,5 @@ Ecwid loads the complete production stylesheet from:
 `site.js` is the production bundle. It contains the product-option enhancements and the compatibility checker, allowing Ecwid to use one short external loader instead of storing the application code in its limited editor.
 
 `site.css` contains the corresponding product-option and compatibility-checker styles. Ecwid loads it through a single `@import` line in the active custom CSS theme.
+
+The four optimized images in `images/system-selector/` power the visual current-system choices used by both compatibility checkers.
