@@ -1372,10 +1372,11 @@ html.sm-faq-modal-open {
   font-weight: 400 !important;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] .sm-eligibility-contact::before {
+.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] span.sm-eligibility-contact::before {
   content: " ";
 }
 
+.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] a.sm-eligibility-contact,
 .ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] .sm-eligibility-contact a {
   color: inherit !important;
   font-weight: 600 !important;
