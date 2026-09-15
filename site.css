@@ -986,9 +986,16 @@ hr.rounded {
 }
 
 .ec-store__category-page--39980905 .sm-system-picker__chevron {
+  width: 0;
+  height: 0;
   top: 50%;
-  margin: 0;
-  transform: translateY(-65%) rotate(45deg) !important;
+  right: 14px;
+  margin: -2px 0 0;
+  border-top: 5px solid currentColor !important;
+  border-right: 4px solid transparent !important;
+  border-bottom: 0 !important;
+  border-left: 4px solid transparent !important;
+  transform: none !important;
 }
 
 .sm-system-dialog {
