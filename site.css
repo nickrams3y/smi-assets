@@ -2107,22 +2107,103 @@ html.sm-product-options-active .sm-po-required-note::before {
   }
 }
 
-/* Compact the gray and orange product-description disclosure rows. */
-.product-details__product-description details > summary[style*="background:#f2f2f2"],
+/* Unified gray product-description disclosure cards. */
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] {
+  background: #f2f3f4 !important;
+  border: 1px solid #e1e3e5 !important;
+  border-left: 1px solid #e1e3e5 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary {
+  position: relative !important;
+  display: block !important;
+  min-height: 58px !important;
+  padding: 10px 112px 10px 16px !important;
+  background: #f2f3f4 !important;
+  border: 0 !important;
+  color: #222 !important;
+  line-height: 1.25 !important;
+  list-style: none !important;
+}
+
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary::-webkit-details-marker {
+  display: none !important;
+}
+
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary::after {
+  content: "View details";
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  display: inline-flex;
+  width: 88px;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 9px;
+  box-sizing: border-box;
+  transform: translateY(-50%);
+  background: #333;
+  border: 1px solid #333;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.product-details__product-description details[open][style*="border-left:3px solid #9a9a9a"] > summary::after {
+  content: "Close";
+}
+
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary span {
+  line-height: 1.25 !important;
+}
+
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary > span[style*="margin:0"] {
+  margin-top: 2px !important;
+}
+
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary span[style*="border-radius:999px"] {
+  display: none !important;
+}
+
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > section > div {
+  background: #fff !important;
+  border-top: 1px solid #e1e3e5 !important;
+}
+
+/* Keep the orange disclosures compact without changing their emphasis. */
 .product-details__product-description details > summary[style*="background:#fff7ed"] {
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   line-height: 1.2 !important;
 }
 
-.product-details__product-description details > summary[style*="background:#f2f2f2"] span,
 .product-details__product-description details > summary[style*="background:#fff7ed"] span {
   line-height: 1.2 !important;
 }
 
-.product-details__product-description details > summary[style*="background:#f2f2f2"] > span[style*="margin:3px"],
 .product-details__product-description details > summary[style*="background:#fff7ed"] > span[style*="margin:4px"] {
   margin-top: 0 !important;
+}
+
+@media (max-width: 480px) {
+  .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary {
+    min-height: 54px !important;
+    padding: 9px 100px 9px 13px !important;
+  }
+
+  .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary::after {
+    right: 9px;
+    width: 80px;
+    min-height: 32px;
+    padding: 5px 7px;
+    font-size: 11px;
+  }
 }
 
 /* Compact product-upgrade cards and detail dialogs.
