@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title description">
+  <title id="title">4-inch to 8-inch programming</title>
+  <desc id="description">A small orange vehicle display connects by an arrow to a larger blue display.</desc>
+  <rect width="512" height="512" rx="48" fill="#fff"/>
+  <g fill="none" stroke="#f15a24" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="54" y="128" width="172" height="132" rx="18"/>
+    <path d="M96 296h88M140 260v36"/>
+    <path d="M210 323c24 42 58 61 103 61"/>
+    <path d="m287 355 29 29-30 26"/>
+  </g>
+  <g fill="none" stroke="#159bd7" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="277" y="178" width="181" height="140" rx="18"/>
+    <path d="M319 354h98M368 318v36"/>
+  </g>
+  <circle cx="97" cy="194" r="9" fill="#f15a24"/>
+  <circle cx="132" cy="194" r="9" fill="#f15a24"/>
+  <circle cx="167" cy="194" r="9" fill="#f15a24"/>
+  <path d="M318 223h99M318 256h72" fill="none" stroke="#159bd7" stroke-width="14" stroke-linecap="round"/>
+</svg>
