@@ -2138,7 +2138,7 @@ html.sm-product-options-active .sm-po-required-note::before {
 }
 
 .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary::after {
-  content: "View details" !important;
+  content: "Read More" !important;
   position: absolute !important;
   inset: auto 12px auto auto !important;
   top: 50% !important;
@@ -2181,6 +2181,22 @@ html.sm-product-options-active .sm-po-required-note::before {
 
 .product-details__product-description details[open][style*="border-left:3px solid #9a9a9a"] > summary::after {
   content: "Close" !important;
+  display: inline-flex !important;
+  width: 88px !important;
+  min-width: 88px !important;
+  max-width: 88px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  max-height: 34px !important;
+  padding: 6px 9px !important;
+  background: #333 !important;
+  border: 1px solid #333 !important;
+  border-radius: 6px !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+  text-align: center !important;
 }
 
 .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary span {
@@ -2191,8 +2207,21 @@ html.sm-product-options-active .sm-po-required-note::before {
   margin-top: 2px !important;
 }
 
-.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary span[style*="border-radius:999px"] {
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary span[style*="border-radius:999px"],
+.product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary > span[style*="display:flex"] > span:last-child,
+.product-details__product-description details[open][style*="border-left:3px solid #9a9a9a"] > summary span[style*="border-radius:999px"],
+.product-details__product-description details[open][style*="border-left:3px solid #9a9a9a"] > summary > span[style*="display:flex"] > span:last-child {
   display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
 }
 
 .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > section > div {
@@ -2225,6 +2254,17 @@ html.sm-product-options-active .sm-po-required-note::before {
     inset: auto 9px auto auto !important;
     top: 50% !important;
     right: 9px !important;
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    padding: 5px 7px !important;
+    font-size: 11px !important;
+  }
+
+  .product-details__product-description details[open][style*="border-left:3px solid #9a9a9a"] > summary::after {
     width: 80px !important;
     min-width: 80px !important;
     max-width: 80px !important;
