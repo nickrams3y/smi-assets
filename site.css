@@ -2313,6 +2313,32 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__image img {
   object-fit: contain !important;
 }
 
+dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 1px !important;
+  margin: 16px 0 0 !important;
+  overflow: hidden !important;
+  background: #dcdfe2 !important;
+  border: 1px solid #dcdfe2 !important;
+  border-radius: 8px !important;
+  box-sizing: border-box !important;
+}
+
+dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid span {
+  display: flex !important;
+  min-width: 0 !important;
+  min-height: 54px !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 9px 10px !important;
+  background: #fff !important;
+  color: #333 !important;
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+  box-sizing: border-box !important;
+}
+
 dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   color: #d94a1f !important;
   font-weight: 600 !important;
@@ -2366,5 +2392,15 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
     width: min(220px, 100%) !important;
     height: 150px !important;
     margin-bottom: 14px !important;
+  }
+
+  dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid span {
+    min-height: 48px !important;
+    padding: 8px 9px !important;
+    font-size: 12px !important;
   }
 }
