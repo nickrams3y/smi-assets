@@ -2107,6 +2107,24 @@ html.sm-product-options-active .sm-po-required-note::before {
   }
 }
 
+/* Compact the gray and orange product-description disclosure rows. */
+.product-details__product-description details > summary[style*="background:#f2f2f2"],
+.product-details__product-description details > summary[style*="background:#fff7ed"] {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+  line-height: 1.2 !important;
+}
+
+.product-details__product-description details > summary[style*="background:#f2f2f2"] span,
+.product-details__product-description details > summary[style*="background:#fff7ed"] span {
+  line-height: 1.2 !important;
+}
+
+.product-details__product-description details > summary[style*="background:#f2f2f2"] > span[style*="margin:3px"],
+.product-details__product-description details > summary[style*="background:#fff7ed"] > span[style*="margin:4px"] {
+  margin-top: 0 !important;
+}
+
 /* Compact product-upgrade cards and detail dialogs.
    The increased specificity and important declarations prevent Ecwid's
    product-description defaults from flattening the card layout. */
