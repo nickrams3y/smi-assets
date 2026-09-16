@@ -2163,6 +2163,13 @@ html body .product-details__product-description details.sm-text-disclosure[open]
   appearance: none !important;
 }
 
+html body .product-details__product-description details.sm-text-disclosure--plain > summary,
+html body .product-details__product-description details.sm-text-disclosure--plain[open] > summary {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+}
+
 .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] > summary::-webkit-details-marker {
   display: none !important;
 }
@@ -2345,6 +2352,17 @@ html body .product-details__product-description details.sm-text-disclosure[open]
   padding: 0 !important;
   box-sizing: border-box !important;
   overflow: hidden !important;
+}
+
+html body .product-details__product-description details.sm-text-disclosure > summary > .sm-disclosure-title,
+html body .product-details__product-description details.sm-text-disclosure[open] > summary > .sm-disclosure-title {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #222 !important;
+  font-size: 17px !important;
+  line-height: 1.25 !important;
+  font-weight: 700 !important;
 }
 
 html body .product-details__product-description details.sm-text-disclosure > summary .sm-disclosure-preview,

@@ -187,6 +187,12 @@ SMI_DOM_RUNNER.add(init);
  function enhanceTextDisclosures(){
   var root=document.querySelector(".product-details__product-description");
   if(!root)return;
+  var policyPreviews={
+   "warranty":"Your hardware is covered for one year from the purchase date. If a covered component fails, we’ll replace it.",
+   "processing time":"Most orders are prepared and shipped within five business days, although processing times may vary.",
+   "shipping":"Free domestic shipping is included to all 50 states. Every order is securely packaged to protect its contents during transit.",
+   "returns and cancellations":"Free domestic returns are available within 30 days. We’ll provide a prepaid return label at no charge."
+  };
   root.querySelectorAll('details[style*="border-left:3px solid #9a9a9a"]').forEach(function(detail){
    var summary=detail.querySelector(":scope > summary");
    if(!summary)return;
@@ -203,6 +209,25 @@ SMI_DOM_RUNNER.add(init);
      }
     }
    });
+   var directTitle=Array.prototype.map.call(summary.childNodes,function(node){return node.nodeType===3?node.textContent:""}).join(" ").replace(/\s+/g," ").trim();
+   var titleKey=directTitle.toLowerCase(),previewCopy=policyPreviews[titleKey];
+   if(previewCopy&&!summary.querySelector(":scope > .sm-disclosure-preview-row")){
+    Array.prototype.forEach.call(summary.childNodes,function(node){if(node.nodeType===3)node.remove()});
+    var titleSpan=document.createElement("span");
+    titleSpan.className="sm-disclosure-title";
+    titleSpan.textContent=directTitle;
+    var row=document.createElement("span");
+    row.className="sm-disclosure-preview-row";
+    var preview=document.createElement("span");
+    preview.className="sm-disclosure-preview";
+    preview.textContent=previewCopy;
+    row.appendChild(preview);
+    summary.insertBefore(titleSpan,summary.firstChild);
+    summary.insertBefore(row,summary.querySelector(":scope > .sm-disclosure-action"))
+   }
+   var hasPreview=!!summary.querySelector(":scope > .sm-disclosure-preview-row");
+   detail.classList.toggle("sm-text-disclosure--preview",hasPreview);
+   detail.classList.toggle("sm-text-disclosure--plain",!hasPreview);
    var action=summary.querySelector(":scope > .sm-disclosure-action");
    if(!action){
     action=document.createElement("span");
