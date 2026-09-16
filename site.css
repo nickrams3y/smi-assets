@@ -2116,6 +2116,42 @@ html.sm-product-options-active .sm-po-required-note::before {
   box-shadow: none !important;
 }
 
+/* Keep the 12-inch cross-sell understated; the ACM warning below stays orange. */
+.product-details__product-description #sm-12-inch-upgrade-ad {
+  background: #f2f3f4 !important;
+  border: 1px solid #dfe2e5 !important;
+  border-left: 1px solid #dfe2e5 !important;
+  box-shadow: none !important;
+}
+
+.product-details__product-description #sm-12-inch-upgrade-ad > summary {
+  background: #f2f3f4 !important;
+}
+
+.product-details__product-description #sm-12-inch-upgrade-ad > summary > span:last-child > span:first-child {
+  color: #555 !important;
+}
+
+.product-details__product-description #sm-12-inch-upgrade-ad > summary > span:last-child > span[aria-hidden="true"] {
+  background: #444 !important;
+  border-color: #444 !important;
+  color: #fff !important;
+}
+
+.product-details__product-description #sm-12-inch-upgrade-ad > section > div {
+  border-top-color: #dfe2e5 !important;
+}
+
+.product-details__product-description #sm-12-inch-upgrade-ad > section > div > div {
+  background: #f2f3f4 !important;
+}
+
+.product-details__product-description #sm-12-inch-upgrade-ad > section > div > div > a {
+  background: #444 !important;
+  border-color: #444 !important;
+  color: #fff !important;
+}
+
 /* Unified gray product-description disclosure cards. */
 .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] {
   background: #f2f3f4 !important;
