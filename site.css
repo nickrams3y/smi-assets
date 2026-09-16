@@ -1014,6 +1014,24 @@ hr.rounded {
   line-height: 1.2;
 }
 
+#sm-fit-checker.sm-fit--apim .sm-system-picker__chevron {
+  display: none !important;
+}
+
+#sm-fit-checker.sm-fit--apim .sm-system-picker__trigger::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 0;
+  height: 0;
+  margin-top: -2px;
+  border-top: 5px solid currentColor;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  pointer-events: none;
+}
+
 .ec-store__category-page--39980905 .sm-system-picker__value strong {
   font-size: 16px;
 }
