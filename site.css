@@ -2107,6 +2107,15 @@ html.sm-product-options-active .sm-po-required-note::before {
   }
 }
 
+/* Match the kit contents container to the soft gray disclosure cards. */
+.product-details__product-description [aria-label="Kit contents"] {
+  background: #f2f3f4 !important;
+  border: 1px solid #e1e3e5 !important;
+  border-left: 1px solid #e1e3e5 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
 /* Unified gray product-description disclosure cards. */
 .product-details__product-description details[style*="border-left:3px solid #9a9a9a"] {
   background: #f2f3f4 !important;
