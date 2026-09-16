@@ -2279,13 +2279,17 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body {
 }
 
 dialog.sm-upgrade-modal .sm-upgrade-modal__body p {
-  margin: 0 !important;
+  margin: 0 0 14px !important;
+}
+
+dialog.sm-upgrade-modal .sm-upgrade-modal__body p:last-child {
+  margin-bottom: 0 !important;
 }
 
 dialog.sm-upgrade-modal .sm-upgrade-modal__image {
   display: flex !important;
-  width: 120px !important;
-  height: 90px !important;
+  width: min(260px, 100%) !important;
+  height: 180px !important;
   align-items: center !important;
   justify-content: center !important;
   margin: 0 auto 14px !important;
@@ -2356,8 +2360,8 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   }
 
   dialog.sm-upgrade-modal .sm-upgrade-modal__image {
-    width: 108px !important;
-    height: 82px !important;
-    margin-bottom: 12px !important;
+    width: min(220px, 100%) !important;
+    height: 150px !important;
+    margin-bottom: 14px !important;
   }
 }
