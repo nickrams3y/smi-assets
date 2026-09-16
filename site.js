@@ -157,3 +157,28 @@ function init(){
 }
 SMI_DOM_RUNNER.add(init);
 })();
+
+(function(){
+ if(document.documentElement.dataset.smUpgradeDialogs)return;
+ document.documentElement.dataset.smUpgradeDialogs="1";
+ function close(dialog){
+  if(!dialog)return;
+  if(typeof dialog.close==="function"&&dialog.open)dialog.close();else dialog.removeAttribute("open");
+  document.documentElement.classList.remove("sm-upgrade-modal-open")
+ }
+ document.addEventListener("click",function(event){
+  var opener=event.target.closest("[data-sm-upgrade-open]");
+  if(opener){
+   event.preventDefault();
+   var dialog=document.getElementById(opener.getAttribute("data-sm-upgrade-open"));
+   if(!dialog)return;
+   if(!dialog.dataset.smUpgradeBound){dialog.dataset.smUpgradeBound="1";dialog.addEventListener("close",function(){document.documentElement.classList.remove("sm-upgrade-modal-open")})}
+   document.documentElement.classList.add("sm-upgrade-modal-open");
+   if(typeof dialog.showModal==="function"){if(!dialog.open)dialog.showModal()}else dialog.setAttribute("open","");
+   return
+  }
+  var closer=event.target.closest("[data-sm-upgrade-close]");
+  if(closer){event.preventDefault();close(closer.closest("dialog"));return}
+  if(event.target.matches&&event.target.matches("dialog.sm-upgrade-modal"))close(event.target)
+ })
+})();
