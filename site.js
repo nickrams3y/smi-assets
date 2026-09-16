@@ -192,7 +192,16 @@ SMI_DOM_RUNNER.add(init);
    if(!summary)return;
    detail.classList.add("sm-text-disclosure");
    summary.querySelectorAll("span").forEach(function(span){
-    if(!span.classList.contains("sm-disclosure-action")&&span.textContent.trim().toLowerCase()==="read more")span.classList.add("sm-disclosure-legacy-action")
+    if(!span.classList.contains("sm-disclosure-action")&&span.textContent.trim().toLowerCase()==="read more"){
+     span.classList.add("sm-disclosure-legacy-action");
+     var previewRow=span.parentElement;
+     if(previewRow&&previewRow!==summary){
+      previewRow.classList.add("sm-disclosure-preview-row");
+      Array.prototype.forEach.call(previewRow.children,function(child){
+       if(child!==span)child.classList.add("sm-disclosure-preview")
+      })
+     }
+    }
    });
    var action=summary.querySelector(":scope > .sm-disclosure-action");
    if(!action){
