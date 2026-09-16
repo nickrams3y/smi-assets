@@ -2106,3 +2106,225 @@ html.sm-product-options-active .sm-po-required-note::before {
     animation: none;
   }
 }
+
+/* Compact product-upgrade cards and detail dialogs.
+   The increased specificity and important declarations prevent Ecwid's
+   product-description defaults from flattening the card layout. */
+.product-details__product-description .sm-upgrade-cards {
+  display: grid !important;
+  gap: 10px !important;
+  margin: 16px 0 0 !important;
+}
+
+.product-details__product-description article.sm-upgrade-card {
+  display: grid !important;
+  grid-template-columns: 112px minmax(0, 1fr) auto !important;
+  gap: 14px !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 12px !important;
+  background: #f2f3f4 !important;
+  border: 1px solid #e1e3e5 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+
+.product-details__product-description .sm-upgrade-card__image {
+  display: flex !important;
+  width: 112px !important;
+  height: 88px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  border: 1px solid #e2e2e2 !important;
+  border-radius: 9px !important;
+  box-sizing: border-box !important;
+}
+
+.product-details__product-description .sm-upgrade-card__image img {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+}
+
+.product-details__product-description .sm-upgrade-card__copy {
+  display: block !important;
+  min-width: 0 !important;
+  color: #616161 !important;
+  font-size: 14px !important;
+  line-height: 1.42 !important;
+}
+
+.product-details__product-description .sm-upgrade-card__copy strong {
+  display: block !important;
+  margin: 0 0 4px !important;
+  color: #222 !important;
+  font-size: 17px !important;
+  line-height: 1.28 !important;
+}
+
+.product-details__product-description button.sm-upgrade-card__button {
+  display: inline-flex !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 36px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 8px 12px !important;
+  background: #333 !important;
+  border: 1px solid #333 !important;
+  border-radius: 7px !important;
+  box-shadow: none !important;
+  color: #fff !important;
+  font: inherit !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
+
+.product-details__product-description button.sm-upgrade-card__button:hover {
+  background: #111 !important;
+  border-color: #111 !important;
+}
+
+dialog.sm-upgrade-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  display: none !important;
+  width: min(680px, calc(100vw - 28px)) !important;
+  max-width: 680px !important;
+  height: auto !important;
+  max-height: min(82vh, 760px) !important;
+  margin: auto !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28) !important;
+  color: #222 !important;
+  box-sizing: border-box !important;
+}
+
+dialog.sm-upgrade-modal[open] {
+  display: block !important;
+}
+
+dialog.sm-upgrade-modal::backdrop {
+  background: rgba(18, 18, 18, 0.58) !important;
+}
+
+dialog.sm-upgrade-modal .sm-upgrade-modal__header {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  margin: 0 !important;
+  padding: 18px 20px 15px !important;
+  background: #f2f3f4 !important;
+  border-bottom: 1px solid #dedede !important;
+  box-sizing: border-box !important;
+}
+
+dialog.sm-upgrade-modal .sm-upgrade-modal__title {
+  margin: 0 !important;
+  color: #222 !important;
+  font-size: 22px !important;
+  line-height: 1.25 !important;
+}
+
+dialog.sm-upgrade-modal button.sm-upgrade-modal__close {
+  display: inline-flex !important;
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: -4px -5px 0 0 !important;
+  padding: 0 !important;
+  background: #fff !important;
+  border: 1px solid #cfcfcf !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  color: #222 !important;
+  font: inherit !important;
+  font-size: 24px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+
+dialog.sm-upgrade-modal .sm-upgrade-modal__body {
+  max-height: calc(82vh - 72px) !important;
+  margin: 0 !important;
+  padding: 19px 21px 6px !important;
+  overflow: auto !important;
+  color: #222 !important;
+  font-size: 16px !important;
+  line-height: 1.62 !important;
+  box-sizing: border-box !important;
+}
+
+dialog.sm-upgrade-modal .sm-upgrade-modal__body p {
+  margin: 0 0 16px !important;
+}
+
+dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
+  color: #d94a1f !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 2px !important;
+}
+
+@media (max-width: 560px) {
+  .product-details__product-description article.sm-upgrade-card {
+    grid-template-columns: 86px minmax(0, 1fr) !important;
+    gap: 10px 12px !important;
+    padding: 10px !important;
+  }
+
+  .product-details__product-description .sm-upgrade-card__image {
+    grid-row: 1 / span 2 !important;
+    width: 86px !important;
+    height: 82px !important;
+  }
+
+  .product-details__product-description .sm-upgrade-card__copy {
+    font-size: 13px !important;
+    line-height: 1.38 !important;
+  }
+
+  .product-details__product-description .sm-upgrade-card__copy strong {
+    font-size: 16px !important;
+  }
+
+  .product-details__product-description button.sm-upgrade-card__button {
+    grid-column: 2 !important;
+    justify-self: end !important;
+    min-height: 32px !important;
+    padding: 6px 10px !important;
+  }
+
+  dialog.sm-upgrade-modal .sm-upgrade-modal__header {
+    padding: 16px 17px 13px !important;
+  }
+
+  dialog.sm-upgrade-modal .sm-upgrade-modal__title {
+    font-size: 19px !important;
+  }
+
+  dialog.sm-upgrade-modal .sm-upgrade-modal__body {
+    padding: 16px 17px 4px !important;
+    font-size: 15px !important;
+  }
+}
