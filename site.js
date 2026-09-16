@@ -182,3 +182,32 @@ SMI_DOM_RUNNER.add(init);
   if(event.target.matches&&event.target.matches("dialog.sm-upgrade-modal"))close(event.target)
  })
 })();
+
+(function(){
+ function enhanceTextDisclosures(){
+  var root=document.querySelector(".product-details__product-description");
+  if(!root)return;
+  root.querySelectorAll('details[style*="border-left:3px solid #9a9a9a"]').forEach(function(detail){
+   var summary=detail.querySelector(":scope > summary");
+   if(!summary)return;
+   detail.classList.add("sm-text-disclosure");
+   summary.querySelectorAll("span").forEach(function(span){
+    if(!span.classList.contains("sm-disclosure-action")&&span.textContent.trim().toLowerCase()==="read more")span.classList.add("sm-disclosure-legacy-action")
+   });
+   var action=summary.querySelector(":scope > .sm-disclosure-action");
+   if(!action){
+    action=document.createElement("span");
+    action.className="sm-disclosure-action";
+    action.setAttribute("aria-hidden","true");
+    summary.appendChild(action)
+   }
+   function update(){action.textContent=detail.open?"Close":"Read More"}
+   if(!detail.dataset.smDisclosureBound){
+    detail.dataset.smDisclosureBound="1";
+    detail.addEventListener("toggle",update)
+   }
+   update()
+  })
+ }
+ SMI_DOM_RUNNER.add(enhanceTextDisclosures)
+})();
