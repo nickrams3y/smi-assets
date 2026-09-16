@@ -2325,7 +2325,7 @@ dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid {
   box-sizing: border-box !important;
 }
 
-dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid span {
+dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid > div {
   display: flex !important;
   min-width: 0 !important;
   min-height: 54px !important;
@@ -2398,7 +2398,7 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
-  dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid span {
+  dialog.sm-upgrade-modal .sm-upgrade-compatibility-grid > div {
     min-height: 48px !important;
     padding: 8px 9px !important;
     font-size: 12px !important;
