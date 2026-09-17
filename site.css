@@ -2853,3 +2853,23 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
     font-size: 12px !important;
   }
 }
+
+
+/* Hand-drawn marker behind the checkout referral question. */
+/* q79lne6 is the live "How did you first hear about us?" field. */
+.ec-size .ec-form__cell--q79lne6 > .ec-form__title {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.ec-size .ec-form__cell--q79lne6 > .ec-form__title::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0.16em -0.22em 0.02em -0.18em;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 36' preserveAspectRatio='none'%3E%3Cpath d='M4 9 Q72 5 137 7 T268 5 L396 3 L393 28 Q337 32 272 29 T138 32 L2 30 Z' fill='%23ffe54f' fill-opacity='.65'/%3E%3Cpath d='M8 12 L105 9 Q195 12 287 7 L399 8 L395 30 L302 28 Q200 34 103 30 L5 33 Z' fill='%23ffe54f' fill-opacity='.38'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  transform: rotate(-0.65deg);
+}
