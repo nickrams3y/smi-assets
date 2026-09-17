@@ -22,6 +22,18 @@ window.MutationObserver=function(callback){this.observe=function(){SMI_DOM_RUNNE
 
 window.MutationObserver=SMI_NATIVE_MUTATION_OBSERVER;
 
+/* Keep the complimentary Sync 3.4 USB drive with the optional upgrades. */
+SMI_DOM_RUNNER.add(function(){
+ if(!location.pathname.includes("8-to-12"))return;
+ document.querySelectorAll(".details-product-option").forEach(function(card){
+  var title=card.querySelector(".details-product-option__title")||card.querySelector("label");
+  if(title&&/include a complimentary sync 3\.4 update usb drive/i.test(title.textContent||"")){
+   card.classList.add("sm-po-card");
+   card.dataset.smPoKind="optional";
+  }
+ });
+});
+
 (function(){
 var D={Ford:{"C-Max":[2013,2015,"Standard"],Edge:[2011,2015,"Recessed"],Escape:[2013,2015,"Standard"],Expedition:[2015,2015,"Standard"],Explorer:[2011,2016,"Recessed"],"F-150":[2013,2015,"F150"],"F-250":[2013,2016,"Recessed"],"F-350":[2013,2016,"Recessed"],"F-450":[2013,2016,"Recessed"],Fiesta:[2013,2015,"Special"],Flex:[2014,2015,"Recessed"],Focus:[2012,2015,"Standard"],Fusion:[2013,2016,"Standard"],Mustang:[2015,2015,"Standard"],Taurus:[2013,2015,"Recessed"],Transit:[2015,2015,"Special"]},Lincoln:{MKC:[2015,2015,"Standard"],MKS:[2013,2015,"Recessed"],MKT:[2013,2015,"Recessed"],MKX:[2011,2015,"Recessed"],MKZ:[2013,2016,"Standard"]}};
 var A={Ford:{"C-Max":[2013,2018],Edge:[2011,2024],Escape:[2013,2022],Expedition:[2015,2024],Explorer:[2011,2024],"F-150":[2013,2024],"F-250":[2013,2024],"F-350":[2013,2024],"F-450":[2013,2024],Fiesta:[2013,2019],Flex:[2014,2019],Focus:[2012,2018],Fusion:[2013,2020],Mustang:[2015,2023],Taurus:[2013,2019],Transit:[2015,2024],EcoSport:[2018,2022],Ranger:[2019,2023]},Lincoln:{Aviator:[2020,2021],Continental:[2017,2020],Corsair:[2020,2022],MKC:[2015,2019],MKS:[2013,2016],MKT:[2013,2019],MKX:[2011,2018],MKZ:[2013,2020],Nautilus:[2019,2023],Navigator:[2015,2021]}};
