@@ -1,4 +1,11 @@
 /* Simply Michigan Infotainment storefront enhancements. */
+(function(){
+ if(document.getElementById("sm-home-hero-critical"))return;
+ var style=document.createElement("style");
+ style.id="sm-home-hero-critical";
+ style.textContent="#tile-slider-j8w6us.ins-tile--fullscreen{padding-top:0!important;--slider-height:clamp(440px,52vh,560px)!important;--slider-height:clamp(440px,52svh,560px)!important}@media(max-width:699px){#tile-slider-j8w6us.ins-tile--fullscreen{--slider-height:clamp(340px,42vh,400px)!important;--slider-height:clamp(340px,42svh,400px)!important}}";
+ (document.head||document.documentElement).appendChild(style);
+})();
 var SMI_DOM_RUNNER=(function(){
  var tasks=[],observer=null,timer=null,firstQueued=0,running=false,started=false;
  function observe(){observer.observe(document.body||document.documentElement,{childList:true,subtree:true})}
