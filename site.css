@@ -888,6 +888,34 @@ hr.rounded {
 }
 
 /* Visual current-system selector shared by both compatibility checkers. */
+/* Mask the homepage's native placeholder while the visual picker initializes.
+   This prevents Ecwid's older saved "Select current system" text from flashing. */
+#sm-home-fit-checker .sm-home-fit__form label:has(> #sm-home-fit-system:not(.sm-system-native)) {
+  position: relative;
+}
+
+#sm-home-fit-checker .sm-home-fit__form #sm-home-fit-system:not(.sm-system-native) {
+  color: transparent !important;
+}
+
+#sm-home-fit-checker .sm-home-fit__form label:has(> #sm-home-fit-system:not(.sm-system-native))::after {
+  content: "Select system";
+  position: absolute;
+  right: 32px;
+  bottom: 0;
+  left: 11px;
+  display: flex;
+  height: 44px;
+  align-items: center;
+  overflow: hidden;
+  color: #777;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .sm-system-field-native {
   position: absolute !important;
   width: 1px !important;
