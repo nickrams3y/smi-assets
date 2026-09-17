@@ -297,6 +297,23 @@ hr.rounded {
   white-space: normal;
 }
 
+.product-details__product-price-row .sm-price-promo--excluded {
+  box-sizing: border-box !important;
+  width: 280px !important;
+  padding: 8px 12px !important;
+  gap: 8px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+
+.product-details__product-price-row .sm-price-promo__check {
+  flex: 0 0 auto;
+  color: #26843b;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .product-details__product-price-row .sm-price-promo__copy {
   appearance: none !important;
   flex: 0 0 auto !important;
