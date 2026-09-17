@@ -249,6 +249,8 @@ hr.rounded {
 
 .product-details__product-price-row .product-details__product-price {
   grid-area: price;
+  position: relative;
+  top: 2px;
 }
 
 .product-details__product-price-row .product-details__product-on-sale {
@@ -384,18 +386,18 @@ hr.rounded {
 .product-details .product-details__rating-reviews {
   display: flex;
   align-items: center;
-  min-height: 22px;
+  min-height: 25px;
 }
 
 .product-details .product-details__rating-reviews .star-rating {
-  margin-right: 7px !important;
-  transform: scale(1.18);
+  margin-right: 9px !important;
+  transform: scale(1.32);
   transform-origin: left center;
 }
 
 .product-details .product-details__rating-reviews .product-details__rating-text,
 .product-details .product-details__rating-reviews .product-details__rating-reviews-text {
-  font-size: 15px !important;
+  font-size: 16px !important;
   line-height: 1.35 !important;
 }
 
