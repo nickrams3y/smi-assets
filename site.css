@@ -250,7 +250,7 @@ hr.rounded {
 .product-details__product-price-row .product-details__product-price {
   grid-area: price;
   position: relative;
-  top: 2px;
+  top: 4px;
 }
 
 .product-details__product-price-row .product-details__product-on-sale {
