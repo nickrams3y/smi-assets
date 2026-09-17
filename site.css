@@ -293,6 +293,10 @@ hr.rounded {
   white-space: nowrap;
 }
 
+.product-details__product-price-row .sm-price-promo--excluded .sm-price-promo__text {
+  white-space: normal;
+}
+
 .product-details__product-price-row .sm-price-promo__copy {
   appearance: none !important;
   flex: 0 0 auto !important;
