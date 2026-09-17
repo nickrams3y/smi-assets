@@ -99,6 +99,12 @@ function pricePromo(){
  set(promo,{"grid-area":"promotion",display:"inline-flex",width:"fit-content","max-width":"100%","align-items":"center",gap:"8px","justify-self":"start",padding:"7px 9px 7px 12px",color:"#222",background:"#f3f4f6",border:"1px solid #d7d9dd","border-radius":"999px","font-size":"13px","font-weight":"700","line-height":"1.25"});set(promo.querySelector(".sm-price-promo__text"),{"white-space":"nowrap"});set(copy,{appearance:"none",flex:"0 0 auto","min-height":"28px",padding:"4px 9px",color:"#222",background:"#fff",border:"1px solid #b9bdc4","border-radius":"999px",font:"inherit","font-size":"12px","line-height":"1.2"});set(status,{position:"absolute",width:"1px",height:"1px",padding:"0",margin:"-1px",overflow:"hidden",clip:"rect(0, 0, 0, 0)","white-space":"nowrap",border:"0"});
  if(promo.dataset.code===code&&promo.dataset.amount===amount)return;promo.dataset.code=code;promo.dataset.amount=amount;promo.querySelector(".sm-price-promo__text").textContent="Extra "+amount+" off with code "+code;promo.querySelector(".sm-price-promo__copy").textContent="Copy";promo.querySelector(".sm-price-promo__status").textContent=""
 }
+function lazyEmbeds(){
+ document.querySelectorAll('iframe[src*="youtube.com/embed"],iframe[src*="youtube-nocookie.com/embed"]').forEach(function(frame){
+  if(!frame.hasAttribute("loading"))frame.setAttribute("loading","lazy");
+  if(!frame.hasAttribute("fetchpriority"))frame.setAttribute("fetchpriority","low")
+ })
+}
 if(!document.documentElement.dataset.smPricePromoListener){document.documentElement.dataset.smPricePromoListener="1";document.addEventListener("click",function(e){var b=e.target.closest(".sm-price-promo__copy");if(!b)return;var promo=b.closest(".sm-price-promo"),code=promo.dataset.code,done=function(){b.textContent="Copied";promo.querySelector(".sm-price-promo__status").textContent="Code copied: "+code;setTimeout(function(){if(b.isConnected)b.textContent="Copy"},2200)};if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(code).then(done).catch(function(){});else{var x=document.createElement("textarea");x.value=code;x.setAttribute("readonly","");x.style.position="fixed";x.style.opacity="0";document.body.appendChild(x);x.select();try{document.execCommand("copy");done()}catch(z){}x.remove()}})}
 var SYSTEM_IMAGE_ROOT="https://nickrams3y.github.io/smi-assets/images/system-selector/";
 function visualSystemPicker(s){
@@ -137,6 +143,7 @@ function home(){
  });
 }
 function init(){
+ lazyEmbeds();
  fitmentAlert();
  pricePromo();
  prefill();
