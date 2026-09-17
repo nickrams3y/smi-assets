@@ -119,7 +119,7 @@ function home(){
  function years(){var a=base();y.innerHTML='<option value="">Select year</option>';y.disabled=!a;if(a)for(var i=a[0];i<=max(a);i++){var o=document.createElement("option");o.value=o.textContent=i;y.appendChild(o)}system()}
  function has12(k,v){return b.value==="Ford"&&((k==="F-150"&&v>=2015&&v<=2020)||((k==="F-250"||k==="F-350")&&v>=2017&&v<=2022))}
  function actions(a){return '<div class="sm-home-fit__actions">'+a.map(function(x){return '<a href="'+x[1]+'">'+x[0]+'</a>'}).join("")+'</div>'}
- function show(t,p,a,n){r.className="sm-home-fit__result"+(n?" sm-home-fit__result--notice":"")+(t==="Your vehicle is eligible"?" sm-home-fit__result--eligible":"");r.innerHTML="<h3>"+t+"</h3><p>"+p+"</p>"+(a?actions(a):"");r.hidden=false}
+ function show(t,p,a,n){r.className="sm-home-fit__result"+(n?" sm-home-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-home-fit__result--eligible":"");r.innerHTML="<h3>"+t+"</h3><p>"+p+"</p>"+(a?actions(a):"");r.hidden=false}
  b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);system();
  f.addEventListener("submit",function(e){e.preventDefault();var k=m.value,a=base(),v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a make, model, year and current system.",0,1);return}
   if(z==="4"){
@@ -149,7 +149,7 @@ function init(){
  function models(){m.innerHTML='<option value="">Select model</option>';years();Object.keys(V[b.value]||{}).forEach(function(k){var o=document.createElement("option");o.value=o.textContent=k;m.appendChild(o)});m.disabled=!b.value}
  function years(){var k=key(),a=k&&V[b.value][k],end=a&&(isApim?a[1]:Math.max(a[1],conversionYearMax(b.value,k)));y.innerHTML='<option value="">Select model year</option>';y.disabled=!a;if(a)for(var i=a[0];i<=end;i++){var o=document.createElement("option");o.value=o.textContent=i;y.appendChild(o)}system()}
  function buttons(a){return '<div class="sm-fit__actions">'+a.map(function(x){return '<a'+(x[2]?' class="sm-fit__secondary"':'')+' href="'+x[1]+'">'+x[0]+'</a>'}).join("")+'</div>'}
- function show(t,p,a,n){r.className="sm-fit__result"+(n?" sm-fit__result--notice":"")+(t==="Your vehicle is eligible"?" sm-fit__result--eligible":"");r.innerHTML="<h4>"+t+"</h4><p>"+p+"</p>"+(a?buttons(a):"");r.hidden=false}
+ function show(t,p,a,n){r.className="sm-fit__result"+(n?" sm-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-fit__result--eligible":"");r.innerHTML="<h4>"+t+"</h4><p>"+p+"</p>"+(a?buttons(a):"");r.hidden=false}
  b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);system();
  f.addEventListener("submit",function(e){e.preventDefault();var k=key(),a=k&&V[b.value][k],v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a make, model, year and current system.",0,1);return}
  if(isApim){
