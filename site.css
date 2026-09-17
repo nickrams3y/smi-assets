@@ -372,6 +372,10 @@ hr.rounded {
     margin-top: 2px !important;
   }
 
+  .product-details__product-price-row .product-details__product-price {
+    top: 6px;
+  }
+
   .product-details__product-price-row .product-details__label-container {
     margin-right: -7px !important;
     transform: scale(0.82);
