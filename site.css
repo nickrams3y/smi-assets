@@ -233,18 +233,17 @@ hr.rounded {
   display: none !important;
 }
 
-/* Keep Ecwid's sale pricing intact and add the active announcement-bar code
-   beside it on desktop and on its own line on mobile. */
+/* Keep Ecwid's sale pricing on one clean line and place the active
+   announcement-bar code beneath it. */
 .product-details__product-price-row .product-details-module__content:has(.sm-price-promo) {
   display: grid !important;
-  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-columns: max-content max-content minmax(0, 1fr);
   grid-template-areas:
-    "sale-label sale-label"
-    "price comparison"
-    "promotion promotion"
-    "paypal paypal";
+    "price sale-label comparison"
+    "promotion promotion promotion"
+    "paypal paypal paypal";
   align-items: center;
-  column-gap: 12px;
+  column-gap: 9px;
   row-gap: 7px;
 }
 
@@ -259,11 +258,19 @@ hr.rounded {
 .product-details__product-price-row .product-details__label-container {
   grid-area: sale-label;
   justify-self: start;
+  margin: 0 -5px 0 0 !important;
+  transform: scale(0.88);
+  transform-origin: left center;
 }
 
 .product-details__product-price-row .details-product-price-compare__container {
   grid-area: comparison;
   margin: 0 !important;
+  white-space: nowrap;
+}
+
+.product-details__product-price-row .details-product-price-discount__text {
+  display: none !important;
 }
 
 .product-details__product-price-row .ec-paypal-pay-later-message {
@@ -349,18 +356,45 @@ hr.rounded {
 
 @media (max-width: 600px) {
   .product-details__product-price-row .product-details-module__content:has(.sm-price-promo) {
-    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-columns: max-content max-content minmax(0, 1fr);
     grid-template-areas:
-      "sale-label sale-label"
-      "price comparison"
-      "promotion promotion"
-      "paypal paypal";
-    column-gap: 10px;
+      "price sale-label comparison"
+      "promotion promotion promotion"
+      "paypal paypal paypal";
+    column-gap: 7px;
   }
 
   .product-details__product-price-row .sm-price-promo {
     margin-top: 2px !important;
   }
+
+  .product-details__product-price-row .product-details__label-container {
+    margin-right: -7px !important;
+    transform: scale(0.82);
+  }
+
+  .product-details__product-price-row .details-product-price-compare__container {
+    font-size: 13px !important;
+  }
+}
+
+/* Make the compact product-page rating easier to scan. */
+.product-details .product-details__rating-reviews {
+  display: flex;
+  align-items: center;
+  min-height: 22px;
+}
+
+.product-details .product-details__rating-reviews .star-rating {
+  margin-right: 7px !important;
+  transform: scale(1.18);
+  transform-origin: left center;
+}
+
+.product-details .product-details__rating-reviews .product-details__rating-text,
+.product-details .product-details__rating-reviews .product-details__rating-reviews-text {
+  font-size: 15px !important;
+  line-height: 1.35 !important;
 }
 
 /*
