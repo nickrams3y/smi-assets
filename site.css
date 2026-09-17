@@ -269,7 +269,8 @@ hr.rounded {
   white-space: nowrap;
 }
 
-.product-details__product-price-row .details-product-price-discount__text {
+.product-details__product-price-row .details-product-price-discount__text,
+.product-details__product-price-row .details-product-price-discount__value {
   display: none !important;
 }
 
