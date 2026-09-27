@@ -2965,3 +2965,50 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 36' preserveAspectRatio='none'%3E%3Cpath d='M4 9 Q72 5 137 7 T268 5 L396 3 L393 28 Q337 32 272 29 T138 32 L2 30 Z' fill='%23ffe54f' fill-opacity='.65'/%3E%3Cpath d='M8 12 L105 9 Q195 12 287 7 L399 8 L395 30 L302 28 Q200 34 103 30 L5 33 Z' fill='%23ffe54f' fill-opacity='.38'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   transform: rotate(-0.65deg);
 }
+/* Mobile product image previews; Ecwid retains swipe and full-screen behavior. */
+.ec-size .ec-store .sm-gallery-previews { display: none; }
+@media (max-width: 767px) {
+  .ec-size .ec-store .product-details__gallery { --sm-mobile-previews: 1; }
+  .ec-size .ec-store .sm-mobile-gallery > .details-gallery__scroll { display: none; }
+  .ec-size .ec-store .sm-mobile-gallery > .sm-gallery-previews {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 12px 0 0;
+    padding: 2px 0 4px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+  .ec-size .ec-store .sm-gallery-preview {
+    appearance: none;
+    display: block;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    min-width: 0;
+    min-height: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 3px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: none;
+    cursor: pointer;
+    overflow: hidden;
+    touch-action: manipulation;
+  }
+  .ec-size .ec-store .sm-gallery-preview[aria-pressed="true"] { border-color: #f15a24; }
+  .ec-size .ec-store .sm-gallery-preview:focus-visible { outline: 2px solid #222; outline-offset: -4px; }
+  .ec-size .ec-store .sm-gallery-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    object-fit: contain;
+  }
+}

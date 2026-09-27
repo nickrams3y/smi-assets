@@ -16,6 +16,74 @@ var SMI_DOM_RUNNER=(function(){
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ready,{once:true});else ready();
  return{add:function(task){tasks.push(task);if(started)schedule(180)}}
 })();
+
+/* Mobile product previews: navigate Ecwid's existing swipe gallery, not a second gallery. */
+(function(){
+ var states=new WeakMap(),mobile=window.matchMedia('(max-width: 767px)');
+ function imageURL(slide){
+  var image=slide.querySelector('.details-gallery__thumb-bg');
+  var match=image&&image.style.backgroundImage.match(/url\(["']?([^"')]+)["']?\)/);
+  return match?match[1]:'';
+ }
+ function remove(gallery,state){
+  if(state){state.scroller.removeEventListener('scroll',state.onScroll);cancelAnimationFrame(state.frame);state.row.remove();states.delete(gallery)}
+  gallery.classList.remove('sm-mobile-gallery');
+ }
+ function enhance(){
+  document.querySelectorAll('.product-details__gallery').forEach(function(gallery){
+   var state=states.get(gallery),scroller=gallery.querySelector('.details-gallery__thumbs');
+   // Only enhance the native horizontal mobile layout, and only after our CSS is ready.
+   if(!mobile.matches||!scroller||getComputedStyle(scroller).overflowX!=='auto'||getComputedStyle(gallery).getPropertyValue('--sm-mobile-previews').trim()!=='1'){
+    remove(gallery,state);return;
+   }
+   var slides=Array.prototype.filter.call(scroller.children,function(slide){return slide.classList.contains('details-gallery__thumb')});
+   var urls=slides.map(imageURL),signature=urls.join('|');
+   if(slides.length<2||urls.some(function(url){return !url})){remove(gallery,state);return}
+   if(state&&state.scroller===scroller&&state.signature===signature&&state.row.isConnected){state.slides=slides;return}
+   remove(gallery,state);
+   var row=document.createElement('div');row.className='sm-gallery-previews';
+   row.setAttribute('role','group');row.setAttribute('aria-label','Product image previews');
+   state={scroller:scroller,slides:slides,row:row,signature:signature,frame:0,selected:-1};
+   var buttons=urls.map(function(url,index){
+    var button=document.createElement('button'),image=document.createElement('img');
+    button.type='button';button.className='sm-gallery-preview';
+    button.setAttribute('aria-label','View image '+(index+1)+' of '+urls.length);
+    button.setAttribute('aria-pressed','false');
+    // Reuse the exact gallery URL so the browser can reuse its existing request/cache.
+    image.alt='';image.width=64;image.height=64;image.loading='lazy';image.decoding='async';image.src=url;
+    button.appendChild(image);row.appendChild(button);
+    button.addEventListener('click',function(){
+     var left=state.slides[index].getBoundingClientRect().left-scroller.getBoundingClientRect().left+scroller.scrollLeft;
+     scroller.scrollTo({left:left,behavior:'instant'});update();
+    });
+    button.addEventListener('keydown',function(event){
+     var next=event.key==='ArrowRight'?Math.min(index+1,buttons.length-1):event.key==='ArrowLeft'?Math.max(index-1,0):event.key==='Home'?0:event.key==='End'?buttons.length-1:-1;
+     if(next<0)return;event.preventDefault();buttons[next].focus({preventScroll:true});buttons[next].click();
+    });
+    return button;
+   });
+   function update(){
+    if(!row.isConnected)return;
+    var left=scroller.getBoundingClientRect().left,closest=0,distance=Infinity;
+    state.slides.forEach(function(slide,index){var delta=Math.abs(slide.getBoundingClientRect().left-left);if(delta<distance){distance=delta;closest=index}});
+    if(state.selected===closest)return;state.selected=closest;
+    buttons.forEach(function(button,index){button.setAttribute('aria-pressed',String(index===closest))});
+    // Keep the selected preview visible without scrolling the page vertically.
+    var rect=buttons[closest].getBoundingClientRect(),bounds=row.getBoundingClientRect();
+    if(rect.left<bounds.left)row.scrollLeft-=bounds.left-rect.left;
+    else if(rect.right>bounds.right)row.scrollLeft+=rect.right-bounds.right;
+   }
+   state.onScroll=function(){if(state.frame)return;state.frame=requestAnimationFrame(function(){state.frame=0;update()})};
+   scroller.addEventListener('scroll',state.onScroll,{passive:true});
+   gallery.appendChild(row);gallery.classList.add('sm-mobile-gallery');states.set(gallery,state);update();
+  });
+ }
+ SMI_DOM_RUNNER.add(enhance);
+ window.addEventListener('resize',enhance);
+ // A delayed stylesheet must not leave unstyled preview buttons on the page.
+ document.addEventListener('load',function(event){if(event.target.tagName==='LINK')enhance()},true);
+ window.addEventListener('load',enhance,{once:true});
+})();
 var SMI_NATIVE_MUTATION_OBSERVER=window.MutationObserver;
 window.MutationObserver=function(callback){this.observe=function(){SMI_DOM_RUNNER.add(callback)};this.disconnect=function(){}};
 (()=>{const e=document,t=t=>e.createElement(t),o=/(apim-(and-screen|replacement)|8-to-12|audio-control-module|sync-3-usb-hub|2019-2022-mustang-4-to-8|2013-2014-f-150-4-to-8|2015-2017-f-150-4-to-8|2018-2020-f-150-4-to-8|2020-2022-f-250-350-super-duty-4-to-8)/,s={d:"Choose Your Display",s:"SimplyCare Coverage",c:"Connectivity Upgrade Options",v:'4" to 8" Conversions',u:"Choose Based on Your Current System",r:"Trying to match your current color and you're unsure of what color you need?"},a=e=>(e||"").replace(/\s+/g," ").trim().toLowerCase();function l(){let s=location.pathname,l=o.test(s);if(e.documentElement.classList.toggle("sm-product-options-active",l),!l)return;let n=[...e.querySelectorAll("button")].find(e=>"add to bag"===a(e.textContent));if(n&&!e.querySelector(".sm-po-required-note")){let e=t("p");e.className="sm-po-required-note",n.insertAdjacentElement("afterend",e)}let i=e.querySelector(".details-product-options");if(!i||i.dataset.sm===s)return;let r=[...i.querySelectorAll(":scope > .details-product-option")];if(!r.length)return;let c=4,p=["Vehicle Details","Optional Upgrades"];(s.includes("2019-2022-mustang-4-to-8")||s.includes("2013-2014-f-150-4-to-8")||s.includes("2015-2017-f-150-4-to-8")||s.includes("2018-2020-f-150-4-to-8")||s.includes("2020-2022-f-250-350-super-duty-4-to-8"))?(c=Math.max(0,r.length-3),p=["Vehicle Details","Optional Upgrades"]):s.includes("8-to-12")?(c=r.findIndex(e=>/connectivity upgrade|extended warranty|upload a vin|include a complimentary sync 3\.4 update usb drive/.test(a((e.querySelector(".details-product-option__title")||e.querySelector("label")||{}).textContent))),c=c<0?r.length:c,p=["Truck & Upgrade Details","Optional Upgrades"]):s.includes("audio-control")?(c=9,p=["Vehicle Details","Optional Upgrades"]):s.includes("sync-3-usb-hub")?(c=1,p=["Choose Your Hub","Trade-In Details"]):s.includes("apim-replacement")&&(c=s.includes("without")?3:4,p=["Vehicle Details","Optional Upgrades"]),i.querySelectorAll(".sm-po-section-heading,.sm-po-section-intro").forEach(e=>e.remove());let f=s.includes("8-to-12")?r.findIndex(e=>/did you read the entire product page/.test(a((e.querySelector(".details-product-option__title")||e.querySelector("label")||{}).textContent))):-1;f<=c&&(f=-1);p.push("Review & Confirm");let d=!1;r.forEach((e,o)=>{if(0===o||o===c||o===f){let s=t("h3"),a=o===f?3:o?2:1;if(s.className="sm-po-section-heading",s.innerHTML=`<span class=sm-po-step-number>${a}</span><span>${p[a-1]}</span>`,i.insertBefore(s,e),!o&&c>0){let o=t("p");o.className="sm-po-section-intro",i.insertBefore(o,e)}}let l=e.querySelector(".details-product-option__title")||e.querySelector("label"),n=a(l&&l.textContent);e.classList.add("sm-po-card"),e.dataset.smPoKind=/replacement usb hub|which usb hub/.test(n)?"conditional":(s.includes("apim-and-screen")||s.includes("2019-2022-mustang-4-to-8")||s.includes("2013-2014-f-150-4-to-8")||s.includes("2015-2017-f-150-4-to-8")||s.includes("2018-2020-f-150-4-to-8")||s.includes("2020-2022-f-250-350-super-duty-4-to-8"))&&o>=c||/4(?:"|-inch)?\s*to\s*8|simplycare|extended warranty|wireless|connectivity upgrade|authentic usb-c|upload a (?:picture|vin)/.test(n)?"optional":"required",e.dataset.smNote="vehicle model"===n?"vehicle":"vin"===n?"vin":s.includes("apim-and-screen")&&/choose your display/.test(n)?"display":/connectivity upgrade/.test(n)?"connectivity":/upload a vin/.test(n)?"vin-photo":"";let r=/upgrade path/.test(n)?"u":/bezel and trim color/.test(n)?"r":/choose your display/.test(n)?"d":/extended warranty|simplycare/.test(n)?"s":/4(?:"|-inch)?\s*to\s*8/.test(n)?"v":!d&&/connectivity upgrade|built-in wireless/.test(n)?"c":"";if(r&&l&&!l.querySelector(".sm-po-help-button")){d=d||"c"===r;let e=t("button");e.type="button",e.className="sm-po-help-button",e.dataset.help=r,e.textContent="?",l.append(e)}let u=/^vehicle model$/.test(n)?"Select your vehicle":/^model year$/.test(n)?"Select model year":/choose your display/.test(n)?"Select your display type":"vin"===n?"Enter your 17 character VIN":"",m=u&&e.querySelector(".form-control__placeholder-inner");m&&(m.textContent=u)}),i.dataset.sm=s}e.addEventListener("click",o=>{let a=o.target.closest(".sm-po-help-button");if(a){o.preventDefault(),o.stopPropagation();let l=a.dataset.help,n=e.querySelector(".sm-po-dialog");n||(n=t("dialog"),n.className="sm-po-dialog",e.body.append(n)),n.dataset.help=l,n.innerHTML=`<div class=sm-po-dialog__header><h2 class=sm-po-dialog__title>${s[l]}</h2><button type=button class=sm-po-dialog__close aria-label=Close>×</button></div><div class=sm-po-dialog__body>${"<p class=sm-po-copy><b></b><span></span></p>".repeat(3)}<a class=sm-po-dialog__link href=https://support.simplymichigan.co/articles/104443-4-to-8-conversion-overview target=_blank>Read the conversion overview</a></div>`,n.showModal()}let l=o.target.closest(".sm-po-dialog__close");l&&l.closest("dialog").close()}),new MutationObserver(()=>requestAnimationFrame(l)).observe(e.documentElement,{childList:!0,subtree:!0}),l()})();
