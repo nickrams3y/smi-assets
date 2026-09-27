@@ -2970,6 +2970,21 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
 @media (max-width: 767px) {
   .ec-size .ec-store .product-details__gallery { --sm-mobile-previews: 1; }
   .ec-size .ec-store .sm-mobile-gallery > .details-gallery__scroll { display: none; }
+  /* The cover sets the frame height; contain differently shaped photos inside it. */
+  .ec-size .ec-store .sm-mobile-gallery .details-gallery__thumb-img-wrapper-inner {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+  }
+  .ec-size .ec-store .sm-mobile-gallery .details-gallery__thumb-bg,
+  .ec-size .ec-store .sm-mobile-gallery .details-gallery__thumb-img {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+    background-size: contain !important;
+    background-position: center !important;
+  }
   .ec-size .ec-store .sm-mobile-gallery > .sm-gallery-previews {
     display: flex;
     gap: 8px;
