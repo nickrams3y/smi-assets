@@ -3042,3 +3042,82 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
 .ec-size .ec-store .sm-connectivity-summary li::before { display: none; }
 .ec-size .ec-store .sm-connectivity-summary__check { display: inline-flex; flex: 0 0 20px; height: 20px; align-items: center; justify-content: center; margin-top: 1px; border-radius: 50%; background: #e8f3eb; color: #2f7647; font-weight: 700; }
 .ec-size .ec-store .sm-connectivity-summary__note { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid #dedede; font-size: 13px !important; line-height: 1.5 !important; color: #626262; }
+
+/* Product-description photos inside connectivity help only. */
+.sm-po-dialog[data-help="c"] .sm-po-dialog__header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #fff;
+}
+.sm-po-dialog[data-help="c"] .sm-po-copy.sm-po-copy--photo {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  column-gap: 16px;
+  row-gap: 5px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #e7e9ed;
+}
+.sm-po-dialog[data-help="c"] .sm-po-copy.sm-po-copy--photo:last-of-type {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+.sm-po-dialog[data-help="c"] .sm-po-copy--photo > b,
+.sm-po-dialog[data-help="c"] .sm-po-copy--photo > span {
+  grid-column: 2;
+}
+.sm-po-dialog[data-help="c"] .sm-po-connectivity-photo {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  display: block;
+  width: 150px;
+  height: 140px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+}
+@media (max-width: 479px) {
+  .sm-po-dialog[data-help="c"] .sm-po-copy.sm-po-copy--photo {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 8px;
+  }
+  .sm-po-dialog[data-help="c"] .sm-po-copy--photo > b,
+  .sm-po-dialog[data-help="c"] .sm-po-copy--photo > span {
+    grid-column: 1;
+  }
+  .sm-po-dialog[data-help="c"] .sm-po-connectivity-photo {
+    grid-row: auto;
+    justify-self: center;
+    width: 180px;
+    height: 132px;
+  }
+}
+
+/* Give the final product option and stock message room above the purchase button. */
+.ec-size .ec-store .product-details .details-product-purchase {
+  padding-top: 22px !important;
+}
+.ec-size .ec-store .product-details .details-product-purchase__place.sm-stock-status {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px !important;
+  line-height: 1.45;
+}
+.ec-size .ec-store .product-details .sm-stock-icon {
+  flex: 0 0 18px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+.ec-size .ec-store .product-details .sm-stock-status--available .sm-stock-icon {
+  color: #27834b;
+}
+.ec-size .ec-store .product-details .sm-stock-status--preorder .sm-stock-icon {
+  color: #c62f3e;
+}

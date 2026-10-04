@@ -347,6 +347,34 @@ SMI_DOM_RUNNER.add(init);
  SMI_DOM_RUNNER.add(enhanceTextDisclosures)
 })();
 
+/* Reuse the product-description photos in the connectivity question-mark dialog. */
+(function(){
+ var photos=[
+  {file:'usb-c-wireless-hub.jpg',alt:'USB-C and USB-A hub with built-in wireless Apple CarPlay and Android Auto'},
+  {file:'oem-usb-c-upgrade.jpg',alt:'Ford OEM USB-C and USB-A hub with vehicle-specific bezels'},
+  {file:'wireless-adapter.jpg',alt:'Wireless Apple CarPlay and Android Auto USB adapter'}
+ ];
+ document.addEventListener('click',function(event){
+  if(!event.target.closest('.sm-po-help-button[data-help="c"]'))return;
+  // The existing help handler creates fresh paragraphs before this listener runs.
+  var dialog=document.querySelector('.sm-po-dialog[open][data-help="c"]');
+  if(!dialog)return;
+  var sources=document.querySelectorAll('.product-details .sm-upgrade-card__image img, .product-details .sm-upgrade-modal__image img');
+  dialog.querySelectorAll('.sm-po-copy').forEach(function(paragraph,index){
+   var photo=photos[index];if(!photo||paragraph.querySelector('img'))return;
+   var source=Array.prototype.find.call(sources,function(img){return img.src.split('?')[0].endsWith('/'+photo.file)});
+   var img=document.createElement('img');
+   img.className='sm-po-connectivity-photo';img.width=160;img.height=140;
+   img.alt=source?source.alt:photo.alt;img.decoding='async';
+   // Some descriptions omit the OEM card; reuse its shared photo for the existing OEM explanation.
+   img.src=source?source.src:'https://cdn.jsdelivr.net/gh/nickrams3y/smi-assets@main/images/product-upgrades/'+photo.file;
+   img.addEventListener('error',function(){img.remove();paragraph.classList.remove('sm-po-copy--photo')},{once:true});
+   paragraph.classList.add('sm-po-copy--photo');paragraph.prepend(img);
+  });
+  dialog.scrollTop=0;
+ });
+})();
+
 /* Explain connectivity choices while preserving Ecwid's option values and pricing. */
 (function(){
  var nextID=0;
@@ -409,4 +437,26 @@ SMI_DOM_RUNNER.add(init);
  document.addEventListener('change',function(event){if(!event.target.matches('.details-product-option select'))return;var row=event.target.closest('.details-product-option');requestAnimationFrame(function(){if(row.isConnected)refresh(row)})});
  document.addEventListener('load',function(event){if(event.target.tagName==='LINK')enhance()},true);
  window.addEventListener('load',enhance,{once:true});
+})();
+
+/* Stock wording follows Ecwid's rendered inventory state, including option changes. */
+(function(){
+ function enhanceStock(){
+  document.querySelectorAll('.product-details .details-product-purchase__place').forEach(function(label){
+   var text=label.querySelector(':scope > span:not(.sm-stock-icon)');
+   if(!text)return;
+   var current=text.textContent.trim(),state='',wording=current;
+   if(/^In stock(?:, ready to ship)?$/i.test(current)){state='available';wording='In stock, ready to ship'}
+   else if(/^Out of stock, available for pre-order$/i.test(current)){state='preorder';wording='Out of stock, available for pre-order'}
+   var icon=label.querySelector('.sm-stock-icon');
+   label.classList.toggle('sm-stock-status',!!state);
+   label.classList.toggle('sm-stock-status--available',state==='available');
+   label.classList.toggle('sm-stock-status--preorder',state==='preorder');
+   if(!state){if(icon)icon.remove();return}
+   if(text.textContent!==wording)text.textContent=wording;
+   if(!icon){icon=document.createElement('span');icon.className='sm-stock-icon';icon.setAttribute('aria-hidden','true');label.prepend(icon)}
+   var mark=state==='available'?'✓':'×';if(icon.textContent!==mark)icon.textContent=mark;
+  });
+ }
+ SMI_DOM_RUNNER.add(enhanceStock);
 })();
