@@ -375,7 +375,6 @@ SMI_DOM_RUNNER.add(init);
   var choices=Array.prototype.map.call(select.options,function(option){
    var key=kind(option.value),item=copy[key],match=option.textContent.match(/\s+\(([+-][^)]*)\)\s*$/),price=match?match[1]:'';
    var size=option.value.match(/- (Small|Large) version, (.+)$/i),name=item?item.label+(size?' — '+size[1].toLowerCase():''):'';
-   if(item){var label=name+(price?' ('+price+')':key==='wired'?' (included)':'');if(option.label!==label)option.label=label}
    return {key:key,item:item,price:price,name:name,size:size?size[1]+' hub: '+size[2]:''};
   });
   if(!choices.some(function(choice){return choice.item}))return;
@@ -395,9 +394,7 @@ SMI_DOM_RUNNER.add(init);
   }
   row.classList.add('sm-connectivity-option');
   var selected=choices[select.selectedIndex],item=selected&&selected.item;
-  // The readonly input is Ecwid's visual label only. Never change select values or dispatch a selection.
-  var display=row.querySelector('input.form-control__text[readonly]');
-  if(item&&display&&display.value!==selected.name)display.value=selected.name;
+  // Ecwid owns all option names, selected labels, values, and prices; only add the explanation.
   var signature=item?selected.name+'|'+selected.price+'|'+selected.size:'';
   if(summary.dataset.choice===signature)return;
   summary.dataset.choice=signature;summary.hidden=!item;summary.replaceChildren();if(!item)return;
