@@ -1794,7 +1794,6 @@ html.sm-product-options-active .details-product-option:not(.sm-po-has-title-row)
 html.sm-product-options-active .details-product-option[data-sm-note="vehicle"] .details-product-option__title::after,
 html.sm-product-options-active .details-product-option[data-sm-note="vin"] .details-product-option__title::after,
 html.sm-product-options-active .details-product-option[data-sm-note="display"] .details-product-option__title::after,
-html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title::after,
 html.sm-product-options-active .details-product-option[data-sm-note="vin-photo"] .details-product-option__title::after {
   display: block;
   margin-top: 3px;
@@ -1819,11 +1818,6 @@ html.sm-product-options-active .details-product-option[data-sm-note="vin-photo"]
 html.sm-product-options-active .details-product-option[data-sm-note="display"] .details-product-option__title::after {
   width: 100%;
   content: 'Optional 8.46" Sync 4 HD display upgrade available';
-}
-
-html.sm-product-options-active .details-product-option[data-sm-note="connectivity"] .details-product-option__title::after {
-  width: 100%;
-  content: "Check out our USB-C hub upgrade with built-in wireless Apple CarPlay and Android Auto, plus 30W fast charging";
 }
 
 html.sm-product-options-active .details-product-option[data-sm-note="display"] .details-product-option__title,
@@ -3040,7 +3034,7 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   background: #f5f6f7; color: #292929; font-size: 14px; line-height: 1.5;
 }
 .ec-size .ec-store .sm-connectivity-summary[hidden] { display: none !important; }
-.ec-size .ec-store .sm-connectivity-summary__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; }
+.ec-size .ec-store .sm-connectivity-summary__head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
 .ec-size .ec-store .sm-connectivity-summary__head strong { font-size: 16px; line-height: 1.4; font-weight: 700; }
 .ec-size .ec-store .sm-connectivity-summary__price { white-space: nowrap; font-weight: 700; }
 .ec-size .ec-store .sm-connectivity-summary ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 9px; }
