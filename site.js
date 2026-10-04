@@ -383,7 +383,7 @@ SMI_DOM_RUNNER.add(init);
    intro=document.createElement('div');intro.className='sm-connectivity-intro';
    var label=document.createElement('label'),reassurance=document.createElement('p');
    if(!select.id)select.id='sm-connectivity-'+(++nextID);
-   label.htmlFor=select.id;label.textContent='How would you like to connect your phone?';
+   label.htmlFor=select.id;label.textContent='Connectivity Upgrade';
    reassurance.textContent=/apim-and-screen|complete-sync-3-upgrade-kit/.test(location.pathname)?'Wired Apple CarPlay and Android Auto are already included with this kit. Upgrades are optional.':'Wired Apple CarPlay and Android Auto use a USB cable and a compatible USB hub. These upgrades are optional.';
    intro.append(label,reassurance);row.insertBefore(intro,title);
   }
