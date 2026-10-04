@@ -351,8 +351,8 @@ SMI_DOM_RUNNER.add(init);
 (function(){
  var nextID=0;
  var copy={
-  wired:{label:'Wired connection',features:['Apple CarPlay & Android Auto via USB cable','No connectivity upgrade charge'],note:'Plug your phone into a compatible USB hub to use CarPlay or Android Auto.'},
-  wireless:{label:'Wireless USB-C hub',features:['Wireless Apple CarPlay & Android Auto','USB-C and USB-A ports','Up to 30W fast charging','No separate adapter needed'],note:'Fast charging requires a USB cable. Wireless refers to CarPlay and Android Auto, not wireless charging.'},
+  wired:{label:'Wired connection',features:['Apple CarPlay & Android Auto via USB cable','No connectivity upgrade charge'],note:'Plug your phone into a the included compatible USB hub to use CarPlay or Android Auto.'},
+  wireless:{label:'Wireless USB-C hub',features:['Wireless Apple CarPlay & Android Auto','USB-C and USB-A ports','Up to 30W fast charging','No separate adapter needed'],note:''},
   adapter:{label:'Wireless USB adapter',features:['Wireless Apple CarPlay & Android Auto','Plugs into a compatible USB port','No USB hub replacement needed'],note:'Adds wireless connectivity. It does not upgrade your USB ports or charging speed.'},
   standard:{label:'Dual USB-A hub',features:['Two USB-A ports','Wired Apple CarPlay & Android Auto'],note:'This hub does not add wireless connectivity. Connect your phone with a USB cable.'},
   standardBundle:{label:'USB-A hub + wireless adapter',features:['Dual USB-A hub','Wireless Apple CarPlay & Android Auto','Separate USB adapter included'],note:'The adapter provides wireless connectivity through the USB hub.'},
@@ -381,11 +381,10 @@ SMI_DOM_RUNNER.add(init);
   var intro=row.querySelector('.sm-connectivity-intro'),summary=row.querySelector('.sm-connectivity-summary');
   if(!intro){
    intro=document.createElement('div');intro.className='sm-connectivity-intro';
-   var label=document.createElement('label'),reassurance=document.createElement('p');
+   var reassurance=document.createElement('p');
    if(!select.id)select.id='sm-connectivity-'+(++nextID);
-   label.htmlFor=select.id;label.textContent='Connectivity Upgrade';
    reassurance.textContent=/apim-and-screen|complete-sync-3-upgrade-kit/.test(location.pathname)?'Wired Apple CarPlay and Android Auto are already included with this kit. Upgrades are optional.':'Wired Apple CarPlay and Android Auto use a USB cable and a compatible USB hub. These upgrades are optional.';
-   intro.append(label,reassurance);row.insertBefore(intro,title);
+   intro.append(reassurance);title.insertAdjacentElement('afterend',intro);
   }
   if(!summary){
    summary=document.createElement('div');summary.className='sm-connectivity-summary';summary.id=select.id+'-summary';summary.setAttribute('aria-live','polite');summary.setAttribute('aria-atomic','true');
@@ -402,7 +401,8 @@ SMI_DOM_RUNNER.add(init);
   head.className='sm-connectivity-summary__head';heading.textContent=selected.name;price.className='sm-connectivity-summary__price';price.textContent=selected.price||(selected.key==='wired'?'Included':'Optional');head.append(heading,price);
   var features=item.features.concat(selected.size?[selected.size]:[]);
   features.forEach(function(text){var li=document.createElement('li'),check=document.createElement('span'),content=document.createElement('span');check.className='sm-connectivity-summary__check';check.setAttribute('aria-hidden','true');check.textContent='✓';content.textContent=text;li.append(check,content);list.appendChild(li)});
-  note.className='sm-connectivity-summary__note';note.textContent=item.note;summary.append(head,list,note);
+  summary.append(head,list);
+  if(item.note){note.className='sm-connectivity-summary__note';note.textContent=item.note;summary.append(note)}
  }
  function enhance(){document.querySelectorAll('.details-product-option').forEach(refresh)}
  SMI_DOM_RUNNER.add(enhance);
