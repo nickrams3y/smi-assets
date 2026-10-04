@@ -346,3 +346,70 @@ SMI_DOM_RUNNER.add(init);
  }
  SMI_DOM_RUNNER.add(enhanceTextDisclosures)
 })();
+
+/* Explain connectivity choices while preserving Ecwid's option values and pricing. */
+(function(){
+ var nextID=0;
+ var copy={
+  wired:{label:'Wired connection',features:['Apple CarPlay & Android Auto via USB cable','No connectivity upgrade charge'],note:'Plug your phone into a compatible USB hub to use CarPlay or Android Auto.'},
+  wireless:{label:'Wireless USB-C hub',features:['Wireless Apple CarPlay & Android Auto','USB-C and USB-A ports','Up to 30W fast charging','No separate adapter needed'],note:'Fast charging requires a USB cable. Wireless refers to CarPlay and Android Auto, not wireless charging.'},
+  adapter:{label:'Wireless USB adapter',features:['Wireless Apple CarPlay & Android Auto','Plugs into a compatible USB port','No USB hub replacement needed'],note:'Adds wireless connectivity. It does not upgrade your USB ports or charging speed.'},
+  standard:{label:'Dual USB-A hub',features:['Two USB-A ports','Wired Apple CarPlay & Android Auto'],note:'This hub does not add wireless connectivity. Connect your phone with a USB cable.'},
+  standardBundle:{label:'USB-A hub + wireless adapter',features:['Dual USB-A hub','Wireless Apple CarPlay & Android Auto','Separate USB adapter included'],note:'The adapter provides wireless connectivity through the USB hub.'},
+  oem:{label:'Ford OEM USB-C hub',features:['Authentic Ford USB-C and USB-A hub','Wired Apple CarPlay & Android Auto','Normal charging speed'],note:'This hub does not add wireless connectivity. Available for eligible vehicles only.'},
+  bundle:{label:'OEM hub + wireless adapter',features:['Authentic Ford USB-C and USB-A hub','Wireless Apple CarPlay & Android Auto','Wireless connectivity through a separate USB adapter'],note:'Normal charging speed. The OEM USB-C hub is available for eligible vehicles only.'}
+ };
+ function kind(value){
+  var s=value.toLowerCase();
+  if(/no upgrade|^wired connection/.test(s))return 'wired';
+  if(/standard usb hub|dual usb-a/.test(s))return /wireless/.test(s)?'standardBundle':'standard';
+  if(/ford.*oem/.test(s)&&/wireless/.test(s))return 'bundle';
+  if(/usb.c.*hub/.test(s)&&/built.in.*wireless|fast charging/.test(s))return 'wireless';
+  if(/ford.*oem.*usb.c/.test(s))return 'oem';
+  if(/wireless.*adapter/.test(s))return 'adapter';
+  return '';
+ }
+ function refresh(row){
+  var select=row.querySelector('select'),title=row.querySelector('.details-product-option__title');
+  if(!select||!title||!/connectivity upgrade/i.test(title.textContent)||getComputedStyle(row).getPropertyValue('--sm-connectivity-card').trim()!=='1')return;
+  var choices=Array.prototype.map.call(select.options,function(option){
+   var key=kind(option.value),item=copy[key],match=option.textContent.match(/\s+\(([+-][^)]*)\)\s*$/),price=match?match[1]:'';
+   var size=option.value.match(/- (Small|Large) version, (.+)$/i),name=item?item.label+(size?' — '+size[1].toLowerCase():''):'';
+   if(item){var label=name+(price?' ('+price+')':key==='wired'?' (included)':'');if(option.label!==label)option.label=label}
+   return {key:key,item:item,price:price,name:name,size:size?size[1]+' hub: '+size[2]:''};
+  });
+  if(!choices.some(function(choice){return choice.item}))return;
+  var intro=row.querySelector('.sm-connectivity-intro'),summary=row.querySelector('.sm-connectivity-summary');
+  if(!intro){
+   intro=document.createElement('div');intro.className='sm-connectivity-intro';
+   var label=document.createElement('label'),reassurance=document.createElement('p');
+   if(!select.id)select.id='sm-connectivity-'+(++nextID);
+   label.htmlFor=select.id;label.textContent='How would you like to connect your phone?';
+   reassurance.textContent=/apim-and-screen|complete-sync-3-upgrade-kit/.test(location.pathname)?'Wired Apple CarPlay and Android Auto are already included with this kit. Upgrades are optional.':'Wired Apple CarPlay and Android Auto use a USB cable and a compatible USB hub. These upgrades are optional.';
+   intro.append(label,reassurance);row.insertBefore(intro,title);
+  }
+  if(!summary){
+   summary=document.createElement('div');summary.className='sm-connectivity-summary';summary.id=select.id+'-summary';summary.setAttribute('aria-live','polite');summary.setAttribute('aria-atomic','true');
+   row.appendChild(summary);
+   var described=(select.getAttribute('aria-describedby')||'').split(/\s+/).filter(Boolean);if(described.indexOf(summary.id)<0)described.push(summary.id);select.setAttribute('aria-describedby',described.join(' '));
+  }
+  row.classList.add('sm-connectivity-option');
+  var selected=choices[select.selectedIndex],item=selected&&selected.item;
+  // The readonly input is Ecwid's visual label only. Never change select values or dispatch a selection.
+  var display=row.querySelector('input.form-control__text[readonly]');
+  if(item&&display&&display.value!==selected.name)display.value=selected.name;
+  var signature=item?selected.name+'|'+selected.price+'|'+selected.size:'';
+  if(summary.dataset.choice===signature)return;
+  summary.dataset.choice=signature;summary.hidden=!item;summary.replaceChildren();if(!item)return;
+  var head=document.createElement('div'),heading=document.createElement('strong'),price=document.createElement('span'),list=document.createElement('ul'),note=document.createElement('p');
+  head.className='sm-connectivity-summary__head';heading.textContent=selected.name;price.className='sm-connectivity-summary__price';price.textContent=selected.price||(selected.key==='wired'?'Included':'Optional');head.append(heading,price);
+  var features=item.features.concat(selected.size?[selected.size]:[]);
+  features.forEach(function(text){var li=document.createElement('li'),check=document.createElement('span'),content=document.createElement('span');check.className='sm-connectivity-summary__check';check.setAttribute('aria-hidden','true');check.textContent='✓';content.textContent=text;li.append(check,content);list.appendChild(li)});
+  note.className='sm-connectivity-summary__note';note.textContent=item.note;summary.append(head,list,note);
+ }
+ function enhance(){document.querySelectorAll('.details-product-option').forEach(refresh)}
+ SMI_DOM_RUNNER.add(enhance);
+ document.addEventListener('change',function(event){if(!event.target.matches('.details-product-option select'))return;var row=event.target.closest('.details-product-option');requestAnimationFrame(function(){if(row.isConnected)refresh(row)})});
+ document.addEventListener('load',function(event){if(event.target.tagName==='LINK')enhance()},true);
+ window.addEventListener('load',enhance,{once:true});
+})();

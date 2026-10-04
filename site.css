@@ -3027,3 +3027,27 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
     object-fit: contain;
   }
 }
+
+/* Connectivity explanations: gray edge, short labels, native Ecwid selection. */
+.ec-size .ec-store .details-product-option { --sm-connectivity-card: 1; }
+.ec-size .ec-store .details-product-option.sm-connectivity-option > .details-product-option__title { display: none !important; }
+.ec-size .ec-store .sm-connectivity-intro label {
+  display: block; margin: 0 0 8px; font-size: 16px; line-height: 1.4; font-weight: 700; color: #292929;
+}
+.ec-size .ec-store .sm-connectivity-intro p {
+  margin: 0 0 14px; font-size: 14px !important; line-height: 1.5 !important; color: #626262;
+}
+.ec-size .ec-store .sm-connectivity-summary {
+  box-sizing: border-box; margin: 14px 0 0; padding: 17px 16px;
+  border: 1px solid #dedede; border-left: 4px solid #9a9a9a; border-radius: 9px;
+  background: #f5f6f7; color: #292929; font-size: 14px; line-height: 1.5;
+}
+.ec-size .ec-store .sm-connectivity-summary[hidden] { display: none !important; }
+.ec-size .ec-store .sm-connectivity-summary__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; }
+.ec-size .ec-store .sm-connectivity-summary__head strong { font-size: 16px; line-height: 1.4; font-weight: 700; }
+.ec-size .ec-store .sm-connectivity-summary__price { white-space: nowrap; font-weight: 700; }
+.ec-size .ec-store .sm-connectivity-summary ul { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 9px; }
+.ec-size .ec-store .sm-connectivity-summary li { display: flex; align-items: flex-start; gap: 8px; margin: 0; padding: 0; }
+.ec-size .ec-store .sm-connectivity-summary li::before { display: none; }
+.ec-size .ec-store .sm-connectivity-summary__check { display: inline-flex; flex: 0 0 20px; height: 20px; align-items: center; justify-content: center; margin-top: 1px; border-radius: 50%; background: #e8f3eb; color: #2f7647; font-weight: 700; }
+.ec-size .ec-store .sm-connectivity-summary__note { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid #dedede; font-size: 13px !important; line-height: 1.5 !important; color: #626262; }
