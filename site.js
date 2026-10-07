@@ -460,3 +460,58 @@ SMI_DOM_RUNNER.add(init);
  }
  SMI_DOM_RUNNER.add(enhanceStock);
 })();
+
+/* Group the two installation embeds into one on-demand, three-video gallery. */
+(function(){
+ var videos=[
+  {id:'OWrfQuf2pgI',title:'Is a Sync 3 Upgrade Worth It?',creator:'Nine Finger Wrenching'},
+  {id:'etDgW6yLIIU',title:'Sync 2 to Sync 3 Installation',creator:'Auto Freak Garage'},
+  {id:'DOY7z6q39AU',title:'2014 F-150 Sync 3 Upgrade',creator:'The Futzer'}
+ ];
+ function image(id,large){
+  var img=document.createElement('img');img.alt='';img.width=large?1280:480;img.height=large?720:360;img.loading='lazy';img.decoding='async';
+  var fallback='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';
+  function recover(){if(img.src!==fallback)img.src=fallback}
+  img.addEventListener('error',recover);if(large)img.addEventListener('load',function(){if(img.naturalWidth<200)recover()});
+  img.src=large?'https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg':fallback;return img;
+ }
+ function build(){
+  var gallery=document.createElement('section');gallery.className='sm-video-gallery';gallery.setAttribute('aria-label','See the Upgrade in Action');
+  gallery.innerHTML='<h2 class="sm-video-gallery__heading">See the Upgrade in Action</h2><p class="sm-video-gallery__intro">Watch real installs and see the results for yourself.</p><div class="sm-video-gallery__player"></div><div class="sm-video-gallery__caption"><div class="sm-video-gallery__details" aria-live="polite"><strong></strong><span></span></div><a class="sm-video-gallery__external" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div><div class="sm-video-gallery__choices" role="group" aria-label="Choose a video"></div>';
+  var player=gallery.querySelector('.sm-video-gallery__player'),details=gallery.querySelector('.sm-video-gallery__details'),external=gallery.querySelector('.sm-video-gallery__external'),choices=gallery.querySelector('.sm-video-gallery__choices'),selected=-1;
+  var buttons=videos.map(function(video,index){
+   var button=document.createElement('button');button.type='button';button.className='sm-video-gallery__choice';
+   var thumb=document.createElement('span'),copy=document.createElement('span'),title=document.createElement('strong'),creator=document.createElement('span');
+   thumb.className='sm-video-gallery__thumb';copy.className='sm-video-gallery__choice-copy';title.textContent=video.title;creator.textContent=video.creator;
+   thumb.appendChild(image(video.id,false));copy.append(title,creator);button.append(thumb,copy);choices.appendChild(button);
+   button.addEventListener('click',function(){select(index)});return button;
+  });
+  function select(index){
+   if(selected===index)return;selected=index;var video=videos[index];
+   // Removing the previous iframe stops its video before another can play.
+   player.replaceChildren();gallery.dataset.video=video.id;
+   details.querySelector('strong').textContent=video.title;details.querySelector('span').textContent=video.creator;
+   external.href='https://www.youtube.com/watch?v='+video.id;
+   buttons.forEach(function(button,i){button.setAttribute('aria-pressed',String(i===index))});
+   var poster=document.createElement('button'),play=document.createElement('span');poster.type='button';poster.className='sm-video-gallery__poster';poster.setAttribute('aria-label','Play '+video.title+' by '+video.creator);
+   play.className='sm-video-gallery__play';play.setAttribute('aria-hidden','true');play.textContent='▶';poster.append(image(video.id,true),play);player.appendChild(poster);
+   poster.addEventListener('click',function(){
+    var frame=document.createElement('iframe');frame.title=video.title+' — '+video.creator;frame.width=760;frame.height=428;
+    frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
+    frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&playsinline=1&rel=0';
+    player.replaceChildren(frame);frame.focus();
+   });
+  }
+  select(0);return gallery;
+ }
+ function enhanceVideos(){
+  document.querySelectorAll('.product-details__product-description').forEach(function(description){
+   if(description.querySelector('.sm-video-gallery')||getComputedStyle(description).getPropertyValue('--sm-video-gallery').trim()!=='1')return;
+   var frames=Array.prototype.filter.call(description.querySelectorAll('iframe'),function(frame){return /^https:\/\/www\.youtube(?:-nocookie)?\.com\/embed\/(etDgW6yLIIU|DOY7z6q39AU)(?:[?/#]|$)/.test(frame.src)});
+   if(!videos.slice(1).every(function(video){return frames.some(function(frame){return frame.src.indexOf('/embed/'+video.id)>=0})}))return;
+   var gallery=build();frames[0].before(gallery);frames.forEach(function(frame){frame.remove()});
+  });
+ }
+ SMI_DOM_RUNNER.add(enhanceVideos);
+ document.addEventListener('load',function(event){if(event.target.tagName==='LINK')enhanceVideos()},true);
+})();
