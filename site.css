@@ -3121,6 +3121,16 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
 .ec-size .ec-store .product-details .sm-stock-status--preorder .sm-stock-icon {
   color: #c62f3e;
 }
+.ec-size .ec-store .product-details .details-product-purchase__place.sm-stock-status--processing {
+  margin-bottom: 3px !important;
+}
+.ec-size .ec-store .product-details .sm-stock-processing {
+  margin: 0 0 14px 26px;
+  color: #666;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
 
 /* Three installation videos share one player; unrelated product demos remain separate. */
 .ec-size .ec-store .product-details__product-description { --sm-video-gallery: 1; }

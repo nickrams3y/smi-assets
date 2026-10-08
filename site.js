@@ -284,16 +284,49 @@ SMI_DOM_RUNNER.add(init);
  })
 })();
 
+/* Read processing estimates from the current product's full policy, never its preview. */
+var SMI_PROCESSING_POLICY=(function(){
+ function read(root){
+  if(!root||!/^\/products\/(?:ford-lincoln-sync-3-apim-(?:and-screen-complete-upgrade-kit|replacement)-(?:with|without)-navigation|ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit|ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit|audio-control-module-acm-(?:receiver|reciever)|(?:2013-2014-f-150|2015-2017-f-150|2018-2020-f-150|2020-2022-f-250-350-super-duty|2019-2022-mustang)-4-to-8-complete-sync-3-upgrade-kit)\/?$/.test(location.pathname))return null;
+  var detail=Array.prototype.find.call(root.querySelectorAll('details'),function(item){
+   var summary=item.querySelector(':scope > summary');if(!summary)return false;
+   var title=summary.querySelector('.sm-disclosure-title');
+   var text=title?title.textContent:Array.prototype.map.call(summary.childNodes,function(node){return node.nodeType===3?node.textContent:''}).join(' ');
+   return /^Processing Time$/i.test(text.trim());
+  });
+  if(!detail)return null;
+  var copy=detail.cloneNode(true);copy.querySelector('summary').remove();
+  var body=copy.textContent.replace(/\s+/g,' ').trim();
+  var times=body.match(/\b\d+(?:\s*(?:[-–—]|to)\s*\d+)?\s+business days\b/gi);
+  if(!times)return null;
+  var estimate,preview;
+  if(times.length===1){
+   var time=times[0].replace(/\s*(?:[-–—]|\bto\b)\s*/g,'–');
+   estimate=/–/.test(time)?'typically '+time:'usually within '+time;
+   preview=/–/.test(time)?'Typical processing time is '+time+'.':'Most orders ship within '+time+'.';
+  }else{
+   // Fiesta/Transit has a usual estimate followed by an explicit longer allowance.
+   var allowance=body.match(/Most orders ship within (\d+ business days); however, .*?additional processing and should ship within (\d+ business days)\./i);
+   if(!allowance)return null; // Do not guess when a policy has multiple unexplained estimates.
+   estimate='usually within '+allowance[1]+'; allow up to '+allowance[2];
+   preview=allowance[0];
+  }
+  var caveat=/Certain configurations may take longer\./i.test(body)?' Certain configurations may take longer.':'';
+  return{detail:detail,note:'Processing time: '+estimate+'.'+caveat,preview:preview+caveat};
+ }
+ return{read:read};
+})();
+
 (function(){
  function enhanceTextDisclosures(){
   var root=document.querySelector(".product-details__product-description");
   if(!root)return;
   var policyPreviews={
    "warranty":"Your hardware is covered for one year from the purchase date. If a covered component fails, we’ll replace it.",
-   "processing time":"Most orders are prepared and shipped within five business days, although processing times may vary.",
    "shipping":"Free domestic shipping is included to all 50 states. Every order is securely packaged to protect its contents during transit.",
    "returns and cancellations":"Free domestic returns are available within 30 days. We’ll provide a prepaid return label at no charge."
   };
+  var processing=SMI_PROCESSING_POLICY.read(root);
   root.querySelectorAll('details[style*="border-left:3px solid #9a9a9a"]').forEach(function(detail){
    var summary=detail.querySelector(":scope > summary");
    if(!summary)return;
@@ -312,6 +345,7 @@ SMI_DOM_RUNNER.add(init);
    });
    var directTitle=Array.prototype.map.call(summary.childNodes,function(node){return node.nodeType===3?node.textContent:""}).join(" ").replace(/\s+/g," ").trim();
    var titleKey=directTitle.toLowerCase(),previewCopy=policyPreviews[titleKey];
+   if(processing&&processing.detail===detail)previewCopy=processing.preview;
    if(previewCopy&&!summary.querySelector(":scope > .sm-disclosure-preview-row")){
     Array.prototype.forEach.call(summary.childNodes,function(node){if(node.nodeType===3)node.remove()});
     var titleSpan=document.createElement("span");
@@ -326,6 +360,8 @@ SMI_DOM_RUNNER.add(init);
     summary.insertBefore(titleSpan,summary.firstChild);
     summary.insertBefore(row,summary.querySelector(":scope > .sm-disclosure-action"))
    }
+   var processingPreview=summary.querySelector('.sm-disclosure-preview');
+   if(processing&&processing.detail===detail&&processingPreview&&processingPreview.textContent!==processing.preview)processingPreview.textContent=processing.preview;
    var hasPreview=!!summary.querySelector(":scope > .sm-disclosure-preview-row");
    detail.classList.toggle("sm-text-disclosure--preview",hasPreview);
    detail.classList.toggle("sm-text-disclosure--plain",!hasPreview);
@@ -449,6 +485,14 @@ SMI_DOM_RUNNER.add(init);
    if(/^In stock(?:, ready to ship)?$/i.test(current)){state='available';wording='In stock, ready to ship'}
    else if(/^Out of stock, available for pre-order$/i.test(current)){state='preorder';wording='Out of stock, available for pre-order'}
    var icon=label.querySelector('.sm-stock-icon');
+   var processing=SMI_PROCESSING_POLICY.read(label.closest('.product-details').querySelector('.product-details__product-description'));
+   var note=label.parentElement.querySelector(':scope > .sm-stock-processing');
+   var noteCopy=state==='available'&&processing?processing.note:'';
+   if(noteCopy){
+    if(!note){note=document.createElement('div');note.className='sm-stock-processing';label.after(note)}
+    if(note.textContent!==noteCopy)note.textContent=noteCopy;
+   }else if(note)note.remove();
+   label.classList.toggle('sm-stock-status--processing',!!noteCopy);
    label.classList.toggle('sm-stock-status',!!state);
    label.classList.toggle('sm-stock-status--available',state==='available');
    label.classList.toggle('sm-stock-status--preorder',state==='preorder');
