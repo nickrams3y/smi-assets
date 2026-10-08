@@ -3249,3 +3249,47 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   .ec-size .ec-store .sm-video-gallery__choice-copy { padding: 10px 12px; }
   .ec-size .ec-store .sm-video-gallery__thumb img { object-fit: contain; }
 }
+
+/* Compact availability announcement above the 12-inch product gallery and details. */
+.ec-size .ec-store .product-details { --sm-seat-availability: 1; }
+.ec-size .ec-store .sm-seat-availability {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border: 1px solid #d4e6d9;
+  border-left: 4px solid #2f8f4e;
+  border-radius: 8px;
+  background: #edf7f0;
+  color: #245d38;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.ec-size .ec-store .sm-seat-availability strong { font-weight: 700; }
+.ec-size .ec-store .sm-seat-availability__check {
+  flex: 0 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #2f8f4e;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+@media (max-width: 600px) {
+  .ec-size .ec-store .sm-seat-availability {
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 12px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+}
