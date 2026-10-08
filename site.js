@@ -526,7 +526,7 @@ SMI_DOM_RUNNER.add(init);
   });
   if(!details||getComputedStyle(details).getPropertyValue('--sm-seat-availability').trim()!=='1'||details.previousElementSibling?.classList.contains('sm-seat-availability'))return;
   var banner=document.createElement('div');banner.className='sm-seat-availability';banner.setAttribute('role','note');
-  banner.innerHTML='<span class="sm-seat-availability__check" aria-hidden="true">✓</span><span><strong>Fold-down / bench seat configurations</strong> are now available in limited quantities.</span>';
+  banner.innerHTML='<span class="sm-seat-availability__check" aria-hidden="true">✓</span><span><strong>Fold down / bench seat configurations</strong> are now available in limited quantities.</span>';
   details.before(banner);
  }
  SMI_DOM_RUNNER.add(seatAvailabilityBanner);
