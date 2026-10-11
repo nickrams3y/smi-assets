@@ -560,6 +560,12 @@ var SMI_PROCESSING_POLICY=(function(){
  document.addEventListener('load',function(event){if(event.target.tagName==='LINK')enhanceVideos()},true);
 })();
 
+/* Distinguish the native New Arrivals previous/next controls for screen readers. */
+SMI_DOM_RUNNER.add(function(){
+ var previous=document.querySelector('#tile-category-products-eqfZnr .ins-tile__control-prev');
+ if(previous&&previous.getAttribute('aria-label')!=='Go to the previous slide')previous.setAttribute('aria-label','Go to the previous slide');
+});
+
 /* Announce the newly available jump-seat configuration on the 12-inch kit only. */
 (function(){
  function seatAvailabilityBanner(){

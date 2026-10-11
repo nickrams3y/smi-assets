@@ -3132,6 +3132,44 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   line-height: 1.5;
 }
 
+/* Keep Ecwid's native New Arrivals arrows available below the cards on phones. */
+@media (max-width: 767px) {
+  #tile-category-products-eqfZnr .section__container {
+    flex-direction: column;
+  }
+  #tile-category-products-eqfZnr .ins-tile__slider-controls--desktop {
+    display: flex !important;
+    position: static !important;
+    order: 2;
+    width: 112px;
+    height: 44px !important;
+    margin: 20px auto 0;
+    padding: 0;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    transform: none;
+  }
+  #tile-category-products-eqfZnr .ins-tile__slider-controls--desktop > [role="button"] {
+    position: static;
+    display: flex;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d4d4d4;
+    border-radius: 50%;
+    background: #fff;
+  }
+  #tile-category-products-eqfZnr .ins-tile__slider-controls--desktop > [role="button"]:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 3px;
+  }
+}
+
 /* Three installation videos share one player; unrelated product demos remain separate. */
 .ec-size .ec-store .product-details__product-description { --sm-video-gallery: 1; }
 .ec-size .ec-store .sm-video-gallery {
