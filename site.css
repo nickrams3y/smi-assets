@@ -3132,41 +3132,60 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   line-height: 1.5;
 }
 
-/* Keep Ecwid's native New Arrivals arrows available below the cards on phones. */
+/* A persistent mobile scroll cue for New Arrivals; native swiping stays intact. */
+#tile-category-products-eqfZnr .sm-arrivals-scroll { display: none; }
 @media (max-width: 767px) {
-  #tile-category-products-eqfZnr .section__container {
-    flex-direction: column;
-  }
-  #tile-category-products-eqfZnr .ins-tile__slider-controls--desktop {
-    display: flex !important;
-    position: static !important;
-    order: 2;
-    width: 112px;
-    height: 44px !important;
-    margin: 20px auto 0;
-    padding: 0;
-    gap: 24px;
-    align-items: center;
-    justify-content: center;
-    transform: none;
-  }
-  #tile-category-products-eqfZnr .ins-tile__slider-controls--desktop > [role="button"] {
-    position: static;
-    display: flex;
-    flex: 0 0 44px;
-    width: 44px;
+  #tile-category-products-eqfZnr .ins-tile__slider-controls--desktop { display: none !important; }
+  #tile-category-products-eqfZnr .sm-arrivals-scroll:not([hidden]) {
+    display: block;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: min(240px, 75%);
     height: 44px;
-    margin: 0;
+    margin: 10px auto 0;
     padding: 0;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #d4d4d4;
-    border-radius: 50%;
-    background: #fff;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    cursor: ew-resize;
+    touch-action: pan-y;
   }
-  #tile-category-products-eqfZnr .ins-tile__slider-controls--desktop > [role="button"]:focus-visible {
-    outline: 2px solid #555;
-    outline-offset: 3px;
+  #tile-category-products-eqfZnr .sm-arrivals-scroll::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 8px;
+    background: #e2e2e2;
+  }
+  #tile-category-products-eqfZnr .sm-arrivals-scroll::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: var(--sm-scroll-thumb, 48px);
+    height: 6px;
+    margin-top: -1px;
+    border: 0;
+    border-radius: 8px;
+    background: #888;
+  }
+  #tile-category-products-eqfZnr .sm-arrivals-scroll::-moz-range-track {
+    height: 4px;
+    border-radius: 8px;
+    background: #e2e2e2;
+  }
+  #tile-category-products-eqfZnr .sm-arrivals-scroll::-moz-range-thumb {
+    width: var(--sm-scroll-thumb, 48px);
+    height: 6px;
+    border: 0;
+    border-radius: 8px;
+    background: #888;
+  }
+  #tile-category-products-eqfZnr .sm-arrivals-scroll:focus-visible {
+    outline: 2px solid #888;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  #tile-category-products-eqfZnr .sm-arrivals-dragging {
+    scroll-snap-type: none !important;
+    scroll-behavior: auto !important;
   }
 }
 

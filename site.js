@@ -560,11 +560,43 @@ var SMI_PROCESSING_POLICY=(function(){
  document.addEventListener('load',function(event){if(event.target.tagName==='LINK')enhanceVideos()},true);
 })();
 
-/* Distinguish the native New Arrivals previous/next controls for screen readers. */
-SMI_DOM_RUNNER.add(function(){
- var previous=document.querySelector('#tile-category-products-eqfZnr .ins-tile__control-prev');
- if(previous&&previous.getAttribute('aria-label')!=='Go to the previous slide')previous.setAttribute('aria-label','Go to the previous slide');
-});
+/* A small mobile scroll bar reflects and controls Ecwid's existing product row. */
+(function(){
+ var state=null,mobile=window.matchMedia('(max-width: 767px)');
+ function cleanup(){
+  if(!state)return;
+  state.row.removeEventListener('scroll',state.sync);state.resize.disconnect();
+  state.row.classList.remove('sm-arrivals-dragging');state.bar.remove();state=null;
+ }
+ function enhance(){
+  var tile=document.getElementById('tile-category-products-eqfZnr');
+  var row=tile&&tile.querySelector('.ins-tile__body-inner');
+  if(!mobile.matches||!row){cleanup();return}
+  if(state&&state.row===row&&state.bar.isConnected){state.sync();return}
+  cleanup();
+  var bar=document.createElement('input');bar.type='range';bar.className='sm-arrivals-scroll';
+  bar.min='0';bar.max='1000';bar.step='1';bar.value='0';bar.setAttribute('aria-label','Scroll through new arrivals');
+  var dragging=false;
+  function sync(){
+   var max=row.scrollWidth-row.clientWidth;bar.hidden=max<=1;
+   bar.style.setProperty('--sm-scroll-thumb',Math.max(32,bar.clientWidth*row.clientWidth/Math.max(1,row.scrollWidth))+'px');
+   if(!dragging)bar.value=String(Math.round(Math.max(0,Math.min(1,row.scrollLeft/Math.max(1,max)))*1000));
+   bar.setAttribute('aria-valuetext',Math.round(Number(bar.value)/10)+'% through new arrivals');
+  }
+  function finish(){dragging=false;row.classList.remove('sm-arrivals-dragging');sync()}
+  bar.addEventListener('pointerdown',function(){dragging=true;row.classList.add('sm-arrivals-dragging')});
+  bar.addEventListener('input',function(){
+   row.classList.add('sm-arrivals-dragging');
+   row.scrollLeft=Number(bar.value)/1000*(row.scrollWidth-row.clientWidth);sync();
+  });
+  bar.addEventListener('change',finish);bar.addEventListener('pointerup',finish);bar.addEventListener('pointercancel',finish);bar.addEventListener('blur',finish);
+  row.closest('.ins-tile__slider').after(bar);
+  row.addEventListener('scroll',sync,{passive:true});
+  var resize=new ResizeObserver(sync);resize.observe(row);resize.observe(bar);
+  state={row:row,bar:bar,sync:sync,resize:resize};sync();
+ }
+ SMI_DOM_RUNNER.add(enhance);mobile.addEventListener('change',enhance);
+})();
 
 /* Announce the newly available jump-seat configuration on the 12-inch kit only. */
 (function(){
