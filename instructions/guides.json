@@ -3,7 +3,7 @@
     "id": "sync-3-upgrade",
     "category": "Upgrade kits",
     "title": "Sync 2 to Sync 3 upgrade kits",
-    "subtitle": "General installation instructions and additional conversion notes",
+    "subtitle": "Instructions for Sync 2 to Sync 3 upgrade kits, all vehicles",
     "keywords": "navigation non navigation 8 inch",
     "files": [
       {
@@ -16,7 +16,7 @@
     "id": "apim",
     "category": "Replacement hardware",
     "title": "Sync 3 APIM replacement",
-    "subtitle": "Ford and Lincoln",
+    "subtitle": "Instructions for Sync 3 APIM replacements, all vehicles",
     "keywords": "module navigation non navigation",
     "files": [
       {
@@ -28,8 +28,8 @@
   {
     "id": "12-inch",
     "category": "Upgrade kits",
-    "title": "12 inch screen upgrade for F-150 and F-250",
-    "subtitle": "",
+    "title": "12\" Sync 3 Upgrade",
+    "subtitle": "Instructions for installing the 12\" display for the F-150 and F-250",
     "keywords": "F150 F-150 F250 F-250 12 screen upgrade installation",
     "files": [
       {
@@ -97,8 +97,8 @@
   {
     "id": "usb-hub",
     "category": "Accessories",
-    "title": "Wireless USB-C hub",
-    "subtitle": "CarPlay, Android Auto and 30W charging",
+    "title": "USB-C Hub with Wireless Apple CarPlay and Android Auto",
+    "subtitle": "Installation instructions and general information",
     "keywords": "USB A adapter connectivity",
     "files": [
       {
@@ -110,13 +110,27 @@
   {
     "id": "software-update",
     "category": "Software updates",
-    "title": "Sync 3.4 software / maps update",
-    "subtitle": "Instructions for the supplied update USB drive",
+    "title": "Sync 3.4 Update Flash Drive",
+    "subtitle": "Instructions for installing the 3.4 update on using our software updating service",
     "keywords": "firmware navigation 2025 maps USB software update 3.4",
     "files": [
       {
         "label": "Software and maps update instructions",
         "url": "https://nickrams3y.github.io/smi-assets/instructions/pdfs/sync-3-software-maps-update.pdf"
+      }
+    ]
+  },
+  {
+    "id": "usb-hub-firmware",
+    "category": "Software updates",
+    "title": "Updating USB-C Hub with Wireless Apple CarPlay and Android Auto",
+    "subtitle": "Instructions on how to update the firmware on your USB-C Hub with wireless Apple CarPlay and Android Auto",
+    "keywords": "USB C wireless firmware updating OTA CarPlay Android Auto",
+    "files": [],
+    "links": [
+      {
+        "label": "Read instructions \u2192",
+        "url": "https://simplymichigan.co/blog/updating-usb-hub"
       }
     ]
   }
