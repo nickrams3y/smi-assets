@@ -1,6 +1,26 @@
 
 (async function(){
  var root=document.getElementById('sm-install-library');if(!root||root.dataset.initialized)return;root.dataset.initialized='true';
+ function addSupportJump(){
+  var description=document.querySelector('#tile-text-KxDxiG .ins-tile__description'),target=document.getElementById('tile-contact-us-SndLp5');
+  if(!description||!target)return false;
+  if(document.getElementById('sm-il-support-jump'))return true;
+  var link=document.createElement('a');link.id='sm-il-support-jump';link.href='#'+target.id;link.textContent='Need Support? Reach out to us';
+  link.addEventListener('click',function(event){
+   var currentTarget=document.getElementById('tile-contact-us-SndLp5');if(!currentTarget)return;target=currentTarget;
+   event.preventDefault();
+   target.setAttribute('tabindex','-1');target.focus({preventScroll:true});
+   target.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+  });
+  description.after(link);return true;
+ }
+ var supportAttempts=0;
+ function connectSupportJump(){
+  addSupportJump();
+  if(window.SMI_DOM_RUNNER){window.SMI_DOM_RUNNER.add(addSupportJump);return}
+  if(++supportAttempts<120)setTimeout(connectSupportJump,250);
+ }
+ connectSupportJump();
  var all;try{var response=await fetch(root.dataset.source,{cache:'no-cache'});if(!response.ok)throw new Error('Unavailable');all=await response.json();if(!Array.isArray(all))throw new Error('Invalid catalog')}catch(error){root.querySelector('.sm-il-loading').textContent='The instruction library could not load. Please refresh the page or contact us for your guide.';return}
  root.innerHTML="\n <div class=\"sm-il-preview\" hidden><strong>Layout preview.</strong> Product groups below are draft placeholders. PDF files and guide-to-product matches have not been added yet.</div>\n <div class=\"sm-il-toolbar\">\n  <label for=\"sm-il-search\">Find your instructions</label>\n  <input id=\"sm-il-search\" type=\"search\" placeholder=\"Search by product, vehicle or screen size\" autocomplete=\"off\" aria-controls=\"sm-il-results\">\n  <p class=\"sm-il-hint\">Choose the guide for your product. View or download a PDF, or read instructions online.</p>\n  <div class=\"sm-il-filters\" role=\"group\" aria-label=\"Filter instructions by product type\"></div>\n </div>\n <p class=\"sm-il-status\" role=\"status\" aria-live=\"polite\"></p>\n <div id=\"sm-il-results\" class=\"sm-il-grid\"></div>\n <div class=\"sm-il-empty\" hidden></div>\n <div class=\"sm-il-help\"><div><strong>Not sure which instructions you need?</strong><p>Send us your order number and vehicle details, and we\u2019ll help you find the right guide.</p></div><a href=\"https://simplymichigan.co/contact-us\">Contact us \u2192</a></div>\n <noscript><p>Please enable JavaScript to browse the instruction library, or <a href=\"https://simplymichigan.co/contact-us\">contact us for your guide</a>.</p></noscript>\n \n";
  var preview=false,selected='All guides';
