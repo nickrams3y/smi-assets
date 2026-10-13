@@ -1,0 +1,36 @@
+
+#sm-install-library{max-width:1128px;margin:0 auto;padding:16px 24px 56px;color:#262626;font-family:inherit;font-size:16px;line-height:1.55;text-align:left}
+#sm-install-library *{box-sizing:border-box}
+#sm-install-library [hidden]{display:none!important}
+#sm-install-library button,#sm-install-library input{font:inherit}
+#sm-install-library .sm-il-preview{padding:12px 16px;margin:0 0 24px;background:#fff4e7;border:1px solid #e8d2b6;border-radius:8px;font-size:14px;color:#604521}
+#sm-install-library .sm-il-toolbar{padding:24px;background:#f5f5f4;border:1px solid #e2e2df;border-radius:12px}
+#sm-install-library label{display:block;font-weight:700;margin-bottom:8px}
+#sm-install-library input[type=search]{appearance:none;display:block;width:100%;min-height:48px;margin:0;padding:12px 15px;border:1px solid #b8b8b8;border-radius:7px;background:#fff;color:#262626;font-size:16px}
+#sm-install-library .sm-il-hint{font-size:14px;color:#626262;margin:8px 0 18px}
+#sm-install-library .sm-il-filters{display:flex;flex-wrap:wrap;gap:8px}
+#sm-install-library .sm-il-filter{border:1px solid #d2d2d2;border-radius:30px;background:white;color:#424242;padding:9px 15px;min-height:44px;cursor:pointer;font-size:14px;font-weight:600}
+#sm-install-library .sm-il-filter[aria-pressed=true]{background:#303030;border-color:#303030;color:#fff}
+#sm-install-library .sm-il-status{color:#626262;font-size:14px;margin:22px 0 14px}
+#sm-install-library .sm-il-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+#sm-install-library .sm-il-card{border:1px solid #dededb;border-top:3px solid #f15a24;border-radius:10px;padding:23px 21px;background:#fff;display:flex;flex-direction:column;min-width:0}
+#sm-install-library .sm-il-card-top{display:flex;align-items:center;gap:12px;margin-bottom:17px}
+#sm-install-library .sm-il-icon{display:grid;place-items:center;width:42px;height:49px;border:1px solid #d2d2ce;border-radius:5px;background:#f7f7f5;font-size:11px;font-weight:800;letter-spacing:.7px;color:#666;flex:none}
+#sm-install-library .sm-il-category{color:#777;font-size:12px;letter-spacing:.7px;text-transform:uppercase;font-weight:700}
+#sm-install-library h2{font-size:19px;line-height:1.3;font-weight:700;margin:0 0 7px;padding:0;color:#262626}
+#sm-install-library .sm-il-subtitle{font-size:14px;color:#626262;margin:0 0 23px}
+#sm-install-library .sm-il-files{margin-top:auto;display:grid;gap:15px}
+#sm-install-library .sm-il-file-label{font-size:14px;font-weight:700;display:block;margin-bottom:8px}
+#sm-install-library .sm-il-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#sm-install-library .sm-il-view{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 15px;min-height:44px;background:#303030;border:1px solid #303030;color:white!important;text-decoration:none!important;border-radius:6px;font-size:14px;font-weight:600}
+#sm-install-library .sm-il-download{background:transparent;border:0;min-height:44px;padding:8px 0;color:#555;text-decoration:underline;text-underline-offset:3px;font-size:14px;cursor:pointer}
+#sm-install-library .sm-il-pending{color:#777;background:#f2f2f0;border:1px dashed #d2d2ce;border-radius:6px;padding:11px 13px;font-size:14px;margin-top:auto}
+#sm-install-library .sm-il-empty{padding:34px 24px;text-align:center;border:1px solid #dededb;border-radius:10px;background:#fafaf9}
+#sm-install-library .sm-il-help{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-top:28px;padding:22px 24px;background:#f5f5f4;border:1px solid #e2e2df;border-radius:10px}
+#sm-install-library .sm-il-help strong{display:block;font-size:17px;margin-bottom:4px}
+#sm-install-library .sm-il-help p{margin:0;color:#626262;font-size:14px}
+#sm-install-library .sm-il-help a{color:#303030;font-size:14px;font-weight:700;white-space:nowrap;text-underline-offset:3px}
+#sm-install-library .sm-il-error{font-size:14px;color:#9a2929;margin:12px 0 0}
+#sm-install-library a:focus-visible,#sm-install-library button:focus-visible,#sm-install-library input:focus-visible{outline:3px solid #d65a2f;outline-offset:3px}
+@media(max-width:950px){#sm-install-library .sm-il-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#sm-install-library{padding:8px 16px 36px}#sm-install-library .sm-il-toolbar{padding:18px}#sm-install-library .sm-il-grid{grid-template-columns:1fr}#sm-install-library .sm-il-help{align-items:flex-start;flex-direction:column;padding:20px}#sm-install-library .sm-il-filter{padding:9px 12px}#sm-install-library .sm-il-card{padding:20px}}
