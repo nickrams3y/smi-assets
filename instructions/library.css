@@ -36,8 +36,9 @@
 @media(max-width:600px){#sm-install-library{padding:8px 16px 36px}#sm-install-library .sm-il-toolbar{padding:18px}#sm-install-library .sm-il-grid{grid-template-columns:1fr}#sm-install-library .sm-il-help{align-items:flex-start;flex-direction:column;padding:20px}#sm-install-library .sm-il-filter{padding:9px 12px}#sm-install-library .sm-il-card{padding:20px}}
 
 /* Instructions introduction: jump to the contact form below the library. */
-#sm-il-support-jump{display:inline-flex;align-items:center;justify-content:center;align-self:center;gap:7px;width:fit-content;max-width:100%;min-height:44px;margin:10px auto 0;padding:6px 2px;border:0;border-radius:3px;background:transparent;color:#555!important;font-family:inherit;font-size:14px;font-weight:500;line-height:1.4;text-align:center;text-decoration:none!important;box-sizing:border-box}
+#sm-il-support-jump{display:inline-flex;align-items:center;justify-content:center;align-self:center;gap:7px;width:fit-content;max-width:100%;min-height:44px;margin:10px auto 0;padding:8px 14px;border:1px solid #c9c9c7;border-radius:7px;background:#f7f7f6;color:#404040!important;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.04);font-family:inherit;font-size:14px;font-weight:500;line-height:1.4;text-align:center;text-decoration:none!important;box-sizing:border-box}
 #sm-il-support-jump::after{content:"↓";font-size:15px;line-height:1}
-#sm-il-support-jump:hover{color:#222!important;text-decoration:underline!important;text-underline-offset:4px}
+#sm-il-support-jump:hover{background:#eeeeec;border-color:#aaa;color:#222!important}
+#sm-il-support-jump:active{background:#e6e6e3;box-shadow:none}
 #sm-il-support-jump:focus-visible{outline:3px solid #d65a2f;outline-offset:3px}
 #tile-contact-us-SndLp5{scroll-margin-top:90px}
