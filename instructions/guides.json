@@ -133,5 +133,31 @@
         "url": "https://simplymichigan.co/blog/updating-usb-hub"
       }
     ]
+  },
+  {
+    "id": "sync-3-reset",
+    "category": "Troubleshooting",
+    "title": "Sync 3 Reset Instructions",
+    "subtitle": "Instructions for performing a soft reset, master reset, or hard reset",
+    "keywords": "reset frozen screen troubleshooting master soft hard",
+    "files": [
+      {
+        "label": "Reset instructions",
+        "url": "https://nickrams3y.github.io/smi-assets/instructions/pdfs/sync-3-reset-instructions.pdf"
+      }
+    ]
+  },
+  {
+    "id": "software-maps-guide",
+    "category": "Software updates",
+    "title": "Software and Maps Update Instructions",
+    "subtitle": "Information on software and map update options for your Sync 3 system",
+    "keywords": "software maps firmware update CyanLabs Ford navigation",
+    "files": [
+      {
+        "label": "Software and maps update instructions",
+        "url": "https://nickrams3y.github.io/smi-assets/instructions/pdfs/software-and-maps-update-instructions.pdf"
+      }
+    ]
   }
 ]
