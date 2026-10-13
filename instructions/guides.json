@@ -2,7 +2,7 @@
   {
     "id": "sync-3-upgrade",
     "category": "Upgrade kits",
-    "title": "Sync 2 to Sync 3 upgrade kits",
+    "title": "Sync 2 to Sync 3 Upgrade",
     "subtitle": "Instructions for Sync 2 to Sync 3 upgrade kits, all vehicles",
     "keywords": "navigation non navigation 8 inch",
     "files": [
@@ -15,7 +15,7 @@
   {
     "id": "apim",
     "category": "Replacement hardware",
-    "title": "Sync 3 APIM replacement",
+    "title": "Sync 3 APIM Replacement",
     "subtitle": "Instructions for Sync 3 APIM replacements, all vehicles",
     "keywords": "module navigation non navigation",
     "files": [
@@ -110,7 +110,7 @@
   {
     "id": "software-update",
     "category": "Software updates",
-    "title": "Sync 3.4 Update Flash Drive",
+    "title": "Sync 3.4 Update Service",
     "subtitle": "Instructions for installing the 3.4 update on using our software updating service",
     "keywords": "firmware navigation 2025 maps USB software update 3.4",
     "files": [
