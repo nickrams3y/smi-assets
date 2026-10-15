@@ -39,6 +39,19 @@
     ]
   },
   {
+    "id": "4-to-8-conversion",
+    "category": "Upgrade kits",
+    "title": "4\" to 8\" Sync 3 Conversion",
+    "subtitle": "Universal installation and programming instructions for 4\" to 8\" conversions",
+    "keywords": "Ford Lincoln F-150 F150 F-250 F250 F-350 F350 Super Duty Mustang 4 inch 8 inch conversion",
+    "files": [
+      {
+        "label": "Installation and programming instructions",
+        "url": "https://files.simplymichigan.co/4-to-8-conversion-instructions.pdf"
+      }
+    ]
+  },
+  {
     "id": "fiesta-transit",
     "category": "Upgrade kits",
     "title": "Fiesta / Transit Sync 3 upgrade",
@@ -92,7 +105,12 @@
     "title": "ACM / receiver replacement",
     "subtitle": "Audio Control Module",
     "keywords": "radio sound",
-    "files": []
+    "files": [
+      {
+        "label": "Replacement instructions",
+        "url": "https://files.simplymichigan.co/acm-replacement-instructions.pdf"
+      }
+    ]
   },
   {
     "id": "usb-hub",
