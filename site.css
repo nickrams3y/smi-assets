@@ -19,6 +19,18 @@ hr.rounded {
   border-radius: 5px;
 }
 
+/* Size the floating contact button before Ecwid renders it on mobile. */
+@media (max-width: 699px) {
+  .ins-contacts-widget__button {
+    height: 44px !important;
+    padding-inline: 10px !important;
+  }
+
+  .ins-contacts-widget__button-title {
+    font-size: 14px !important;
+  }
+}
+
 @media (max-width: 600px) {
   .hc-reviews-overview__column-4 {
     flex: 1 1 100% !important;
