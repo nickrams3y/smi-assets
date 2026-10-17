@@ -640,3 +640,15 @@ var SMI_PROCESSING_POLICY=(function(){
  SMI_DOM_RUNNER.add(seatAvailabilityBanner);
  document.addEventListener('load',function(event){if(event.target.tagName==='LINK')seatAvailabilityBanner()},true);
 })();
+
+/* Keep Ecwid's live SKU beneath the product purchase controls. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('.product-details__sidebar').forEach(function(sidebar){
+  var sku=sidebar.querySelector(':scope > .product-details__product-sku');
+  var purchase=sidebar.querySelector(':scope > .details-product-purchase');
+  if(!sku||!purchase)return;
+  if(purchase.nextElementSibling!==sku)purchase.after(sku);
+  sku.style.marginTop='12px';
+  sku.style.marginBottom='0';
+ });
+});
