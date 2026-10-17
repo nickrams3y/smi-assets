@@ -129,13 +129,13 @@ function conversionKit(make,model,year){
 }
 function liteReplacement(make,model,year,show){
  var range=make==="Ford"&&L[model];if(!range||year<range[0]||year>range[1])return false;
- var links=[["Replace My 4&quot; SYNC 3 Lite APIM",U.lite]],kit=conversionKit(make,model,year);
- var copy="Keep your factory 4-inch non-touchscreen SYNC 3 Lite system with a replacement APIM. We will verify your vehicle's eligibility using your VIN before shipping.";
- if(model==="Transit")copy+=" Factory SYNC 3 Lite is required; base radio and E-Transit models are excluded.";
+ var links=[["APIM (Sync 3 Lite Non-Touchscreen)",U.lite]],kit=conversionKit(make,model,year);
+ var copy="Keep your factory 4-inch non-touchscreen Sync 3 Lite system with a replacement APIM. We will verify your vehicle's eligibility using your VIN before shipping.";
+ if(model==="Transit")copy+=" Factory Sync 3 Lite is required; base radio and E-Transit models are excluded.";
  if(model==="Expedition"||model==="Expedition MAX")copy+=" Availability depends on factory equipment; some applications are fleet/XL configurations.";
  if(kit){links.push(["Upgrade to 8&quot; Sync 3",kit.url]);if(kit.twelve)links.push(["12&quot; Upgrade Kit",U.t]);copy+=" Prefer a larger screen? Choose a complete upgrade kit below."}
  else links.push(["Questions About Your System?",U.c,1]);
- show(kit?"Replacement and upgrade options":"4-inch SYNC 3 Lite replacement",copy,links);return true
+ show(kit?"Replacement and upgrade options":"4-inch Sync 3 Lite replacement",copy,links);return true
 }
 function conversionYearMax(make,model){if(make!=="Ford")return 0;if(model==="F-150")return 2020;if(model==="Mustang"||model==="F-250"||model==="F-350")return 2022;return 0}
 var HKEY="smVehicleHandoffV1",HMAX=30*60*1000;
