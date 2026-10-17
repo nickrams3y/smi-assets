@@ -166,7 +166,7 @@ Object.keys(F).forEach(function(make){Object.keys(F[make]).forEach(function(mode
 /* Navigator display fitment is confirmed here for 2015 only. */
 F.Lincoln.Navigator[2]={2015:"Standard"};
 A=F;
-var P="https://simplymichigan.co/products/",U={n:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-without-navigation",y:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with-navigation",t:P+"ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit",s:P+"ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit",f1314:P+"2013-2014-f-150-4-to-8-complete-sync-3-upgrade-kit",f1517:P+"2015-2017-f-150-4-to-8-complete-sync-3-upgrade-kit",f4:P+"2018-2020-f-150-4-to-8-complete-sync-3-upgrade-kit",sd4:P+"2020-2022-f-250-350-super-duty-4-to-8-complete-sync-3-upgrade-kit",m4:P+"2019-2022-mustang-4-to-8-complete-sync-3-upgrade-kit",an:P+"ford-lincoln-sync-3-apim-replacement-with-navigation",ax:P+"ford-lincoln-sync-3-apim-replacement-without-navigation",lite:P+"ford-sync-3-lite-apim-replacement-for-4-non-touchscreen-systems",ds:P+"sync-3-display-screen-replacement-standard",dr:P+"sync-3-display-screen-replacement-recessed",d4:P+"sync-4-8-46-display-with-sync-3-conversion-bracket",acm:P+"audio-control-module-acm-receiver",g:"https://support.simplymichigan.co/articles/104443-4-to-8-conversion-overview",e:"https://simplymichigan.co/upgrade_guide",c:"https://simplymichigan.co/contact-us"};
+var P="https://simplymichigan.co/products/",U={n:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-without-navigation",y:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with-navigation",t:P+"ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit",s:P+"ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit",f1314:P+"2013-2014-f-150-4-to-8-complete-sync-3-upgrade-kit",f1517:P+"2015-2017-f-150-4-to-8-complete-sync-3-upgrade-kit",f4:P+"2018-2020-f-150-4-to-8-complete-sync-3-upgrade-kit",sd4:P+"2020-2022-f-250-350-super-duty-4-to-8-complete-sync-3-upgrade-kit",m4:P+"2019-2022-mustang-4-to-8-complete-sync-3-upgrade-kit",r4:P+"2019-2023-ranger-4-to-8-complete-sync-3-upgrade-kit",an:P+"ford-lincoln-sync-3-apim-replacement-with-navigation",ax:P+"ford-lincoln-sync-3-apim-replacement-without-navigation",lite:P+"ford-sync-3-lite-apim-replacement-for-4-non-touchscreen-systems",ds:P+"sync-3-display-screen-replacement-standard",dr:P+"sync-3-display-screen-replacement-recessed",d4:P+"sync-4-8-46-display-with-sync-3-conversion-bracket",acm:P+"audio-control-module-acm-receiver",g:"https://support.simplymichigan.co/articles/104443-4-to-8-conversion-overview",e:"https://simplymichigan.co/upgrade_guide",c:"https://simplymichigan.co/contact-us"};
 function display(a,v){if(a[2]&&typeof a[2]==="object")return a[2][v]||"Unverified";return a[2]==="F150"?(v>=2015?"Standard":"Recessed"):a[2]}
 function replacements(t,twelve,sync4){var q=[];if(twelve)q.push(['12&quot; Upgrade Kit',U.t]);q.push(["APIM (Navigation)",U.an],["APIM (Non-Navigation)",U.ax]);if(t==="Special"||t==="Unverified"){q.push(["Contact Us About a Display",U.c],["ACM Replacement",U.acm]);return q}q.push(['Sync 3 8.0&quot; Screen',t==="Standard"?U.ds:U.dr]);if(sync4)q.push(['Sync 4 8.46&quot; Screen Upgrade',U.d4]);q.push(["ACM Replacement",U.acm]);return q}
 function conversionKit(make,model,year){
@@ -177,6 +177,7 @@ function conversionKit(make,model,year){
   if(year>=2018&&year<=2020)return {name:"F-150",url:U.f4,twelve:true}
  }
  if(model==="Mustang"&&year>=2019&&year<=2022)return {name:"Mustang",url:U.m4,twelve:false};
+ if(model==="Ranger"&&year>=2019&&year<=2023)return {name:"Ranger",url:U.r4,twelve:false};
  if((model==="F-250"||model==="F-350")&&year>=2020&&year<=2022)return {name:"Super Duty",url:U.sd4,twelve:true};
  return null
 }
@@ -190,7 +191,7 @@ function liteReplacement(make,model,year,show){
  else links.push(["Questions About Your System?",U.c,1]);
  show(kit?"Replacement and upgrade options":"4-inch Sync 3 Lite replacement",copy,links);return true
 }
-function conversionYearMax(make,model){if(make!=="Ford")return 0;if(model==="F-150")return 2020;if(model==="Mustang"||model==="F-250"||model==="F-350")return 2022;return 0}
+function conversionYearMax(make,model){if(make!=="Ford")return 0;if(model==="F-150")return 2020;if(model==="Ranger")return 2023;if(model==="Mustang"||model==="F-250"||model==="F-350")return 2022;return 0}
 var HKEY="smVehicleHandoffV1",HMAX=30*60*1000;
 function clean(s){return (s||"").replace(/\s+/g," ").trim().toLowerCase()}
 function remember(e){
@@ -271,7 +272,7 @@ function visualSystemPicker(s){
 }
 function home(){
  var f=document.getElementById("sm-home-fit-form");if(!f||f.dataset.ready)return;f.dataset.ready="1";
- var b=document.getElementById("sm-home-fit-brand"),m=document.getElementById("sm-home-fit-model"),y=document.getElementById("sm-home-fit-year"),s=document.getElementById("sm-home-fit-system"),r=document.getElementById("sm-home-fit-result"),X={Ford:{"F-150":2020,"F-250":2022,"F-350":2022,Mustang:2022}},bl=b.closest("label").querySelector("span"),bo=b.querySelector('option[value=""]'),os=s.querySelector('option[value=""]'),o8=s.querySelector('option[value="8"]'),o3=s.querySelector('option[value="3"]');if(bl)bl.textContent="Make";if(bo)bo.textContent="Select make";if(os)os.textContent="Select system";if(o3)o3.textContent='8" Sync 3 (touch screen)';if(o8&&o3)s.insertBefore(o3,o8.nextSibling);var refreshSystem=visualSystemPicker(s);
+ var b=document.getElementById("sm-home-fit-brand"),m=document.getElementById("sm-home-fit-model"),y=document.getElementById("sm-home-fit-year"),s=document.getElementById("sm-home-fit-system"),r=document.getElementById("sm-home-fit-result"),X={Ford:{"F-150":2020,"F-250":2022,"F-350":2022,Mustang:2022,Ranger:2023}},bl=b.closest("label").querySelector("span"),bo=b.querySelector('option[value=""]'),os=s.querySelector('option[value=""]'),o8=s.querySelector('option[value="8"]'),o3=s.querySelector('option[value="3"]');if(bl)bl.textContent="Make";if(bo)bo.textContent="Select make";if(os)os.textContent="Select system";if(o3)o3.textContent='8" Sync 3 (touch screen)';if(o8&&o3)s.insertBefore(o3,o8.nextSibling);var refreshSystem=visualSystemPicker(s);
  function base(){return (F[b.value]||{})[m.value]}
  function max(a){return Math.max((X[b.value]||{})[m.value]||0,a[1])}
  function system(){s.disabled=!(b.value&&m.value&&y.value);if(s.disabled)s.value="";refreshSystem()}
