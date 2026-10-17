@@ -642,13 +642,18 @@ var SMI_PROCESSING_POLICY=(function(){
 })();
 
 /* Keep Ecwid's live SKU beneath the product purchase controls. */
-SMI_DOM_RUNNER.add(function(){
- document.querySelectorAll('.product-details__sidebar').forEach(function(sidebar){
-  var sku=sidebar.querySelector(':scope > .product-details__product-sku');
-  var purchase=sidebar.querySelector(':scope > .details-product-purchase');
-  if(!sku||!purchase)return;
-  if(purchase.nextElementSibling!==sku)purchase.after(sku);
-  sku.style.marginTop='12px';
-  sku.style.marginBottom='0';
- });
-});
+(function(){
+ var mobile=window.matchMedia('(max-width: 767px)');
+ function placeSKU(){
+  document.querySelectorAll('.product-details__sidebar').forEach(function(sidebar){
+   var sku=sidebar.querySelector(':scope > .product-details__product-sku');
+   var purchase=sidebar.querySelector(':scope > .details-product-purchase');
+   if(!sku||!purchase)return;
+   if(purchase.nextElementSibling!==sku)purchase.after(sku);
+   sku.style.marginTop='12px';
+   sku.style.marginBottom=mobile.matches?'24px':'0';
+  });
+ }
+ SMI_DOM_RUNNER.add(placeSKU);
+ mobile.addEventListener('change',placeSKU);
+})();
