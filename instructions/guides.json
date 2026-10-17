@@ -166,6 +166,19 @@
     ]
   },
   {
+    "id": "speaker-self-test",
+    "category": "Troubleshooting",
+    "title": "Speaker Walk Around Self Test",
+    "subtitle": "Instructions for running the audio and speaker self test through the diagnostic menu",
+    "keywords": "speaker speakers audio sound test walk around diagnostics troubleshooting radio ACM",
+    "files": [
+      {
+        "label": "Speaker self test instructions",
+        "url": "https://files.simplymichigan.co/speaker-walk-around-self-test-instructions.pdf"
+      }
+    ]
+  },
+  {
     "id": "software-maps-guide",
     "category": "Software updates",
     "title": "Software and Maps Update Instructions",
