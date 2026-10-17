@@ -4,7 +4,7 @@ Small browser-side assets used by the Simply Michigan Infotainment Ecwid storefr
 
 Ecwid loads the complete production bundle from:
 
-`https://cdn.jsdelivr.net/gh/nickrams3y/smi-assets@main/site.js`
+`https://nickrams3y.github.io/smi-assets/site.js?v=eb6e7e4`
 
 Ecwid loads the complete production stylesheet from:
 
@@ -12,7 +12,9 @@ Ecwid loads the complete production stylesheet from:
 
 ## Compatibility checker
 
-`sync-3-compatibility-checker.js` powers the vehicle compatibility checker on the Sync 2 to Sync 3 upgrades landing page. It runs entirely in the shopper's browser. When a shopper follows a recommended product link, the current browser tab temporarily retains the vehicle selections so the matching product fields can be prefilled.
+The shared finder implementation in `site.js` powers the homepage, Sync 2 to Sync 3 upgrades landing page, and APIM replacements landing page. `sync-3-compatibility-checker.js` and `c.js` are legacy snapshots, not the script used by these live finders. When a shopper follows a recommended product link, the current browser tab temporarily retains the vehicle selections so matching product fields can be prefilled.
+
+The `L` table in `site.js` lists the published U.S. factory 4-inch SYNC 3 Lite replacement model/year ranges. It expands the selectable catalog without changing the original `D` table used for Sync 2 conversion eligibility. For the 4-inch system choice, eligible vehicles receive a Lite replacement link alongside existing conversion kits where available. VIN verification and the Transit/Expedition equipment qualifiers remain in the result. Do not add conditional applications omitted from the published product listing.
 
 `site.js` is the production bundle. It contains the product-option enhancements and the compatibility checker, allowing Ecwid to use one short external loader instead of storing the application code in its limited editor.
 
