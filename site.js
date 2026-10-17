@@ -17,6 +17,53 @@ var SMI_DOM_RUNNER=(function(){
  return{add:function(task){tasks.push(task);if(started)schedule(180)}}
 })();
 
+/* Use Ecwid's existing 800px derivative for small Instant Site product cards.
+   Keep this early: replacing a pending oversized image can cancel its download.
+   Product detail galleries, zoom images, and uploaded originals are not changed. */
+(function(){
+ var selector='.ins-tile__product-card .ins-picture--full',states=new WeakMap();
+ function restore(picture,state){
+  state.sources.forEach(function(item){if(item.node.parentElement===picture&&item.node.srcset===state.url)item.node.srcset=item.srcset});
+  if(state.img.getAttribute('src')===state.url)state.img.setAttribute('src',state.src);
+  picture.removeAttribute('data-sm-card-thumbnail');
+ }
+ function optimize(){
+  document.querySelectorAll(selector).forEach(function(picture){
+   var img=picture.querySelector('img'),sources=Array.from(picture.querySelectorAll('source'));
+   if(!img)return;
+   var state=states.get(picture),width=img.getBoundingClientRect().width;
+   if(width>400){if(state)restore(picture,state);return}
+   if(width<=0)return;
+   // Ecwid supplies the medium derivative as the 1x image for its 500px breakpoint.
+   var medium=sources.find(function(source){return source.media==='(min-width: 500px)'});
+   if(!medium)return;
+   if(state&&state.img===img){
+    if(state.failed&&medium.srcset===state.medium)return;
+    if(sources.every(function(source){return source.srcset===state.url}))return;
+   }
+   // Do not add another download when a fast connection/cache has finished the image.
+   if(img.complete&&img.naturalWidth>0)return;
+   var options=medium.srcset.split(',');
+   if(options.length<2)return;
+   var url=options[0].trim().split(/\s+/)[0];
+   if(!/^https:\/\/d2j6dbq0eux0bg.cloudfront.net\/images\/20154142\/products\/\d+\/\d+\.(?:jpg|png|webp)$/.test(url))return;
+   if(url.slice(0,url.lastIndexOf('/'))!==img.src.slice(0,img.src.lastIndexOf('/')))return;
+   if(state&&state.onError)state.img.removeEventListener('error',state.onError);
+   state={img:img,url:url,src:img.getAttribute('src'),medium:medium.srcset,sources:sources.map(function(source){return{node:source,srcset:source.srcset}}),failed:false};
+   state.onError=function(){if(states.get(picture)!==state)return;state.failed=true;restore(picture,state)};
+   states.set(picture,state);
+   img.addEventListener('error',state.onError,{once:true});
+   sources.forEach(function(source){source.srcset=url});
+   img.src=url;
+   picture.setAttribute('data-sm-card-thumbnail','800');
+  });
+ }
+ optimize();
+ SMI_DOM_RUNNER.add(optimize);
+ var resizeTimer;
+ window.addEventListener('resize',function(){clearTimeout(resizeTimer);resizeTimer=setTimeout(optimize,150)});
+})();
+
 /* Mobile product previews: navigate Ecwid's existing swipe gallery, not a second gallery. */
 (function(){
  var states=new WeakMap(),mobile=window.matchMedia('(max-width: 767px)');
