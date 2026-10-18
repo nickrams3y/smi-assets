@@ -729,7 +729,7 @@ var SMI_PROCESSING_POLICY=(function(){
   if(root.dataset.initialized)return;
   if(window.SMI_TROUBLESHOOT&&document.getElementById('sm-troubleshoot-css')?.dataset.loaded==='true'){window.SMI_TROUBLESHOOT.mount(root);return}
   if(task||Date.now()<retryAt)return;
-  task=Promise.all([asset('link','sm-troubleshoot-css',base+'tool.css?v=20261017c'),asset('script','sm-troubleshoot-js',base+'tool.js?v=20261017c')]).then(function(){task=null;mount()}).catch(function(){
+  task=Promise.all([asset('link','sm-troubleshoot-css',base+'tool.css?v=20261017d'),asset('script','sm-troubleshoot-js',base+'tool.js?v=20261017d')]).then(function(){task=null;mount()}).catch(function(){
    task=null;retryAt=Date.now()+30000;
    if(!root.isConnected)return;
    root.innerHTML='<p style="text-align:center;padding:24px" role="status">The guide could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact support</a>.</p>';
