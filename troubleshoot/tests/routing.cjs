@@ -23,7 +23,7 @@ assert.match(run('sound',{...sound,sources:'unknown',speaker:'all'}).result.titl
 assert(!/phone-audio path/.test(run('sound',{...sound,sources:'unknown',speaker:'all'}).result.title));
 assert.match(run('sound',{...sound,sources:'phone',speaker:'all'}).result.title,/phone playback/);
 for(const system of ['Sync 2 · 8 inch','Sync 3 · 8 inch']){
- const resetGuide=system.startsWith('Sync 2')?'reset2':'reset';
+ const resetGuide=system.startsWith('Sync 2')?undefined:'reset';
  assert.equal(run('screen',{screenSymptom:'black'},system).questions.at(-1).guide,resetGuide);
  assert.equal(run('screen',{screenSymptom:'damage'},system).result.code,'screen-damage');
  assert(!run('screen',{screenSymptom:'damage'},system).questions.some(q=>q.id==='reset'));

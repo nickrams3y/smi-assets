@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-const guides={speaker:'https://files.simplymichigan.co/speaker-walk-around-self-test-instructions.pdf?v=20261018b',reset:'https://files.simplymichigan.co/sync-3-reset-instructions.pdf?v=20261018b',reset2:'https://files.simplymichigan.co/sync-2-reset-instructions.pdf?v=20261018b'};
+const guides={speaker:'https://files.simplymichigan.co/speaker-walk-around-self-test-instructions.pdf?v=20261018-originals',reset:'https://files.simplymichigan.co/sync-3-reset-instructions.pdf?v=20261018-originals'};
 const contact='https://simplymichigan.co/contact-us';
 const products={apim:'https://simplymichigan.co/products/sync-3-apims'};
 const systems=['Not sure/Other system','Sync 2 · 8 inch','Sync 3 · 8 inch','Sync 3 Lite · 4 inch'];
@@ -41,7 +41,7 @@ function support(title,description,steps){return makeResult('support',title,desc
 function solved(title,description){return makeResult('resolved',title,description,['Continue using the system and check that the improvement lasts.','If the problem returns, note what happened and contact us.'],'No replacement is recommended based on this result.');}
 function plan(state){
  const list=[],a=state.answers||{};let result=null;
- function ask(id){let q={...questions[id]};if(id==='reset'&&state.system==='Sync 2 · 8 inch')q.guide='reset2';list.push({...q,id});return q.options.some(o=>o.value===a[id])?a[id]:null;}
+ function ask(id){let q={...questions[id]};if(id==='reset'&&state.system==='Sync 2 · 8 inch'){delete q.guide;q.help+=' Contact us if you need help with the Sync 2 reset procedure.';}list.push({...q,id});return q.options.some(o=>o.value===a[id])?a[id]:null;}
  function done(value){result=value||null;return {questions:list,result};}
  if(!problems.some(p=>p[0]===state.problem))return done();
  const touchscreen=['Sync 2 · 8 inch','Sync 3 · 8 inch'].includes(state.system);
@@ -151,7 +151,7 @@ hand:'<path d="M8 12V6a2 2 0 0 1 4 0v6-8a2 2 0 0 1 4 0v8-6a2 2 0 0 1 4 0v10c0 4-
 'refresh-cw':'<path d="M20 7a9 9 0 0 0-15-1L2 9m0-6v6h6m-4 8a9 9 0 0 0 15 1l3-3m0 6v-6h-6"/>',
 smartphone:'<rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/>'};
 function escape(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function guideLink(key){return '<a class="sm-button sm-secondary sm-guide" href="'+guides[key]+'" target="_blank" rel="noopener">'+(key==='speaker'?'Speaker self-test instructions':key==='reset2'?'Sync 2 reset instructions':'Sync 3 reset instructions')+' ↗</a>';}
+function guideLink(key){return '<a class="sm-button sm-secondary sm-guide" href="'+guides[key]+'" target="_blank" rel="noopener">'+(key==='speaker'?'Speaker self-test instructions':'Sync 3 reset instructions')+' ↗</a>';}
 window.SMI_TROUBLESHOOT={mount:function(root){
  if(root.dataset.initialized)return;root.dataset.initialized='true';
  root.innerHTML='<div class="sm-wrap"><p class="sm-preview">Early version · Results identify a likely next step, not a confirmed diagnosis. Contact us to verify the right replacement for your vehicle.</p><div class="sm-stepper" aria-label="Your progress"><span data-step="0"><b>1</b> Your system</span><em></em><span data-step="1"><b>2</b> The problem</span><em></em><span data-step="2"><b>3</b> Checks</span><em></em><span data-step="3"><b>4</b> Results</span></div><section class="sm-panel" id="sm-tool-body" aria-label="Troubleshooting questions"></section><div class="sm-bottom">Prefer to talk to us? <a href="'+contact+'">Contact support</a></div><div class="sm-progress-tools"><span data-progress-note>Progress stays in this tab for up to 24 hours.</span><button type="button" class="sm-back" data-action="reset">Start over</button></div></div>';

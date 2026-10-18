@@ -153,28 +153,15 @@
     ]
   },
   {
-    "id": "sync-2-reset",
-    "category": "Troubleshooting",
-    "title": "Sync 2 Reset Instructions",
-    "subtitle": "Soft reset and master reset instructions for Sync 2 / MyFord Touch",
-    "keywords": "sync 2 myford mylincoln touch reset frozen master soft",
-    "files": [
-      {
-        "label": "Reset instructions",
-        "url": "https://files.simplymichigan.co/sync-2-reset-instructions.pdf?v=20261018b"
-      }
-    ]
-  },
-  {
     "id": "sync-3-reset",
     "category": "Troubleshooting",
     "title": "Sync 3 Reset Instructions",
-    "subtitle": "Instructions for a soft reset and master reset; contact us for power-disconnection guidance",
-    "keywords": "reset frozen screen troubleshooting master soft",
+    "subtitle": "Instructions for performing a soft reset, master reset, or hard reset",
+    "keywords": "reset frozen screen troubleshooting master soft hard",
     "files": [
       {
         "label": "Reset instructions",
-        "url": "https://files.simplymichigan.co/sync-3-reset-instructions.pdf?v=20261018b"
+        "url": "https://files.simplymichigan.co/sync-3-reset-instructions.pdf?v=20261018-originals"
       }
     ]
   },
@@ -182,12 +169,12 @@
     "id": "speaker-self-test",
     "category": "Troubleshooting",
     "title": "Speaker Walk Around Self Test",
-    "subtitle": "Run a compatible Sync 3 speaker self test and record what the results mean",
+    "subtitle": "Instructions for running the audio and speaker self test through the diagnostic menu",
     "keywords": "speaker speakers audio sound test walk around diagnostics troubleshooting radio ACM",
     "files": [
       {
         "label": "Speaker self test instructions",
-        "url": "https://files.simplymichigan.co/speaker-walk-around-self-test-instructions.pdf?v=20261018b"
+        "url": "https://files.simplymichigan.co/speaker-walk-around-self-test-instructions.pdf?v=20261018-originals"
       }
     ]
   },
