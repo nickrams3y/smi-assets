@@ -729,7 +729,7 @@ var SMI_PROCESSING_POLICY=(function(){
   if(root.dataset.initialized)return;
   if(window.SMI_TROUBLESHOOT&&document.getElementById('sm-troubleshoot-css')?.dataset.loaded==='true'){window.SMI_TROUBLESHOOT.mount(root);return}
   if(task||Date.now()<retryAt)return;
-  task=Promise.all([asset('link','sm-troubleshoot-css',base+'tool.css?v=20261017d'),asset('script','sm-troubleshoot-js',base+'tool.js?v=20261017d')]).then(function(){task=null;mount()}).catch(function(){
+  task=Promise.all([asset('link','sm-troubleshoot-css',base+'tool.css?v=20261017e'),asset('script','sm-troubleshoot-js',base+'tool.js?v=20261017e')]).then(function(){task=null;mount()}).catch(function(){
    task=null;retryAt=Date.now()+30000;
    if(!root.isConnected)return;
    root.innerHTML='<p style="text-align:center;padding:24px" role="status">The guide could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact support</a>.</p>';
@@ -737,4 +737,17 @@ var SMI_PROCESSING_POLICY=(function(){
   });
  }
  SMI_DOM_RUNNER.add(mount);
+})();
+
+/* Carry troubleshooting results into the native contact message, only on request. */
+(function(){
+ var loading=false,retryAt=0;
+ function attach(){
+  if(!/^\/(?:en\/)?contact-us\/?$/.test(location.pathname)||!new URL(location.href).searchParams.has('troubleshooting'))return;
+  if(window.SMI_TROUBLESHOOT_CONTACT){window.SMI_TROUBLESHOOT_CONTACT.mount();return;}
+  if(loading||Date.now()<retryAt)return;loading=true;
+  var script=document.createElement('script');script.src='https://nickrams3y.github.io/smi-assets/troubleshoot/contact.js?v=20261017e';script.async=true;
+  script.onload=function(){loading=false;window.SMI_TROUBLESHOOT_CONTACT?.mount()};script.onerror=function(){loading=false;retryAt=Date.now()+30000;script.remove();var form=document.querySelector('textarea[id^="contact-us-"][id$="-message"]')?.closest('form');if(form&&!document.getElementById('sm-results-unavailable')){var note=document.createElement('p');note.id='sm-results-unavailable';note.setAttribute('role','alert');note.textContent='Your troubleshooting results could not be attached automatically. Please copy your results and include them in the message below.';form.prepend(note)}};document.head.appendChild(script);
+ }
+ SMI_DOM_RUNNER.add(attach);
 })();

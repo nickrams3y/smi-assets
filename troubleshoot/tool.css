@@ -38,3 +38,22 @@
 #sm-troubleshoot .sm-question-help {clear:both;color:var(--sm-muted);font-size:14px;margin:0 0 12px;}
 #sm-troubleshoot .sm-flow-status {color:var(--sm-muted);font-size:12px;margin:22px 0 0;}
 #sm-troubleshoot .sm-self-test legend + .sm-answers {clear:both;}
+#sm-troubleshoot .sm-preview{max-width:720px;font-size:15px;line-height:1.55;}
+#sm-troubleshoot .sm-restart{background:#fff;color:#252729;border:2px solid #65696c;box-shadow:0 1px 2px #00000012;}
+#sm-troubleshoot .sm-restart:hover{background:#f0f2f0;}
+#sm-troubleshoot .sm-origin{flex-direction:column;}
+#sm-troubleshoot .sm-order{margin:20px 0;}
+#sm-troubleshoot .sm-order label{font-size:14px;font-weight:700;display:block;}
+#sm-troubleshoot .sm-order label span{font-weight:400;color:var(--sm-muted);}
+#sm-troubleshoot .sm-order input{display:block;width:100%;max-width:300px;padding:12px;border:1px solid var(--sm-line);border-radius:6px;font-size:16px;margin-top:7px;}
+#sm-troubleshoot .sm-order p{font-size:13px;color:var(--sm-muted);margin:7px 0;}
+#sm-troubleshoot .sm-system-pictures{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+#sm-troubleshoot .sm-system-picture{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;border:2px solid var(--sm-line);border-radius:10px;padding:14px;cursor:pointer;}
+#sm-troubleshoot .sm-system-picture:has(input:checked){border-color:var(--sm-green);background:var(--sm-soft);}
+#sm-troubleshoot .sm-system-picture input{align-self:flex-start;}
+#sm-troubleshoot .sm-system-picture img{width:100%;height:125px;object-fit:contain;margin:8px 0 12px;}
+#sm-troubleshoot .sm-system-picture strong{font-size:14px;}
+#sm-troubleshoot .sm-system-picture small{font-size:12px;color:var(--sm-muted);}
+#sm-troubleshoot .sm-other-system{margin-top:12px;width:fit-content;}
+#sm-troubleshoot input:focus-visible{outline:3px solid #fa5728;outline-offset:3px;}
+@media(max-width:550px){#sm-troubleshoot .sm-stepper{gap:5px;font-size:10px;}#sm-troubleshoot .sm-stepper span{flex-direction:column;gap:4px;text-align:center;flex:1;}#sm-troubleshoot .sm-stepper em{width:8px;}#sm-troubleshoot .sm-system-picture{padding:10px;}#sm-troubleshoot .sm-system-picture img{height:85px;}#sm-troubleshoot .sm-system-picture strong{font-size:13px;}}
