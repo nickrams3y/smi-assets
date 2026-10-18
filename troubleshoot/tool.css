@@ -57,3 +57,9 @@
 #sm-troubleshoot .sm-other-system{margin-top:12px;width:fit-content;}
 #sm-troubleshoot input:focus-visible{outline:3px solid #fa5728;outline-offset:3px;}
 @media(max-width:550px){#sm-troubleshoot .sm-stepper{gap:5px;font-size:10px;}#sm-troubleshoot .sm-stepper span{flex-direction:column;gap:4px;text-align:center;flex:1;}#sm-troubleshoot .sm-stepper em{width:8px;}#sm-troubleshoot .sm-system-picture{padding:10px;}#sm-troubleshoot .sm-system-picture img{height:85px;}#sm-troubleshoot .sm-system-picture strong{font-size:13px;}}
+#sm-troubleshoot .sm-bottom{font-size:15px;line-height:1.5;}
+#sm-troubleshoot .sm-bottom a{font-weight:600;}
+#sm-troubleshoot .sm-result-buttons{justify-content:flex-end;}
+@media(min-width:760px){#sm-troubleshoot .sm-system-pictures{grid-template-columns:repeat(4,minmax(0,1fr));}#sm-troubleshoot .sm-system-picture img{height:105px;}#sm-troubleshoot .sm-system-picture{padding:10px;}}
+#sm-troubleshoot .sm-choice:last-child{grid-column:auto;min-height:96px;}
+@media(max-width:550px){#sm-troubleshoot .sm-choice:last-child{min-height:80px;}}
