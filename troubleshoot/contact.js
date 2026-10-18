@@ -14,7 +14,7 @@ function mount(){
  const data=read();
  const native=document.querySelector('textarea[id^="contact-us-"][id$="-message"]'),form=native?.closest('form');
  if(!form||form.dataset.smTroubleshooting)return;
- if(!data){if(new URL(location.href).searchParams.has('troubleshooting')&&!document.getElementById('sm-results-unavailable')){const warning=document.createElement('p');warning.id='sm-results-unavailable';warning.setAttribute('role','status');warning.textContent='Your troubleshooting results are no longer available in this tab. Return to the guide or paste your copied results into the message below.';form.prepend(warning);}return;}
+ if(!data){if(new URL(location.href).searchParams.has('troubleshooting')&&!document.getElementById('sm-results-unavailable')){const warning=document.createElement('p');warning.id='sm-results-unavailable';warning.setAttribute('role','status');warning.append('Your troubleshooting results are no longer available in this tab. ');const resume=document.createElement('a');resume.href='https://simplymichigan.co/troubleshoot';resume.textContent='Return to the guide';warning.append(resume,' or paste your copied results into the message below.');form.prepend(warning);}return;}
  form.dataset.smTroubleshooting='true';
  const label=form.querySelector('label[for="'+native.id+'"]'),required=native.required;
  const comment=native.cloneNode(false);comment.id=native.id+'-comment';comment.removeAttribute('name');comment.value=native.value;comment.required=required;comment.placeholder='Add your question or anything else we should know. Your troubleshooting results will be included automatically.';
@@ -30,7 +30,7 @@ function mount(){
  form.addEventListener('submit',submit,true);
  const order=form.querySelector('input[id$="-additionalNote"]');if(order&&!order.value&&typeof data.order==='string'&&/^SM\d+$/.test(data.order))setValue(order,data.order);
  sync();document.getElementById('sm-results-unavailable')?.remove();form.prepend(notice);
- notice.querySelector('button').addEventListener('click',()=>{observer.disconnect();form.removeEventListener('submit',submit,true);setValue(native,comment.value);native.hidden=false;native.style.removeProperty('display');native.required=required;native.removeAttribute('aria-hidden');if(label)label.htmlFor=native.id;comment.remove();notice.remove();try{sessionStorage.removeItem(key)}catch(e){}native.focus();});
+ notice.querySelector('button').addEventListener('click',()=>{observer.disconnect();form.removeEventListener('submit',submit,true);setValue(native,comment.value);native.hidden=false;native.style.removeProperty('display');native.required=required;native.removeAttribute('aria-hidden');if(label)label.htmlFor=native.id;comment.remove();notice.remove();try{sessionStorage.removeItem(key);const url=new URL(location.href);url.searchParams.delete('troubleshooting');history.replaceState(history.state,'',url.href)}catch(e){}native.focus();});
  // Clear the temporary handoff only after Ecwid displays its success state.
  const observer=new MutationObserver(()=>{
   if(!form.isConnected){observer.disconnect();return;}

@@ -62,6 +62,11 @@ assert.equal(restoreProgress(saved,86402000).step,0);
 assert.equal(restoreProgress({...saved,version:1},2000).origin,'');
 assert.equal(restoreProgress({...saved,state:{...saved.state,origin:'bad'}},2000).step,0);
 assert.equal(restoreProgress({...saved,state:{...saved.state,answers:{screenSymptom:'black'}}},2000).step,2);
+// Focused-check navigation survives reload only for questions in the current path.
+const focused={...saved,state:{...saved.state,step:2,currentCheck:'reset'}};
+assert.equal(restoreProgress(focused,2000).currentCheck,'reset');
+assert.equal(restoreProgress({...focused,state:{...focused.state,currentCheck:'audioWorks'}},2000).currentCheck,'');
+assert.equal(restoreProgress({...focused,state:{...focused.state,currentCheck:'<script>'}},2000).currentCheck,'');
 assert(!problems.some(p=>p[0]==='touch'));
 let terminals=0;
 function walk(problem,system,answers={}){

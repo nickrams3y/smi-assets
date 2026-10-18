@@ -710,15 +710,16 @@ var SMI_PROCESSING_POLICY=(function(){
 
 /* Load the unadvertised troubleshooting tool only on its own page. */
 (function(){
- var task=null,retryAt=0,base='https://nickrams3y.github.io/smi-assets/troubleshoot/';
+ var task=null,retryAt=0,attempt=0,base='https://nickrams3y.github.io/smi-assets/troubleshoot/';
  function active(){return /^\/(?:en\/)?troubleshoot\/?$/.test(location.pathname)}
  function asset(tag,id,url){return new Promise(function(resolve,reject){
   var el=document.getElementById(id);
   if(el&&el.dataset.loaded==='true'){resolve();return}
   if(el)el.remove();el=document.createElement(tag);el.id=id;
   if(tag==='link'){el.rel='stylesheet';el.href=url}else{el.src=url;el.async=true}
-  el.onload=function(){el.dataset.loaded='true';resolve()};
-  el.onerror=function(){el.remove();reject(new Error('Troubleshooter asset unavailable'))};
+  var timeout=setTimeout(function(){el.remove();reject(new Error('Troubleshooter asset timed out'))},15000);
+  el.onload=function(){clearTimeout(timeout);el.dataset.loaded='true';resolve()};
+  el.onerror=function(){clearTimeout(timeout);el.remove();reject(new Error('Troubleshooter asset unavailable'))};
   document.head.appendChild(el);
  })}
  function mount(){
@@ -729,11 +730,11 @@ var SMI_PROCESSING_POLICY=(function(){
   if(root.dataset.initialized)return;
   if(window.SMI_TROUBLESHOOT&&document.getElementById('sm-troubleshoot-css')?.dataset.loaded==='true'){window.SMI_TROUBLESHOOT.mount(root);return}
   if(task||Date.now()<retryAt)return;
-  task=Promise.all([asset('link','sm-troubleshoot-css',base+'tool.css?v=20261018b'),asset('script','sm-troubleshoot-js',base+'tool.js?v=20261018b')]).then(function(){task=null;mount()}).catch(function(){
-   task=null;retryAt=Date.now()+30000;
+  task=Promise.all([asset('link','sm-troubleshoot-css',base+'tool.css?v=20261018c'+(attempt?'&retry='+attempt:'')),asset('script','sm-troubleshoot-js',base+'tool.js?v=20261018c'+(attempt?'&retry='+attempt:''))]).then(function(){task=null;mount()}).catch(function(){
+   task=null;attempt++;retryAt=Date.now()+30000;
    if(!root.isConnected)return;
    root.innerHTML='<p style="text-align:center;padding:24px" role="status">The guide could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact support</a>.</p>';
-   root.querySelector('button').onclick=function(){retryAt=0;mount()};
+   root.querySelector('button').onclick=function(){retryAt=0;root.innerHTML='<p style="text-align:center;padding:24px" role="status">Loading troubleshooting guide…</p>';mount()};
   });
  }
  SMI_DOM_RUNNER.add(mount);
@@ -741,13 +742,14 @@ var SMI_PROCESSING_POLICY=(function(){
 
 /* Carry troubleshooting results into the native contact message, only on request. */
 (function(){
- var loading=false,retryAt=0;
+ var loading=false,retryAt=0,attempt=0;
  function attach(){
   if(!/^\/(?:en\/)?contact-us\/?$/.test(location.pathname)||!new URL(location.href).searchParams.has('troubleshooting'))return;
   if(window.SMI_TROUBLESHOOT_CONTACT){window.SMI_TROUBLESHOOT_CONTACT.mount();return;}
   if(loading||Date.now()<retryAt)return;loading=true;
-  var script=document.createElement('script');script.src='https://nickrams3y.github.io/smi-assets/troubleshoot/contact.js?v=20261018b';script.async=true;
-  script.onload=function(){loading=false;window.SMI_TROUBLESHOOT_CONTACT?.mount()};script.onerror=function(){loading=false;retryAt=Date.now()+30000;script.remove();var form=document.querySelector('textarea[id^="contact-us-"][id$="-message"]')?.closest('form');if(form&&!document.getElementById('sm-results-unavailable')){var note=document.createElement('p');note.id='sm-results-unavailable';note.setAttribute('role','alert');note.textContent='Your troubleshooting results could not be attached automatically. Please copy your results and include them in the message below.';form.prepend(note)}};document.head.appendChild(script);
+  var script=document.createElement('script');script.src='https://nickrams3y.github.io/smi-assets/troubleshoot/contact.js?v=20261018c'+(attempt?'&retry='+attempt:'');script.async=true;
+  var timeout=setTimeout(function(){script.onerror()},15000);
+  script.onload=function(){clearTimeout(timeout);loading=false;window.SMI_TROUBLESHOOT_CONTACT?.mount()};script.onerror=function(){clearTimeout(timeout);loading=false;attempt++;retryAt=Date.now()+30000;script.remove();var form=document.querySelector('textarea[id^="contact-us-"][id$="-message"]')?.closest('form');if(form&&!document.getElementById('sm-results-unavailable')){var note=document.createElement('p');note.id='sm-results-unavailable';note.setAttribute('role','alert');note.textContent='Your troubleshooting results could not be attached automatically. Please copy your results and include them in the message below.';form.prepend(note)}};document.head.appendChild(script);
  }
  SMI_DOM_RUNNER.add(attach);
 })();
