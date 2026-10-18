@@ -31,3 +31,13 @@ The four optimized images in `images/system-selector/` power the visual current-
 Small Instant Site product cards (`.ins-tile__product-card .ins-picture--full`) use the existing Ecwid 800px derivative when their oversized image is still loading. The code reads the current image's medium breakpoint URL from Ecwid's markup; there is no fixed product/image mapping to maintain when a cover photo changes. Cards wider than 400 CSS pixels retain the native sources.
 
 This runs early in `site.js` so browsers can cancel pending oversized downloads. Already-loaded images are left alone to avoid a redundant request, so savings depend on cache and script timing. A failed replacement restores the native sources. Product detail galleries, zoom images, cart images, uploaded originals, and mobile gallery navigation are outside this selector. No CSS or catalog edits are required.
+
+## Troubleshooting guide (early version)
+
+`/troubleshoot` loads `troubleshoot/tool.js` and `troubleshoot/tool.css` through the small route-specific loader at the end of `site.js`. It mounts beneath Ecwid's existing `tile-text-ohZTvt` introduction. No navigation or homepage links are added. The page is publicly reachable by its URL; this is not access control or a search-indexing restriction.
+
+The five paths mirror the approved interactive mockup: audio, screen, touch, Sync stability, and phone connectivity. This first version provides next checks and a contact link, not a validated parts-selection engine. Most results are category-level guidance; answers are retained for support review. The amplifier branch is provisional and appears only for all-source audio failure with a reported premium system and an ACM replacement that left symptoms unchanged. No repair outcome or replacement purchase is implied. Broader diagnosis and vehicle-specific routing need separate evidence and review.
+
+Answers stay in the current page's memory; there is no form submission, persistent answer storage, or automatic message. Customers can copy a plain-text summary or manually select it if clipboard access is unavailable. Reloading starts over. Asset failures offer a retry and a support link. Shared DOM-runner mounting supports Ecwid navigation without duplicate instances. For changes to the tool files, bump their `v` query in the loader.
+
+Validation: all five paths at 1280, 390, and 320px; previous answers, restart, copy/fallback, and unrelated-page asset isolation. Re-run live verification after GitHub Pages deployment.

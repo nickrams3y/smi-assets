@@ -707,3 +707,34 @@ var SMI_PROCESSING_POLICY=(function(){
  SMI_DOM_RUNNER.add(placeSKU);
  mobile.addEventListener('change',placeSKU);
 })();
+
+/* Load the unadvertised troubleshooting tool only on its own page. */
+(function(){
+ var task=null,retryAt=0,base='https://nickrams3y.github.io/smi-assets/troubleshoot/';
+ function active(){return /^\/(?:en\/)?troubleshoot\/?$/.test(location.pathname)}
+ function asset(tag,id,url){return new Promise(function(resolve,reject){
+  var el=document.getElementById(id);
+  if(el&&el.dataset.loaded==='true'){resolve();return}
+  if(el)el.remove();el=document.createElement(tag);el.id=id;
+  if(tag==='link'){el.rel='stylesheet';el.href=url}else{el.src=url;el.async=true}
+  el.onload=function(){el.dataset.loaded='true';resolve()};
+  el.onerror=function(){el.remove();reject(new Error('Troubleshooter asset unavailable'))};
+  document.head.appendChild(el);
+ })}
+ function mount(){
+  if(!active()){var old=document.getElementById('sm-troubleshoot');if(old)old.remove();return}
+  var tile=document.getElementById('tile-text-ohZTvt');if(!tile)return;
+  var root=document.getElementById('sm-troubleshoot');
+  if(!root){root=document.createElement('section');root.id='sm-troubleshoot';root.setAttribute('aria-label','Infotainment troubleshooter');tile.after(root);root.innerHTML='<p style="text-align:center;padding:24px" role="status">Loading troubleshooting guide…</p>'}
+  if(root.dataset.initialized)return;
+  if(window.SMI_TROUBLESHOOT&&document.getElementById('sm-troubleshoot-css')?.dataset.loaded==='true'){window.SMI_TROUBLESHOOT.mount(root);return}
+  if(task||Date.now()<retryAt)return;
+  task=Promise.all([asset('link','sm-troubleshoot-css',base+'tool.css?v=20261017a'),asset('script','sm-troubleshoot-js',base+'tool.js?v=20261017a')]).then(function(){task=null;mount()}).catch(function(){
+   task=null;retryAt=Date.now()+30000;
+   if(!root.isConnected)return;
+   root.innerHTML='<p style="text-align:center;padding:24px" role="status">The guide could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact support</a>.</p>';
+   root.querySelector('button').onclick=function(){retryAt=0;mount()};
+  });
+ }
+ SMI_DOM_RUNNER.add(mount);
+})();
