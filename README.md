@@ -41,3 +41,5 @@ The five paths mirror the approved interactive mockup: audio, screen, touch, Syn
 Answers stay in the current page's memory; there is no form submission, persistent answer storage, or automatic message. Customers can copy a plain-text summary or manually select it if clipboard access is unavailable. Reloading starts over. Asset failures offer a retry and a support link. Shared DOM-runner mounting supports Ecwid navigation without duplicate instances. For changes to the tool files, bump their `v` query in the loader.
 
 Validation: all five paths at 1280, 390, and 320px; previous answers, restart, copy/fallback, and unrelated-page asset isolation. Re-run live verification after GitHub Pages deployment.
+
+The sound path includes the published Speaker Walk Around Self Test PDF in a new tab, with answers for every speaker, some speakers, silence, not yet tested, unable to start, and uncertainty. The answer is included in copied results and changes the next checks. The provisional amplifier path also requires reported silence during the self test; tones heard or inability to start never confirm a failed module.

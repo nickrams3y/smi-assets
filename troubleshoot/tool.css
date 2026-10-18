@@ -28,3 +28,10 @@
 #tile-text-ohZTvt .section__container {margin-bottom:24px!important;}
 
 #sm-troubleshoot h2,#sm-troubleshoot h3 {font-weight:700;}
+
+#sm-troubleshoot .sm-self-test {border-top:1px solid var(--sm-line);padding-top:20px;margin-top:26px;}
+#sm-troubleshoot .sm-self-test legend {float:left;width:100%;margin-bottom:9px;}
+#sm-troubleshoot .sm-self-test legend + p {clear:both;margin-bottom:12px;}
+#sm-troubleshoot .sm-guide {margin-top:14px;font-weight:600;text-align:center;}
+#sm-troubleshoot .sm-self-test .sm-guide {margin-top:0;}
+#sm-troubleshoot .sm-guide-hint {font-size:12px;color:var(--sm-muted);margin:9px 0 15px;}
