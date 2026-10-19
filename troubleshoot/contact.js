@@ -28,60 +28,60 @@ function decorate(form,native){
  fields.forEach(([suffix,labelText,placeholder])=>{const input=form.querySelector('[id$="-'+suffix+'"]');if(!input)return;const field=input.parentElement;field.dataset.smContactField=suffix;if(input.required)field.dataset.smContactRequired='true';const label=field.querySelector('label');if(label)label.textContent=labelText;input.placeholder=placeholder;});
  const submit=form.querySelector('button[id$="-submit-button"]');
  if(submit){submit.parentElement.dataset.smContactActions='true';const text=submit.querySelector('span.leading-5');if(text)text.textContent='Send message';
- const note=document.createElement('div');note.className='sm-contact-photo-note';note.innerHTML='<strong>Need to send a photo or proof for a military discount?</strong><p>You can attach it when you reply to our email.</p>';submit.parentElement.before(note);}
+ const note=document.createElement('div');note.className='sm-contact-photo-note';note.innerHTML='<strong>Need to send a photo or proof for a military discount?</strong><p>Send us your message first. Once we reply by email, you can attach your photos or documents to your reply.</p>';submit.parentElement.before(note);}
  if(!document.getElementById('sm-contact-design-style')){const style=document.createElement('style');style.id='sm-contact-design-style';style.textContent=`
-.sm-contact-content{max-width:1080px!important;width:100%!important}
-.sm-contact-spacing{margin-top:52px!important;margin-bottom:56px!important}
-.sm-contact-layout{display:grid!important;grid-template-columns:minmax(220px,.8fr) minmax(0,1.55fr)!important;gap:48px!important;align-items:start!important;color:#252728}
-.sm-contact-layout>.sm-contact-intro,.sm-contact-layout>.sm-contact-form-column{grid-column:auto!important;min-width:0;margin:0!important}
-.sm-contact-intro h1{font-size:38px!important;line-height:1.14!important;letter-spacing:-1px!important;font-weight:700!important;text-align:left!important;color:#252728!important}
-.sm-contact-intro .section__grid{gap:16px!important}
+:is(.sm-contact-content,.section__content:has(#contact-us-ZNGYK5-message)){max-width:1080px!important;width:100%!important}
+:is(.sm-contact-spacing,.section__container:has(#contact-us-ZNGYK5-message)){margin-top:52px!important;margin-bottom:56px!important}
+:is(.sm-contact-layout,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid){display:grid!important;grid-template-columns:minmax(220px,.8fr) minmax(0,1.55fr)!important;gap:48px!important;align-items:start!important;color:#252728}
+:is(.sm-contact-layout,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid)>:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1),:is(.sm-contact-layout,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid)>:is(.sm-contact-form-column,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-2){grid-column:auto!important;min-width:0;margin:0!important}
+:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) h1{font-size:38px!important;line-height:1.14!important;letter-spacing:-1px!important;font-weight:700!important;text-align:left!important;color:#252728!important}
+:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) .section__grid{gap:16px!important}
 .sm-contact-eyebrow{font-size:11px;letter-spacing:1.7px;text-transform:uppercase;font-weight:700;color:#666966;margin:0 0 12px}
-.sm-contact-description p{font-size:15px!important;line-height:1.65!important;color:#666966!important;text-align:left!important;margin:0!important}
+:is(.sm-contact-description,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p)) p{font-size:15px!important;line-height:1.65!important;color:#666966!important;text-align:left!important;margin:0!important}
 .sm-contact-response{font-size:13px;line-height:1.5;color:#666966;margin:22px 0 0}
 .sm-contact-shortcuts{border-top:1px solid #dedfda;margin-top:28px;padding-top:22px;font-size:13px;line-height:1.6}
 .sm-contact-shortcuts p{color:#666966;margin:0 0 12px}
 .sm-contact-shortcuts a{display:block;width:fit-content;margin:10px 0;color:#252728!important;font-weight:600;text-decoration:underline!important;text-underline-offset:4px}
-.sm-contact-form{box-sizing:border-box;background:#fff;border:1px solid #dedfda;border-radius:16px;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:18px;color:#252728}
-.sm-contact-form>*{grid-column:1/-1;min-width:0}
-.sm-contact-form .sm-contact-form-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:25px;order:-2}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){box-sizing:border-box;background:#fff;border:1px solid #dedfda;border-radius:16px;padding:28px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:18px;color:#252728}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message))>*{grid-column:1/-1;min-width:0}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-contact-form-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:25px;order:-2}
 .sm-contact-form-heading h2{font-size:20px!important;font-weight:600!important;line-height:1.3!important;letter-spacing:-.3px;color:#252728!important;margin:0}
 .sm-contact-form-heading>span{font-size:11px;color:#666966;white-space:nowrap}
-.sm-contact-form [data-sm-contact-field="name"],.sm-contact-form [data-sm-contact-field="email"]{grid-column:auto}
-.sm-contact-form [data-sm-contact-field]{margin:0 0 20px!important}
-.sm-contact-form [data-sm-contact-field] label{font-size:13px!important;line-height:1.45!important;font-weight:600!important;color:#252728!important;margin-bottom:8px}
-.sm-contact-form [data-sm-contact-required] label:after{content:' *'}
-[data-sm-contact-field]>div:first-child>span{display:none!important}
-.sm-contact-form [data-sm-contact-field] input,.sm-contact-form [data-sm-contact-field] textarea{box-sizing:border-box;width:100%;border:1px solid #dedfda!important;border-radius:7px!important;background:#fff!important;color:#252728!important;padding:12px!important;font-family:inherit!important;font-size:16px!important;line-height:1.45!important;font-style:normal!important;box-shadow:none!important}
-.sm-contact-form [data-sm-contact-field] input::placeholder,.sm-contact-form [data-sm-contact-field] textarea::placeholder{color:#747873!important;opacity:1!important;font-style:normal!important}
-.sm-contact-form [data-sm-contact-field] textarea:not([hidden]){height:128px!important;min-height:128px!important;resize:vertical}
-.sm-contact-form [data-sm-contact-field] input:focus-visible,.sm-contact-form [data-sm-contact-field] textarea:focus-visible,.sm-contact-form button:focus-visible{outline:2px solid #777f79!important;outline-offset:3px!important}
-[data-sm-contact-field="additionalNote"]{max-width:240px}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field="name"],div:has(> #contact-us-ZNGYK5-name)),:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field="email"],div:has(> #contact-us-ZNGYK5-email)){grid-column:auto}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))){margin:0 0 20px!important}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) label{font-size:13px!important;line-height:1.45!important;font-weight:600!important;color:#252728!important;margin-bottom:8px}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-required],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-message))) label:after{content:' *'}
+:is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message)))>div:first-child>span{display:none!important}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) input,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) textarea{box-sizing:border-box;width:100%;border:1px solid #dedfda!important;border-radius:7px!important;background:#fff!important;color:#252728!important;padding:12px!important;font-family:inherit!important;font-size:16px!important;line-height:1.45!important;font-style:normal!important;box-shadow:none!important}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) input::placeholder,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) textarea::placeholder{color:#747873!important;opacity:1!important;font-style:normal!important}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) textarea:not([hidden]){height:128px!important;min-height:128px!important;resize:vertical}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) input:focus-visible,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) textarea:focus-visible,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) button:focus-visible{outline:2px solid #777f79!important;outline-offset:3px!important}
+:is([data-sm-contact-field="additionalNote"],div:has(> #contact-us-ZNGYK5-additionalNote)){max-width:240px}
 .sm-contact-photo-note{background:#f7f7f5;border:1px solid #e5e5e1;border-radius:9px;padding:15px 16px;font-size:13px;line-height:1.55;color:#60655f}
 .sm-contact-photo-note strong{display:block;font-size:13px;color:#353a35;font-weight:600}
 .sm-contact-photo-note p{margin:4px 0 0}
-.sm-contact-form [data-sm-contact-actions]{display:block!important;margin:22px 0 0!important}
-[data-sm-contact-actions] button[id$='-submit-button']{width:100%!important;height:auto!important;min-height:48px;border-radius:8px!important;padding:13px 18px!important;background:#242726!important;color:#fff!important}
-[data-sm-contact-actions] button[id$='-submit-button'] span{filter:none!important;font-size:15px!important;line-height:1.5!important;font-weight:600!important;color:#fff!important;margin:0!important}
-[data-sm-contact-actions] p{font-family:inherit!important;font-size:11px!important;line-height:1.6!important;text-align:center;color:#666966!important;margin:10px 0 0!important}
-[data-sm-contact-actions] p:empty{display:none}
-.sm-contact-form .sm-attached-results{order:-1;background:#eef7f0;border:0;border-radius:8px;padding:14px;margin:0 0 22px;color:#276344}
-.sm-contact-form .sm-attached-heading{gap:8px;align-items:center}
-.sm-contact-form .sm-attached-heading>span{width:20px;height:20px}
-.sm-contact-form .sm-attached-heading strong{font-size:14px;line-height:1.4}
-.sm-contact-form .sm-attached-results p,.sm-contact-form .sm-attached-results summary,.sm-contact-form .sm-attached-results button{font-size:12px;line-height:1.5}
-.sm-contact-form .sm-attached-results p{margin:7px 0 9px}
-.sm-contact-form .sm-attached-results button{min-height:36px;padding:5px 10px}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])){display:block!important;margin:22px 0 0!important}
+:is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])) button[id$='-submit-button']{width:100%!important;height:auto!important;min-height:48px;border-radius:8px!important;padding:13px 18px!important;background:#242726!important;color:#fff!important}
+:is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])) button[id$='-submit-button'] span{filter:none!important;font-size:15px!important;line-height:1.5!important;font-weight:600!important;color:#fff!important;margin:0!important}
+:is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])) p{font-family:inherit!important;font-size:11px!important;line-height:1.6!important;text-align:center;color:#666966!important;margin:10px 0 0!important}
+:is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])) p:empty{display:none}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-results{order:-1;background:#eef7f0;border:0;border-radius:8px;padding:14px;margin:0 0 22px;color:#276344}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-heading{gap:8px;align-items:center}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-heading>span{width:20px;height:20px}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-heading strong{font-size:14px;line-height:1.4}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-results p,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-results summary,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-results button{font-size:12px;line-height:1.5}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-results p{margin:7px 0 9px}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) .sm-attached-results button{min-height:36px;padding:5px 10px}
 @media(max-width:760px){
-.sm-contact-spacing{margin-top:30px!important;margin-bottom:36px!important}
-.sm-contact-layout{grid-template-columns:minmax(0,1fr)!important;gap:26px!important}
-.sm-contact-intro h1{font-size:32px!important;max-width:400px}
-.sm-contact-intro .section__grid{gap:12px!important}
+:is(.sm-contact-spacing,.section__container:has(#contact-us-ZNGYK5-message)){margin-top:30px!important;margin-bottom:36px!important}
+:is(.sm-contact-layout,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid){grid-template-columns:minmax(0,1fr)!important;gap:26px!important}
+:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) h1{font-size:32px!important;max-width:400px}
+:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) .section__grid{gap:12px!important}
 .sm-contact-response{margin-top:14px}
 .sm-contact-shortcuts{display:none}
-.sm-contact-form{padding:22px}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){padding:22px}
 }
-@media(max-width:480px){.sm-contact-form{padding:19px;grid-template-columns:minmax(0,1fr)}[data-sm-contact-field="additionalNote"]{max-width:none}.sm-contact-form-heading h2{font-size:18px!important}.sm-contact-intro h1{font-size:30px!important}}
+@media(max-width:480px){:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){padding:19px;grid-template-columns:minmax(0,1fr)}:is([data-sm-contact-field="additionalNote"],div:has(> #contact-us-ZNGYK5-additionalNote)){max-width:none}.sm-contact-form-heading h2{font-size:18px!important}:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) h1{font-size:30px!important}}
 `;document.head.append(style);}
 }
 
@@ -121,5 +121,7 @@ function mount(){
  observer.observe(document.body,{childList:true,subtree:true});
 }
 window.SMI_TROUBLESHOOT_CONTACT={mount};
+// Let Ecwid finish hydrating its native form before attaching behavior.
+// The native-markup stylesheet already supplies the layout during this interval.
 if(typeof SMI_DOM_RUNNER!=='undefined')SMI_DOM_RUNNER.add(mount);else mount();
 })();
