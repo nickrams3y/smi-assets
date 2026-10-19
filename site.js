@@ -101,7 +101,6 @@ function decorate(form,native){
 :is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) h1{font-size:32px!important;max-width:400px}
 :is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) .section__grid{gap:12px!important}
 .sm-contact-response{margin-top:14px}
-.sm-contact-shortcuts{display:none}
 :is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){padding:22px}
 }
 @media(max-width:480px){:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){padding:19px;grid-template-columns:minmax(0,1fr)}:is([data-sm-contact-field="additionalNote"],div:has(> #contact-us-ZNGYK5-additionalNote)){max-width:none}.sm-contact-form-heading h2{font-size:18px!important}:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) h1{font-size:30px!important}}
@@ -124,7 +123,6 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 .section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) a{display:inline-block;opacity:1!important;border-bottom:0!important;font-size:13px!important;line-height:20.8px!important;color:#252728!important;font-weight:600;text-decoration:underline!important;text-underline-offset:4px}
 @media(max-width:760px){
 .section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p + p + p + p > a):not(:has(a)):not(:has(+ p + p > a)){margin-top:14px!important}
-.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p + p > a):not(:has(a)),.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> a){display:none!important}
 }
 `;document.head.append(style);}
 }
