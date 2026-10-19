@@ -740,16 +740,16 @@ var SMI_PROCESSING_POLICY=(function(){
  SMI_DOM_RUNNER.add(mount);
 })();
 
-/* Carry troubleshooting results into the native contact message, only on request. */
+/* Style the contact page and attach troubleshooting results only on request. */
 (function(){
  var loading=false,retryAt=0,attempt=0;
  function attach(){
-  if(!/^\/(?:en\/)?contact-us\/?$/.test(location.pathname)||!new URL(location.href).searchParams.has('troubleshooting'))return;
+  if(!/^\/(?:en\/)?contact-us\/?$/.test(location.pathname))return;
   if(window.SMI_TROUBLESHOOT_CONTACT){window.SMI_TROUBLESHOOT_CONTACT.mount();return;}
   if(loading||Date.now()<retryAt)return;loading=true;
-  var script=document.createElement('script');script.src='https://nickrams3y.github.io/smi-assets/troubleshoot/contact.js?v=20261018c'+(attempt?'&retry='+attempt:'');script.async=true;
+  var script=document.createElement('script');script.src='https://nickrams3y.github.io/smi-assets/troubleshoot/contact.js?v=20261019a'+(attempt?'&retry='+attempt:'');script.async=true;
   var timeout=setTimeout(function(){script.onerror()},15000);
-  script.onload=function(){clearTimeout(timeout);loading=false;window.SMI_TROUBLESHOOT_CONTACT?.mount()};script.onerror=function(){clearTimeout(timeout);loading=false;attempt++;retryAt=Date.now()+30000;script.remove();var form=document.querySelector('textarea[id^="contact-us-"][id$="-message"]')?.closest('form');if(form&&!document.getElementById('sm-results-unavailable')){var note=document.createElement('p');note.id='sm-results-unavailable';note.setAttribute('role','alert');note.textContent='Your troubleshooting results could not be attached automatically. Please copy your results and include them in the message below.';form.prepend(note)}};document.head.appendChild(script);
+  script.onload=function(){clearTimeout(timeout);loading=false;window.SMI_TROUBLESHOOT_CONTACT?.mount()};script.onerror=function(){clearTimeout(timeout);loading=false;attempt++;retryAt=Date.now()+30000;script.remove();var form=document.querySelector('textarea[id^="contact-us-"][id$="-message"]')?.closest('form');if(form&&new URL(location.href).searchParams.has('troubleshooting')&&!document.getElementById('sm-results-unavailable')){var note=document.createElement('p');note.id='sm-results-unavailable';note.setAttribute('role','alert');note.textContent='Your troubleshooting results could not be attached automatically. Please copy your results and include them in the message below.';form.prepend(note)}};document.head.appendChild(script);
  }
  SMI_DOM_RUNNER.add(attach);
 })();

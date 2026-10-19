@@ -55,3 +55,9 @@ The instruction catalog publishes Nick's original Sync 3 reset and speaker-test 
 Run `node troubleshoot/tests/routing.cjs` for the pure decision-flow checks, including all terminal answer sequences. Browser verification covers representative results for all four paths, stale-answer clearing, copied summaries, linked PDFs, and 1280/390/320px layouts. Re-run against the live page after GitHub Pages deployment.
 
 Contact-handoff validation intercepts the real `https://vuega.ecwid.com/contact-us` request before network transmission and asserts its message contains comments, system history, order number, answers, and recommendation. This validates request composition without sending a test email; inbox delivery still depends on Ecwid.
+
+## Contact page design
+
+All `/contact-us` visits load the route-scoped `troubleshoot/contact.js` enhancement. It restyles Ecwid's existing form and labels, preserves its controls, validation, honeypot, privacy text, and submit handler, and keeps the optional troubleshooting handoff. Desktop uses an introduction/sidebar beside the form; mobile stacks the fields. The upload mockup was not implemented: a note tells customers they can attach photos or military-discount proof when replying to our email. There is no upload input or new delivery service.
+
+If the enhancement cannot load, Ecwid's original form remains available. Only visits carrying a troubleshooting token show handoff-specific load errors. The submit button's inherited contrast filter is explicitly disabled to retain readable white text. Verification is in `work/2026-10-19-contact-redesign` in the parent workspace; test submissions were intercepted before delivery.
