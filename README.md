@@ -8,7 +8,7 @@ Ecwid loads the complete production bundle from:
 
 Ecwid loads the complete production stylesheet from:
 
-`https://cdn.jsdelivr.net/gh/nickrams3y/smi-assets@main/site.css`
+`https://nickrams3y.github.io/smi-assets/site.css?v=09da81d` (header link; the custom CSS theme also imports `site.css?v=eb6e7e4`)
 
 ## Compatibility checker
 
@@ -58,6 +58,8 @@ Contact-handoff validation intercepts the real `https://vuega.ecwid.com/contact-
 
 ## Contact page design
 
-The contact enhancement source is `troubleshoot/contact.js`, bundled near the start of `site.js` so `/contact-us` no longer waits for a second script download. Keep that bundled copy synchronized with the source. `site.css` targets both native Ecwid contact markup (form ZNGYK5) and the enhanced markup, so the card, columns, and fields are styled before JavaScript decoration. The script includes the same CSS as a fallback. It restyles Ecwid's existing form and labels, preserves its controls, validation, honeypot, privacy text, and submit handler, and keeps the optional troubleshooting handoff. Desktop uses an introduction/sidebar beside the form; mobile stacks the fields. The upload mockup was not implemented: a note tells customers they can attach photos or military-discount proof when replying to our email. There is no upload input or new delivery service.
+The contact enhancement source is `troubleshoot/contact.js`, bundled near the start of `site.js` so `/contact-us` no longer waits for a second script download. Keep that bundled copy synchronized with the source. `site.css` targets both native Ecwid contact markup (form ZNGYK5) and the enhanced markup, so the card, columns, and fields are styled before JavaScript decoration. The script includes the same CSS as a fallback. It restyles Ecwid's existing form, preserves its controls, validation, honeypot, privacy text, and submit handler, and keeps the optional troubleshooting handoff. Desktop uses an introduction/sidebar beside the form; mobile stacks the fields. The upload mockup was not implemented: a note tells customers they can attach photos or military-discount proof when replying to our email. There is no upload input or new delivery service.
 
 If the enhancement cannot load, Ecwid's original form remains available. Missing or expired troubleshooting tokens still show handoff-specific guidance. The submit button's inherited contrast filter is explicitly disabled to retain readable white text. Verification is in `work/2026-10-19-contact-redesign` in the parent workspace; test submissions were intercepted before delivery.
+
+The heading, description, labels, placeholders, submit label, and photo-reply note are saved directly in Ecwid contact section `contact-us-ZNGYK5`. The photo note is the Message field note, styled from native markup. Do not overwrite this copy in JavaScript: that caused the old text to flash and move the layout. Early CSS supplies matching eyebrow, response-time, and form-heading slots until accessible HTML enhancements mount; the description selector excludes the heading container. Delayed-script checks at 1280, 760, 390, and 320px compare heading and field positions before and after mounting.

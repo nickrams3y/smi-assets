@@ -31,24 +31,22 @@ function read(){
 function setValue(el,value){const proto=el.tagName==='TEXTAREA'?HTMLTextAreaElement.prototype:HTMLInputElement.prototype;Object.getOwnPropertyDescriptor(proto,'value').set.call(el,value);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}
 // Restyle Ecwid's existing controls without replacing its form or submit handler.
 function decorate(form,native){
- const buttonText=form.querySelector('button[id$="-submit-button"] span.leading-5');
- if(buttonText&&buttonText.textContent==='Submit')buttonText.textContent='Send message';
  if(form.dataset.smContactDesign)return;
  const grid=form.closest('.section__grid'),content=grid?.closest('.section__content'),intro=grid?.querySelector('h1')?.closest('.order-1');
  if(!grid||!content||!intro)return;
  form.dataset.smContactDesign='20261019';form.classList.add('sm-contact-form');
  grid.classList.add('sm-contact-layout');content.classList.add('sm-contact-content');content.parentElement.classList.add('sm-contact-spacing');intro.classList.add('sm-contact-intro');form.parentElement.classList.add('sm-contact-form-column');
  const heading=intro.querySelector('h1'),description=intro.querySelector('h1')?.parentElement.nextElementSibling;
- heading.textContent='Let’s get you connected.';
- if(description){description.classList.add('sm-contact-description');description.querySelector('p').textContent='Questions about your vehicle, help with an order, or something else? Send us a message.';}
+ if(description)description.classList.add('sm-contact-description');
  const eyebrow=document.createElement('p');eyebrow.className='sm-contact-eyebrow';eyebrow.textContent='Here to help';heading.before(eyebrow);
  const help=document.createElement('div');help.className='sm-contact-help';help.innerHTML='<p class="sm-contact-response">We typically reply within 24 hours.</p><div class="sm-contact-shortcuts"><p>Looking for a quick answer?</p><a href="https://simplymichigan.co/install">Installation instructions <span aria-hidden="true">↗</span></a><a href="https://support.simplymichigan.co/">Visit our support center <span aria-hidden="true">↗</span></a></div>';intro.append(help);
  const title=document.createElement('div');title.className='sm-contact-form-heading';title.innerHTML='<h2>Send us a message</h2><span>* Required</span>';form.prepend(title);
- const fields=[['name','Your name','First and last name'],['email','Email address','you@example.com'],['additionalNote','Order number (optional)','SM1234'],['message','How can we help?','Tell us what’s going on. For vehicle questions, include the year and model.']];
- fields.forEach(([suffix,labelText,placeholder])=>{const input=form.querySelector('[id$="-'+suffix+'"]');if(!input)return;const field=input.parentElement;field.dataset.smContactField=suffix;if(input.required)field.dataset.smContactRequired='true';const label=field.querySelector('label');if(label)label.textContent=labelText;input.placeholder=placeholder;});
+ // Copy and placeholders live in Ecwid, so the first render matches the enhanced form.
+ ['name','email','additionalNote','message'].forEach(suffix=>{const input=form.querySelector('[id$="-'+suffix+'"]');if(!input)return;const field=input.parentElement;field.dataset.smContactField=suffix;if(input.required)field.dataset.smContactRequired='true';});
  const submit=form.querySelector('button[id$="-submit-button"]');
- if(submit){submit.parentElement.dataset.smContactActions='true';const text=submit.querySelector('span.leading-5');if(text)text.textContent='Send message';
- const note=document.createElement('div');note.className='sm-contact-photo-note';note.innerHTML='<strong>Need to send a photo or proof for a military discount?</strong><p>Send us your message first. Once we reply by email, you can attach your photos or documents to your reply.</p>';submit.parentElement.before(note);}
+ if(submit)submit.parentElement.dataset.smContactActions='true';
+ const photoNote=native.parentElement.querySelector(':scope > div.mt-2');
+ if(photoNote)photoNote.classList.add('sm-contact-photo-note');
  if(!document.getElementById('sm-contact-design-style')){const style=document.createElement('style');style.id='sm-contact-design-style';style.textContent=`
 :is(.sm-contact-content,.section__content:has(#contact-us-ZNGYK5-message)){max-width:1080px!important;width:100%!important}
 :is(.sm-contact-spacing,.section__container:has(#contact-us-ZNGYK5-message)){margin-top:52px!important;margin-bottom:56px!important}
@@ -57,7 +55,7 @@ function decorate(form,native){
 :is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) h1{font-size:38px!important;line-height:1.14!important;letter-spacing:-1px!important;font-weight:700!important;text-align:left!important;color:#252728!important}
 :is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) .section__grid{gap:16px!important}
 .sm-contact-eyebrow{font-size:11px;letter-spacing:1.7px;text-transform:uppercase;font-weight:700;color:#666966;margin:0 0 12px}
-:is(.sm-contact-description,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p)) p{font-size:15px!important;line-height:1.65!important;color:#666966!important;text-align:left!important;margin:0!important}
+:is(.sm-contact-description,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p):not(:has(> h1))) p{font-size:15px!important;line-height:1.65!important;color:#666966!important;text-align:left!important;margin:0!important}
 .sm-contact-response{font-size:13px;line-height:1.5;color:#666966;margin:22px 0 0}
 .sm-contact-shortcuts{border-top:1px solid #dedfda;margin-top:28px;padding-top:22px;font-size:13px;line-height:1.6}
 .sm-contact-shortcuts p{color:#666966;margin:0 0 12px}
@@ -77,9 +75,11 @@ function decorate(form,native){
 :is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) textarea:not([hidden]){height:128px!important;min-height:128px!important;resize:vertical}
 :is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) input:focus-visible,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-field],div:has(> :is(#contact-us-ZNGYK5-name,#contact-us-ZNGYK5-email,#contact-us-ZNGYK5-additionalNote,#contact-us-ZNGYK5-message))) textarea:focus-visible,:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) button:focus-visible{outline:2px solid #777f79!important;outline-offset:3px!important}
 :is([data-sm-contact-field="additionalNote"],div:has(> #contact-us-ZNGYK5-additionalNote)){max-width:240px}
-.sm-contact-photo-note{background:#f7f7f5;border:1px solid #e5e5e1;border-radius:9px;padding:15px 16px;font-size:13px;line-height:1.55;color:#60655f}
-.sm-contact-photo-note strong{display:block;font-size:13px;color:#353a35;font-weight:600}
-.sm-contact-photo-note p{margin:4px 0 0}
+:is(.sm-contact-photo-note,#contact-us-ZNGYK5-message ~ div.mt-2){margin:20px 0 0!important;background:#f7f7f5;border:1px solid #e5e5e1;border-radius:9px;padding:15px 16px;font-size:13px;line-height:1.55;color:#60655f}
+:is(.sm-contact-photo-note,#contact-us-ZNGYK5-message ~ div.mt-2)>p:first-child{display:block;font-size:13px;color:#353a35;font-weight:600}
+:is(.sm-contact-photo-note,#contact-us-ZNGYK5-message ~ div.mt-2) p{font-size:13px!important;line-height:1.55!important;margin:4px 0 0!important}
+:is(.sm-contact-photo-note,#contact-us-ZNGYK5-message ~ div.mt-2)>p:first-child{margin:0!important}
+:is(.sm-contact-photo-note,#contact-us-ZNGYK5-message ~ div.mt-2)>p:has(>br:only-child){display:none}
 :is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)) :is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])){display:block!important;margin:22px 0 0!important}
 :is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])) button[id$='-submit-button']{width:100%!important;height:auto!important;min-height:48px;border-radius:8px!important;padding:13px 18px!important;background:#242726!important;color:#fff!important}
 :is([data-sm-contact-actions],form:has(#contact-us-ZNGYK5-message) > div:has(> button[id$="-submit-button"])) button[id$='-submit-button'] span{filter:none!important;font-size:15px!important;line-height:1.5!important;font-weight:600!important;color:#fff!important;margin:0!important}
@@ -102,6 +102,14 @@ function decorate(form,native){
 :is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){padding:22px}
 }
 @media(max-width:480px){:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){padding:19px;grid-template-columns:minmax(0,1fr)}:is([data-sm-contact-field="additionalNote"],div:has(> #contact-us-ZNGYK5-additionalNote)){max-width:none}.sm-contact-form-heading h2{font-size:18px!important}:is(.sm-contact-intro,.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1) h1{font-size:30px!important}}
+
+/* Match the enhancement geometry before the optional JavaScript arrives. */
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(>h1):not(:has(.sm-contact-eyebrow))::before{content:"Here to help";display:block;font-size:11px;line-height:16.5px;letter-spacing:1.7px;text-transform:uppercase;font-weight:700;color:#666966;margin:0 0 12px}
+.sm-contact-eyebrow{line-height:16.5px}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1:not(:has(.sm-contact-help))::after{content:"We typically reply within 24 hours.";display:block;font-size:13px;line-height:19.5px;color:#666966;margin:22px 0 0}
+form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before{content:"Send us a message";display:block;grid-column:1/-1;order:-2;font-size:20px;font-weight:600;line-height:26px;letter-spacing:-.3px;color:#252728;margin:0 0 25px}
+@media(max-width:760px){.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1:not(:has(.sm-contact-help))::after{margin-top:14px}}
+@media(max-width:480px){form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before{font-size:18px;line-height:23.4px}}
 `;document.head.append(style);}
 }
 
