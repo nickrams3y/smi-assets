@@ -39,7 +39,10 @@ function decorate(form,native){
  const heading=intro.querySelector('h1'),description=intro.querySelector('h1')?.parentElement.nextElementSibling;
  if(description)description.classList.add('sm-contact-description');
  const eyebrow=document.createElement('p');eyebrow.className='sm-contact-eyebrow';eyebrow.textContent='Here to help';heading.before(eyebrow);
+ // Quick-answer links are saved in Ecwid; retain fallback for older cached page HTML.
+ if(!description?.querySelector('a[href="https://simplymichigan.co/upgrade_guide"]')){
  const help=document.createElement('div');help.className='sm-contact-help';help.innerHTML='<p class="sm-contact-response">We typically reply within 24 hours.</p><div class="sm-contact-shortcuts"><p>Looking for a quick answer?</p><a href="https://simplymichigan.co/upgrade_guide">Upgrade guide <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/install">Installation instructions <span aria-hidden="true">↗</span></a><a href="https://support.simplymichigan.co/">Visit our support center <span aria-hidden="true">↗</span></a></div>';intro.append(help);
+ }
  const title=document.createElement('div');title.className='sm-contact-form-heading';title.innerHTML='<h2>Send us a message</h2><span>* Required</span>';form.prepend(title);
  // Copy and placeholders live in Ecwid, so the first render matches the enhanced form.
  ['name','email','additionalNote','message'].forEach(suffix=>{const input=form.querySelector('[id$="-'+suffix+'"]');if(!input)return;const field=input.parentElement;field.dataset.smContactField=suffix;if(input.required)field.dataset.smContactRequired='true';});
@@ -110,6 +113,19 @@ function decorate(form,native){
 form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before{content:"Send us a message";display:block;grid-column:1/-1;order:-2;font-size:20px;font-weight:600;line-height:26px;letter-spacing:-.3px;color:#252728;margin:0 0 25px}
 @media(max-width:760px){.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1:not(:has(.sm-contact-help))::after{margin-top:14px}}
 @media(max-width:480px){form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before{font-size:18px;line-height:23.4px}}
+
+/* Native quick-answer content renders before the optional enhancement script. */
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1:has(.section__grid a[href="https://simplymichigan.co/upgrade_guide"])::after{display:none!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1:has(.section__grid a[href="https://simplymichigan.co/upgrade_guide"]) > .sm-contact-help{display:none!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:empty{display:none}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p + p > a){font-size:13px!important;line-height:19.5px!important;margin-top:22px!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p > a):not(:has(a)){border-top:1px solid #dedfda;margin:28px 0 12px!important;padding-top:22px;font-size:13px!important;line-height:20.8px!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> a){font-size:13px!important;line-height:20.8px!important;margin:10px 0!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) a{display:inline-block;color:#252728!important;font-weight:600;text-decoration:underline!important;text-underline-offset:4px}
+@media(max-width:760px){
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p + p > a){margin-top:14px!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p > a):not(:has(a)),.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> a){display:none!important}
+}
 `;document.head.append(style);}
 }
 
