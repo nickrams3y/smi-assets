@@ -104,6 +104,32 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 @media(max-width:760px){
 .section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p + p + p + p > a):not(:has(a)):not(:has(+ p + p > a)){margin-top:14px!important}
 }
+
+/* Compact mobile contact introduction and native quick-answer cards. */
+@media(max-width:760px){
+
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1{text-align:center!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 h1{text-align:center!important;margin-left:auto!important;margin-right:auto!important;max-width:440px;font-size:30px!important;line-height:1.16!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(>p) p{text-align:center!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px;row-gap:8px}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p{text-align:center!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(p){display:contents!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:not(:has(p)){grid-column:1/-1}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(>a){grid-column:auto;display:flex!important;margin:0!important;min-width:0}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(>a)>a{box-sizing:border-box;display:flex!important;align-items:center;justify-content:center;width:100%;min-height:60px;padding:10px 9px;border:1px solid #dedfda!important;border-radius:9px;background:#fff;text-decoration:none!important;font-size:13px!important;line-height:1.4!important;text-align:center;overflow-wrap:break-word;text-wrap:balance}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(>a)>a:focus-visible{outline:2px solid #777f79;outline-offset:3px}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(>a)>a:active{background:#efefec}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+p+p+p+p>a):not(:has(a)):not(:has(+p+p>a)){margin-top:4px!important}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+p+p>a):not(:has(a)){margin:10px 0 2px!important;padding-top:14px}
+:is(.sm-contact-spacing,.section__container:has(#contact-us-ZNGYK5-message)){margin-top:24px!important;margin-bottom:28px!important}
+:is(.sm-contact-layout,.section__content:has(#contact-us-ZNGYK5-message)>.section__grid){gap:22px!important}
+:is(.sm-contact-photo-note,#contact-us-ZNGYK5-message~div.mt-2){padding:12px 13px;margin-top:14px!important}
+:is(.sm-contact-photo-note,#contact-us-ZNGYK5-message~div.mt-2) p{font-size:12px!important;line-height:1.5!important}
+:is(.sm-contact-form,form:has(#contact-us-ZNGYK5-message)){text-align:left}
+.sm-contact-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:18px;padding-top:14px}
+.sm-contact-shortcuts p{grid-column:1/-1;text-align:center;margin:0 0 2px}
+.sm-contact-shortcuts a{display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-height:60px;margin:0;padding:10px 9px;border:1px solid #dedfda;border-radius:9px;background:#fff;text-decoration:none!important;line-height:1.4}
+}
 `;document.head.append(style);}
 }
 
