@@ -917,3 +917,32 @@ var SMI_PROCESSING_POLICY=(function(){
  }
  SMI_DOM_RUNNER.add(mount);
 })();
+
+/* The support library is fetched only on the dedicated support page. */
+(function(){
+ var task=null,failed=false,base='https://nickrams3y.github.io/smi-assets/support/';
+ function active(){return /^\/(?:en\/)?support\/?$/.test(location.pathname)}
+ function asset(tag,id,file){return new Promise(function(resolve,reject){
+  var el=document.getElementById(id);if(el&&el.dataset.loaded==='true'){resolve();return}
+  if(el)el.remove();el=document.createElement(tag);el.id=id;
+  if(tag==='link'){el.rel='stylesheet';el.href=base+file}else{el.src=base+file;el.async=true}
+  var timer=setTimeout(function(){el.remove();reject(new Error('Support asset timed out'))},15000);
+  el.onload=function(){clearTimeout(timer);el.dataset.loaded='true';resolve()};
+  el.onerror=function(){clearTimeout(timer);el.remove();reject(new Error('Support asset unavailable'))};document.head.appendChild(el);
+ })}
+ function mount(){
+  var root=document.getElementById('sm-support'),tile=document.getElementById('tile-text-3SJuj7');
+  if(!active()){if(root){if(window.SMI_SUPPORT)window.SMI_SUPPORT.unmount();root.remove()}if(tile)tile.hidden=false;return}
+  if(!tile)return;
+  if(!root){root=document.createElement('section');root.id='sm-support';root.setAttribute('aria-label','Support library');root.style.minHeight='60vh';root.innerHTML='<p style="text-align:center;padding:32px" role="status">Loading support articles…</p>';tile.after(root)}
+  if(root.dataset.initialized)return;
+  if(window.SMI_SUPPORT&&document.getElementById('sm-support-css')?.dataset.loaded==='true'){tile.hidden=true;window.SMI_SUPPORT.mount(root);return}
+  if(task||failed)return;
+  task=Promise.all([asset('link','sm-support-css','hub.css?v=20261020a'),asset('script','sm-support-js','hub.js?v=20261020a')]).then(function(){task=null;mount()}).catch(function(){
+   task=null;failed=true;if(!root.isConnected)return;
+   root.innerHTML='<p style="text-align:center;padding:32px" role="status">The support library could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact us for help</a>.</p>';
+   root.querySelector('button').onclick=function(){failed=false;mount()};
+  });
+ }
+ SMI_DOM_RUNNER.add(mount);
+})();
