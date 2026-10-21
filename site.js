@@ -938,7 +938,7 @@ var SMI_PROCESSING_POLICY=(function(){
   if(root.dataset.initialized)return;
   if(window.SMI_SUPPORT&&document.getElementById('sm-support-css')?.dataset.loaded==='true'){tile.hidden=true;window.SMI_SUPPORT.mount(root);return}
   if(task||failed)return;
-  task=Promise.all([asset('link','sm-support-css','hub.css?v=20261020a'),asset('script','sm-support-js','hub.js?v=20261020a')]).then(function(){task=null;mount()}).catch(function(){
+  task=Promise.all([asset('link','sm-support-css','hub.css?v=20261020a'),asset('script','sm-support-js','hub.js?v=20261020b')]).then(function(){task=null;mount()}).catch(function(){
    task=null;failed=true;if(!root.isConnected)return;
    root.innerHTML='<p style="text-align:center;padding:32px" role="status">The support library could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact us for help</a>.</p>';
    root.querySelector('button').onclick=function(){failed=false;mount()};
