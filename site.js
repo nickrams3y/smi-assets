@@ -933,12 +933,13 @@ var SMI_PROCESSING_POLICY=(function(){
  function mount(){
   var root=document.getElementById('sm-support'),tile=document.getElementById('tile-text-3SJuj7');
   if(!active()){if(root){if(window.SMI_SUPPORT)window.SMI_SUPPORT.unmount();root.remove()}if(tile)tile.hidden=false;return}
+  if(document.querySelector('#sm-support[data-native]'))return;
   if(!tile)return;
   if(!root){root=document.createElement('section');root.id='sm-support';root.setAttribute('aria-label','Support library');root.style.minHeight='60vh';root.innerHTML='<p style="text-align:center;padding:32px" role="status">Loading support articles…</p>';tile.after(root)}
   if(root.dataset.initialized)return;
   if(window.SMI_SUPPORT&&document.getElementById('sm-support-css')?.dataset.loaded==='true'){tile.hidden=true;window.SMI_SUPPORT.mount(root);return}
   if(task||failed)return;
-  task=Promise.all([asset('link','sm-support-css','hub.css?v=20261020a'),asset('script','sm-support-js','hub.js?v=20261020b')]).then(function(){task=null;mount()}).catch(function(){
+  task=Promise.all([asset('link','sm-support-css','hub.css?v=20261020c'),asset('script','sm-support-js','hub.js?v=20261020c')]).then(function(){task=null;mount()}).catch(function(){
    task=null;failed=true;if(!root.isConnected)return;
    root.innerHTML='<p style="text-align:center;padding:32px" role="status">The support library could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact us for help</a>.</p>';
    root.querySelector('button').onclick=function(){failed=false;mount()};

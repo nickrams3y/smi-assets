@@ -13,3 +13,10 @@ assert.equal(rank('CarPlay')[0].id,'108333');assert.equal(rank('no sound')[0].id
 assert(rank('USB C').some(a=>a.id==='104458'));assert(rank('GPS').some(a=>a.id==='104287'));
 assert.equal(rank('zzzznotfound').length,0);assert(rank('CarPlay','26651').every(a=>a.category==='26651'));
 console.log('74 articles, category counts, migrated links/media, sanitized markup and search checks passed.');
+assert.equal(rank('CarPlay not connecting')[0].id,'108333');
+assert.equal(rank('How can I reset my Sync 3 system?')[0].id,'104293');
+assert(rank('CarPlay not connecting','26647').every(a=>a.category==='26647'));
+assert(context.window.SMI_SUPPORT.search(data.articles,'CarPlay disconnecting','').partial);
+const related=context.window.SMI_SUPPORT.relatedArticles(data.articles,data.articles.find(a=>a.id==='105986'));
+assert(related.some(a=>a.id==='125382'));assert(!related.some(a=>a.id==='104456'));
+console.log('Natural-language fallback, category filtering and relevant audio suggestions passed.');
