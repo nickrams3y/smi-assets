@@ -542,7 +542,7 @@ SMI_DOM_RUNNER.add(init);
 /* Read processing estimates from the current product's full policy, never its preview. */
 var SMI_PROCESSING_POLICY=(function(){
  function read(root){
-  if(!root||!/^\/products\/(?:ford-lincoln-sync-3-apim-(?:and-screen-complete-upgrade-kit|replacement)-(?:with|without)-navigation|ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit|ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit|audio-control-module-acm-(?:receiver|reciever)|(?:2013-2014-f-150|2015-2017-f-150|2018-2020-f-150|2020-2022-f-250-350-super-duty|2019-2022-mustang|2019-2023-ranger)-4-to-8-complete-sync-3-upgrade-kit)\/?$/.test(location.pathname))return null;
+  if(!root||!/^\/products\/(?:ford-lincoln-sync-3-apim-(?:and-screen-complete-upgrade-kit|replacement)-(?:with|without)-navigation|ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit|ford-sync-3-lite-apim-replacement-for-4-non-touchscreen-systems|ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit|audio-control-module-acm-(?:receiver|reciever)|(?:2013-2014-f-150|2015-2017-f-150|2018-2020-f-150|2020-2022-f-250-350-super-duty|2019-2022-mustang|2019-2023-ranger)-4-to-8-complete-sync-3-upgrade-kit)\/?$/.test(location.pathname))return null;
   var detail=Array.prototype.find.call(root.querySelectorAll('details'),function(item){
    var summary=item.querySelector(':scope > summary');if(!summary)return false;
    var title=summary.querySelector('.sm-disclosure-title');
