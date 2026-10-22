@@ -20,3 +20,13 @@ assert(context.window.SMI_SUPPORT.search(data.articles,'CarPlay disconnecting','
 const related=context.window.SMI_SUPPORT.relatedArticles(data.articles,data.articles.find(a=>a.id==='105986'));
 assert(related.some(a=>a.id==='125382'));assert(!related.some(a=>a.id==='104456'));
 console.log('Natural-language fallback, category filtering and relevant audio suggestions passed.');
+
+const suggest=(q,c)=>context.window.SMI_SUPPORT.suggest(data.articles,q,c);
+assert.equal(suggest('').articles.length,0);assert.equal(suggest('c').articles.length,0);
+assert(suggest('carp').articles.some(a=>a.id==='108333'));
+assert(suggest('milit').articles.some(a=>a.id==='104455'));
+assert(suggest('reset sy').articles.some(a=>a.id==='104293'));
+assert.equal(suggest('zzzznotfound').articles.length,0);
+assert(suggest('carp','26647').articles.every(a=>a.category==='26647'));
+assert(suggest('carplay zzzznotfound').partial);
+console.log('Live suggestions: partial words, empty/no matches and category filtering passed.');

@@ -77,3 +77,5 @@ All 74 source articles were copied on October 20, 2026. Four substantive changes
 Search, topic filters, article permalinks, recommended/related articles, and copy-link controls use URL hashes so browser Back works without another Ecwid document navigation. No customer information, search analytics, accounts, or third-party search service are added. `/troubleshoot` is not promoted. The original HelpSite service remains available pending cutover/redirect decisions. The standalone `support/index.html` is a review preview; the production page uses the existing Ecwid header/footer.
 
 Run `node support/tests/catalog.cjs` for catalog, link, media and search checks. Bump the loader asset query after changes, and the catalog version in `hub.js` when changing article content.
+
+Support search offers up to five live article suggestions after two characters, debounced by 150 ms. Suggestions use the loaded catalog, support partial title words and the active topic filter, and provide keyboard navigation and a full-results link. The suggestion styles ship inside `support/hub.js` so the existing Ecwid snippet receives the complete feature together.
