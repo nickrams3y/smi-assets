@@ -961,7 +961,7 @@ var SMI_PROCESSING_POLICY=(function(){
   if(!section){if(note)note.remove();return}
   if(!document.getElementById(styleId)){
    var style=document.createElement('style');style.id=styleId;
-   style.textContent='#sm-checkout-review-note{display:flex;align-items:flex-start;gap:13px;box-sizing:border-box;width:100%;margin:22px 0 0;padding:19px;border:1px solid #e2e2e2;border-radius:10px;background:#f5f5f4;color:#252525;font-family:inherit;text-align:left}'+
+   style.textContent='#sm-checkout-review-note{display:flex;align-items:flex-start;gap:13px;box-sizing:border-box;width:100%;margin:22px 0 20px;padding:19px;border:1px solid #e2e2e2;border-radius:10px;background:#f5f5f4;color:#252525;font-family:inherit;text-align:left}'+
     '#sm-checkout-review-note .sm-review-icon{display:block;flex:0 0 23px;width:23px;height:23px;margin:2px 0 0;color:#646464}'+
     '#sm-checkout-review-note .sm-review-copy{min-width:0;flex:1}'+
     '#sm-checkout-review-note .sm-review-title{display:block;margin:0 0 8px;padding:0;font-family:inherit;font-size:16px;font-weight:700;line-height:1.4;color:#252525}'+
