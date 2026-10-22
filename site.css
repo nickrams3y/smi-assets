@@ -3474,3 +3474,11 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 .sm-contact-shortcuts p{grid-column:1/-1;text-align:center;margin:0 0 2px}
 .sm-contact-shortcuts a{display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-height:60px;margin:0;padding:10px 9px;border:1px solid #dedfda;border-radius:9px;background:#fff;text-decoration:none!important;line-height:1.4}
 }
+
+/* Keep a real gap before Pay, independent of the note's injected margin. */
+.ec-cart-step--payment .ec-cart-step__section:has(> #sm-checkout-review-note) {
+  padding-bottom: 20px !important;
+}
+#sm-checkout-review-note {
+  margin-bottom: 0 !important;
+}

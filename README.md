@@ -28,7 +28,7 @@ The four optimized images in `images/system-selector/` power the visual current-
 
 ## Checkout review reminder
 
-`checkout/review-note.js` is bundled at the end of `site.js`. Keep the source and bundled copy synchronized. On the active payment step it places the approved optional Google survey reminder immediately after Ecwid's order-comments section. Its small scoped stylesheet is installed with the markup, avoiding another request or an unstyled note. Native comments, payment controls, submission, and Google's actual post-order opt-in are unchanged. Repeated checkout renders reuse the note, and earlier checkout steps remove it. Verification lives in `work/2026-10-21-checkout-review` in the parent workspace; the test cart stops before Pay.
+`checkout/review-note.js` is bundled at the end of `site.js`. Keep the source and bundled copy synchronized. On the active payment step it places the approved optional Google survey reminder immediately after Ecwid's order-comments section. Its small scoped stylesheet is installed with the markup, avoiding another request or an unstyled note. A matching rule in `site.css` puts 20px bottom padding on the containing comments section and zeroes the note's bottom margin, preserving the Pay gap with older loaded scripts as well. Native comments, payment controls, submission, and Google's actual post-order opt-in are unchanged. Repeated checkout renders reuse the note, and earlier checkout steps remove it. Verification lives in `work/2026-10-21-checkout-review` in the parent workspace; the test cart stops before Pay.
 
 ## Product card image delivery
 
