@@ -3482,3 +3482,14 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 #sm-checkout-review-note {
   margin-bottom: 0 !important;
 }
+
+/* Keep product names readable in storefront, category and home-page cards. */
+.ec-size .ec-store .grid-product__title,
+.ec-size .ec-store .grid-product__title-inner,
+.ins-tile__product-card .ins-tile__product-name {
+  -webkit-hyphens: none !important;
+  hyphens: none !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  white-space: normal !important;
+}
