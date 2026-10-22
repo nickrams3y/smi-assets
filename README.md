@@ -4,7 +4,7 @@ Small browser-side assets used by the Simply Michigan Infotainment Ecwid storefr
 
 Ecwid loads the complete production bundle from:
 
-`https://nickrams3y.github.io/smi-assets/site.js?v=eb6e7e4`
+`https://nickrams3y.github.io/smi-assets/site.js?v=78f0dbb`
 
 Ecwid loads the complete production stylesheet from:
 
