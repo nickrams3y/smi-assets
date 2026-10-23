@@ -3483,6 +3483,11 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   margin-bottom: 0 !important;
 }
 
+/* Hide the Instant Site platform credit across the shared footer. */
+.ins-tile__made-with {
+  display: none !important;
+}
+
 /* Keep product names readable in storefront, category and home-page cards. */
 .ec-size .ec-store .grid-product__title,
 .ec-size .ec-store .grid-product__title-inner,
