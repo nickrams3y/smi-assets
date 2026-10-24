@@ -16,7 +16,8 @@ console.log('83 articles, category counts, migrated links/media, sanitized marku
 assert.equal(rank('CarPlay not connecting')[0].id,'108333');
 assert.equal(rank('How can I reset my Sync 3 system?')[0].id,'104293');
 assert(rank('CarPlay not connecting','26647').every(a=>a.category==='26647'));
-assert(context.window.SMI_SUPPORT.search(data.articles,'CarPlay disconnecting','').partial);
+assert.equal(rank('CarPlay disconnecting')[0].id,'108333');
+assert(context.window.SMI_SUPPORT.search(data.articles,'CarPlay zzzznotfound','').partial);
 const related=context.window.SMI_SUPPORT.relatedArticles(data.articles,data.articles.find(a=>a.id==='105986'));
 assert(related.some(a=>a.id==='125382'));assert(!related.some(a=>a.id==='104456'));
 console.log('Natural-language fallback, category filtering and relevant audio suggestions passed.');
