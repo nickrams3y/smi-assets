@@ -5,3 +5,10 @@
 
 /* Larger breadcrumbs and modality-aware destination focus. */
 #sm-support .sh-crumb{font-size:16px;line-height:1.5;align-items:center;gap:8px 12px;margin:24px 0;padding:10px 14px;background:var(--sh-soft);border:1px solid var(--sh-line);border-radius:10px}#sm-support .sh-crumb a{display:inline-flex;align-items:center;min-height:36px;font-weight:650;color:#245f48;text-decoration:underline;text-underline-offset:4px}#sm-support [data-focus]:focus-visible{outline:3px solid #298568;outline-offset:5px;border-radius:3px}#sm-support[data-nav-input="pointer"] [data-focus]:focus{outline:none!important;box-shadow:none!important} @media(max-width:619px){#sm-support .sh-crumb{font-size:15px;padding:8px 12px;margin:18px 0;gap:4px 10px}#sm-support .sh-crumb a{min-height:40px}}
+
+/* Match the homepage support label, including its decorative green pulse. */
+#sm-support .sh-hero .sh-eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;text-transform:none;letter-spacing:.2px;font-size:18px;font-weight:700;line-height:1.4;color:#222;margin:0 0 12px}
+#sm-support .sh-hero .sh-eyebrow::before{content:'';display:inline-block;flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:#35a66b;box-shadow:0 0 0 3px #35a66b16;animation:sh-support-pulse 3.6s ease-in-out infinite}
+@keyframes sh-support-pulse{0%,100%{opacity:1;box-shadow:0 0 0 3px #35a66b16}50%{opacity:.6;box-shadow:0 0 0 6px #35a66b06}}
+@media(max-width:619px){#sm-support .sh-hero .sh-eyebrow{font-size:16px}}
+@media(prefers-reduced-motion:reduce){#sm-support .sh-hero .sh-eyebrow::before{animation:none}}

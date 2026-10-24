@@ -3498,3 +3498,10 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   overflow-wrap: normal !important;
   white-space: normal !important;
 }
+
+/* Match the homepage support label, including its decorative green pulse. */
+#sm-support .sh-hero .sh-eyebrow{display:flex;align-items:center;justify-content:center;gap:10px;text-transform:none;letter-spacing:.2px;font-size:18px;font-weight:700;line-height:1.4;color:#222;margin:0 0 12px}
+#sm-support .sh-hero .sh-eyebrow::before{content:'';display:inline-block;flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:#35a66b;box-shadow:0 0 0 3px #35a66b16;animation:sh-support-pulse 3.6s ease-in-out infinite}
+@keyframes sh-support-pulse{0%,100%{opacity:1;box-shadow:0 0 0 3px #35a66b16}50%{opacity:.6;box-shadow:0 0 0 6px #35a66b06}}
+@media(max-width:619px){#sm-support .sh-hero .sh-eyebrow{font-size:16px}}
+@media(prefers-reduced-motion:reduce){#sm-support .sh-hero .sh-eyebrow::before{animation:none}}
