@@ -713,8 +713,7 @@ hr.rounded {
   border: 1px solid #dedede;
   border-left: 1px solid #dedede;
   border-radius: 12px;
-  background: #f4f3f2;
-  background: oklch(0.9594 0.00254 48.72);
+  background: #fff !important;
   box-sizing: border-box;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
 }
