@@ -703,14 +703,22 @@ hr.rounded {
   margin-top: 32px !important;
 }
 
-/* Keep the homepage Facebook banner close to the preceding product grid. */
+/* Keep the homepage Facebook banner close to its neighboring product sections. */
 #tile-category-products-r5kGz9:has(+ #tile-custom-code-F8uhvY #smi-facebook-section) .section__container {
   margin-bottom: 24px !important;
+}
+
+#tile-custom-code-F8uhvY:has(#smi-facebook-section) + #tile-category-products-eqfZnr .section__container {
+  margin-top: 24px !important;
 }
 
 @media (max-width: 640px) {
   #tile-category-products-r5kGz9:has(+ #tile-custom-code-F8uhvY #smi-facebook-section) .section__container {
     margin-bottom: 12px !important;
+  }
+
+  #tile-custom-code-F8uhvY:has(#smi-facebook-section) + #tile-category-products-eqfZnr .section__container {
+    margin-top: 12px !important;
   }
 }
 
