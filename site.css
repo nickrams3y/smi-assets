@@ -703,6 +703,17 @@ hr.rounded {
   margin-top: 32px !important;
 }
 
+/* Keep the homepage Facebook banner close to the preceding product grid. */
+#tile-category-products-r5kGz9:has(+ #tile-custom-code-F8uhvY #smi-facebook-section) .section__container {
+  margin-bottom: 24px !important;
+}
+
+@media (max-width: 640px) {
+  #tile-category-products-r5kGz9:has(+ #tile-custom-code-F8uhvY #smi-facebook-section) .section__container {
+    margin-bottom: 12px !important;
+  }
+}
+
 #sm-home-fit-checker .sm-home-fit__inner {
   display: grid;
   grid-template-columns: minmax(220px, 0.75fr) minmax(620px, 2.25fr);
