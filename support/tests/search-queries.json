@@ -436,5 +436,32 @@
     "post install checklist",
     "final checks",
     "reassembl"
+  ],
+  "find-sync-3-version-and-build-number": [
+    "build",
+    "build number",
+    "where is my build number",
+    "about sync",
+    "firmware version",
+    "what version do I have",
+    "version screenshot"
+  ],
+  "forscan-acm-file-length-error": [
+    "length",
+    "length error",
+    "FORScan length error",
+    "loading ACM file",
+    "ACM warning",
+    "radio presets",
+    "asbuilt length error"
+  ],
+  "add-factory-navigation-to-non-navigation-sync-3": [
+    "add navigation",
+    "non nav to nav",
+    "activate navigation",
+    "unlock navigation",
+    "factory navigation",
+    "add factory maps",
+    "map download add navigation"
   ]
 }
