@@ -3627,9 +3627,9 @@ html.sm-product-options-active .details-product-options > .details-product-optio
 html.sm-product-options-active .details-product-options .sm-po-help-button{background:#fff!important;color:var(--sm-bubble-ink)!important;border:1px solid var(--sm-bubble-line)!important}
 html.sm-product-options-active .details-product-options > .sm-prefill-notice{margin-bottom:24px!important;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;box-shadow:none!important}
 
-/* Shared finders and the homepage support panel. Section backgrounds stay put. */
+/* Finders retain their original white surface, independent of shared card colors. */
 html body #sm-home-fit-checker .sm-home-fit__inner,
-html body #sm-fit-checker{position:relative;overflow:visible!important;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;box-shadow:none!important;padding-top:34px!important;margin-top:18px!important}
+html body #sm-fit-checker{position:relative;overflow:visible!important;background:#fff!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;box-shadow:none!important;padding-top:34px!important;margin-top:18px!important}
 html body #sm-home-fit-checker .sm-home-fit__icon,
 html body #sm-fit-checker .sm-fit__icon{position:absolute;top:-22px;left:20px;box-sizing:border-box;width:44px;height:44px;border:5px solid #f4f3f2;background:var(--sm-bubble-orange);color:#fff}
 html body #sm-home-fit-checker .sm-home-fit__icon svg{width:23px;height:23px}
