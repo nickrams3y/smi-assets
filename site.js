@@ -1237,7 +1237,8 @@ SMI_DOM_RUNNER.add(function(){
    var walker=document.createTreeWalker(section,NodeFilter.SHOW_TEXT),node;while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/30-day/g,'30 day');
    full.append(section);
   });
-  card.append(summary,full);sources.find(function(source){return !!source}).before(card);
+  var contactHeading=Array.from(root.querySelectorAll('h2,h3')).find(function(heading){return /^contact us$/i.test(heading.textContent.trim())});
+  card.append(summary,full);(contactHeading||sources.find(function(source){return !!source})).before(card);
   sources.forEach(function(source){if(source){source.classList.add('sm-order-source');source.hidden=true}});
   card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
  }
