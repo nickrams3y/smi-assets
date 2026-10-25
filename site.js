@@ -1245,7 +1245,7 @@ SMI_DOM_RUNNER.add(function(){
    var kitEnd=kitHeading.nextElementSibling;
    while(kitEnd&&!( /^H[1-6]$/.test(kitEnd.tagName)&&Number(kitEnd.tagName.slice(1))<=Number(kitHeading.tagName.slice(1))))kitEnd=kitEnd.nextElementSibling;
    if(kitEnd)kitEnd.before(card);else kitHeading.parentElement.append(card);
-  }else (contactHeading||sources.find(function(source){return !!source})).before(card);
+  }else (hubPage?sources.find(function(source){return !!source}):contactHeading||sources.find(function(source){return !!source})).before(card);
   sources.forEach(function(source){if(source){source.classList.add('sm-order-source');source.hidden=true}});
   card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
  }
