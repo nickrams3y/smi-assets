@@ -17,6 +17,18 @@ var SMI_DOM_RUNNER=(function(){
  return{add:function(task){tasks.push(task);if(started)schedule(180)}}
 })();
 
+/* Migrate remaining legacy support links in native Ecwid sections and SPA content. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('a[href*="support.simplymichigan.co"]').forEach(function(link){
+  try{
+   var old=new URL(link.getAttribute('href'),location.href);
+   if(old.hostname!=="support.simplymichigan.co")return;
+   var article=old.pathname.match(/^\/articles\/(\d+)/),category=old.pathname.match(/^\/categories\/(\d+)/);
+   link.setAttribute('href','https://simplymichigan.co/support'+(article?'#article='+article[1]:category?'#category='+category[1]:''));
+  }catch(error){}
+ });
+});
+
 /* Contact page enhancement: bundled to avoid a second network request. */
 (function(){
 'use strict';
