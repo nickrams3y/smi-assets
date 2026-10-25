@@ -1069,6 +1069,8 @@ var SMI_PROCESSING_POLICY=(function(){
   if(box.classList.contains('sm-bubble'))return;
   var icon=/questions|support|not sure/i.test(title)?'?':/discount/i.test(title)?'★':/warning|important|required|compatib|issue|intended/i.test(title)?'!':/return|cancel|trade/i.test(title)?'↩':/shipping|stock|contents/i.test(title)?'✓':/warranty|care|tested|programmed|play|updated/i.test(title)?'✓':'i';
   box.classList.add('sm-bubble');head.setAttribute('data-sm-bubble-icon',icon);
+  if(/^Have a USB hub to trade in\?$/i.test(title)){box.classList.add('sm-hub-trade-in');head.removeAttribute('data-sm-bubble-icon')}
+  if(/^(?:⚠\uFE0F?\s*)?Sync software version 3\.4 is required\.?$/i.test(title)){box.classList.add('sm-hub-software-note');head.removeAttribute('data-sm-bubble-icon')}
   // Reuse an existing decorative badge where present; photographs stay in place.
   var first=head.firstElementChild;
   if(first&&first.getAttribute('aria-hidden')==='true'&&!first.querySelector('img')&&first.textContent.trim().length<=2){

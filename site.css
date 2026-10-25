@@ -3817,3 +3817,7 @@ html body .product-details__product-description .sm-order-section ul{padding-lef
 
 html body .product-details__product-description .sm-order-section > section{padding:0!important;margin:0!important;background:transparent!important}
 html body .product-details__product-description .sm-order-card--two .sm-order-facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+/* Hub trade-in and software notice need no extra decorative badge. */
+html body .product-details__product-description :is(.sm-hub-trade-in,.sm-hub-software-note)::before{display:none!important;content:none!important}
+html body .product-details__product-description :is(.sm-hub-trade-in,.sm-hub-software-note){padding-top:20px!important}
