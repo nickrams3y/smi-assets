@@ -703,6 +703,11 @@ hr.rounded {
   margin-top: 32px !important;
 }
 
+/* The Most Popular sticker replaces the removed headline on narrow screens. */
+#tile-category-products-r5kGz9 .ins-sticker--view--above + .ins-tile__title {
+  display: none !important;
+}
+
 /* Keep the homepage Facebook banner close to its neighboring product sections. */
 #tile-category-products-r5kGz9:has(+ #tile-custom-code-F8uhvY #smi-facebook-section) .section__container {
   margin-bottom: 24px !important;
