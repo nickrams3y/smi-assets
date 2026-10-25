@@ -1123,3 +1123,16 @@ SMI_DOM_RUNNER.add(function(){
   card.classList.add('sm-promo-card');
  });
 });
+
+/* Shorter approved highlight copy, preserving product-specific descriptions. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('.product-details__product-description [aria-label="Product highlights"] > div').forEach(function(card){
+  var copy=card.querySelector(':scope > span:last-child');if(!copy)return;
+  var title=copy.querySelector(':scope > strong'),description=copy.querySelector(':scope > span');if(!title||!description)return;
+  var heading=title.textContent.trim(),text=description.textContent.trim(),replacement='';
+  if(heading==='1 Year Warranty & Free Returns')title.textContent='1 Year Warranty';
+  if(heading==='VIN Programmed'&&/include everything your vehicle needs/.test(text))replacement='Programmed to include everything your vehicle needs, including backup cameras, steering wheel controls, climate controls, climate seats and more.';
+  if(heading==='Plug & Play'&&/^Easy installation/.test(text))replacement="Easy installation! Plug and play, just swap out the hardware and you're done. No technical knowledge required.";
+  if(replacement&&text!==replacement)description.textContent=replacement;
+ });
+});
