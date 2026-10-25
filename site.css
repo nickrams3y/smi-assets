@@ -3592,3 +3592,62 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   #sm-support .sh-body .sh-vehicle-year li { font-size: 14px; }
 }
 /* End conversion parts guide. */
+
+/* Floating-badge design system — approved October 25, 2026. */
+:root{--sm-bubble-bg:#f0f1ee;--sm-bubble-line:#d6dbd0;--sm-bubble-ink:#292c27;--sm-bubble-muted:#686f62;--sm-bubble-orange:#f15a24;--sm-bubble-radius:16px}
+html body .sm-bubble,
+html body .product-details__product-description .sm-bubble,
+html body #sm-12-inch-upgrade-ad.sm-bubble,
+html body .product-details__product-description details.sm-bubble[open]{position:relative!important;box-sizing:border-box!important;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:var(--sm-bubble-radius)!important;box-shadow:none!important;color:var(--sm-bubble-ink)!important;overflow:visible!important;margin-top:32px!important;margin-bottom:24px!important}
+html body .sm-bubble:not(details){padding:30px 22px 20px!important}
+html body .sm-bubble:not(details)::before,
+html body .product-details__product-description details.sm-bubble > summary[data-sm-bubble-icon]::before{content:attr(data-sm-bubble-icon)!important;display:flex!important;position:absolute!important;inset:-21px auto auto 18px!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;width:42px!important;height:42px!important;border:5px solid #fff!important;border-radius:50%!important;background:var(--sm-bubble-orange)!important;color:#fff!important;font:700 19px/1 Arial,sans-serif!important;transform:none!important;pointer-events:none}
+html body .sm-bubble .sm-bubble-old-icon{display:none!important}
+html body .sm-bubble-benefit{display:block!important;margin-top:18px!important;margin-bottom:0!important}
+html body .sm-bubble-benefit > span:last-child{display:block!important}
+html body .sm-bubble-support{display:block!important}
+html body .sm-bubble-support > span:last-child{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;margin-top:16px!important}
+html body .sm-bubble-support a{min-height:44px;border-radius:8px!important}
+html body .product-details__product-description details.sm-bubble > summary,
+html body #sm-12-inch-upgrade-ad.sm-bubble > summary,
+html body .product-details__product-description details.sm-bubble[open] > summary{overflow:visible!important;border-radius:15px!important;background:var(--sm-bubble-bg)!important;padding-top:28px!important;padding-bottom:17px!important;color:var(--sm-bubble-ink)!important}
+html body .product-details__product-description details.sm-bubble[open] > summary{border-radius:15px 15px 0 0!important}
+html body .sm-bubble > section > div{border-top-color:var(--sm-bubble-line)!important}
+html body .sm-bubble > summary :is(.sm-disclosure-preview,.sm-disclosure-preview-row){background:transparent!important}
+html body .sm-bubble > summary .sm-disclosure-preview::after{background:linear-gradient(90deg,transparent,var(--sm-bubble-bg))!important}
+
+/* One numbered panel per order section, with native fields kept in place. */
+html.sm-product-options-active .details-product-options{gap:0!important;padding-top:16px!important}
+html.sm-product-options-active .details-product-options > .sm-po-section-heading{position:relative;display:block;box-sizing:border-box;width:100%;max-width:none!important;margin:28px 0 0!important;padding:30px 20px 10px!important;background:var(--sm-bubble-bg);border:1px solid var(--sm-bubble-line);border-bottom:0;border-radius:16px 16px 0 0;font-size:23px;line-height:1.25;color:var(--sm-bubble-ink)}
+html.sm-product-options-active .details-product-options > .sm-po-section-heading:first-child{margin-top:8px!important}
+html.sm-product-options-active .sm-po-section-heading .sm-po-step-number{position:absolute;top:-22px;left:18px;box-sizing:border-box;width:44px;height:44px;border:5px solid #fff;font-size:16px}
+html.sm-product-options-active .details-product-options > .sm-po-section-intro{box-sizing:border-box;margin:0!important;padding:0 20px 20px!important;background:var(--sm-bubble-bg);border-left:1px solid var(--sm-bubble-line);border-right:1px solid var(--sm-bubble-line);color:var(--sm-bubble-muted)!important}
+html.sm-product-options-active .details-product-options > .details-product-option.sm-po-card{max-width:none!important;border:0!important;border-left:1px solid var(--sm-bubble-line)!important;border-right:1px solid var(--sm-bubble-line)!important;border-radius:0!important;background:var(--sm-bubble-bg)!important;padding:9px 20px 13px!important;margin:0!important;box-shadow:none!important}
+html.sm-product-options-active .details-product-options > .details-product-option.sm-po-card.sm-po-group-end{padding-bottom:22px!important;border-bottom:1px solid var(--sm-bubble-line)!important;border-radius:0 0 16px 16px!important;margin-bottom:12px!important}
+html.sm-product-options-active .details-product-options .sm-po-help-button{background:#fff!important;color:var(--sm-bubble-ink)!important;border:1px solid var(--sm-bubble-line)!important}
+html.sm-product-options-active .details-product-options > .sm-prefill-notice{margin-bottom:24px!important;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;box-shadow:none!important}
+
+/* Shared finders and the homepage support panel. Section backgrounds stay put. */
+html body #sm-home-fit-checker .sm-home-fit__inner,
+html body #sm-fit-checker,
+html body #smi-home-support{position:relative;overflow:visible!important;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;box-shadow:none!important;padding-top:34px!important;margin-top:18px!important}
+html body #sm-home-fit-checker .sm-home-fit__icon,
+html body #sm-fit-checker .sm-fit__icon{position:absolute;top:-22px;left:20px;box-sizing:border-box;width:44px;height:44px;border:5px solid #f4f3f2;background:var(--sm-bubble-orange);color:#fff}
+html body #sm-home-fit-checker .sm-home-fit__icon svg{width:23px;height:23px}
+html body #sm-fit-checker .sm-fit__icon{border-color:#fff}
+html body #smi-home-support::before{content:'?';position:absolute;top:-22px;left:24px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:44px;height:44px;border:5px solid #e2dfda;border-radius:50%;background:var(--sm-bubble-orange);color:#fff;font:bold 20px/1 Arial,sans-serif}
+html body #sm-fit-checker .sm-fit__heading{padding-left:0}
+html body :is(#sm-fit-checker,#sm-home-fit-checker) :is(.sm-fit__result,.sm-home-fit__result){background:#fff;border:1px solid var(--sm-bubble-line);border-radius:10px}
+
+/* Checkout reminder, retaining the existing space above Pay. */
+html body #sm-checkout-review-note{position:relative;display:block;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;margin-top:32px!important;padding:30px 20px 20px!important}
+html body #sm-checkout-review-note .sm-review-icon{position:absolute;top:-22px;left:18px;box-sizing:border-box;width:44px;height:44px;padding:6px;border:5px solid #fff;border-radius:50%;background:var(--sm-bubble-orange);color:#fff;margin:0}
+@media(max-width:480px){
+ html body .sm-bubble:not(details){padding:28px 16px 18px!important}
+ html body .sm-bubble-support > span:last-child{grid-template-columns:1fr!important}
+ html.sm-product-options-active .details-product-options > .sm-po-section-heading{padding-left:16px!important;padding-right:16px!important;font-size:22px}
+ html.sm-product-options-active .details-product-options > :is(.sm-po-section-intro,.details-product-option.sm-po-card){padding-left:16px!important;padding-right:16px!important}
+}
+/* End floating-badge design system. */
+/* White field surfaces sit behind Ecwid's transparent input/placeholder layers. */
+html.sm-product-options-active .details-product-options .sm-po-card .form-control{background-color:#fff!important;border-radius:8px!important}
