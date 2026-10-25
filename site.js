@@ -596,7 +596,7 @@ var SMI_PROCESSING_POLICY=(function(){
   var processing=SMI_PROCESSING_POLICY.read(root);
   root.querySelectorAll('details[style*="border-left:3px solid #9a9a9a"]').forEach(function(detail){
    var summary=detail.querySelector(":scope > summary");
-   if(!summary)return;
+   if(!summary||detail.classList.contains("sm-care-disclosure"))return;
    detail.classList.add("sm-text-disclosure");
    summary.querySelectorAll("span").forEach(function(span){
     if(!span.classList.contains("sm-disclosure-action")&&span.textContent.trim().toLowerCase()==="read more"){
@@ -1065,17 +1065,24 @@ SMI_DOM_RUNNER.add(function(){
  if(old&&old.textContent.trim()==='A little more Simply Michigan.')old.remove();
 });
 
-/* SimplyCare disclosure thumbnail: preserve each product's approved text and native toggle. */
+/* SimplyCare uses an inner grid because Safari does not lay out summary children as a grid reliably. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('.product-details__product-description details').forEach(function(detail){
-  var summary=detail.querySelector(':scope > summary');if(!summary)return;
-  var title=summary.querySelector(':scope > span:not(.sm-disclosure-preview-row):not(.sm-disclosure-action):not(.sm-care-image)');
+  var summary=detail.querySelector(':scope > summary');if(!summary||summary.querySelector('.sm-care-layout'))return;
+  var title=summary.querySelector(':scope > span:not(.sm-disclosure-preview-row):not(.sm-disclosure-action)');
   if(!title||!/^SimplyCare\+?$/.test(title.textContent.trim()))return;
+  var preview=summary.querySelector(':scope > .sm-disclosure-preview-row');
+  var action=summary.querySelector(':scope > .sm-disclosure-action');
+  if(!preview||!action)return;
   detail.classList.add('sm-care-disclosure');title.classList.add('sm-care-title');
-  if(summary.querySelector('.sm-care-image'))return;
+  var layout=document.createElement('span');layout.className='sm-care-layout';
+  var copy=document.createElement('span');copy.className='sm-care-copy';
   var frame=document.createElement('span');frame.className='sm-care-image';frame.setAttribute('aria-hidden','true');
   var img=document.createElement('img');img.src='https://nickrams3y.github.io/smi-assets/images/product-upgrades/simplycare-protection.webp';
   img.alt='';img.width=320;img.height=320;img.loading='lazy';img.decoding='async';
-  frame.appendChild(img);summary.prepend(frame);
+  frame.appendChild(img);copy.appendChild(title);copy.appendChild(preview);
+  layout.appendChild(frame);layout.appendChild(copy);layout.appendChild(action);summary.appendChild(layout);
+  function update(){action.textContent=detail.open?'Close':'View details'}
+  detail.addEventListener('toggle',update);update();
  });
 });

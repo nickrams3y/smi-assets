@@ -3669,26 +3669,25 @@ html body #smi-facebook-section .smi-fb-mark{flex-basis:30px!important;width:30p
 @media(max-width:619px){html body #smi-facebook-section .smi-fb-eyebrow{font-size:14px!important;max-width:330px;margin:0 auto 10px!important;text-align:left!important}}
 @media(max-width:440px){html body [role="note"][aria-label="Military and first responder discounts"]{padding:31px 18px 20px!important}}
 
-/* SimplyCare uses the same photo/copy/action layout as upgrade cards. */
+/* Match upgrade cards using an inner grid, including in Safari's native summary. */
 html body .product-details__product-description details.sm-care-disclosure{border:1px solid #e1e3e5!important;border-radius:12px!important;background:#fff!important;overflow:hidden!important}
 html body .product-details__product-description details.sm-care-disclosure > summary,
-html body .product-details__product-description details.sm-care-disclosure[open] > summary{display:grid!important;grid-template-columns:112px minmax(0,1fr) auto!important;grid-template-rows:auto auto!important;column-gap:14px!important;row-gap:4px!important;align-items:center!important;min-height:112px!important;padding:12px!important;background:#f2f3f4!important;list-style:none!important}
+html body .product-details__product-description details.sm-care-disclosure[open] > summary{display:block!important;min-height:0!important;padding:0!important;background:#f2f3f4!important;list-style:none!important}
 html body .product-details__product-description details.sm-care-disclosure > summary::before,
 html body .product-details__product-description details.sm-care-disclosure > summary::after,
 html body .product-details__product-description details.sm-care-disclosure > summary::-webkit-details-marker{display:none!important;content:none!important}
-html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-image{grid-column:1!important;grid-row:1 / span 2!important;display:flex!important;align-items:center!important;justify-content:center!important;width:112px!important;height:88px!important;border:1px solid #e2e2e2!important;border-radius:9px!important;box-sizing:border-box!important;overflow:hidden!important;background:#fff!important}
+html body .product-details__product-description .sm-care-layout{display:grid!important;grid-template-columns:112px minmax(0,1fr) auto!important;gap:14px!important;align-items:center!important;box-sizing:border-box!important;width:100%!important;padding:12px!important}
+html body .product-details__product-description .sm-care-image{display:flex!important;align-items:center!important;justify-content:center!important;width:112px!important;height:88px!important;border:1px solid #e2e2e2!important;border-radius:9px!important;box-sizing:border-box!important;overflow:hidden!important;background:#fff!important}
 html body .product-details__product-description .sm-care-image img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;margin:0!important}
-html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-title{grid-column:2!important;grid-row:1!important;align-self:end!important;font-size:17px!important;line-height:1.28!important;margin:0!important}
-html body .product-details__product-description details.sm-care-disclosure > summary > .sm-disclosure-preview-row{grid-column:2!important;grid-row:2!important;align-self:start!important;overflow:visible!important}
-html body .product-details__product-description details.sm-care-disclosure > summary .sm-disclosure-preview{white-space:normal!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;line-height:1.42!important}
-html body .product-details__product-description details.sm-care-disclosure > summary > .sm-disclosure-action,
-html body .product-details__product-description details.sm-care-disclosure[open] > summary > .sm-disclosure-action{position:static!important;inset:auto!important;grid-column:3!important;grid-row:1 / span 2!important;transform:none!important;width:auto!important;max-width:none!important;min-width:88px!important;height:36px!important;max-height:none!important;font-size:13px!important;border-radius:7px!important}
+html body .product-details__product-description .sm-care-copy{display:block!important;min-width:0!important;color:#616161!important;font-size:14px!important;line-height:1.42!important}
+html body .product-details__product-description .sm-care-title{display:block!important;font-size:17px!important;font-weight:700!important;line-height:1.28!important;margin:0 0 4px!important;color:#222!important}
+html body .product-details__product-description details.sm-care-disclosure > summary .sm-care-copy .sm-disclosure-preview-row{display:block!important;width:100%!important;min-width:0!important;margin:0!important;overflow:visible!important}
+html body .product-details__product-description details.sm-care-disclosure > summary .sm-care-copy .sm-disclosure-preview{white-space:normal!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;font-size:14px!important;line-height:1.42!important;color:#616161!important}
+html body .product-details__product-description .sm-care-layout > .sm-disclosure-action{display:inline-flex!important;position:static!important;inset:auto!important;transform:none!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;width:104px!important;max-width:none!important;min-width:0!important;min-height:36px!important;height:auto!important;max-height:none!important;margin:0!important;padding:8px 12px!important;background:#333!important;border:1px solid #333!important;border-radius:7px!important;color:#fff!important;font-weight:700!important;font-size:13px!important;line-height:1.2!important;white-space:nowrap!important}
 @media(max-width:560px){
- html body .product-details__product-description details.sm-care-disclosure > summary,
- html body .product-details__product-description details.sm-care-disclosure[open] > summary{grid-template-columns:86px minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;gap:4px 12px!important;padding:10px!important}
- html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-image{width:86px!important;height:82px!important;grid-row:1 / span 3!important}
- html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-title{font-size:16px!important}
- html body .product-details__product-description details.sm-care-disclosure > summary .sm-disclosure-preview{font-size:13px!important}
- html body .product-details__product-description details.sm-care-disclosure > summary > .sm-disclosure-action,
- html body .product-details__product-description details.sm-care-disclosure[open] > summary > .sm-disclosure-action{grid-column:2!important;grid-row:3!important;justify-self:end!important;margin-top:6px!important;min-height:36px!important}
+ html body .product-details__product-description .sm-care-layout{grid-template-columns:86px minmax(0,1fr)!important;gap:10px 12px!important;padding:10px!important}
+ html body .product-details__product-description .sm-care-image{width:86px!important;height:82px!important;grid-row:1 / span 2!important}
+ html body .product-details__product-description .sm-care-title{font-size:16px!important}
+ html body .product-details__product-description details.sm-care-disclosure > summary .sm-care-copy .sm-disclosure-preview{font-size:13px!important;line-height:1.38!important}
+ html body .product-details__product-description .sm-care-layout > .sm-disclosure-action{grid-column:2!important;justify-self:end!important;min-height:32px!important;padding:6px 10px!important}
 }
