@@ -22,7 +22,8 @@
   "105843": [
     "programming only",
     "hardware bought elsewhere",
-    "standalone programming"
+    "standalone programming",
+    "program my APIM"
   ],
   "104279": [
     "recess",
@@ -174,7 +175,9 @@
     "4to8 parts",
     "shopping list",
     "54 pin extension",
-    "camera retention harness"
+    "camera retention harness",
+    "required hardware",
+    "require"
   ],
   "104448": [
     "no call audio",
@@ -226,7 +229,8 @@
   "104300": [
     "warranty length",
     "guarantee",
-    "three year warranty"
+    "three year warranty",
+    "3 year"
   ],
   "104301": [
     "USD",
@@ -251,7 +255,8 @@
   "104580": [
     "telephone",
     "customer service",
-    "talk to someone"
+    "talk to someone",
+    "contact"
   ],
   "104287": [
     "GPS mounting",
@@ -404,7 +409,8 @@
   "apim-acm-screen-or-upgrade-kit": [
     "APIM vs ACM",
     "which part do I need",
-    "display or computer"
+    "display or computer",
+    "module"
   ],
   "8-46-inch-display-sync-3-or-sync-4": [
     "846",
