@@ -3648,7 +3648,7 @@ html body #sm-checkout-review-note .sm-review-icon{position:absolute;top:-22px;l
 }
 /* End floating-badge design system. */
 /* White field surfaces sit behind Ecwid's transparent input/placeholder layers. */
-html.sm-product-options-active .details-product-options .sm-po-card .form-control{background-color:#fff!important;border-radius:8px!important}
+html.sm-product-options-active .details-product-options .sm-po-card .form-control:not(.form-control--file){background-color:#fff!important;border-radius:8px!important}
 
 /* Retire only the wireless hub description banner; retain catalog stock labels. */
 html body .product-details__product-description [role="note"][aria-label="Back in stock"]{display:none!important}
