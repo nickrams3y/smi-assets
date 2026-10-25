@@ -1237,8 +1237,15 @@ SMI_DOM_RUNNER.add(function(){
    var walker=document.createTreeWalker(section,NodeFilter.SHOW_TEXT),node;while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/30-day/g,'30 day');
    full.append(section);
   });
-  var contactHeading=Array.from(root.querySelectorAll('h2,h3')).find(function(heading){return /^contact us$/i.test(heading.textContent.trim())});
-  card.append(summary,full);(contactHeading||sources.find(function(source){return !!source})).before(card);
+  var headings=Array.from(root.querySelectorAll('h2,h3'));
+  var kitHeading=headings.find(function(heading){return /^kit contents$/i.test(heading.textContent.trim())});
+  var contactHeading=headings.find(function(heading){return /^contact us$/i.test(heading.textContent.trim())});
+  card.append(summary,full);
+  if(kitHeading){
+   var kitEnd=kitHeading.nextElementSibling;
+   while(kitEnd&&!( /^H[1-6]$/.test(kitEnd.tagName)&&Number(kitEnd.tagName.slice(1))<=Number(kitHeading.tagName.slice(1))))kitEnd=kitEnd.nextElementSibling;
+   if(kitEnd)kitEnd.before(card);else kitHeading.parentElement.append(card);
+  }else (contactHeading||sources.find(function(source){return !!source})).before(card);
   sources.forEach(function(source){if(source){source.classList.add('sm-order-source');source.hidden=true}});
   card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
  }
