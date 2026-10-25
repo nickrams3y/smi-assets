@@ -3731,3 +3731,31 @@ html body .product-details__product-description .sm-promo-action{display:flex!im
  html body .product-details__product-description .sm-promo-description{grid-column:1 / -1;grid-row:2}
  html body .product-details__product-description .sm-promo-action{grid-column:1 / -1;grid-row:3;justify-self:end;width:auto!important;max-width:100%!important;padding:10px 14px!important}
 }
+
+/* Button-free SimplyCare and upgrade cards; the complete summary/card is the target. */
+html body .product-details__product-description article.sm-tap-upgrade{position:relative!important;grid-template-columns:96px minmax(0,1fr)!important;gap:8px 16px!important;padding:14px!important;cursor:pointer}
+html body .product-details__product-description .sm-care-layout{grid-template-columns:96px minmax(0,1fr)!important;gap:8px 16px!important;padding:14px!important}
+html body .product-details__product-description .sm-tap-upgrade .sm-upgrade-card__image,
+html body .product-details__product-description .sm-care-image{grid-column:1!important;grid-row:1 / span 2!important;width:96px!important;height:82px!important}
+html body .product-details__product-description .sm-upgrade-card__description{display:block!important}
+html body .product-details__product-description .sm-tap-upgrade button.sm-upgrade-card__button,
+html body .product-details__product-description .sm-care-layout > .sm-disclosure-action{position:static!important;grid-column:2!important;grid-row:2!important;justify-self:stretch!important;display:block!important;width:auto!important;max-width:100%!important;min-height:0!important;height:auto!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#686b6e!important;font-size:11px!important;line-height:1.35!important;font-weight:400!important;white-space:normal!important;text-align:right!important}
+html body .product-details__product-description .sm-tap-upgrade button.sm-upgrade-card__button::after{content:"";position:absolute;inset:0;border-radius:12px}
+html body .product-details__product-description article.sm-tap-upgrade:hover,
+html body .product-details__product-description details.sm-care-disclosure > summary:hover{background:#eaecee!important}
+html body .product-details__product-description article.sm-tap-upgrade:focus-within{outline:2px solid #555;outline-offset:3px}
+@media(max-width:560px){
+ html body .product-details__product-description article.sm-tap-upgrade,
+ html body .product-details__product-description .sm-care-layout{grid-template-columns:70px minmax(0,1fr)!important;gap:10px 12px!important;padding:12px!important}
+ html body .product-details__product-description .sm-tap-upgrade .sm-upgrade-card__image,
+ html body .product-details__product-description .sm-care-image{width:70px!important;height:70px!important;grid-row:1!important}
+ html body .product-details__product-description .sm-tap-upgrade .sm-upgrade-card__copy,
+ html body .product-details__product-description .sm-care-copy{display:contents!important}
+ html body .product-details__product-description .sm-tap-upgrade .sm-upgrade-card__copy strong,
+ html body .product-details__product-description details.sm-care-disclosure > summary .sm-care-copy .sm-care-title{grid-column:2;grid-row:1;margin:0!important;font-size:16px!important}
+ html body .product-details__product-description .sm-tap-upgrade .sm-upgrade-card__description,
+ html body .product-details__product-description .sm-care-copy .sm-disclosure-preview-row{grid-column:1 / -1!important;grid-row:2!important;color:#616161!important;font-size:14px!important;line-height:1.45!important}
+ html body .product-details__product-description details.sm-care-disclosure > summary .sm-care-copy .sm-disclosure-preview{font-size:14px!important;line-height:1.45!important}
+ html body .product-details__product-description .sm-tap-upgrade button.sm-upgrade-card__button,
+ html body .product-details__product-description .sm-care-layout > .sm-disclosure-action{grid-column:1 / -1!important;grid-row:3!important}
+}

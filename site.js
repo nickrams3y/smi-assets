@@ -632,14 +632,14 @@ var SMI_PROCESSING_POLICY=(function(){
    var hasPreview=!!summary.querySelector(":scope > .sm-disclosure-preview-row");
    detail.classList.toggle("sm-text-disclosure--preview",hasPreview);
    detail.classList.toggle("sm-text-disclosure--plain",!hasPreview);
-   var action=summary.querySelector(":scope > .sm-disclosure-action");
+   var action=summary.querySelector(":scope > .sm-disclosure-action, .sm-care-layout .sm-disclosure-action");
    if(!action){
     action=document.createElement("span");
     action.className="sm-disclosure-action";
     action.setAttribute("aria-hidden","true");
     summary.appendChild(action)
    }
-   function update(){action.textContent=detail.open?"Close":"Read More"}
+   function update(){var care=detail.classList.contains("sm-care-disclosure");action.textContent=care?(detail.open?"Click or tap on the card to close":"Click or tap on the card to view more"):(detail.open?"Close":"Read More")}
    if(!detail.dataset.smDisclosureBound){
     detail.dataset.smDisclosureBound="1";
     detail.addEventListener("toggle",update)
@@ -1090,7 +1090,7 @@ SMI_DOM_RUNNER.add(function(){
   img.alt='';img.width=320;img.height=320;img.loading='lazy';img.decoding='async';
   frame.appendChild(img);copy.appendChild(title);copy.appendChild(preview);
   layout.appendChild(frame);layout.appendChild(copy);layout.appendChild(action);summary.appendChild(layout);
-  function update(){action.textContent=detail.open?'Close':'View details'}
+  function update(){action.textContent=detail.open?'Click or tap on the card to close':'Click or tap on the card to view more'}
   detail.addEventListener('toggle',update);update();
  });
 });
@@ -1134,5 +1134,18 @@ SMI_DOM_RUNNER.add(function(){
   if(heading==='VIN Programmed'&&/include everything your vehicle needs/.test(text))replacement='Programmed to include everything your vehicle needs, including backup cameras, steering wheel controls, climate controls, climate seats and more.';
   if(heading==='Plug & Play'&&/^Easy installation/.test(text))replacement="Easy installation! Plug and play, just swap out the hardware and you're done. No technical knowledge required.";
   if(replacement&&text!==replacement)description.textContent=replacement;
+ });
+});
+
+/* Full-card upgrade triggers with a quiet hint in place of the dark button. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('.product-details__product-description article.sm-upgrade-card').forEach(function(card){
+  if(card.classList.contains('sm-tap-upgrade'))return;
+  var copy=card.querySelector('.sm-upgrade-card__copy'),button=card.querySelector('button[data-sm-upgrade-open]');if(!copy||!button)return;
+  var title=copy.querySelector('strong');if(!title)return;
+  var description=document.createElement('span');description.className='sm-upgrade-card__description';
+  Array.from(copy.childNodes).forEach(function(node){if(node!==title)description.appendChild(node)});copy.appendChild(description);
+  button.textContent='Click or tap on the card to view more';button.setAttribute('aria-label','View details: '+title.textContent.trim());
+  card.classList.add('sm-tap-upgrade');
  });
 });
