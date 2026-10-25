@@ -1207,8 +1207,9 @@ SMI_DOM_RUNNER.add(function(){
   var names=['Warranty','Processing Time','Shipping','Returns and Cancellations'];
   var all=Array.from(root.querySelectorAll('details'));
   var sources=names.map(function(name){return all.find(function(d){return title(d).toLowerCase()===name.toLowerCase()||(name==='Returns and Cancellations'&&title(d).toLowerCase()==='returns')})});
-  if(sources.some(function(d){return !d}))return;
-  var texts=sources.map(body),processing=SMI_PROCESSING_POLICY.read(root);
+  var hubPage=location.pathname.replace(/\/$/,'')==='/products/sync-3-usb-hub-with-built-in-wireless-apple-carplay-android-auto-and-pd-30w-fast-charging';
+  if(sources.some(function(d){return !d})&&!(hubPage&&sources[2]&&sources[3]))return;
+  var texts=sources.map(function(d){return d?body(d):''}),processing=SMI_PROCESSING_POLICY.read(root);
   var estimate=texts[1].match(/\b\d+(?:\s*(?:[-–—]|to)\s*\d+)?\s+business days\b/gi)||[];
   var timeLabel='Processing time',timeNote='See timing below';
   if(processing&&estimate.length===1){timeLabel=estimate[0];timeNote=/[-–—]|\bto\b/.test(timeLabel)?'Typical processing time':'Most orders ship within';if(/Certain configurations may take longer/i.test(texts[1]))timeNote+='; some take longer'}
@@ -1218,24 +1219,26 @@ SMI_DOM_RUNNER.add(function(){
    ['box',timeLabel,timeNote],
    ['truck',/free domestic shipping/i.test(texts[2])?'Free shipping':'Shipping',/all 50 states/i.test(texts[2])?'All 50 states':'See shipping details'],
    ['returns',/\b30[ -]day|within 30 days/i.test(texts[3])?'30 day returns':'Returns',/free 30[ -]day domestic returns|prepaid return label at no charge/i.test(texts[3])?'Free domestic returns':'See return details']
-  ];
+  ].filter(function(f,i){return !!sources[i]});
   var card=document.createElement('details');card.className='sm-order-card';
   var summary=document.createElement('summary');summary.className='sm-order-summary';
   summary.innerHTML='<span class="sm-order-badge">'+icon('shield')+'</span><span class="sm-order-heading">Ordering &amp; peace of mind</span><span class="sm-order-intro">Warranty, processing, shipping and returns — all in one place.</span>';
+  if(facts.length===2){card.classList.add('sm-order-card--two');summary.querySelector('.sm-order-intro').textContent='Shipping and returns — all in one place.'}
   var highlights=document.createElement('span');highlights.className='sm-order-facts';
   facts.forEach(function(f){var item=document.createElement('span');item.className='sm-order-fact';item.innerHTML=icon(f[0]);var copy=document.createElement('span'),strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=f[1];small.textContent=f[2];copy.append(strong,small);item.append(copy);highlights.append(item)});
   summary.append(highlights);
   var hint=document.createElement('span');hint.className='sm-order-hint';hint.setAttribute('aria-hidden','true');hint.innerHTML='<span>Click or tap to view all details</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';summary.append(hint);
   var full=document.createElement('div');full.className='sm-order-full';
   sources.forEach(function(source,i){
+   if(!source)return;
    var section=document.createElement('section');section.className='sm-order-section';var heading=document.createElement('h3');heading.textContent=i===1?'Processing time':i===3?'Returns and cancellations':names[i];section.append(heading);
    Array.from(source.childNodes).forEach(function(n){if(n.nodeType===1&&n.tagName==='SUMMARY')return;section.append(n.cloneNode(true))});
    section.querySelectorAll('[style],[id]').forEach(function(el){el.removeAttribute('style');el.removeAttribute('id')});
    var walker=document.createTreeWalker(section,NodeFilter.SHOW_TEXT),node;while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/30-day/g,'30 day');
    full.append(section);
   });
-  card.append(summary,full);sources[0].before(card);
-  sources.forEach(function(source){source.classList.add('sm-order-source');source.hidden=true});
+  card.append(summary,full);sources.find(function(source){return !!source}).before(card);
+  sources.forEach(function(source){if(source){source.classList.add('sm-order-source');source.hidden=true}});
   card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
  }
  SMI_DOM_RUNNER.add(enhance);
