@@ -1005,10 +1005,22 @@ var SMI_PROCESSING_POLICY=(function(){
 (function(){
  'use strict';
  function mark(box){
-  if(box.classList.contains('sm-bubble'))return;
   var summary=box.tagName==='DETAILS'?box.querySelector(':scope > summary'):null;
   var head=summary||box;
   var title=(head.querySelector('strong,h2,h3,.sm-disclosure-title')||head).textContent.trim();
+  var label=box.getAttribute('aria-label')||'';
+  // Keep Nick's original policies, promos, kit contents and green benefit cards.
+  var original=/^(Warranty|Processing Time|Shipping|Returns(?: and Cancellations)?|SimplyCare)/i.test(title)||
+   /^(Kit contents|Military and first responder discounts|Audio Control Module replacement|Back in stock)$/i.test(label)||
+   box.id==='sm-12-inch-upgrade-ad'||
+   (parseFloat(box.style.borderTopWidth)>=3&&box.querySelector(':scope > [aria-hidden]'));
+  if(original){
+   box.classList.remove('sm-bubble','sm-bubble-benefit','sm-bubble-support');
+   head.removeAttribute('data-sm-bubble-icon');
+   box.querySelectorAll('.sm-bubble-old-icon').forEach(function(icon){icon.classList.remove('sm-bubble-old-icon')});
+   return;
+  }
+  if(box.classList.contains('sm-bubble'))return;
   var icon=/questions|support/i.test(title)?'?':/discount/i.test(title)?'★':/warning|important|required|compatib|issue|intended/i.test(title)?'!':/return|cancel|trade/i.test(title)?'↩':/shipping|stock|contents/i.test(title)?'✓':/warranty|care|tested|programmed|play|updated/i.test(title)?'✓':'i';
   box.classList.add('sm-bubble');head.setAttribute('data-sm-bubble-icon',icon);
   // Reuse an existing decorative badge where present; photographs stay in place.
@@ -1020,7 +1032,7 @@ var SMI_PROCESSING_POLICY=(function(){
   if(box.style.borderTopWidth==='3px'&&box.querySelector(':scope > [aria-hidden]'))box.classList.add('sm-bubble-benefit');
  }
  function decorate(){
-  document.querySelectorAll('.product-details__product-description, .ec-store__category-description, .ins-tile--custom-code, .ins-tile--text, #sm-support .sh-body').forEach(function(root){
+  document.querySelectorAll('.product-details__product-description, .ec-store__category-description, .grid__description, .ins-tile--custom-code, .ins-tile--text, #sm-support .sh-body').forEach(function(root){
    root.querySelectorAll('div[style],section[style],aside[style],details[style]').forEach(function(box){
     if(box.closest('dialog,.sm-upgrade-dialog')||box.matches('.sm-hub-mobile-scroll-hint'))return;
     var style=box.style;

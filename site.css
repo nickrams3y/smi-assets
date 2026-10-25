@@ -3629,13 +3629,11 @@ html.sm-product-options-active .details-product-options > .sm-prefill-notice{mar
 
 /* Shared finders and the homepage support panel. Section backgrounds stay put. */
 html body #sm-home-fit-checker .sm-home-fit__inner,
-html body #sm-fit-checker,
-html body #smi-home-support{position:relative;overflow:visible!important;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;box-shadow:none!important;padding-top:34px!important;margin-top:18px!important}
+html body #sm-fit-checker{position:relative;overflow:visible!important;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;box-shadow:none!important;padding-top:34px!important;margin-top:18px!important}
 html body #sm-home-fit-checker .sm-home-fit__icon,
 html body #sm-fit-checker .sm-fit__icon{position:absolute;top:-22px;left:20px;box-sizing:border-box;width:44px;height:44px;border:5px solid #f4f3f2;background:var(--sm-bubble-orange);color:#fff}
 html body #sm-home-fit-checker .sm-home-fit__icon svg{width:23px;height:23px}
 html body #sm-fit-checker .sm-fit__icon{border-color:#fff}
-html body #smi-home-support::before{content:'?';position:absolute;top:-22px;left:24px;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:44px;height:44px;border:5px solid #e2dfda;border-radius:50%;background:var(--sm-bubble-orange);color:#fff;font:bold 20px/1 Arial,sans-serif}
 html body #sm-fit-checker .sm-fit__heading{padding-left:0}
 html body :is(#sm-fit-checker,#sm-home-fit-checker) :is(.sm-fit__result,.sm-home-fit__result){background:#fff;border:1px solid var(--sm-bubble-line);border-radius:10px}
 
@@ -3651,3 +3649,6 @@ html body #sm-checkout-review-note .sm-review-icon{position:absolute;top:-22px;l
 /* End floating-badge design system. */
 /* White field surfaces sit behind Ecwid's transparent input/placeholder layers. */
 html.sm-product-options-active .details-product-options .sm-po-card .form-control{background-color:#fff!important;border-radius:8px!important}
+
+/* Retire only the wireless hub description banner; retain catalog stock labels. */
+html body .product-details__product-description [role="note"][aria-label="Back in stock"]{display:none!important}
