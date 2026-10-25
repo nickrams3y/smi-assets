@@ -882,6 +882,52 @@ var SMI_PROCESSING_POLICY=(function(){
  document.addEventListener('load',function(event){if(event.target.tagName==='LINK')seatAvailabilityBanner()},true);
 })();
 
+/* The 12-inch fold-down center-seat kit is currently offered in silver only. */
+(function(){
+ var locked=new WeakMap(),syncing=false,noteID='sm-bench-seat-color-note';
+ function release(select){
+  var state=locked.get(select);if(!state)return;
+  select.disabled=state.disabled;locked.delete(select);
+  var described=(select.getAttribute('aria-describedby')||'').split(/\s+/).filter(function(id){return id&&id!==noteID});
+  if(described.length)select.setAttribute('aria-describedby',described.join(' '));else select.removeAttribute('aria-describedby');
+ }
+ function syncColor(){
+  if(syncing)return;syncing=true;
+  try{
+   var active=/\/products\/ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit\/?$/.test(location.pathname);
+   var box=active&&document.querySelector('.details-product-options');
+   var seat=box&&box.querySelector('select[aria-label="Do you have a center console or fold down center seat (bench seat)?"]');
+   var color=box&&box.querySelector('select[aria-label="Bezel and Trim Color"]');
+   var silver=color&&Array.from(color.options).find(function(option){return option.value==='Silver'});
+   var limited=seat&&seat.value==='Fold down center seat (bench seat)'&&silver;
+   document.querySelectorAll('.sm-bench-color-locked').forEach(function(row){
+    if(limited&&row.contains(color))return;
+    var old=row.querySelector('select');if(old)release(old);
+    row.classList.remove('sm-bench-color-locked');var note=row.querySelector('.sm-bench-color-note');if(note)note.remove();
+   });
+   if(!limited)return;
+   // Notify Ecwid before locking so its order selection, label and price all update.
+   if(color.value!==silver.value){
+    color.value=silver.value;
+    color.dispatchEvent(new Event('input',{bubbles:true}));
+    color.dispatchEvent(new Event('change',{bubbles:true}));
+   }
+   if(!locked.has(color))locked.set(color,{disabled:color.disabled});
+   color.disabled=true;
+   var row=color.closest('.details-product-option');row.classList.add('sm-bench-color-locked');
+   var note=row.querySelector('.sm-bench-color-note');
+   if(!note){note=document.createElement('p');note.id=noteID;note.className='sm-bench-color-note';note.setAttribute('role','status');note.textContent='The fold-down center seat version is currently available in silver only.';row.appendChild(note)}
+   var described=(color.getAttribute('aria-describedby')||'').split(/\s+/).filter(Boolean);
+   if(described.indexOf(noteID)<0){described.push(noteID);color.setAttribute('aria-describedby',described.join(' '))}
+  }finally{syncing=false}
+ }
+ SMI_DOM_RUNNER.add(syncColor);
+ document.addEventListener('change',function(event){
+  if(syncing||!event.target.matches('.details-product-options select'))return;
+  syncColor();requestAnimationFrame(syncColor);
+ });
+})();
+
 /* Keep Ecwid's live SKU beneath the product purchase controls. */
 (function(){
  var mobile=window.matchMedia('(max-width: 767px)');

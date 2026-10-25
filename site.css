@@ -3759,3 +3759,10 @@ html body .product-details__product-description article.sm-tap-upgrade:focus-wit
  html body .product-details__product-description .sm-tap-upgrade button.sm-upgrade-card__button,
  html body .product-details__product-description .sm-care-layout > .sm-disclosure-action{grid-column:1 / -1!important;grid-row:3!important}
 }
+
+/* Silver-only bezel selection for the 12-inch fold-down center-seat kit. */
+html.sm-product-options-active body .details-product-options .details-product-option.sm-bench-color-locked .form-control--select{background:#e6e7e6!important;cursor:not-allowed!important}
+html body .details-product-option.sm-bench-color-locked .form-control__text{background:transparent!important;color:#6b6b6b!important;-webkit-text-fill-color:#6b6b6b!important;cursor:not-allowed!important}
+html body .details-product-option.sm-bench-color-locked .form-control__select{cursor:not-allowed!important}
+html body .details-product-option.sm-bench-color-locked .form-control__arrow{opacity:.35}
+html body .details-product-option .sm-bench-color-note{margin:8px 0 0!important;color:#626762!important;font-size:13px!important;line-height:1.45!important}
