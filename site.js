@@ -1021,7 +1021,7 @@ var SMI_PROCESSING_POLICY=(function(){
    return;
   }
   if(box.classList.contains('sm-bubble'))return;
-  var icon=/questions|support/i.test(title)?'?':/discount/i.test(title)?'★':/warning|important|required|compatib|issue|intended/i.test(title)?'!':/return|cancel|trade/i.test(title)?'↩':/shipping|stock|contents/i.test(title)?'✓':/warranty|care|tested|programmed|play|updated/i.test(title)?'✓':'i';
+  var icon=/questions|support|not sure/i.test(title)?'?':/discount/i.test(title)?'★':/warning|important|required|compatib|issue|intended/i.test(title)?'!':/return|cancel|trade/i.test(title)?'↩':/shipping|stock|contents/i.test(title)?'✓':/warranty|care|tested|programmed|play|updated/i.test(title)?'✓':'i';
   box.classList.add('sm-bubble');head.setAttribute('data-sm-bubble-icon',icon);
   // Reuse an existing decorative badge where present; photographs stay in place.
   var first=head.firstElementChild;

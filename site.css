@@ -3652,3 +3652,5 @@ html.sm-product-options-active .details-product-options .sm-po-card .form-contro
 
 /* Retire only the wireless hub description banner; retain catalog stock labels. */
 html body .product-details__product-description [role="note"][aria-label="Back in stock"]{display:none!important}
+/* Leave clearance for the category eligibility badge beneath the FAQ button. */
+html body .grid__description [role="note"][aria-label="Vehicle upgrade eligibility"].sm-bubble{margin-top:32px!important;padding-top:28px!important}
