@@ -3667,11 +3667,13 @@ html body #smi-facebook-section h2{display:none!important}
 html body #smi-facebook-section .smi-fb-eyebrow{text-transform:none!important;margin:0 0 10px!important;font-size:17px!important;line-height:1.35!important;letter-spacing:.15px!important;gap:11px!important}
 html body #smi-facebook-section .smi-fb-mark{flex-basis:30px!important;width:30px!important;height:30px!important;font-size:29px!important}
 @media(max-width:619px){
- html body #smi-facebook-section .smi-fb-banner{gap:12px;padding:16px;text-align:left}
- html body #smi-facebook-section .smi-fb-eyebrow{justify-content:flex-start;font-size:15px!important;max-width:none;margin:0 0 9px!important;letter-spacing:0!important;text-align:left!important}
- html body #smi-facebook-section .smi-fb-eyebrow > span:last-child{min-width:0;text-wrap:pretty}
- html body #smi-facebook-section .smi-fb-copy{margin:0;font-size:14px;line-height:1.45;text-align:left}
- html body #smi-facebook-section .smi-fb-button{justify-self:start;min-height:44px;padding:10px 16px}
+ html body #smi-facebook-section .smi-fb-banner{grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:16px 12px;text-align:left}
+ html body #smi-facebook-section .smi-fb-eyebrow{justify-content:flex-start;font-size:14px!important;max-width:none;margin:0!important;letter-spacing:0!important;gap:8px!important;text-align:left!important}
+ html body #smi-facebook-section .smi-fb-eyebrow > span:last-child{min-width:0}
+ html body #smi-facebook-section .smi-fb-heading-line{display:block;white-space:nowrap}
+ html body #smi-facebook-section .smi-fb-copy{display:none}
+ html body #smi-facebook-section .smi-fb-button{justify-self:end;min-height:44px;padding:10px;gap:7px;font-size:13px}
+ html body #smi-facebook-section .smi-fb-button svg{width:16px;height:16px}
 }
 @media(max-width:440px){html body [role="note"][aria-label="Military and first responder discounts"]{padding:31px 18px 20px!important}}
 

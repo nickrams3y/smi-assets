@@ -1060,7 +1060,13 @@ SMI_DOM_RUNNER.add(function(){
  var section=document.getElementById('smi-facebook-section');if(!section)return;
  var heading=section.querySelector('.smi-fb-eyebrow');if(!heading)return;
  var label=heading.querySelector('span:not(.smi-fb-mark)');
- if(label&&label.textContent.trim()==='SIMPLY MICHIGAN INFOTAINMENT ON FACEBOOK')label.textContent='Simply Michigan Infotainment on Facebook';
+ if(label&&!label.querySelector('.smi-fb-heading-line')&&/^Simply Michigan Infotainment on Facebook$/i.test(label.textContent.trim())){
+  label.replaceChildren();
+  ['Simply Michigan','Infotainment on','Facebook'].forEach(function(text,i){
+   if(i)label.appendChild(document.createTextNode(' '));
+   var line=document.createElement('span');line.className='smi-fb-heading-line';line.textContent=text;label.appendChild(line);
+  });
+ }
  heading.id='smi-facebook-label';heading.setAttribute('role','heading');heading.setAttribute('aria-level','2');
  section.setAttribute('aria-labelledby',heading.id);
  var old=section.querySelector('#smi-facebook-title');
