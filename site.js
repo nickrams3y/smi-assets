@@ -1059,6 +1059,8 @@ var SMI_PROCESSING_POLICY=(function(){
 SMI_DOM_RUNNER.add(function(){
  var section=document.getElementById('smi-facebook-section');if(!section)return;
  var heading=section.querySelector('.smi-fb-eyebrow');if(!heading)return;
+ var label=heading.querySelector('span:not(.smi-fb-mark)');
+ if(label&&label.textContent.trim()==='SIMPLY MICHIGAN INFOTAINMENT ON FACEBOOK')label.textContent='Simply Michigan Infotainment on Facebook';
  heading.id='smi-facebook-label';heading.setAttribute('role','heading');heading.setAttribute('aria-level','2');
  section.setAttribute('aria-labelledby',heading.id);
  var old=section.querySelector('#smi-facebook-title');
