@@ -12,3 +12,72 @@
 @keyframes sh-support-pulse{0%,100%{opacity:1;box-shadow:0 0 0 3px #35a66b16}50%{opacity:.6;box-shadow:0 0 0 6px #35a66b06}}
 @media(max-width:619px){#sm-support .sh-hero .sh-eyebrow{font-size:16px}}
 @media(prefers-reduced-motion:reduce){#sm-support .sh-hero .sh-eyebrow::before{animation:none}}
+
+/* Conversion parts guide: model cards and separate year groups. */
+#sm-support .sh-body .sh-conversion-notes {
+  margin: 28px 0 34px;
+  padding: 22px 24px;
+  border: 1px solid #e1e5dc;
+  border-radius: 14px;
+  background: #f4f5f2;
+}
+#sm-support .sh-body .sh-conversion-notes h2 { margin: 0 0 12px; font-size: 18px; }
+#sm-support .sh-body .sh-conversion-notes ul { margin: 0; }
+#sm-support .sh-body .sh-conversion-notes li { margin: 10px 0; }
+#sm-support .sh-body .sh-conversion-notes li:last-child { margin-bottom: 0; }
+#sm-support .sh-body .sh-vehicle-guide > h2 { margin: 0 0 6px; font-size: 26px; }
+#sm-support .sh-body .sh-vehicle-intro { color: var(--sh-muted); font-size: 14px; margin: 0 0 22px; }
+#sm-support .sh-vehicle {
+  margin: 0 0 12px;
+  border: 1px solid #dedfd9;
+  border-radius: 13px;
+  background: #fff;
+}
+#sm-support .sh-vehicle > summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 23px;
+  border-radius: 12px;
+  background: #f6f5f2;
+  cursor: pointer;
+  list-style: none;
+}
+#sm-support .sh-vehicle > summary::-webkit-details-marker { display: none; }
+#sm-support .sh-vehicle > summary::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  justify-self: center;
+  margin-top: -4px;
+  border-right: 2px solid #52634f;
+  border-bottom: 2px solid #52634f;
+  transform: rotate(45deg);
+}
+#sm-support .sh-vehicle > summary:hover { background: #eeefe9; }
+#sm-support .sh-vehicle > summary:focus-visible { outline: 3px solid #298568; outline-offset: 3px; }
+#sm-support .sh-vehicle[open] { border-color: #a7b9a6; }
+#sm-support .sh-vehicle[open] > summary { background: #edf3eb; border-radius: 12px 12px 0 0; border-bottom: 1px solid #dce5d7; }
+#sm-support .sh-vehicle[open] > summary::after { transform: rotate(225deg); margin-top: 4px; }
+#sm-support .sh-vehicle-name { display: block; color: #26392a; font-size: 19px; font-weight: 700; line-height: 1.4; letter-spacing: -.2px; }
+#sm-support .sh-vehicle-years { display: block; margin-top: 4px; color: #666c63; font-size: 13px; line-height: 1.7; }
+#sm-support .sh-vehicle-sections { padding: 0 24px; }
+#sm-support .sh-vehicle-year { padding: 25px 0 23px; }
+#sm-support .sh-vehicle-year + .sh-vehicle-year { border-top: 1px solid #e1e5dc; }
+#sm-support .sh-body .sh-vehicle-year > h3 { margin: 0 0 20px; padding-left: 13px; border-left: 3px solid var(--sh-orange); font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: -.2px; }
+#sm-support .sh-body .sh-vehicle-year > p { font-size: 14px; line-height: 1.75; margin-bottom: 16px; }
+#sm-support .sh-body .sh-vehicle-year > ul { margin: 16px 0 0; padding-left: 20px; }
+#sm-support .sh-body .sh-vehicle-year li { font-size: 15px; line-height: 1.75; margin: 11px 0; padding-left: 3px; }
+#sm-support .sh-body .sh-vehicle-year li:last-child { margin-bottom: 0; }
+#sm-support .sh-vehicle-year li::marker { color: #72876b; }
+@media (max-width: 619px) {
+  #sm-support .sh-body .sh-conversion-notes { padding: 18px 16px; }
+  #sm-support .sh-vehicle > summary { padding: 17px 16px; gap: 12px; }
+  #sm-support .sh-vehicle-name { font-size: 18px; }
+  #sm-support .sh-vehicle-sections { padding: 0 16px; }
+  #sm-support .sh-vehicle-year { padding: 21px 0; }
+  #sm-support .sh-body .sh-vehicle-year > h3 { font-size: 17px; }
+  #sm-support .sh-body .sh-vehicle-year li { font-size: 14px; }
+}
+/* End conversion parts guide. */
