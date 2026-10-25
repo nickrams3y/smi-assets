@@ -1150,21 +1150,21 @@ SMI_DOM_RUNNER.add(function(){
   var copy=document.createElement('span');copy.className='sm-promo-copy';
   var heading=document.createElement('strong');heading.className='sm-promo-title';heading.textContent=title;
   var desc=document.createElement('span');desc.className='sm-promo-description';desc.textContent=description;
-  copy.append(heading,desc);action.classList.add('sm-promo-action');row.append(photo,copy,action);return row;
+  copy.append(heading,desc);action.removeAttribute('style');action.classList.add('sm-promo-action');row.append(photo,copy,action);return row;
  }
  root.querySelectorAll('#sm-12-inch-upgrade-ad').forEach(function(card){
   if(card.classList.contains('sm-promo-card'))return;
   var summary=card.querySelector(':scope > summary');if(!summary)return;
   var photo=summary.querySelector('img');if(!photo)return;photo=photo.parentElement;
-  var action=document.createElement('span');action.setAttribute('aria-hidden','true');action.textContent='View details →';
+  var action=document.createElement('span');action.setAttribute('aria-hidden','true');action.textContent='Click or tap on the card to view more';
   summary.replaceChildren(layout(photo,'Upgrading to Sync 3? See the 12" Option.','Available for the F-150 and F-250. Click or tap for more information.',action));
   card.classList.add('sm-promo-card');
-  card.addEventListener('toggle',function(){action.textContent=card.open?'Close details ↑':'View details →'});
+  card.addEventListener('toggle',function(){action.textContent=card.open?'Click or tap on the card to close':'Click or tap on the card to view more'});
  });
  root.querySelectorAll('[aria-label="Audio Control Module replacement"]').forEach(function(card){
   if(card.classList.contains('sm-promo-card'))return;
   var photo=card.querySelector('img'),action=card.querySelector('a');if(!photo||!action)return;
-  photo=photo.parentElement;action.textContent='View ACM replacements →';
+  photo=photo.parentElement;action.textContent='Click or tap on the card to view ACM replacements';
   card.replaceChildren(layout(photo,'Need to fix an audio issue?','If your screen works normally but your vehicle has no sound, your audio control module (ACM) may be the cause.',action));
   card.classList.add('sm-promo-card');
  });
