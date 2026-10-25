@@ -1195,3 +1195,48 @@ SMI_DOM_RUNNER.add(function(){
   card.classList.add('sm-tap-upgrade');
  });
 });
+
+/* One disclosure for each product's existing ordering policies; preserve source copy. */
+(function(){
+ var icons={shield:'<path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/>',box:'<path d="m3 7 9-4 9 4v10l-9 4-9-4V7Zm0 0 9 4 9-4M12 11v10M7 5l10 4"/>',truck:'<path d="M3 5h11v12H3V5Zm11 5h4l3 4v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',returns:'<path d="M3 10a9 9 0 1 1 1 8M3 4v6h6"/>'};
+ function icon(name){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[name]+'</svg>'}
+ function title(detail){var s=detail.querySelector(':scope > summary'),t=s&&s.querySelector('.sm-disclosure-title');return (t?t.textContent:s?Array.from(s.childNodes).filter(function(n){return n.nodeType===3}).map(function(n){return n.textContent}).join(' '):'').trim()}
+ function body(detail){var clone=detail.cloneNode(true);clone.querySelector('summary').remove();return clone.textContent.replace(/\s+/g,' ').trim()}
+ function enhance(){
+  var root=document.querySelector('.product-details__product-description');if(!root||root.querySelector('.sm-order-card'))return;
+  var names=['Warranty','Processing Time','Shipping','Returns and Cancellations'];
+  var all=Array.from(root.querySelectorAll('details'));
+  var sources=names.map(function(name){return all.find(function(d){return title(d).toLowerCase()===name.toLowerCase()||(name==='Returns and Cancellations'&&title(d).toLowerCase()==='returns')})});
+  if(sources.some(function(d){return !d}))return;
+  var texts=sources.map(body),processing=SMI_PROCESSING_POLICY.read(root);
+  var estimate=texts[1].match(/\b\d+(?:\s*(?:[-–—]|to)\s*\d+)?\s+business days\b/gi)||[];
+  var timeLabel='Processing time',timeNote='See timing below';
+  if(processing&&estimate.length===1){timeLabel=estimate[0];timeNote=/[-–—]|\bto\b/.test(timeLabel)?'Typical processing time':'Most orders ship within';if(/Certain configurations may take longer/i.test(texts[1]))timeNote+='; some take longer'}
+  else if(processing&&estimate.length>1){timeLabel=estimate[0];timeNote='Allow up to '+estimate[estimate.length-1]}
+  var facts=[
+   ['shield',/\b(?:1|one) year\b/i.test(texts[0])?'1 year warranty':'Warranty','Hardware coverage'],
+   ['box',timeLabel,timeNote],
+   ['truck',/free domestic shipping/i.test(texts[2])?'Free shipping':'Shipping',/all 50 states/i.test(texts[2])?'All 50 states':'See shipping details'],
+   ['returns',/\b30[ -]day|within 30 days/i.test(texts[3])?'30 day returns':'Returns',/free 30[ -]day domestic returns|prepaid return label at no charge/i.test(texts[3])?'Free domestic returns':'See return details']
+  ];
+  var card=document.createElement('details');card.className='sm-order-card';
+  var summary=document.createElement('summary');summary.className='sm-order-summary';
+  summary.innerHTML='<span class="sm-order-badge">'+icon('shield')+'</span><span class="sm-order-heading">Ordering &amp; peace of mind</span><span class="sm-order-intro">Warranty, processing, shipping and returns — all in one place.</span>';
+  var highlights=document.createElement('span');highlights.className='sm-order-facts';
+  facts.forEach(function(f){var item=document.createElement('span');item.className='sm-order-fact';item.innerHTML=icon(f[0]);var copy=document.createElement('span'),strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=f[1];small.textContent=f[2];copy.append(strong,small);item.append(copy);highlights.append(item)});
+  summary.append(highlights);
+  var hint=document.createElement('span');hint.className='sm-order-hint';hint.setAttribute('aria-hidden','true');hint.innerHTML='<span>Click or tap to view all details</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';summary.append(hint);
+  var full=document.createElement('div');full.className='sm-order-full';
+  sources.forEach(function(source,i){
+   var section=document.createElement('section');section.className='sm-order-section';var heading=document.createElement('h3');heading.textContent=i===1?'Processing time':i===3?'Returns and cancellations':names[i];section.append(heading);
+   Array.from(source.childNodes).forEach(function(n){if(n.nodeType===1&&n.tagName==='SUMMARY')return;section.append(n.cloneNode(true))});
+   section.querySelectorAll('[style],[id]').forEach(function(el){el.removeAttribute('style');el.removeAttribute('id')});
+   var walker=document.createTreeWalker(section,NodeFilter.SHOW_TEXT),node;while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/30-day/g,'30 day');
+   full.append(section);
+  });
+  card.append(summary,full);sources[0].before(card);
+  sources.forEach(function(source){source.classList.add('sm-order-source');source.hidden=true});
+  card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
+ }
+ SMI_DOM_RUNNER.add(enhance);
+})();
