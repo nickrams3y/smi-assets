@@ -1054,3 +1054,28 @@ var SMI_PROCESSING_POLICY=(function(){
  }
  SMI_DOM_RUNNER.add(decorate);
 })();
+
+/* Match the simplified Facebook heading's accessible label to its visible text. */
+SMI_DOM_RUNNER.add(function(){
+ var section=document.getElementById('smi-facebook-section');if(!section)return;
+ var heading=section.querySelector('.smi-fb-eyebrow');if(!heading)return;
+ heading.id='smi-facebook-label';heading.setAttribute('role','heading');heading.setAttribute('aria-level','2');
+ section.setAttribute('aria-labelledby',heading.id);
+ var old=section.querySelector('#smi-facebook-title');
+ if(old&&old.textContent.trim()==='A little more Simply Michigan.')old.remove();
+});
+
+/* SimplyCare disclosure thumbnail: preserve each product's approved text and native toggle. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('.product-details__product-description details').forEach(function(detail){
+  var summary=detail.querySelector(':scope > summary');if(!summary)return;
+  var title=summary.querySelector(':scope > span:not(.sm-disclosure-preview-row):not(.sm-disclosure-action):not(.sm-care-image)');
+  if(!title||!/^SimplyCare\+?$/.test(title.textContent.trim()))return;
+  detail.classList.add('sm-care-disclosure');title.classList.add('sm-care-title');
+  if(summary.querySelector('.sm-care-image'))return;
+  var frame=document.createElement('span');frame.className='sm-care-image';frame.setAttribute('aria-hidden','true');
+  var img=document.createElement('img');img.src='https://nickrams3y.github.io/smi-assets/images/product-upgrades/simplycare-protection.webp';
+  img.alt='';img.width=320;img.height=320;img.loading='lazy';img.decoding='async';
+  frame.appendChild(img);summary.prepend(frame);
+ });
+});

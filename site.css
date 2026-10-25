@@ -3654,3 +3654,41 @@ html.sm-product-options-active .details-product-options .sm-po-card .form-contro
 html body .product-details__product-description [role="note"][aria-label="Back in stock"]{display:none!important}
 /* Leave clearance for the category eligibility badge beneath the FAQ button. */
 html body .grid__description [role="note"][aria-label="Vehicle upgrade eligibility"].sm-bubble{margin-top:32px!important;padding-top:28px!important}
+
+/* Approved military discount Star tab. Keep the existing copy and link. */
+html body [role="note"][aria-label="Military and first responder discounts"]{display:block!important;position:relative!important;box-sizing:border-box!important;max-width:580px!important;padding:34px 24px 23px!important;margin-top:32px!important;margin-bottom:22px!important;background:#f8fafc!important;border:1px solid #d9dfe8!important;border-radius:10px!important;box-shadow:none!important;color:#555e69!important;text-align:left!important;overflow:visible!important}
+html body [role="note"][aria-label="Military and first responder discounts"] > [aria-hidden="true"]{display:flex!important;position:absolute!important;top:-21px!important;left:23px!important;width:42px!important;height:42px!important;box-sizing:border-box!important;align-items:center!important;justify-content:center!important;border:0!important;border-bottom:4px solid #b22234!important;border-radius:8px!important;background:#16325c!important;color:#fff!important;font-size:23px!important;line-height:1!important;box-shadow:0 0 0 5px #fff!important}
+html body [role="note"][aria-label="Military and first responder discounts"] > span:last-child{display:block!important}
+html body [role="note"][aria-label="Military and first responder discounts"] strong{display:block!important;font-size:17px!important;line-height:1.35!important;color:#16325c!important;margin:0 0 9px!important}
+html body [role="note"][aria-label="Military and first responder discounts"] > span:last-child > span{color:#555e69!important;font-size:14px!important;line-height:1.6!important}
+html body [role="note"][aria-label="Military and first responder discounts"] a{display:block!important;margin-top:10px!important;color:#16325c!important;font-size:14px!important;line-height:1.55!important;font-weight:600!important;text-decoration:underline!important;text-underline-offset:3px!important}
+/* Simplified Facebook banner: brand and logo become its sole heading. */
+html body #smi-facebook-section h2{display:none!important}
+html body #smi-facebook-section .smi-fb-eyebrow{margin:0 0 10px!important;font-size:17px!important;line-height:1.35!important;letter-spacing:.15px!important;gap:11px!important}
+html body #smi-facebook-section .smi-fb-mark{flex-basis:30px!important;width:30px!important;height:30px!important;font-size:29px!important}
+@media(max-width:619px){html body #smi-facebook-section .smi-fb-eyebrow{font-size:14px!important;max-width:330px;margin:0 auto 10px!important;text-align:left!important}}
+@media(max-width:440px){html body [role="note"][aria-label="Military and first responder discounts"]{padding:31px 18px 20px!important}}
+
+/* SimplyCare uses the same photo/copy/action layout as upgrade cards. */
+html body .product-details__product-description details.sm-care-disclosure{border:1px solid #e1e3e5!important;border-radius:12px!important;background:#fff!important;overflow:hidden!important}
+html body .product-details__product-description details.sm-care-disclosure > summary,
+html body .product-details__product-description details.sm-care-disclosure[open] > summary{display:grid!important;grid-template-columns:112px minmax(0,1fr) auto!important;grid-template-rows:auto auto!important;column-gap:14px!important;row-gap:4px!important;align-items:center!important;min-height:112px!important;padding:12px!important;background:#f2f3f4!important;list-style:none!important}
+html body .product-details__product-description details.sm-care-disclosure > summary::before,
+html body .product-details__product-description details.sm-care-disclosure > summary::after,
+html body .product-details__product-description details.sm-care-disclosure > summary::-webkit-details-marker{display:none!important;content:none!important}
+html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-image{grid-column:1!important;grid-row:1 / span 2!important;display:flex!important;align-items:center!important;justify-content:center!important;width:112px!important;height:88px!important;border:1px solid #e2e2e2!important;border-radius:9px!important;box-sizing:border-box!important;overflow:hidden!important;background:#fff!important}
+html body .product-details__product-description .sm-care-image img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;margin:0!important}
+html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-title{grid-column:2!important;grid-row:1!important;align-self:end!important;font-size:17px!important;line-height:1.28!important;margin:0!important}
+html body .product-details__product-description details.sm-care-disclosure > summary > .sm-disclosure-preview-row{grid-column:2!important;grid-row:2!important;align-self:start!important;overflow:visible!important}
+html body .product-details__product-description details.sm-care-disclosure > summary .sm-disclosure-preview{white-space:normal!important;overflow:visible!important;-webkit-mask-image:none!important;mask-image:none!important;line-height:1.42!important}
+html body .product-details__product-description details.sm-care-disclosure > summary > .sm-disclosure-action,
+html body .product-details__product-description details.sm-care-disclosure[open] > summary > .sm-disclosure-action{position:static!important;inset:auto!important;grid-column:3!important;grid-row:1 / span 2!important;transform:none!important;width:auto!important;max-width:none!important;min-width:88px!important;height:36px!important;max-height:none!important;font-size:13px!important;border-radius:7px!important}
+@media(max-width:560px){
+ html body .product-details__product-description details.sm-care-disclosure > summary,
+ html body .product-details__product-description details.sm-care-disclosure[open] > summary{grid-template-columns:86px minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;gap:4px 12px!important;padding:10px!important}
+ html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-image{width:86px!important;height:82px!important;grid-row:1 / span 3!important}
+ html body .product-details__product-description details.sm-care-disclosure > summary > .sm-care-title{font-size:16px!important}
+ html body .product-details__product-description details.sm-care-disclosure > summary .sm-disclosure-preview{font-size:13px!important}
+ html body .product-details__product-description details.sm-care-disclosure > summary > .sm-disclosure-action,
+ html body .product-details__product-description details.sm-care-disclosure[open] > summary > .sm-disclosure-action{grid-column:2!important;grid-row:3!important;justify-self:end!important;margin-top:6px!important;min-height:36px!important}
+}

@@ -95,3 +95,7 @@ The decorator is idempotent and adds classes/attributes only; product descriptio
 ### Scope refinement
 
 Nick retained the floating-badge order sections and vehicle finders. Policy disclosures (processing, shipping, returns, warranty, SimplyCare), kit contents, 12-inch and ACM promos, green benefit cards, and military discount notes keep their original styles. The homepage support widget also keeps its original appearance without a floating question mark. Category eligibility notices are included via Ecwid's actual `.grid__description` container. The wireless USB hub's description-only Back in Stock banner is hidden; catalog stock ribbons remain unchanged. Military discount alternatives are preview-only pending selection.
+
+The military discount notice now uses Nick's approved Star tab design (navy square star, thin red base, light panel) via its exact aria-label. The homepage Facebook banner uses the brand/logo row as its only heading; the old “A little more Simply Michigan” heading is hidden before scripts run and removed by the shared enhancer. Product benefit cards remain in their original green design while alternatives are reviewed.
+
+SimplyCare/SimplyCare+ description disclosures now reuse the upgrade-card thumbnail layout, retaining their existing copy and native expansion behavior. `images/product-upgrades/simplycare-protection.webp` is the supplied 5000px illustration resized to 320px (5.6 KB).
