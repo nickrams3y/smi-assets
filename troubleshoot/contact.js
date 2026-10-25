@@ -21,7 +21,7 @@ function decorate(form,native){
  const eyebrow=document.createElement('p');eyebrow.className='sm-contact-eyebrow';eyebrow.textContent='Here to help';heading.before(eyebrow);
  // Quick-answer links are saved in Ecwid; retain fallback for older cached page HTML.
  if(!description?.querySelector('a[href="https://simplymichigan.co/upgrade_guide"]')){
- const help=document.createElement('div');help.className='sm-contact-help';help.innerHTML='<p class="sm-contact-response">We typically reply within 24 hours.</p><div class="sm-contact-shortcuts"><p>Looking for a quick answer?</p><a href="https://simplymichigan.co/upgrade_guide">Upgrade guide <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/install">Installation instructions <span aria-hidden="true">↗</span></a><a href="https://support.simplymichigan.co/">Visit our support center <span aria-hidden="true">↗</span></a></div>';intro.append(help);
+ const help=document.createElement('div');help.className='sm-contact-help';help.innerHTML='<p class="sm-contact-response">We typically reply within 24 hours.</p><div class="sm-contact-shortcuts"><p>Looking for a quick answer?</p><a href="https://simplymichigan.co/upgrade_guide">Upgrade guide <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/install">Installation instructions <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/support">Visit our support center <span aria-hidden="true">↗</span></a></div>';intro.append(help);
  }
  const title=document.createElement('div');title.className='sm-contact-form-heading';title.innerHTML='<h2>Send us a message</h2><span>* Required</span>';form.prepend(title);
  // Copy and placeholders live in Ecwid, so the first render matches the enhanced form.
