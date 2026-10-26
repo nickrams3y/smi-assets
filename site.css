@@ -3844,6 +3844,12 @@ html body .product-details__product-description .sm-compact-highlights > div > s
 @media(max-width:360px){html body .product-details__product-description .sm-compact-highlights > div{padding:16px 10px!important}}
 
 /* Original compatibility artwork, sized for the price column and mobile gallery. */
-html body .product-details .sm-platform-logos{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:10px!important;box-sizing:border-box!important;width:100%!important;max-width:310px!important;margin:14px auto 22px!important;padding:0!important;line-height:1!important}
-html body .product-details .sm-platform-logos > img{display:block!important;flex:1 1 0!important;min-width:0!important;width:calc(50% - 5px)!important;max-width:150px!important;height:auto!important;object-fit:contain!important;margin:0!important}
-@media(max-width:767px){html body .product-details .details-gallery > .sm-platform-logos{justify-content:center!important;margin:16px 0 12px!important;max-width:none!important}html body .product-details .details-gallery > .sm-platform-logos > img{max-width:none!important}}
+html body .product-details .sm-platform-logos{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:10px!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;margin:0 0 16px!important;padding:0!important;line-height:1!important}
+html body .product-details .sm-platform-logos > img{display:block!important;flex:1 1 0!important;min-width:0!important;width:calc(50% - 5px)!important;max-width:none!important;height:auto!important;object-fit:contain!important;margin:0!important}
+@media(max-width:767px){html body .product-details .details-gallery > .sm-platform-logos{justify-content:center!important;margin:8px 0!important;max-width:none!important}html body .product-details .details-gallery > .sm-platform-logos > img{max-width:none!important}}
+
+/* Consistent full-column pricing notices and compatibility artwork. */
+html body .product-details .product-details__product-price-row .product-details-module__content:has(.sm-price-promo){row-gap:8px!important}
+html body .product-details .product-details__product-price-row:has(.sm-price-promo){margin-bottom:8px!important;padding-bottom:0!important}
+html body .product-details .product-details__product-price-row .sm-price-promo{width:100%!important;box-sizing:border-box!important;justify-self:stretch!important;justify-content:space-between!important;margin:0!important;border-radius:10px!important}
+html body .product-details .product-details__product-price-row .ec-paypal-pay-later-message{width:100%!important;max-width:none!important;box-sizing:border-box!important;justify-self:stretch!important;margin:0!important}
