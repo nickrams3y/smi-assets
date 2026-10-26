@@ -1185,7 +1185,15 @@ SMI_DOM_RUNNER.add(function(){
  });
 });
 
-/* Approved compact highlights for the standard Sync 3 kits. */
+/* Shared compact highlights retain each product's original feature copy. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('.product-details__product-description [aria-label="Product highlights"]').forEach(function(panel){
+  var cards=Array.from(panel.children);
+  if(cards.length===4&&cards.every(function(card){return card.matches('div')&&card.querySelector(':scope > [aria-hidden="true"]')&&card.querySelector(':scope > span:last-child > strong')&&card.querySelector(':scope > span:last-child > span')}))panel.classList.add('sm-compact-highlights');
+ });
+});
+
+/* Approved shorter copy for the two standard Sync 3 kits. */
 SMI_DOM_RUNNER.add(function(){
  if(!/^\/products\/ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with(?:out)?-navigation\/?$/.test(location.pathname))return;
  var panel=document.querySelector('.product-details__product-description [aria-label="Product highlights"]');
@@ -1274,25 +1282,33 @@ SMI_DOM_RUNNER.add(function(){
  SMI_DOM_RUNNER.add(enhance);
 })();
 
-/* Standard kit platform badges and ordering details follow the shopping flow. */
+/* Shared platform badges and ordering details follow the shopping flow. */
 (function(){
  var mobile=window.matchMedia('(max-width:767px)');
  function arrange(){
-  if(!/^\/products\/ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with(?:out)?-navigation\/?$/.test(location.pathname))return;
   var description=document.querySelector('.product-details__product-description');if(!description)return;
   var product=description.closest('.product-details');if(!product)return;
   var gallery=product.querySelector('.product-details__gallery'),price=product.querySelector('.product-details__product-price-row');
+  product.querySelectorAll('.sm-platform-logos').forEach(function(row){if(row.smSourceAnchor&&!description.contains(row.smSourceAnchor))row.remove()});
   var badges=product.querySelector('.sm-platform-logos');
   if(!badges){
    var android=description.querySelector('img[alt="Android Auto"]'),apple=description.querySelector('img[alt="Apple CarPlay"]');
-   if(android&&apple&&android.parentElement===apple.parentElement){badges=android.parentElement;badges.classList.add('sm-platform-logos');badges.setAttribute('aria-label','Apple CarPlay and Android Auto compatibility')}
+   if(android&&apple&&android.parentElement===apple.parentElement){badges=android.parentElement;badges.smSourceAnchor=document.createComment('Compatibility artwork source');badges.before(badges.smSourceAnchor);badges.classList.add('sm-platform-logos');badges.setAttribute('aria-label','Apple CarPlay and Android Auto compatibility')}
   }
   if(badges&&gallery&&price){
    if(mobile.matches){if(badges.parentElement!==gallery)gallery.appendChild(badges)}
    else if(price.nextElementSibling!==badges)price.after(badges);
   }
-  var policies=description.querySelector('.sm-order-card'),videos=description.querySelector('.sm-video-gallery');
-  if(policies&&videos&&videos.previousElementSibling!==policies)videos.before(policies);
+  var policies=description.querySelector('.sm-order-card');
+  // The hub keeps its explicitly requested position below Contact us.
+  var hubPage=/\/products\/sync-3-usb-hub-with-built-in-wireless-apple-carplay-android-auto-and-pd-30w-fast-charging\/?$/.test(location.pathname);
+  if(!policies||hubPage)return;
+  var panel=description.querySelector('[aria-label="Product highlights"]');
+  if(!panel)return;
+  // The first product-highlights list precedes installation videos and kit contents.
+  var bullets=panel.nextElementSibling;
+  while(bullets&&!bullets.matches('ul,ol,h2,h3,section,.sm-video-gallery,iframe,details'))bullets=bullets.nextElementSibling;
+  if(bullets&&bullets.matches('ul,ol')&&bullets.nextElementSibling!==policies)bullets.after(policies);
  }
  SMI_DOM_RUNNER.add(arrange);mobile.addEventListener('change',arrange);
 })();

@@ -99,3 +99,11 @@ Nick retained the floating-badge order sections and vehicle finders. Policy disc
 The military discount notice now uses Nick's approved Star tab design (navy square star, thin red base, light panel) via its exact aria-label. The homepage Facebook banner uses the brand/logo row as its only heading; the old “A little more Simply Michigan” heading is hidden before scripts run and removed by the shared enhancer. Product benefit cards remain in their original green design while alternatives are reviewed.
 
 SimplyCare/SimplyCare+ description disclosures now reuse the upgrade-card thumbnail layout, retaining their existing copy and native expansion behavior. `images/product-upgrades/simplycare-protection.webp` is the supplied 5000px illustration resized to 320px (5.6 KB).
+
+## Shared product presentation
+
+All existing four-feature `Product highlights` panels use the compact white layout with aligned round green checks. Product-specific feature text is retained; only the two standard kits use their previously approved shortened copy. Existing Android Auto/Apple CarPlay artwork is moved below pricing on desktop and into the gallery on mobile. Desktop centers the pair; mobile fills the gallery content width. Pages without these logos do not gain compatibility claims. Source anchors discard moved logos when Ecwid replaces a description during navigation.
+
+Ordering cards follow the first highlight bullet list, ahead of installation videos or subsequent product sections. The wireless USB-C hub keeps its requested position below Contact us. The existing disclosure preserves each product's warranty, processing estimates, shipping and return terms. Accessories and service pages without those components retain their content. The shared discount rectangle, file-upload styling and full-card upgrade interactions already apply wherever present.
+
+Catalog and responsive evidence: `../work/2026-10-25-product-consistency`. Audit all public product sitemap entries; check the 16 feature-panel products at 1440, 1024, 768, 767, 390 and 320px. Verify saved Ecwid loader references and live pages separately.
