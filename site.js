@@ -561,8 +561,9 @@ var SMI_PROCESSING_POLICY=(function(){
    var text=title?title.textContent:Array.prototype.map.call(summary.childNodes,function(node){return node.nodeType===3?node.textContent:''}).join(' ');
    return /^Processing Time$/i.test(text.trim());
   });
+  if(!detail)detail=Array.prototype.find.call(root.querySelectorAll('.sm-order-section'),function(section){var heading=section.querySelector(':scope > h3');return heading&&/^Processing time$/i.test(heading.textContent.trim())});
   if(!detail)return null;
-  var copy=detail.cloneNode(true);copy.querySelector('summary').remove();
+  var copy=detail.cloneNode(true),heading=copy.querySelector(':scope > summary, :scope > h3');if(heading)heading.remove();
   var body=copy.textContent.replace(/\s+/g,' ').trim();
   var times=body.match(/\b\d+(?:\s*(?:[-–—]|to)\s*\d+)?\s+business days\b/gi);
   if(!times)return null;
@@ -1342,6 +1343,7 @@ SMI_DOM_RUNNER.add(function(){
    var android=description.querySelector('img[alt="Android Auto"]'),apple=description.querySelector('img[alt="Apple CarPlay"]');
    if(android&&apple&&android.parentElement===apple.parentElement){badges=android.parentElement;badges.smSourceAnchor=document.createComment('Compatibility artwork source');badges.before(badges.smSourceAnchor);badges.classList.add('sm-platform-logos');badges.setAttribute('aria-label','Apple CarPlay and Android Auto compatibility')}
   }
+  if(badges&&!badges.smSourceAnchor&&description.contains(badges)){badges.smSourceAnchor=document.createComment('Compatibility artwork source');badges.before(badges.smSourceAnchor)}
   if(badges&&gallery&&price){
    if(mobile.matches){if(badges.parentElement!==gallery)gallery.appendChild(badges)}
    else if(price.nextElementSibling!==badges)price.after(badges);
@@ -1358,4 +1360,39 @@ SMI_DOM_RUNNER.add(function(){
   if(bullets&&bullets.matches('ul,ol')&&bullets.nextElementSibling!==policies)bullets.after(policies);
  }
  SMI_DOM_RUNNER.add(arrange);mobile.addEventListener('change',arrange);
+})();
+
+/* Interactions for content authored and saved in Ecwid product descriptions. */
+(function(){
+ function saved(element){var description=element.closest('.product-details__product-description');return description&&description.querySelector('[data-sm-content-version]')}
+ document.addEventListener('toggle',function(event){
+  var detail=event.target;if(!detail.matches||!detail.matches('details')||!saved(detail))return;
+  var action=detail.querySelector(':scope > summary .sm-order-hint > span');
+  if(action){action.textContent=detail.open?'Click or tap to close':'Click or tap to view all details';return}
+  action=detail.querySelector(':scope > summary .sm-promo-action, :scope > summary .sm-disclosure-action');
+  if(!action)return;
+  var card=detail.matches('.sm-promo-card,.sm-care-disclosure');
+  action.textContent=card?(detail.open?'Click or tap on the card to close':'Click or tap on the card to view more'):(detail.open?'Close':'Read More');
+ },true);
+ document.addEventListener('click',function(event){
+  var button=event.target.closest('.sm-video-gallery__choice,.sm-video-gallery__poster');if(!button||!saved(button))return;
+  var gallery=button.closest('.sm-video-gallery'),player=gallery.querySelector('.sm-video-gallery__player'),choices=Array.from(gallery.querySelectorAll('.sm-video-gallery__choice'));
+  var choice=button.matches('.sm-video-gallery__choice')?button:choices.find(function(item){return item.getAttribute('aria-pressed')==='true'});
+  if(!choice)return;
+  var id=choice.dataset.videoId;if(!/^[a-zA-Z0-9_-]{11}$/.test(id))return;
+  var copy=choice.querySelector('.sm-video-gallery__choice-copy'),title=copy.querySelector('strong').textContent,creator=copy.querySelector('span').textContent;
+  if(button.matches('.sm-video-gallery__choice')){
+   if(choice.getAttribute('aria-pressed')==='true')return;
+   gallery.dataset.video=id;choices.forEach(function(item){item.setAttribute('aria-pressed',String(item===choice))});
+   var details=gallery.querySelector('.sm-video-gallery__details');details.querySelector('strong').textContent=title;details.querySelector('span').textContent=creator;
+   gallery.querySelector('.sm-video-gallery__external').href='https://www.youtube.com/watch?v='+id;
+   var poster=document.createElement('button'),image=document.createElement('img'),play=document.createElement('span');poster.type='button';poster.className='sm-video-gallery__poster';poster.setAttribute('aria-label','Play '+title+' by '+creator);
+   image.alt='';image.width=1280;image.height=720;image.decoding='async';image.src='https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg';
+   play.className='sm-video-gallery__play';play.setAttribute('aria-hidden','true');play.textContent='▶';poster.append(image,play);player.replaceChildren(poster);
+  }else{
+   var frame=document.createElement('iframe');frame.title=title+' — '+creator;frame.width=760;frame.height=428;frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';frame.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&playsinline=1&rel=0';player.replaceChildren(frame);frame.focus();
+  }
+ });
+ function recover(event){var image=event.target;if(!image.matches||!image.matches('.sm-video-gallery img')||!saved(image))return;var match=image.src.match(/\/vi\/([a-zA-Z0-9_-]{11})\/maxresdefault\.jpg/);if(match&&(event.type==='error'||image.naturalWidth<200))image.src='https://i.ytimg.com/vi/'+match[1]+'/hqdefault.jpg'}
+ document.addEventListener('error',recover,true);document.addEventListener('load',recover,true);
 })();
