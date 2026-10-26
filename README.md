@@ -4,11 +4,11 @@ Small browser-side assets used by the Simply Michigan Infotainment Ecwid storefr
 
 Ecwid loads the complete production bundle from:
 
-`https://nickrams3y.github.io/smi-assets/site.js?v=78f0dbb`
+`https://nickrams3y.github.io/smi-assets/site.js?v=0306e05`
 
 Ecwid loads the complete production stylesheet from:
 
-`https://nickrams3y.github.io/smi-assets/site.css?v=09da81d` (header link; the custom CSS theme also imports `site.css?v=eb6e7e4`)
+`https://nickrams3y.github.io/smi-assets/site.css?v=2719ee4` (header link; the custom CSS theme also imports `site.css?v=eb6e7e4`)
 
 ## Compatibility checker
 
@@ -102,7 +102,7 @@ SimplyCare/SimplyCare+ description disclosures now reuse the upgrade-card thumbn
 
 ## Shared product presentation
 
-All existing four-feature `Product highlights` panels use the compact white layout with aligned round green checks. Feature descriptions use concise copy with product-specific fitment, hardware generation, programming requirements and qualifiers preserved. Exact source-text matches prevent the shorter-copy rules from replacing future description edits. The two standard kits retain their approved copy. Existing Android Auto/Apple CarPlay artwork is moved below pricing on desktop and into the gallery on mobile. The side-by-side pair fills the price column on desktop and gallery content width on mobile. Coupon and PayPal notices fill the same price-column width, with compact 8px spacing; coupon text wraps on narrow screens. Pages without these logos do not gain compatibility claims. Source anchors discard moved logos when Ecwid replaces a description during navigation.
+All existing four-feature `Product highlights` panels use the compact white layout with aligned round green checks. Feature descriptions use concise copy with product-specific fitment, hardware generation, programming requirements and qualifiers preserved. The concise copy is saved directly in each product's Ecwid HTML; JavaScript no longer rewrites it. The two standard kits retain their approved copy. Existing Android Auto/Apple CarPlay artwork is moved below pricing on desktop and into the gallery on mobile. The side-by-side pair fills the price column on desktop and gallery content width on mobile. Coupon and PayPal notices fill the same price-column width, with compact 8px spacing; coupon text wraps on narrow screens. Pages without these logos do not gain compatibility claims. Source anchors discard moved logos when Ecwid replaces a description during navigation.
 
 Ordering cards follow the first highlight bullet list, ahead of installation videos or subsequent product sections. The wireless USB-C hub keeps its requested position below Contact us. The existing disclosure preserves each product's warranty, processing estimates, shipping and return terms. Accessories and service pages without those components retain their content. The shared discount rectangle, file-upload styling and full-card upgrade interactions already apply wherever present.
 
@@ -111,3 +111,11 @@ Catalog and responsive evidence: `../work/2026-10-25-product-consistency`. Audit
 Concise feature-copy evidence and the before/after copy list: `../work/2026-10-25-concise-highlights`. Verify unchanged headings and description text outside the feature panel, exact product-specific short copy, and aligned checks/text at 1440, 390 and 320px.
 
 Full-width pricing and logo layout evidence: `../work/2026-10-25-even-price-column`, covering all 16 feature-panel products at 1440, 1024, 767, 390 and 320px. PayPal visibility remains controlled by its native SDK.
+
+## Product HTML ownership (2026-10-26 migration)
+
+Ecwid is the source of truth for the 16 enhanced product descriptions: K3-NON, K3-NAV, K3-FT, K12, K48-F13, K48-F15, K48-F18, K48-FS17, K48-SD20, K48-M19, K48-R19, AP3-NON, AP3-NAV, AP3-LITE, ACM, HUB-CW. Their compact highlights, full ordering policies, video galleries, promos, SimplyCare panels and upgrade dialogs are stored in the individual Description fields. Edit those fields for future content changes. Do not reinstate JavaScript content builders or duplicate policy sources. The earlier decorator and copy-replacement notes above describe historical implementation.
+
+Shared CSS remains hosted here because of Ecwid's character limit. JavaScript retains necessary storefront interactions, responsive placement of Ecwid-authored compatibility artwork, option logic, and video/dialog/disclosure handlers. Product description layout/content builders were removed in 0306e05. Categories, finders, homepage and support are outside this migration.
+
+Migration backup, prepared HTML, exported catalog and verification reports are in `../work/2026-10-25-ecwid-content-migration`. CSV imports use only name, SKU and description. Ecwid converts formatting newlines to BR and decodes HTML entities: flatten formatting whitespace and use single-quoted attributes for inch-mark labels. Verify persisted HTML semantically against the intended DOM and compare all exported fields after import. Never select Delete all products and categories.
