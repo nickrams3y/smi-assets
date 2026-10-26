@@ -1213,6 +1213,44 @@ SMI_DOM_RUNNER.add(function(){
  });
 });
 
+/* Concise feature copy; exact source matches preserve product-specific distinctions. */
+SMI_DOM_RUNNER.add(function(){
+ var replacements={
+  "A complete conversion kit built specifically for 2020–2022 Super Duty trucks equipped with the factory 4\" Sync system.": "For 2020–2022 Super Duty trucks with factory 4\" Sync.",
+  "Your authentic Ford OEM Sync 3 APIM is programmed to your VIN before shipping and arrives fully updated.": "Authentic Ford OEM APIM, VIN-programmed and fully updated.",
+  "We'll email the custom ACM, FCIM and/or HVAC files needed to complete your conversion with FORScan.": "Custom ACM, FCIM and/or HVAC files emailed. FORScan required.",
+  "Applies to everything in your order. Extended coverage is available through SimplyCare or SimplyCare+.": "Your order is covered. SimplyCare or SimplyCare+ extensions available.",
+  "A complete conversion kit built specifically for 2019–2023 Rangers equipped with the factory 4\" Sync system.": "For 2019–2023 Rangers with factory 4\" Sync.",
+  "Your Gen 4 Sync 3 APIM is programmed to your VIN before shipping and arrives fully updated.": "Gen 4 APIM, VIN-programmed and fully updated.",
+  "A complete conversion kit built specifically for 2019–2022 Mustangs equipped with the factory 4\" Sync system.": "For 2019–2022 Mustangs with factory 4\" Sync.",
+  "A complete conversion kit built specifically for 2017–2019 F-250s equipped with the factory 4\" Sync system.": "For 2017–2019 F-250s with factory 4\" Sync.",
+  "A complete conversion kit built specifically for 2015–2017 F-150s equipped with the factory 4\" Sync system.": "For 2015–2017 F-150s with factory 4\" Sync.",
+  "A complete conversion kit built specifically for 2018–2020 F-150s equipped with the factory 4\" Sync system.": "For 2018–2020 F-150s with factory 4\" Sync.",
+  "A complete conversion kit built specifically for 2013–2014 F-150s equipped with the factory 4\" Sync system.": "For 2013–2014 F-150s with factory 4\" Sync.",
+  "Easy installation! Plug and play, just swap out the hardware and you're done. No technical knowledge required.": "Swap the hardware. No technical knowledge required.",
+  "We'll program your new infotainment system for your exact vehicle before it ships.": "Programmed for your exact vehicle before shipping.",
+  "Applies to everything in your order. If anything happens, you're covered. Extended warranty with SimplyCare is available.": "Your order is covered. SimplyCare extension available.",
+  "Updated to the latest Sync 3.4 software and 2025 maps when the navigation option is selected.": "Latest Sync 3.4; 2025 maps with navigation selected.",
+  "Transfer your factory controls, connect the supplied hardware, and you're done. No cutting or permanent modifications are required. We'll also include a plastic pry tool to aid with installation.": "Transfer factory controls. No cutting or permanent modifications.",
+  "The supplied hardware handles the required screen resolution settings. FORScan is optional for adjusting appearance settings after installation.": "Screen settings handled automatically. FORScan optional for appearance changes.",
+  "Sync 3 works great with your vehicle, keep it! Avoid the drawbacks of upgrading to Sync 4 while retaining the full functionality of your system.": "Keep Sync 3 and your vehicle’s existing features.",
+  "Built directly into the hub. No separate dongle or adapter required.": "Built into the hub. No dongle needed.",
+  "USB-C PD charging tested at approximately 30W for faster phone charging.": "USB-C PD charging, tested at approximately 30W.",
+  "Replace your existing USB hub and reuse your supplied bezel where applicable.": "Swap your hub. Reuse the supplied bezel where applicable.",
+  "Two sizes are available to match different Ford and Lincoln vehicles.": "Two sizes for different Ford and Lincoln vehicles.",
+  "Programmed to include everything your vehicle needs, including backup cameras, steering wheel controls, climate controls, climate seats and more.": "Configured for your vehicle’s factory features.",
+  "Prepared for your compatible vehicle before shipping. Replace the existing APIM and keep your factory 4-inch system.": "Replace your APIM; keep your compatible factory 4-inch system.",
+  "Your replacement APIM is programmed for your vehicle using the VIN supplied with your order.": "Programmed for your exact vehicle before shipping.",
+  "Designed to replace your original ACM using the factory wiring and connectors.": "Uses your vehicle’s factory wiring and connectors.",
+  "We'll use your VIN and original module information to prepare the correct ACM for your vehicle.": "Matched and programmed using your VIN and original ACM details.",
+  "Every module is inspected and tested for normal operation before shipment.": "Inspected and tested before shipping."
+};
+ document.querySelectorAll('.product-details__product-description .sm-compact-highlights > div > span:last-child > span').forEach(function(description){
+  var current=description.textContent.trim(),shorter=replacements[current];
+  if(shorter&&current!==shorter)description.textContent=shorter;
+ });
+});
+
 /* Full-card upgrade triggers with a quiet hint in place of the dark button. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('.product-details__product-description article.sm-upgrade-card').forEach(function(card){
