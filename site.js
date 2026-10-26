@@ -585,72 +585,6 @@ var SMI_PROCESSING_POLICY=(function(){
  return{read:read};
 })();
 
-(function(){
- function enhanceTextDisclosures(){
-  var root=document.querySelector(".product-details__product-description");
-  if(!root)return;
-  var policyPreviews={
-   "warranty":"Your hardware is covered for one year from the purchase date. If a covered component fails, we’ll replace it.",
-   "shipping":"Free domestic shipping is included to all 50 states. Every order is securely packaged to protect its contents during transit.",
-   "returns and cancellations":"Free domestic returns are available within 30 days. We’ll provide a prepaid return label at no charge."
-  };
-  var processing=SMI_PROCESSING_POLICY.read(root);
-  root.querySelectorAll('details[style*="border-left:3px solid #9a9a9a"]').forEach(function(detail){
-   var summary=detail.querySelector(":scope > summary");
-   if(!summary||detail.classList.contains("sm-care-disclosure"))return;
-   detail.classList.add("sm-text-disclosure");
-   summary.querySelectorAll("span").forEach(function(span){
-    if(!span.classList.contains("sm-disclosure-action")&&span.textContent.trim().toLowerCase()==="read more"){
-     span.classList.add("sm-disclosure-legacy-action");
-     var previewRow=span.parentElement;
-     if(previewRow&&previewRow!==summary){
-      previewRow.classList.add("sm-disclosure-preview-row");
-      Array.prototype.forEach.call(previewRow.children,function(child){
-       if(child!==span)child.classList.add("sm-disclosure-preview")
-      })
-     }
-    }
-   });
-   var directTitle=Array.prototype.map.call(summary.childNodes,function(node){return node.nodeType===3?node.textContent:""}).join(" ").replace(/\s+/g," ").trim();
-   var titleKey=directTitle.toLowerCase(),previewCopy=policyPreviews[titleKey];
-   if(processing&&processing.detail===detail)previewCopy=processing.preview;
-   if(previewCopy&&!summary.querySelector(":scope > .sm-disclosure-preview-row")){
-    Array.prototype.forEach.call(summary.childNodes,function(node){if(node.nodeType===3)node.remove()});
-    var titleSpan=document.createElement("span");
-    titleSpan.className="sm-disclosure-title";
-    titleSpan.textContent=directTitle;
-    var row=document.createElement("span");
-    row.className="sm-disclosure-preview-row";
-    var preview=document.createElement("span");
-    preview.className="sm-disclosure-preview";
-    preview.textContent=previewCopy;
-    row.appendChild(preview);
-    summary.insertBefore(titleSpan,summary.firstChild);
-    summary.insertBefore(row,summary.querySelector(":scope > .sm-disclosure-action"))
-   }
-   var processingPreview=summary.querySelector('.sm-disclosure-preview');
-   if(processing&&processing.detail===detail&&processingPreview&&processingPreview.textContent!==processing.preview)processingPreview.textContent=processing.preview;
-   var hasPreview=!!summary.querySelector(":scope > .sm-disclosure-preview-row");
-   detail.classList.toggle("sm-text-disclosure--preview",hasPreview);
-   detail.classList.toggle("sm-text-disclosure--plain",!hasPreview);
-   var action=summary.querySelector(":scope > .sm-disclosure-action, .sm-care-layout .sm-disclosure-action");
-   if(!action){
-    action=document.createElement("span");
-    action.className="sm-disclosure-action";
-    action.setAttribute("aria-hidden","true");
-    summary.appendChild(action)
-   }
-   function update(){var care=detail.classList.contains("sm-care-disclosure");action.textContent=care?(detail.open?"Click or tap on the card to close":"Click or tap on the card to view more"):(detail.open?"Close":"Read More")}
-   if(!detail.dataset.smDisclosureBound){
-    detail.dataset.smDisclosureBound="1";
-    detail.addEventListener("toggle",update)
-   }
-   update()
-  })
- }
- SMI_DOM_RUNNER.add(enhanceTextDisclosures)
-})();
-
 /* Reuse the product-description photos in the connectivity question-mark dialog. */
 (function(){
  var photos=[
@@ -771,61 +705,6 @@ var SMI_PROCESSING_POLICY=(function(){
   });
  }
  SMI_DOM_RUNNER.add(enhanceStock);
-})();
-
-/* Group the two installation embeds into one on-demand, three-video gallery. */
-(function(){
- var videos=[
-  {id:'etDgW6yLIIU',title:'Sync 2 to Sync 3 Installation',creator:'Auto Freak Garage'},
-  {id:'OWrfQuf2pgI',title:'Is a Sync 3 Upgrade Worth It?',creator:'Nine Finger Wrenching'},
-  {id:'DOY7z6q39AU',title:'2014 F-150 Sync 3 Upgrade',creator:'The Futzer'}
- ];
- function image(id,large){
-  var img=document.createElement('img');img.alt='';img.width=large?1280:480;img.height=large?720:360;img.loading='lazy';img.decoding='async';
-  var fallback='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';
-  function recover(){if(img.src!==fallback)img.src=fallback}
-  img.addEventListener('error',recover);if(large)img.addEventListener('load',function(){if(img.naturalWidth<200)recover()});
-  img.src=large?'https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg':fallback;return img;
- }
- function build(){
-  var gallery=document.createElement('section');gallery.className='sm-video-gallery';gallery.setAttribute('aria-label','See the Upgrade in Action');
-  gallery.innerHTML='<h2 class="sm-video-gallery__heading">See the Upgrade in Action</h2><p class="sm-video-gallery__intro">Watch real installs and see the results for yourself.</p><div class="sm-video-gallery__player"></div><div class="sm-video-gallery__caption"><div class="sm-video-gallery__details" aria-live="polite"><strong></strong><span></span></div><a class="sm-video-gallery__external" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a></div><div class="sm-video-gallery__choices" role="group" aria-label="Choose a video"></div>';
-  var player=gallery.querySelector('.sm-video-gallery__player'),details=gallery.querySelector('.sm-video-gallery__details'),external=gallery.querySelector('.sm-video-gallery__external'),choices=gallery.querySelector('.sm-video-gallery__choices'),selected=-1;
-  var buttons=videos.map(function(video,index){
-   var button=document.createElement('button');button.type='button';button.className='sm-video-gallery__choice';
-   var thumb=document.createElement('span'),copy=document.createElement('span'),title=document.createElement('strong'),creator=document.createElement('span');
-   thumb.className='sm-video-gallery__thumb';copy.className='sm-video-gallery__choice-copy';title.textContent=video.title;creator.textContent=video.creator;
-   thumb.appendChild(image(video.id,false));copy.append(title,creator);button.append(thumb,copy);choices.appendChild(button);
-   button.addEventListener('click',function(){select(index)});return button;
-  });
-  function select(index){
-   if(selected===index)return;selected=index;var video=videos[index];
-   // Removing the previous iframe stops its video before another can play.
-   player.replaceChildren();gallery.dataset.video=video.id;
-   details.querySelector('strong').textContent=video.title;details.querySelector('span').textContent=video.creator;
-   external.href='https://www.youtube.com/watch?v='+video.id;
-   buttons.forEach(function(button,i){button.setAttribute('aria-pressed',String(i===index))});
-   var poster=document.createElement('button'),play=document.createElement('span');poster.type='button';poster.className='sm-video-gallery__poster';poster.setAttribute('aria-label','Play '+video.title+' by '+video.creator);
-   play.className='sm-video-gallery__play';play.setAttribute('aria-hidden','true');play.textContent='▶';poster.append(image(video.id,true),play);player.appendChild(poster);
-   poster.addEventListener('click',function(){
-    var frame=document.createElement('iframe');frame.title=video.title+' — '+video.creator;frame.width=760;frame.height=428;
-    frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';
-    frame.src='https://www.youtube-nocookie.com/embed/'+video.id+'?autoplay=1&playsinline=1&rel=0';
-    player.replaceChildren(frame);frame.focus();
-   });
-  }
-  select(0);return gallery;
- }
- function enhanceVideos(){
-  document.querySelectorAll('.product-details__product-description').forEach(function(description){
-   if(description.querySelector('.sm-video-gallery')||getComputedStyle(description).getPropertyValue('--sm-video-gallery').trim()!=='1')return;
-   var frames=Array.prototype.filter.call(description.querySelectorAll('iframe'),function(frame){return /^https:\/\/www\.youtube(?:-nocookie)?\.com\/embed\/(etDgW6yLIIU|DOY7z6q39AU)(?:[?/#]|$)/.test(frame.src)});
-   if(!['etDgW6yLIIU','DOY7z6q39AU'].every(function(id){return frames.some(function(frame){return frame.src.indexOf('/embed/'+id)>=0})}))return;
-   var gallery=build();frames[0].before(gallery);frames.forEach(function(frame){frame.remove()});
-  });
- }
- SMI_DOM_RUNNER.add(enhanceVideos);
- document.addEventListener('load',function(event){if(event.target.tagName==='LINK')enhanceVideos()},true);
 })();
 
 /* A small mobile scroll bar reflects and controls Ecwid's existing product row. */
@@ -1081,7 +960,7 @@ var SMI_PROCESSING_POLICY=(function(){
   if(box.style.borderTopWidth==='3px'&&box.querySelector(':scope > [aria-hidden]'))box.classList.add('sm-bubble-benefit');
  }
  function decorate(){
-  document.querySelectorAll('.product-details__product-description, .ec-store__category-description, .grid__description, .ins-tile--custom-code, .ins-tile--text, #sm-support .sh-body').forEach(function(root){
+  document.querySelectorAll('.ec-store__category-description, .grid__description, .ins-tile--custom-code, .ins-tile--text, #sm-support .sh-body').forEach(function(root){
    root.querySelectorAll('div[style],section[style],aside[style],details[style]').forEach(function(box){
     if(box.closest('dialog,.sm-upgrade-dialog')||box.matches('.sm-hub-mobile-scroll-hint'))return;
     var style=box.style;
@@ -1122,215 +1001,7 @@ SMI_DOM_RUNNER.add(function(){
  if(old&&old.textContent.trim()==='A little more Simply Michigan.')old.remove();
 });
 
-/* SimplyCare uses an inner grid because Safari does not lay out summary children as a grid reliably. */
-SMI_DOM_RUNNER.add(function(){
- document.querySelectorAll('.product-details__product-description details').forEach(function(detail){
-  var summary=detail.querySelector(':scope > summary');if(!summary||summary.querySelector('.sm-care-layout'))return;
-  var title=summary.querySelector(':scope > span:not(.sm-disclosure-preview-row):not(.sm-disclosure-action)');
-  if(!title||!/^SimplyCare\+?$/.test(title.textContent.trim()))return;
-  var preview=summary.querySelector(':scope > .sm-disclosure-preview-row');
-  var action=summary.querySelector(':scope > .sm-disclosure-action');
-  if(!preview||!action)return;
-  detail.classList.add('sm-care-disclosure');title.classList.add('sm-care-title');
-  var layout=document.createElement('span');layout.className='sm-care-layout';
-  var copy=document.createElement('span');copy.className='sm-care-copy';
-  var frame=document.createElement('span');frame.className='sm-care-image';frame.setAttribute('aria-hidden','true');
-  var img=document.createElement('img');img.src='https://nickrams3y.github.io/smi-assets/images/product-upgrades/simplycare-protection.webp';
-  img.alt='';img.width=320;img.height=320;img.loading='lazy';img.decoding='async';
-  frame.appendChild(img);copy.appendChild(title);copy.appendChild(preview);
-  layout.appendChild(frame);layout.appendChild(copy);layout.appendChild(action);summary.appendChild(layout);
-  function update(){action.textContent=detail.open?'Click or tap on the card to close':'Click or tap on the card to view more'}
-  detail.addEventListener('toggle',update);update();
- });
-});
-
-/* Approved compact product promotions; preserve links and the expanded upgrade content. */
-SMI_DOM_RUNNER.add(function(){
- var root=document.querySelector('.product-details__product-description');if(!root)return;
- function layout(photo,title,description,action){
-  var row=document.createElement('span');row.className='sm-promo-layout';
-  photo.classList.add('sm-promo-photo');
-  var copy=document.createElement('span');copy.className='sm-promo-copy';
-  var heading=document.createElement('strong');heading.className='sm-promo-title';heading.textContent=title;
-  var desc=document.createElement('span');desc.className='sm-promo-description';desc.textContent=description;
-  copy.append(heading,desc);action.removeAttribute('style');action.classList.add('sm-promo-action');row.append(photo,copy,action);return row;
- }
- root.querySelectorAll('#sm-12-inch-upgrade-ad').forEach(function(card){
-  if(card.classList.contains('sm-promo-card'))return;
-  var summary=card.querySelector(':scope > summary');if(!summary)return;
-  var photo=summary.querySelector('img');if(!photo)return;photo=photo.parentElement;
-  var action=document.createElement('span');action.setAttribute('aria-hidden','true');action.textContent='Click or tap on the card to view more';
-  summary.replaceChildren(layout(photo,'Upgrading to Sync 3? See the 12" Option.','Available for the F-150 and F-250. Click or tap for more information.',action));
-  card.classList.add('sm-promo-card');
-  card.addEventListener('toggle',function(){action.textContent=card.open?'Click or tap on the card to close':'Click or tap on the card to view more'});
- });
- root.querySelectorAll('[aria-label="Audio Control Module replacement"]').forEach(function(card){
-  if(card.classList.contains('sm-promo-card'))return;
-  var photo=card.querySelector('img'),action=card.querySelector('a');if(!photo||!action)return;
-  photo=photo.parentElement;action.textContent='Click or tap on the card to view ACM replacements';
-  card.replaceChildren(layout(photo,'Need to fix an audio issue?','If your screen works normally but your vehicle has no sound, your audio control module (ACM) may be the cause.',action));
-  card.classList.add('sm-promo-card');
- });
-});
-
-/* Shorter approved highlight copy, preserving product-specific descriptions. */
-SMI_DOM_RUNNER.add(function(){
- document.querySelectorAll('.product-details__product-description [aria-label="Product highlights"] > div').forEach(function(card){
-  var copy=card.querySelector(':scope > span:last-child');if(!copy)return;
-  var title=copy.querySelector(':scope > strong'),description=copy.querySelector(':scope > span');if(!title||!description)return;
-  var heading=title.textContent.trim(),text=description.textContent.trim(),replacement='';
-  if(heading==='1 Year Warranty & Free Returns')title.textContent='1 Year Warranty';
-  if(heading==='VIN Programmed'&&/include everything your vehicle needs/.test(text))replacement='Programmed to include everything your vehicle needs, including backup cameras, steering wheel controls, climate controls, climate seats and more.';
-  if(heading==='Plug & Play'&&/^Easy installation/.test(text))replacement="Easy installation! Plug and play, just swap out the hardware and you're done. No technical knowledge required.";
-  if(replacement&&text!==replacement)description.textContent=replacement;
- });
-});
-
-/* Shared compact highlights retain each product's original feature copy. */
-SMI_DOM_RUNNER.add(function(){
- document.querySelectorAll('.product-details__product-description [aria-label="Product highlights"]').forEach(function(panel){
-  var cards=Array.from(panel.children);
-  if(cards.length===4&&cards.every(function(card){return card.matches('div')&&card.querySelector(':scope > [aria-hidden="true"]')&&card.querySelector(':scope > span:last-child > strong')&&card.querySelector(':scope > span:last-child > span')}))panel.classList.add('sm-compact-highlights');
- });
-});
-
-/* Approved shorter copy for the two standard Sync 3 kits. */
-SMI_DOM_RUNNER.add(function(){
- if(!/^\/products\/ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with(?:out)?-navigation\/?$/.test(location.pathname))return;
- var panel=document.querySelector('.product-details__product-description [aria-label="Product highlights"]');
- if(!panel)return;
- var descriptions={
-  'Plug & Play':'Swap the hardware. No technical knowledge required.',
-  'VIN Programmed':'Configured for your vehicle’s factory features.',
-  '1 Year Warranty':'Your order is covered. SimplyCare extension available.',
-  'Fully Updated':'Updated to the latest Sync 3.4 software version.'
- };
- var cards=Array.from(panel.children);
- if(cards.length!==4||!cards.every(function(card){var title=card.querySelector(':scope > span:last-child > strong');return title&&descriptions[title.textContent.trim()]}))return;
- panel.classList.add('sm-compact-highlights');
- cards.forEach(function(card){
-  var copy=card.querySelector(':scope > span:last-child'),title=copy.querySelector('strong'),description=copy.querySelector(':scope > span');
-  var text=descriptions[title.textContent.trim()];if(description&&description.textContent!==text)description.textContent=text;
- });
-});
-
-/* Concise feature copy; exact source matches preserve product-specific distinctions. */
-SMI_DOM_RUNNER.add(function(){
- var replacements={
-  "A complete conversion kit built specifically for 2020–2022 Super Duty trucks equipped with the factory 4\" Sync system.": "For 2020–2022 Super Duty trucks with factory 4\" Sync.",
-  "Your authentic Ford OEM Sync 3 APIM is programmed to your VIN before shipping and arrives fully updated.": "Authentic Ford OEM APIM, VIN-programmed and fully updated.",
-  "We'll email the custom ACM, FCIM and/or HVAC files needed to complete your conversion with FORScan.": "Custom ACM, FCIM and/or HVAC files emailed. FORScan required.",
-  "Applies to everything in your order. Extended coverage is available through SimplyCare or SimplyCare+.": "Your order is covered. SimplyCare or SimplyCare+ extensions available.",
-  "A complete conversion kit built specifically for 2019–2023 Rangers equipped with the factory 4\" Sync system.": "For 2019–2023 Rangers with factory 4\" Sync.",
-  "Your Gen 4 Sync 3 APIM is programmed to your VIN before shipping and arrives fully updated.": "Gen 4 APIM, VIN-programmed and fully updated.",
-  "A complete conversion kit built specifically for 2019–2022 Mustangs equipped with the factory 4\" Sync system.": "For 2019–2022 Mustangs with factory 4\" Sync.",
-  "A complete conversion kit built specifically for 2017–2019 F-250s equipped with the factory 4\" Sync system.": "For 2017–2019 F-250s with factory 4\" Sync.",
-  "A complete conversion kit built specifically for 2015–2017 F-150s equipped with the factory 4\" Sync system.": "For 2015–2017 F-150s with factory 4\" Sync.",
-  "A complete conversion kit built specifically for 2018–2020 F-150s equipped with the factory 4\" Sync system.": "For 2018–2020 F-150s with factory 4\" Sync.",
-  "A complete conversion kit built specifically for 2013–2014 F-150s equipped with the factory 4\" Sync system.": "For 2013–2014 F-150s with factory 4\" Sync.",
-  "Easy installation! Plug and play, just swap out the hardware and you're done. No technical knowledge required.": "Swap the hardware. No technical knowledge required.",
-  "We'll program your new infotainment system for your exact vehicle before it ships.": "Programmed for your exact vehicle before shipping.",
-  "Applies to everything in your order. If anything happens, you're covered. Extended warranty with SimplyCare is available.": "Your order is covered. SimplyCare extension available.",
-  "Updated to the latest Sync 3.4 software and 2025 maps when the navigation option is selected.": "Latest Sync 3.4; 2025 maps with navigation selected.",
-  "Transfer your factory controls, connect the supplied hardware, and you're done. No cutting or permanent modifications are required. We'll also include a plastic pry tool to aid with installation.": "Transfer factory controls. No cutting or permanent modifications.",
-  "The supplied hardware handles the required screen resolution settings. FORScan is optional for adjusting appearance settings after installation.": "Screen settings handled automatically. FORScan optional for appearance changes.",
-  "Sync 3 works great with your vehicle, keep it! Avoid the drawbacks of upgrading to Sync 4 while retaining the full functionality of your system.": "Keep Sync 3 and your vehicle’s existing features.",
-  "Built directly into the hub. No separate dongle or adapter required.": "Built into the hub. No dongle needed.",
-  "USB-C PD charging tested at approximately 30W for faster phone charging.": "USB-C PD charging, tested at approximately 30W.",
-  "Replace your existing USB hub and reuse your supplied bezel where applicable.": "Swap your hub. Reuse the supplied bezel where applicable.",
-  "Two sizes are available to match different Ford and Lincoln vehicles.": "Two sizes for different Ford and Lincoln vehicles.",
-  "Programmed to include everything your vehicle needs, including backup cameras, steering wheel controls, climate controls, climate seats and more.": "Configured for your vehicle’s factory features.",
-  "Prepared for your compatible vehicle before shipping. Replace the existing APIM and keep your factory 4-inch system.": "Replace your APIM; keep your compatible factory 4-inch system.",
-  "Your replacement APIM is programmed for your vehicle using the VIN supplied with your order.": "Programmed for your exact vehicle before shipping.",
-  "Designed to replace your original ACM using the factory wiring and connectors.": "Uses your vehicle’s factory wiring and connectors.",
-  "We'll use your VIN and original module information to prepare the correct ACM for your vehicle.": "Matched and programmed using your VIN and original ACM details.",
-  "Every module is inspected and tested for normal operation before shipment.": "Inspected and tested before shipping."
-};
- document.querySelectorAll('.product-details__product-description .sm-compact-highlights > div > span:last-child > span').forEach(function(description){
-  var current=description.textContent.trim(),shorter=replacements[current];
-  if(shorter&&current!==shorter)description.textContent=shorter;
- });
-});
-
-/* Full-card upgrade triggers with a quiet hint in place of the dark button. */
-SMI_DOM_RUNNER.add(function(){
- document.querySelectorAll('.product-details__product-description article.sm-upgrade-card').forEach(function(card){
-  if(card.classList.contains('sm-tap-upgrade'))return;
-  var copy=card.querySelector('.sm-upgrade-card__copy'),button=card.querySelector('button[data-sm-upgrade-open]');if(!copy||!button)return;
-  var title=copy.querySelector('strong');if(!title)return;
-  var description=document.createElement('span');description.className='sm-upgrade-card__description';
-  Array.from(copy.childNodes).forEach(function(node){if(node!==title)description.appendChild(node)});copy.appendChild(description);
-  button.textContent='Click or tap on the card to view more';button.setAttribute('aria-label','View details: '+title.textContent.trim());
-  card.classList.add('sm-tap-upgrade');
- });
-});
-
-/* One disclosure for each product's existing ordering policies; preserve source copy. */
-(function(){
- var icons={shield:'<path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/>',box:'<path d="m3 7 9-4 9 4v10l-9 4-9-4V7Zm0 0 9 4 9-4M12 11v10M7 5l10 4"/>',truck:'<path d="M3 5h11v12H3V5Zm11 5h4l3 4v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',returns:'<path d="M3 10a9 9 0 1 1 1 8M3 4v6h6"/>'};
- function icon(name){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+icons[name]+'</svg>'}
- function title(detail){var s=detail.querySelector(':scope > summary'),t=s&&s.querySelector('.sm-disclosure-title');return (t?t.textContent:s?Array.from(s.childNodes).filter(function(n){return n.nodeType===3}).map(function(n){return n.textContent}).join(' '):'').trim()}
- function body(detail){var clone=detail.cloneNode(true);clone.querySelector('summary').remove();return clone.textContent.replace(/\s+/g,' ').trim()}
- function enhance(){
-  var root=document.querySelector('.product-details__product-description');if(!root||root.querySelector('.sm-order-card'))return;
-  var names=['Warranty','Processing Time','Shipping','Returns and Cancellations'];
-  var all=Array.from(root.querySelectorAll('details'));
-  var sources=names.map(function(name){return all.find(function(d){return title(d).toLowerCase()===name.toLowerCase()||(name==='Returns and Cancellations'&&title(d).toLowerCase()==='returns')})});
-  var hubPage=location.pathname.replace(/\/$/,'')==='/products/sync-3-usb-hub-with-built-in-wireless-apple-carplay-android-auto-and-pd-30w-fast-charging';
-  if(sources.some(function(d){return !d})&&!(hubPage&&sources[2]&&sources[3]))return;
-  var sourceAnchor=sources.find(function(source){return !!source});
-  // Merchant-confirmed hub policies. Existing catalog disclosures take precedence.
-  if(hubPage){
-   ['Your hardware is covered for one year from the purchase date. If a covered component fails, we’ll replace it.','Most orders ship within 5 business days.'].forEach(function(copy,i){
-    if(sources[i])return;
-    var detail=document.createElement('details'),heading=document.createElement('summary'),paragraph=document.createElement('p');
-    heading.textContent=names[i];paragraph.textContent=copy;detail.append(heading,paragraph);sources[i]=detail;
-   });
-  }
-  var texts=sources.map(function(d){return d?body(d):''}),processing=SMI_PROCESSING_POLICY.read(root);
-  var estimate=texts[1].match(/\b\d+(?:\s*(?:[-–—]|to)\s*\d+)?\s+business days\b/gi)||[];
-  var timeLabel='Processing time',timeNote='See timing below';
-  if((processing||hubPage)&&estimate.length===1){timeLabel=estimate[0];timeNote=/[-–—]|\bto\b/.test(timeLabel)?'Typical processing time':'Most orders ship within';if(/Certain configurations may take longer/i.test(texts[1]))timeNote+='; some take longer'}
-  else if(processing&&estimate.length>1){timeLabel=estimate[0];timeNote='Allow up to '+estimate[estimate.length-1]}
-  var facts=[
-   ['shield',/\b(?:1|one) year\b/i.test(texts[0])?'1 year warranty':'Warranty','Hardware coverage'],
-   ['box',timeLabel,timeNote],
-   ['truck',/free domestic shipping/i.test(texts[2])?'Free shipping':'Shipping',/all 50 states/i.test(texts[2])?'All 50 states':'See shipping details'],
-   ['returns',/\b30[ -]day|within 30 days/i.test(texts[3])?'30 day returns':'Returns',/free 30[ -]day domestic returns|prepaid return label at no charge/i.test(texts[3])?'Free domestic returns':'See return details']
-  ].filter(function(f,i){return !!sources[i]});
-  var card=document.createElement('details');card.className='sm-order-card';
-  var summary=document.createElement('summary');summary.className='sm-order-summary';
-  summary.innerHTML='<span class="sm-order-badge">'+icon('shield')+'</span><span class="sm-order-heading">Ordering &amp; peace of mind</span><span class="sm-order-intro">Warranty, processing, shipping and returns — all in one place.</span>';
-  if(facts.length===2){card.classList.add('sm-order-card--two');summary.querySelector('.sm-order-intro').textContent='Shipping and returns — all in one place.'}
-  var highlights=document.createElement('span');highlights.className='sm-order-facts';
-  facts.forEach(function(f){var item=document.createElement('span');item.className='sm-order-fact';item.innerHTML=icon(f[0]);var copy=document.createElement('span'),strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=f[1];small.textContent=f[2];copy.append(strong,small);item.append(copy);highlights.append(item)});
-  summary.append(highlights);
-  var hint=document.createElement('span');hint.className='sm-order-hint';hint.setAttribute('aria-hidden','true');hint.innerHTML='<span>Click or tap to view all details</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';summary.append(hint);
-  var full=document.createElement('div');full.className='sm-order-full';
-  sources.forEach(function(source,i){
-   if(!source)return;
-   var section=document.createElement('section');section.className='sm-order-section';var heading=document.createElement('h3');heading.textContent=i===1?'Processing time':i===3?'Returns and cancellations':names[i];section.append(heading);
-   Array.from(source.childNodes).forEach(function(n){if(n.nodeType===1&&n.tagName==='SUMMARY')return;section.append(n.cloneNode(true))});
-   section.querySelectorAll('[style],[id]').forEach(function(el){el.removeAttribute('style');el.removeAttribute('id')});
-   var walker=document.createTreeWalker(section,NodeFilter.SHOW_TEXT),node;while((node=walker.nextNode()))node.nodeValue=node.nodeValue.replace(/30-day/g,'30 day');
-   full.append(section);
-  });
-  var headings=Array.from(root.querySelectorAll('h2,h3'));
-  var kitHeading=headings.find(function(heading){return /^kit contents$/i.test(heading.textContent.trim())});
-  var contactHeading=headings.find(function(heading){return /^contact us$/i.test(heading.textContent.trim())});
-  card.append(summary,full);
-  if(kitHeading){
-   var kitEnd=kitHeading.nextElementSibling;
-   while(kitEnd&&!( /^H[1-6]$/.test(kitEnd.tagName)&&Number(kitEnd.tagName.slice(1))<=Number(kitHeading.tagName.slice(1))))kitEnd=kitEnd.nextElementSibling;
-   if(kitEnd)kitEnd.before(card);else kitHeading.parentElement.append(card);
-  }else (hubPage?sourceAnchor:contactHeading||sourceAnchor).before(card);
-  sources.forEach(function(source){if(source){source.classList.add('sm-order-source');source.hidden=true}});
-  card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
- }
- SMI_DOM_RUNNER.add(enhance);
-})();
-
-/* Shared platform badges and ordering details follow the shopping flow. */
+/* Position the Ecwid-authored compatibility artwork for desktop and mobile. */
 (function(){
  var mobile=window.matchMedia('(max-width:767px)');
  function arrange(){
@@ -1348,16 +1019,7 @@ SMI_DOM_RUNNER.add(function(){
    if(mobile.matches){if(badges.parentElement!==gallery)gallery.appendChild(badges)}
    else if(price.nextElementSibling!==badges)price.after(badges);
   }
-  var policies=description.querySelector('.sm-order-card');
-  // The hub keeps its explicitly requested position below Contact us.
-  var hubPage=/\/products\/sync-3-usb-hub-with-built-in-wireless-apple-carplay-android-auto-and-pd-30w-fast-charging\/?$/.test(location.pathname);
-  if(!policies||hubPage)return;
-  var panel=description.querySelector('[aria-label="Product highlights"]');
-  if(!panel)return;
-  // The first product-highlights list precedes installation videos and kit contents.
-  var bullets=panel.nextElementSibling;
-  while(bullets&&!bullets.matches('ul,ol,h2,h3,section,.sm-video-gallery,iframe,details'))bullets=bullets.nextElementSibling;
-  if(bullets&&bullets.matches('ul,ol')&&bullets.nextElementSibling!==policies)bullets.after(policies);
+
  }
  SMI_DOM_RUNNER.add(arrange);mobile.addEventListener('change',arrange);
 })();
