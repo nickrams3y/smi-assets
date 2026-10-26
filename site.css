@@ -2199,18 +2199,8 @@ html.sm-po-modal-open {
   display: inline-flex;
 }
 
-html.sm-product-options-active .sm-po-required-note {
-  margin: 9px 0 0 !important;
-  padding-left: 9px !important;
-  border-left: 3px solid #f15a24 !important;
-  color: #626a73 !important;
-  font-size: 13px !important;
-  line-height: 1.4 !important;
-}
-
-html.sm-product-options-active .sm-po-required-note::before {
-  content: "Required selections are marked with an orange accent.";
-}
+/* Hide the retired note if an older cached script still inserts it. */
+html.sm-product-options-active .sm-po-required-note {display:none!important}
 
 @keyframes smPoDialogIn {
   from {
