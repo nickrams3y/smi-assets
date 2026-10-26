@@ -441,7 +441,7 @@ function pricePromo(){
  var set=function(el,rules){if(!el)return;Object.keys(rules).forEach(function(k){el.style.setProperty(k,rules[k],"important")})},sale=box.querySelector(".product-details__product-on-sale"),label=box.querySelector(".product-details__label-container"),compare=box.querySelector(".details-product-price-compare__container"),paypal=box.querySelector(".ec-paypal-pay-later-message"),copy=promo.querySelector(".sm-price-promo__copy"),status=promo.querySelector(".sm-price-promo__status");
  box.querySelectorAll(".product-details__product-price-discount,.details-product-price-discount__text,.details-product-price-discount__value").forEach(function(x){x.remove()});
  set(box,{display:"grid","grid-template-columns":"max-content max-content minmax(0, 1fr)","grid-template-areas":'"price sale-label comparison" "promotion promotion promotion" "paypal paypal paypal"',"align-items":"center","column-gap":"9px","row-gap":"7px"});box.dataset.smPricePromoLayout="1";set(box.querySelector(".product-details__product-price"),{"grid-area":"price"});set(sale,{display:"contents"});set(label,{"grid-area":"sale-label","justify-self":"start"});set(compare,{"grid-area":"comparison",margin:"0"});set(paypal,{"grid-area":"paypal",width:"100%"});
- set(promo,{"grid-area":"promotion",display:"inline-flex",width:"fit-content","max-width":"100%","align-items":"center",gap:"8px","justify-self":"start",padding:"7px 9px 7px 12px",color:"#222",background:"#f3f4f6",border:"1px solid #d7d9dd","border-radius":"999px","font-size":"13px","font-weight":"700","line-height":"1.25"});set(promo.querySelector(".sm-price-promo__text"),{"white-space":"nowrap"});set(copy,{appearance:"none",flex:"0 0 auto","min-height":"28px",padding:"4px 9px",color:"#222",background:"#fff",border:"1px solid #b9bdc4","border-radius":"999px",font:"inherit","font-size":"12px","line-height":"1.2"});set(status,{position:"absolute",width:"1px",height:"1px",padding:"0",margin:"-1px",overflow:"hidden",clip:"rect(0, 0, 0, 0)","white-space":"nowrap",border:"0"});
+ set(promo,{"grid-area":"promotion",display:"inline-flex",width:"fit-content","max-width":"100%","align-items":"center",gap:"8px","justify-self":"start",padding:"7px 9px 7px 12px",color:"#222",background:"#f3f4f6",border:"1px solid #d7d9dd","border-radius":"10px","font-size":"13px","font-weight":"700","line-height":"1.25"});set(promo.querySelector(".sm-price-promo__text"),{"white-space":"nowrap"});set(copy,{appearance:"none",flex:"0 0 auto","min-height":"28px",padding:"4px 9px",color:"#222",background:"#fff",border:"1px solid #b9bdc4","border-radius":"7px",font:"inherit","font-size":"12px","line-height":"1.2"});set(status,{position:"absolute",width:"1px",height:"1px",padding:"0",margin:"-1px",overflow:"hidden",clip:"rect(0, 0, 0, 0)","white-space":"nowrap",border:"0"});
  if(promo.dataset.code===code&&promo.dataset.amount===amount)return;promo.dataset.code=code;promo.dataset.amount=amount;promo.querySelector(".sm-price-promo__text").textContent="Extra "+amount+" off with code "+code;promo.querySelector(".sm-price-promo__copy").textContent="Copy";promo.querySelector(".sm-price-promo__status").textContent=""
 }
 function lazyEmbeds(){
@@ -775,8 +775,8 @@ var SMI_PROCESSING_POLICY=(function(){
 /* Group the two installation embeds into one on-demand, three-video gallery. */
 (function(){
  var videos=[
-  {id:'OWrfQuf2pgI',title:'Is a Sync 3 Upgrade Worth It?',creator:'Nine Finger Wrenching'},
   {id:'etDgW6yLIIU',title:'Sync 2 to Sync 3 Installation',creator:'Auto Freak Garage'},
+  {id:'OWrfQuf2pgI',title:'Is a Sync 3 Upgrade Worth It?',creator:'Nine Finger Wrenching'},
   {id:'DOY7z6q39AU',title:'2014 F-150 Sync 3 Upgrade',creator:'The Futzer'}
  ];
  function image(id,large){
@@ -819,7 +819,7 @@ var SMI_PROCESSING_POLICY=(function(){
   document.querySelectorAll('.product-details__product-description').forEach(function(description){
    if(description.querySelector('.sm-video-gallery')||getComputedStyle(description).getPropertyValue('--sm-video-gallery').trim()!=='1')return;
    var frames=Array.prototype.filter.call(description.querySelectorAll('iframe'),function(frame){return /^https:\/\/www\.youtube(?:-nocookie)?\.com\/embed\/(etDgW6yLIIU|DOY7z6q39AU)(?:[?/#]|$)/.test(frame.src)});
-   if(!videos.slice(1).every(function(video){return frames.some(function(frame){return frame.src.indexOf('/embed/'+video.id)>=0})}))return;
+   if(!['etDgW6yLIIU','DOY7z6q39AU'].every(function(id){return frames.some(function(frame){return frame.src.indexOf('/embed/'+id)>=0})}))return;
    var gallery=build();frames[0].before(gallery);frames.forEach(function(frame){frame.remove()});
   });
  }
@@ -1272,4 +1272,27 @@ SMI_DOM_RUNNER.add(function(){
   card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
  }
  SMI_DOM_RUNNER.add(enhance);
+})();
+
+/* Standard kit platform badges and ordering details follow the shopping flow. */
+(function(){
+ var mobile=window.matchMedia('(max-width:767px)');
+ function arrange(){
+  if(!/^\/products\/ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with(?:out)?-navigation\/?$/.test(location.pathname))return;
+  var description=document.querySelector('.product-details__product-description');if(!description)return;
+  var product=description.closest('.product-details');if(!product)return;
+  var gallery=product.querySelector('.product-details__gallery'),price=product.querySelector('.product-details__product-price-row');
+  var badges=product.querySelector('.sm-platform-logos');
+  if(!badges){
+   var android=description.querySelector('img[alt="Android Auto"]'),apple=description.querySelector('img[alt="Apple CarPlay"]');
+   if(android&&apple&&android.parentElement===apple.parentElement){badges=android.parentElement;badges.classList.add('sm-platform-logos');badges.setAttribute('aria-label','Apple CarPlay and Android Auto compatibility')}
+  }
+  if(badges&&gallery&&price){
+   if(mobile.matches){if(badges.parentElement!==gallery)gallery.appendChild(badges)}
+   else if(price.nextElementSibling!==badges)price.after(badges);
+  }
+  var policies=description.querySelector('.sm-order-card'),videos=description.querySelector('.sm-video-gallery');
+  if(policies&&videos&&videos.previousElementSibling!==policies)videos.before(policies);
+ }
+ SMI_DOM_RUNNER.add(arrange);mobile.addEventListener('change',arrange);
 })();

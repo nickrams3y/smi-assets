@@ -3842,3 +3842,8 @@ html body .product-details__product-description .sm-compact-highlights > div > s
  html body .product-details__product-description .sm-compact-highlights > div > span:last-child > span{grid-column:1;grid-row:3}
 }
 @media(max-width:360px){html body .product-details__product-description .sm-compact-highlights > div{padding:16px 10px!important}}
+
+/* Original compatibility artwork, sized for the price column and mobile gallery. */
+html body .product-details .sm-platform-logos{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;box-sizing:border-box!important;width:100%!important;max-width:310px!important;margin:14px 0 22px!important;padding:0!important;line-height:1!important}
+html body .product-details .sm-platform-logos > img{display:block!important;flex:1 1 0!important;min-width:0!important;width:calc(50% - 5px)!important;max-width:150px!important;height:auto!important;object-fit:contain!important;margin:0!important}
+@media(max-width:767px){html body .product-details .details-gallery > .sm-platform-logos{justify-content:center!important;margin:16px auto 12px!important;max-width:310px!important}}
