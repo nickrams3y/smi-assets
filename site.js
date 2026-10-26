@@ -1277,10 +1277,19 @@ SMI_DOM_RUNNER.add(function(){
   var sources=names.map(function(name){return all.find(function(d){return title(d).toLowerCase()===name.toLowerCase()||(name==='Returns and Cancellations'&&title(d).toLowerCase()==='returns')})});
   var hubPage=location.pathname.replace(/\/$/,'')==='/products/sync-3-usb-hub-with-built-in-wireless-apple-carplay-android-auto-and-pd-30w-fast-charging';
   if(sources.some(function(d){return !d})&&!(hubPage&&sources[2]&&sources[3]))return;
+  var sourceAnchor=sources.find(function(source){return !!source});
+  // Merchant-confirmed hub policies. Existing catalog disclosures take precedence.
+  if(hubPage){
+   ['Your hardware is covered for one year from the purchase date. If a covered component fails, we’ll replace it.','Most orders ship within 5 business days.'].forEach(function(copy,i){
+    if(sources[i])return;
+    var detail=document.createElement('details'),heading=document.createElement('summary'),paragraph=document.createElement('p');
+    heading.textContent=names[i];paragraph.textContent=copy;detail.append(heading,paragraph);sources[i]=detail;
+   });
+  }
   var texts=sources.map(function(d){return d?body(d):''}),processing=SMI_PROCESSING_POLICY.read(root);
   var estimate=texts[1].match(/\b\d+(?:\s*(?:[-–—]|to)\s*\d+)?\s+business days\b/gi)||[];
   var timeLabel='Processing time',timeNote='See timing below';
-  if(processing&&estimate.length===1){timeLabel=estimate[0];timeNote=/[-–—]|\bto\b/.test(timeLabel)?'Typical processing time':'Most orders ship within';if(/Certain configurations may take longer/i.test(texts[1]))timeNote+='; some take longer'}
+  if((processing||hubPage)&&estimate.length===1){timeLabel=estimate[0];timeNote=/[-–—]|\bto\b/.test(timeLabel)?'Typical processing time':'Most orders ship within';if(/Certain configurations may take longer/i.test(texts[1]))timeNote+='; some take longer'}
   else if(processing&&estimate.length>1){timeLabel=estimate[0];timeNote='Allow up to '+estimate[estimate.length-1]}
   var facts=[
    ['shield',/\b(?:1|one) year\b/i.test(texts[0])?'1 year warranty':'Warranty','Hardware coverage'],
@@ -1313,7 +1322,7 @@ SMI_DOM_RUNNER.add(function(){
    var kitEnd=kitHeading.nextElementSibling;
    while(kitEnd&&!( /^H[1-6]$/.test(kitEnd.tagName)&&Number(kitEnd.tagName.slice(1))<=Number(kitHeading.tagName.slice(1))))kitEnd=kitEnd.nextElementSibling;
    if(kitEnd)kitEnd.before(card);else kitHeading.parentElement.append(card);
-  }else (hubPage?sources.find(function(source){return !!source}):contactHeading||sources.find(function(source){return !!source})).before(card);
+  }else (hubPage?sourceAnchor:contactHeading||sourceAnchor).before(card);
   sources.forEach(function(source){if(source){source.classList.add('sm-order-source');source.hidden=true}});
   card.addEventListener('toggle',function(){hint.firstElementChild.textContent=card.open?'Click or tap to close':'Click or tap to view all details'});
  }
