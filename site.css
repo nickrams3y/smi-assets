@@ -3821,3 +3821,24 @@ html body .product-details__product-description .sm-order-card--two .sm-order-fa
 /* Hub trade-in and software notice need no extra decorative badge. */
 html body .product-details__product-description :is(.sm-hub-trade-in,.sm-hub-software-note)::before{display:none!important;content:none!important}
 html body .product-details__product-description :is(.sm-hub-trade-in,.sm-hub-software-note){padding-top:20px!important}
+
+/* Compact kit highlights: one panel, four desktop columns and a mobile 2x2 grid. */
+html body .product-details__product-description [aria-label="Product highlights"].sm-compact-highlights{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:0!important;box-sizing:border-box!important;padding:8px!important;margin:20px 0 26px!important;background:#fff!important;border:1px solid #dfe2e5!important;border-radius:16px!important;box-shadow:0 3px 12px rgba(30,40,50,.04)!important}
+html body .product-details__product-description .sm-compact-highlights > div{display:grid!important;grid-template-columns:26px minmax(0,1fr)!important;grid-template-rows:auto 1fr!important;align-items:center!important;align-content:start!important;gap:10px!important;padding:16px 14px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+html body .product-details__product-description .sm-compact-highlights > div + div{border-left:1px solid #e3e5e7!important}
+html body .product-details__product-description .sm-compact-highlights > div::before,
+html body .product-details__product-description .sm-compact-highlights > div::after{content:none!important;display:none!important}
+html body .product-details__product-description .sm-compact-highlights > div > [aria-hidden="true"]{grid-column:1;grid-row:1;align-self:center!important;width:26px!important;height:26px!important;min-width:26px!important;border-radius:50%!important;font-size:17px!important;background:#2f8f4e!important}
+html body .product-details__product-description .sm-compact-highlights > div > span:last-child{display:contents!important}
+html body .product-details__product-description .sm-compact-highlights > div > span:last-child > strong{grid-column:2;grid-row:1;font-size:16px!important;line-height:1.3!important;color:#252a30!important;margin:0!important;overflow-wrap:normal!important}
+html body .product-details__product-description .sm-compact-highlights > div > span:last-child > span{grid-column:1 / -1;grid-row:2;align-self:start;font-size:14px!important;line-height:1.5!important;color:#60666e!important}
+@media(max-width:1100px){
+ html body .product-details__product-description [aria-label="Product highlights"].sm-compact-highlights{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ html body .product-details__product-description .sm-compact-highlights > div{grid-template-columns:minmax(0,1fr)!important;grid-template-rows:auto auto 1fr!important;gap:12px!important;padding:20px 16px!important;align-items:start!important}
+ html body .product-details__product-description .sm-compact-highlights > div:nth-child(3){border-left:0!important}
+ html body .product-details__product-description .sm-compact-highlights > div:nth-child(n+3){border-top:1px solid #e3e5e7!important}
+ html body .product-details__product-description .sm-compact-highlights > div > [aria-hidden="true"]{grid-column:1;grid-row:1;width:30px!important;height:30px!important;font-size:19px!important}
+ html body .product-details__product-description .sm-compact-highlights > div > span:last-child > strong{grid-column:1;grid-row:2}
+ html body .product-details__product-description .sm-compact-highlights > div > span:last-child > span{grid-column:1;grid-row:3}
+}
+@media(max-width:360px){html body .product-details__product-description .sm-compact-highlights > div{padding:16px 10px!important}}

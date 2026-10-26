@@ -1185,6 +1185,26 @@ SMI_DOM_RUNNER.add(function(){
  });
 });
 
+/* Approved compact highlights for the standard Sync 3 kits. */
+SMI_DOM_RUNNER.add(function(){
+ if(!/^\/products\/ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with(?:out)?-navigation\/?$/.test(location.pathname))return;
+ var panel=document.querySelector('.product-details__product-description [aria-label="Product highlights"]');
+ if(!panel)return;
+ var descriptions={
+  'Plug & Play':'Swap the hardware. No technical knowledge required.',
+  'VIN Programmed':'Configured for your vehicle’s factory features.',
+  '1 Year Warranty':'Your order is covered. SimplyCare extension available.',
+  'Fully Updated':'Updated to the latest Sync 3.4 software version.'
+ };
+ var cards=Array.from(panel.children);
+ if(cards.length!==4||!cards.every(function(card){var title=card.querySelector(':scope > span:last-child > strong');return title&&descriptions[title.textContent.trim()]}))return;
+ panel.classList.add('sm-compact-highlights');
+ cards.forEach(function(card){
+  var copy=card.querySelector(':scope > span:last-child'),title=copy.querySelector('strong'),description=copy.querySelector(':scope > span');
+  var text=descriptions[title.textContent.trim()];if(description&&description.textContent!==text)description.textContent=text;
+ });
+});
+
 /* Full-card upgrade triggers with a quiet hint in place of the dark button. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('.product-details__product-description article.sm-upgrade-card').forEach(function(card){
