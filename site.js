@@ -1100,3 +1100,8 @@ SMI_DOM_RUNNER.add(function(){
  function recover(event){var image=event.target;if(!image.matches||!image.matches('.sm-video-gallery img')||!saved(image))return;var match=image.src.match(/\/vi\/([a-zA-Z0-9_-]{11})\/maxresdefault\.jpg/);if(match&&(event.type==='error'||image.naturalWidth<200))image.src='https://i.ytimg.com/vi/'+match[1]+'/hqdefault.jpg'}
  document.addEventListener('error',recover,true);document.addEventListener('load',recover,true);
 })();
+
+/* Keep homepage support suggestions clickable in Safari, including older Ecwid embeds. */
+document.addEventListener('mousedown',function(event){
+ if(event.button===0&&event.target.closest('#smi-home-support .smi-results a'))event.preventDefault();
+});

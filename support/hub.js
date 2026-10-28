@@ -65,6 +65,9 @@ function bindSuggestions(el,data,s){
  input.addEventListener('compositionstart',()=>{composing=true;clearTimeout(timer);if(!dialog)closeList()});input.addEventListener('compositionend',()=>{composing=false;update()});
  input.addEventListener('keydown',e=>{if(e.isComposing||composing)return;if(e.key==='Escape'){dismiss();e.preventDefault()}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){update();if(!box.hidden){const links=box.querySelectorAll('a');links[e.key==='ArrowDown'?0:links.length-1]?.focus();e.preventDefault()}}});
  box.addEventListener('keydown',e=>{const links=Array.from(box.querySelectorAll('a')),index=links.indexOf(document.activeElement);if(e.key==='Escape'){if(dialog)closePanel(true);else{input.focus();closeList()}e.preventDefault()}else if(e.key==='ArrowDown'||e.key==='ArrowUp'){const next=index+(e.key==='ArrowDown'?1:-1);if(next<0)input.focus();else links[Math.min(next,links.length-1)]?.focus();e.preventDefault()}});
+ // Safari blurs the input without a relatedTarget when a link is pressed,
+ // which can hide the suggestion before its click. Preserve focus on mouse-down.
+ box.addEventListener('mousedown',e=>{if(e.button===0&&e.target.closest('a'))e.preventDefault()});
  box.addEventListener('click',e=>{if(e.target.closest('a')&&dialog)closePanel(false)});
  wrap.addEventListener('focusout',e=>{if(!dialog&&!wrap.contains(e.relatedTarget))closeList()});
  function outside(e){if(!dialog&&!wrap.contains(e.target))closeList()}
