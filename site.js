@@ -808,6 +808,48 @@ var SMI_PROCESSING_POLICY=(function(){
  });
 })();
 
+/* A declined USB-hub trade-in needs no further hub selection. */
+(function(){
+ var locked=new WeakMap(),syncing=false;
+ function selectValue(select,value){
+  if(select.value===value)return;
+  select.value=value;
+  select.dispatchEvent(new Event('input',{bubbles:true}));
+  select.dispatchEvent(new Event('change',{bubbles:true}));
+ }
+ function syncTradeIn(){
+  if(syncing)return;syncing=true;
+  try{
+   var active=/\/products\/sync-3-usb-hub-with-built-in-wireless-apple-carplay-android-auto-and-pd-30w-fast-charging\/?$/.test(location.pathname);
+   var box=active&&document.querySelector('.details-product-options');
+   var trade=box&&box.querySelector('select[aria-label="Are you trading in a Sync 3 USB hub?"]');
+   var hub=box&&box.querySelector('select[aria-label="Which USB hub are you trading in?"]');
+   var none=hub&&Array.from(hub.options).find(function(option){return option.value==="I'm not trading in a USB Hub"});
+   var declined=trade&&trade.value==='No thank you'&&none;
+   document.querySelectorAll('.sm-hub-trade-locked').forEach(function(row){
+    if(declined&&row.contains(hub))return;
+    var select=row.querySelector('select'),state=select&&locked.get(select);
+    if(state){
+     select.disabled=state.disabled;locked.delete(select);
+     if(select===hub&&select.value===none?.value)selectValue(select,state.value);
+    }
+    row.classList.remove('sm-hub-trade-locked');
+   });
+   if(!declined)return;
+   if(!locked.has(hub))locked.set(hub,{disabled:hub.disabled,value:hub.value===none.value?hub.options[0].value:hub.value});
+   // Let Ecwid record the option and update its visible label before disabling it.
+   selectValue(hub,none.value);
+   hub.disabled=true;
+   hub.closest('.details-product-option').classList.add('sm-hub-trade-locked');
+  }finally{syncing=false}
+ }
+ SMI_DOM_RUNNER.add(syncTradeIn);
+ document.addEventListener('change',function(event){
+  if(syncing||!event.target.matches('.details-product-options select'))return;
+  syncTradeIn();requestAnimationFrame(syncTradeIn);
+ });
+})();
+
 /* Keep Ecwid's live SKU beneath the product purchase controls. */
 (function(){
  var mobile=window.matchMedia('(max-width: 767px)');
