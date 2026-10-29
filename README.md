@@ -119,3 +119,13 @@ Ecwid is the source of truth for the 16 enhanced product descriptions: K3-NON, K
 Shared CSS remains hosted here because of Ecwid's character limit. JavaScript retains necessary storefront interactions, responsive placement of Ecwid-authored compatibility artwork, option logic, and video/dialog/disclosure handlers. Product description layout/content builders were removed in 0306e05. Categories, finders, homepage and support are outside this migration.
 
 Migration backup, prepared HTML, exported catalog and verification reports are in `../work/2026-10-25-ecwid-content-migration`. CSV imports use only name, SKU and description. Ecwid converts formatting newlines to BR and decodes HTML entities: flatten formatting whitespace and use single-quoted attributes for inch-mark labels. Verify persisted HTML semantically against the intended DOM and compare all exported fields after import. Never select Delete all products and categories.
+
+## Compatibility catalog (2026-10-29)
+
+The homepage, Upgrade Guide, Sync 2-to-3 category and APIM category retain their original vehicle/year/system recommendation branches and link order. Result links render as product cards; eligible Sync 3 and Sync 2 conversion results also show a separate wireless USB-C hub option with a neutral prerequisite note. Unknown systems, invalid conversion selections and Sync 3 Lite do not gain hub compatibility claims.
+
+Catalog titles, approved descriptions, Ecwid image references and hub prerequisite copy belong to Ecwid: the Custom JavaScript body field contains an inert `application/json` script with id `sm-finder-catalog-data`, before the shared asset loader. Do not move that catalog content into this repository. Without that data, the existing finder buttons remain functional. Each compact product row contains the existing URL-map key, SKU, title, description and Ecwid image path.
+
+The shared script handles presentation and reads current USD prices from the matching SKU's public Ecwid Product JSON-LD only after a finder is submitted. Requests have bounded concurrency/timeouts, one network retry and a short in-memory cache. Failed price requests display “View current price”; the product link remains usable. No private API token is exposed. Styling is scoped to the existing finder containers.
+
+Validation and Ecwid field backups are in `../work/2026-10-29-checker-rollout`: 2,700 before/after routing comparisons, 80 desktop/tablet/mobile states, and all 19 approved descriptions with fresh-price, retry, fallback and cache checks. Publish the CSS/JS pair together and verify Ecwid's saved catalog data and both asset references independently of the GitHub deployment.

@@ -359,6 +359,65 @@ F.Lincoln.Navigator[2]={2015:"Standard"};
 F.Ford.Ranger[2]="Standard";
 A=F;
 var P="https://simplymichigan.co/products/",U={n:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-without-navigation",y:P+"ford-lincoln-sync-3-apim-and-screen-complete-upgrade-kit-with-navigation",t:P+"ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit",s:P+"ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit",f1314:P+"2013-2014-f-150-4-to-8-complete-sync-3-upgrade-kit",f1517:P+"2015-2017-f-150-4-to-8-complete-sync-3-upgrade-kit",f4:P+"2018-2020-f-150-4-to-8-complete-sync-3-upgrade-kit",sd1719:P+"2017-2019-f-250-f-350-super-duty-4-to-8-complete-sync-3-upgrade-kit",sd4:P+"2020-2022-f-250-350-super-duty-4-to-8-complete-sync-3-upgrade-kit",m4:P+"2019-2022-mustang-4-to-8-complete-sync-3-upgrade-kit",r4:P+"2019-2023-ranger-4-to-8-complete-sync-3-upgrade-kit",an:P+"ford-lincoln-sync-3-apim-replacement-with-navigation",ax:P+"ford-lincoln-sync-3-apim-replacement-without-navigation",lite:P+"ford-sync-3-lite-apim-replacement-for-4-non-touchscreen-systems",ds:P+"sync-3-display-screen-replacement-standard",dr:P+"sync-3-display-screen-replacement-recessed",d4:P+"sync-4-8-46-display-with-sync-3-conversion-bracket",acm:P+"audio-control-module-acm-receiver",g:"https://simplymichigan.co/support#article=104443-4-to-8-conversion-overview",e:"https://simplymichigan.co/upgrade_guide",c:"https://simplymichigan.co/contact-us"};
+/* Product-card presentation only: the existing finder branches remain authoritative. */
+var FINDER_CATALOG={},FINDER_CONTENT=null;
+var FINDER_HUB = P+"sync-3-usb-hub-with-built-in-wireless-apple-carplay-android-auto-and-pd-30w-fast-charging";
+/* Catalog copy is stored in Ecwid Custom JavaScript as inert JSON, not in this asset. */
+function finderLoadCatalog(){
+ if(FINDER_CONTENT)return true;
+ var el=document.getElementById('sm-finder-catalog-data');if(!el)return false;
+ try{var content=JSON.parse(el.textContent);content.products.forEach(function(row){var url=row[0]==='hub'?FINDER_HUB:U[row[0]];if(url)FINDER_CATALOG[url]={sku:row[1],title:row[2],description:row[3],image:'https://d2j6dbq0eux0bg.cloudfront.net/images/20154142/products/'+row[4]}});FINDER_CONTENT=content;return true}catch(e){return false}
+}
+var finderPrices={},finderPriceQueue=[],finderPriceActive=0;
+function finderEscape(value){return String(value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function finderMoney(value){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(value)}
+function finderCard(link){
+ var product=FINDER_CATALOG[link[1]];
+ if(!product)return '<a class="sm-finder-help" href="'+finderEscape(link[1])+'">'+link[0]+'</a>';
+ return '<a class="sm-finder-product" data-sm-finder-sku="'+product.sku+'" href="'+finderEscape(link[1])+'"><span class="sm-finder-photo"><img src="'+finderEscape(product.image)+'" alt="'+finderEscape(product.title)+'" loading="lazy" decoding="async"></span><span class="sm-finder-body"><strong class="sm-finder-title">'+finderEscape(product.title)+'</strong><span class="sm-finder-description">'+finderEscape(product.description)+'</span><span class="sm-finder-bottom"><strong class="sm-finder-price" data-sm-finder-price="'+finderEscape(link[1])+'">Checking price…</strong><span class="sm-finder-arrow" aria-hidden="true">→</span></span><span class="sm-finder-cta">View product</span></span></a>'
+}
+function finderCards(links,home){
+ finderLoadCatalog();
+ var cls=home?'sm-home-fit__actions':'sm-fit__actions',hasProducts=links.some(function(x){return !!FINDER_CATALOG[x[1]]});
+ if(!hasProducts)return '<div class="'+cls+'">'+links.map(function(x){return '<a'+(x[2]?' class="sm-fit__secondary"':'')+' href="'+x[1]+'">'+x[0]+'</a>'}).join('')+'</div>';
+ return '<div class="'+cls+' sm-finder-catalog" data-count="'+links.length+'">'+links.map(finderCard).join('')+'</div>'
+}
+function finderOther(links,system,home){
+ // Do not infer compatibility for unknown systems, Sync 3 Lite or invalid Sync 2 selections.
+ if(!finderLoadCatalog()||!FINDER_CATALOG[FINDER_HUB]||!links||!(system==='3'||system==='8'&&links.some(function(x){return x[1]===U.y||x[1]===U.n||x[1]===U.s})))return '';
+ var p=FINDER_CATALOG[FINDER_HUB],conversion=system==='8',note=finderEscape(conversion?FINDER_CONTENT.sync2Note:FINDER_CONTENT.sync3Note);if(conversion)note=note.replace('Sync 3 conversion required first.','<strong>Sync 3 conversion required first.</strong>');
+ return '<section class="sm-finder-other"><h4>Other upgrades</h4><div class="sm-finder-hub"><img class="sm-finder-hub-photo" src="'+finderEscape(p.image)+'" alt="Wireless USB-C hub" loading="lazy" decoding="async"><div class="sm-finder-hub-content"><h5>Wireless USB-C Hub Upgrade</h5><p class="sm-finder-hub-copy">'+finderEscape(p.description)+'</p><p class="sm-finder-hub-note" role="note">'+note+'</p></div><div class="'+(home?'sm-home-fit__actions':'sm-fit__actions')+' sm-finder-hub-purchase"><strong class="sm-finder-price" data-sm-finder-price="'+FINDER_HUB+'">Checking price…</strong><a href="'+FINDER_HUB+'">View USB-C upgrade →</a></div></div></section>'
+}
+function finderUpdatePrice(url,price){
+ document.querySelectorAll('[data-sm-finder-price]').forEach(function(el){if(el.getAttribute('data-sm-finder-price')===url)el.textContent=price===null?'View current price':finderMoney(price)})
+}
+function finderRunPrices(){
+ while(finderPriceActive<2&&finderPriceQueue.length){
+  (function(url){
+   finderPriceActive++;
+   var controller=new AbortController(),timer=setTimeout(function(){controller.abort()},12000);
+   // Public Ecwid product HTML supplies Product JSON-LD. No private API token or new hosting dependency.
+   function read(attempt){return fetch(url,{credentials:'omit',signal:controller.signal}).then(function(response){if(!response.ok)throw new Error('Product price unavailable');return response.text()}).catch(function(error){if(!attempt&&!controller.signal.aborted)return read(1);throw error})}
+   read(0).then(function(html){
+    var doc=new DOMParser().parseFromString(html,'text/html'),matched=null;
+    function inspect(value){if(Array.isArray(value)){value.forEach(inspect);return}if(!value||typeof value!=='object')return;if(value['@graph'])inspect(value['@graph']);if(value['@type']==='Product'&&value.sku===FINDER_CATALOG[url].sku)matched=value}
+    doc.querySelectorAll('script[type="application/ld+json"]').forEach(function(el){try{inspect(JSON.parse(el.textContent))}catch(e){}});
+    var offer=matched&&matched.offers;if(Array.isArray(offer))offer=offer[0];var price=offer&&offer.price;
+    if(!offer||offer.priceCurrency!=='USD'||price==null||price===''||!isFinite(Number(price))||Number(price)<0)throw new Error('Product price unavailable');
+    finderPrices[url]={price:Number(price),expires:Date.now()+300000};finderUpdatePrice(url,Number(price))
+   }).catch(function(){finderPrices[url]={price:null,expires:Date.now()+30000};finderUpdatePrice(url,null)}).finally(function(){clearTimeout(timer);finderPriceActive--;finderRunPrices()})
+  })(finderPriceQueue.shift())
+ }
+}
+function finderHydrate(result){
+ result.classList.toggle('sm-finder-result--catalog',!!result.querySelector('.sm-finder-catalog'));
+ if(!result.querySelector('.sm-finder-catalog'))return;
+ result.insertAdjacentHTML('beforeend','<p class="sm-finder-fineprint">Prices in USD before optional upgrades, taxes and discounts.</p>');
+ result.querySelectorAll('.sm-finder-photo img,.sm-finder-hub-photo').forEach(function(img){img.addEventListener('error',function(){img.style.visibility='hidden'},{once:true})});
+ result.querySelectorAll('[data-sm-finder-price]').forEach(function(el){var url=el.getAttribute('data-sm-finder-price'),entry=finderPrices[url];if(entry&&entry.expires>Date.now()){finderUpdatePrice(url,entry.price);return}if(entry&&entry.pending)return;finderPrices[url]={pending:true};finderPriceQueue.push(url)});
+ finderRunPrices()
+}
+
 function display(a,v){if(a[2]&&typeof a[2]==="object")return a[2][v]||"Unverified";return a[2]==="F150"?(v>=2015?"Standard":"Recessed"):a[2]}
 function replacements(t,twelve,sync4){var q=[];if(twelve)q.push(['12&quot; Upgrade Kit',U.t]);q.push(["APIM (Navigation)",U.an],["APIM (Non-Navigation)",U.ax]);if(t==="Special"||t==="Unverified"){q.push(["Contact Us About a Display",U.c],["ACM Replacement",U.acm]);return q}q.push(['Sync 3 8.0&quot; Screen',t==="Standard"?U.ds:U.dr]);if(sync4)q.push(['Sync 4 8.46&quot; Screen Upgrade',U.d4]);q.push(["ACM Replacement",U.acm]);return q}
 function conversionKit(make,model,year){
@@ -472,8 +531,8 @@ function home(){
  function models(){m.innerHTML='<option value="">Select model</option>';years();Object.keys(F[b.value]||{}).forEach(function(k){var o=document.createElement("option");o.value=o.textContent=k;m.appendChild(o)});m.disabled=!b.value}
  function years(){var a=base();y.innerHTML='<option value="">Select year</option>';y.disabled=!a;if(a)for(var i=a[0];i<=max(a);i++){var o=document.createElement("option");o.value=o.textContent=i;y.appendChild(o)}system()}
  function has12(k,v){return b.value==="Ford"&&((k==="F-150"&&v>=2015&&v<=2020)||((k==="F-250"||k==="F-350")&&v>=2017&&v<=2022))}
- function actions(a){return '<div class="sm-home-fit__actions">'+a.map(function(x){return '<a href="'+x[1]+'">'+x[0]+'</a>'}).join("")+'</div>'}
- function show(t,p,a,n){r.className="sm-home-fit__result"+(n?" sm-home-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-home-fit__result--eligible":"");r.innerHTML="<h3>"+t+"</h3><p>"+p+"</p>"+(a?actions(a):"");r.hidden=false}
+ function actions(a){return finderCards(a,true)}
+ function show(t,p,a,n){r.className="sm-home-fit__result"+(n?" sm-home-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-home-fit__result--eligible":"");r.innerHTML="<h3>"+t+"</h3><p>"+p+"</p>"+(a?actions(a):"")+finderOther(a,s.value,true);r.hidden=false;finderHydrate(r)}
  b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);system();
  f.addEventListener("submit",function(e){e.preventDefault();var k=m.value,a=base(),v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a make, model, year and current system.",0,1);return}
   if(z==="4"&&liteReplacement(b.value,k,v,show))return;
@@ -504,8 +563,8 @@ function init(){
  function system(){s.disabled=!(b.value&&m.value&&y.value);if(s.disabled)s.value="";refreshSystem()}
  function models(){m.innerHTML='<option value="">Select model</option>';years();Object.keys(V[b.value]||{}).forEach(function(k){var o=document.createElement("option");o.value=o.textContent=k;m.appendChild(o)});m.disabled=!b.value}
  function years(){var k=key(),a=k&&V[b.value][k],end=a&&(isApim?a[1]:Math.max(a[1],conversionYearMax(b.value,k)));y.innerHTML='<option value="">Select model year</option>';y.disabled=!a;if(a)for(var i=a[0];i<=end;i++){var o=document.createElement("option");o.value=o.textContent=i;y.appendChild(o)}system()}
- function buttons(a){return '<div class="sm-fit__actions">'+a.map(function(x){return '<a'+(x[2]?' class="sm-fit__secondary"':'')+' href="'+x[1]+'">'+x[0]+'</a>'}).join("")+'</div>'}
- function show(t,p,a,n){r.className="sm-fit__result"+(n?" sm-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-fit__result--eligible":"");r.innerHTML="<h4>"+t+"</h4><p>"+p+"</p>"+(a?buttons(a):"");r.hidden=false}
+ function buttons(a){return finderCards(a,false)}
+ function show(t,p,a,n){r.className="sm-fit__result"+(n?" sm-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-fit__result--eligible":"");r.innerHTML="<h4>"+t+"</h4><p>"+p+"</p>"+(a?buttons(a):"")+finderOther(a,s.value,false);r.hidden=false;finderHydrate(r)}
  b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);system();
  f.addEventListener("submit",function(e){e.preventDefault();var k=key(),a=k&&V[b.value][k],v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a make, model, year and current system.",0,1);return}
  if(z==="4"&&liteReplacement(b.value,k,v,show))return;
