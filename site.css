@@ -3658,13 +3658,17 @@ html body .product-details__product-description [role="note"][aria-label="Back i
 /* Leave clearance for the category eligibility badge beneath the FAQ button. */
 html body .grid__description [role="note"][aria-label="Vehicle upgrade eligibility"].sm-bubble{margin-top:32px!important;padding-top:28px!important}
 
-/* Approved military discount Star tab. Keep the existing copy and link. */
-html body [role="note"][aria-label="Military and first responder discounts"]{display:block!important;position:relative!important;box-sizing:border-box!important;max-width:580px!important;padding:34px 24px 23px!important;margin-top:32px!important;margin-bottom:22px!important;background:#f8fafc!important;border:1px solid #d9dfe8!important;border-radius:10px!important;box-shadow:none!important;color:#555e69!important;text-align:left!important;overflow:visible!important}
-html body [role="note"][aria-label="Military and first responder discounts"] > [aria-hidden="true"]{display:flex!important;position:absolute!important;top:-21px!important;left:23px!important;width:42px!important;height:42px!important;box-sizing:border-box!important;align-items:center!important;justify-content:center!important;border:0!important;border-bottom:4px solid #b22234!important;border-radius:8px!important;background:#16325c!important;color:#fff!important;font-size:23px!important;line-height:1!important;box-shadow:0 0 0 5px #fff!important}
+/* Military discount advert: approved red, white and blue card with a linked footer. */
+html body [role="note"][aria-label="Military and first responder discounts"]{display:block!important;position:relative!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;padding:34px 24px 0!important;margin:32px 0 24px!important;background:#f8fafc!important;border:1px solid #d9dfe8!important;border-radius:17px!important;box-shadow:none!important;color:#16325c!important;text-align:left!important;overflow:visible!important}
+html body [role="note"][aria-label="Military and first responder discounts"] > [aria-hidden="true"]{display:flex!important;position:absolute!important;top:-20px!important;left:25px!important;width:38px!important;height:40px!important;box-sizing:border-box!important;align-items:center!important;justify-content:center!important;border:0!important;border-bottom:4px solid #b22234!important;border-radius:9px!important;background:#16325c!important;color:#fff!important;font-size:22px!important;line-height:1!important;box-shadow:0 0 0 5px #fff!important}
 html body [role="note"][aria-label="Military and first responder discounts"] > span:last-child{display:block!important}
-html body [role="note"][aria-label="Military and first responder discounts"] strong{display:block!important;font-size:17px!important;line-height:1.35!important;color:#16325c!important;margin:0 0 9px!important}
-html body [role="note"][aria-label="Military and first responder discounts"] > span:last-child > span{color:#555e69!important;font-size:14px!important;line-height:1.6!important}
-html body [role="note"][aria-label="Military and first responder discounts"] a{display:block!important;margin-top:10px!important;color:#16325c!important;font-size:14px!important;line-height:1.55!important;font-weight:600!important;text-decoration:underline!important;text-underline-offset:3px!important}
+html body [role="note"][aria-label="Military and first responder discounts"] strong{display:block!important;font-size:23px!important;line-height:1.3!important;color:#16325c!important;margin:0 0 7px!important}
+html body [role="note"][aria-label="Military and first responder discounts"] > span:last-child > span{color:#555e69!important;font-size:14px!important;line-height:1.5!important}
+html body [role="note"][aria-label="Military and first responder discounts"] a{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;box-sizing:border-box!important;margin:22px -24px 0!important;padding:15px 24px!important;border-top:2px solid #b22234!important;border-radius:0 0 17px 17px!important;background:#edf1f7!important;color:#16325c!important;font-size:14px!important;line-height:1.45!important;font-weight:700!important;text-decoration:none!important}
+html body [role="note"][aria-label="Military and first responder discounts"] a::after{content:'→';flex-shrink:0;font-size:21px;line-height:1}
+html body [role="note"][aria-label="Military and first responder discounts"] a:hover{background:#e1e8f2!important}
+html body [role="note"][aria-label="Military and first responder discounts"] a:focus-visible{outline:2px solid #16325c;outline-offset:3px}
+@media(max-width:620px){html body [role="note"][aria-label="Military and first responder discounts"]{padding:33px 18px 0!important}html body [role="note"][aria-label="Military and first responder discounts"] strong{font-size:21px!important}html body [role="note"][aria-label="Military and first responder discounts"] a{margin:22px -18px 0!important;padding:14px 18px!important}}
 /* Simplified Facebook banner: brand and logo become its sole heading. */
 html body #smi-facebook-section h2{display:none!important}
 html body #smi-facebook-section .smi-fb-eyebrow{text-transform:none!important;margin:0 0 10px!important;font-size:17px!important;line-height:1.35!important;letter-spacing:.15px!important;gap:11px!important}
@@ -3679,7 +3683,7 @@ html body #smi-facebook-section .smi-fb-mark{flex-basis:30px!important;width:30p
  html body #smi-facebook-section .smi-fb-button{grid-column:2;grid-row:2;justify-self:end;min-height:44px;padding:10px;gap:7px;font-size:13px}
  html body #smi-facebook-section .smi-fb-button svg{width:16px;height:16px}
 }
-@media(max-width:440px){html body [role="note"][aria-label="Military and first responder discounts"]{padding:31px 18px 20px!important}}
+
 
 /* Match upgrade cards using an inner grid, including in Safari's native summary. */
 html body .product-details__product-description details.sm-care-disclosure{border:1px solid #e1e3e5!important;border-radius:12px!important;background:#fff!important;overflow:hidden!important}
