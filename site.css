@@ -3913,3 +3913,11 @@ html.sm-product-options-active .details-product-options .sm-po-color-help:hover 
 .sm-po-dialog .sm-trim-guide-content h3 {font-size:18px;line-height:1.4;margin:0 0 10px;color:#202124;border:0;padding:0}
 .sm-po-dialog .sm-trim-guide-content p {margin:0 0 16px}
 .sm-po-dialog .sm-trim-guide-content ul {margin:0;padding-left:22px}
+
+/* Ecwid may unwrap unstyled spans when a product description is saved. */
+html body .product-details__product-description .sm-order-fact:has(> strong) {
+  display:grid;grid-template-columns:19px minmax(0,1fr);gap:2px 9px;align-content:start;
+}
+html body .product-details__product-description .sm-order-fact:has(> strong) > svg {grid-column:1;grid-row:1 / span 2}
+html body .product-details__product-description .sm-order-fact > strong {grid-column:2;grid-row:1;margin:0}
+html body .product-details__product-description .sm-order-fact > small {grid-column:2;grid-row:2}
