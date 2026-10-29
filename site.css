@@ -3892,3 +3892,24 @@ html body .product-details .product-details__product-price-row .ec-paypal-pay-la
 :is(#sm-home-fit-checker,#sm-fit-checker) p.sm-finder-fineprint{font-size:11px!important;color:#6a7365!important;margin:12px 0 0!important;line-height:1.5!important}
 @media(max-width:760px){:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-result--catalog{padding:14px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-catalog[data-count]{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-catalog[data-count="1"]{grid-template-columns:minmax(0,1fr)}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-photo{height:140px;padding:8px}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-body{padding:12px 10px}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-title{font-size:14px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-price{font-size:19px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-hub{grid-template-columns:80px minmax(0,1fr);gap:12px;padding:14px 12px}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-hub-photo{width:80px!important;height:90px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-hub-purchase{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;min-width:0}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-hub h5{font-size:16px!important}:is(#sm-home-fit-checker,#sm-fit-checker) p.sm-finder-hub-copy{font-size:13px!important}}
 @media(max-width:360px){:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-result--catalog{padding:10px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-catalog[data-count]{gap:8px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-photo{height:115px}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-hub{grid-template-columns:60px minmax(0,1fr)}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-hub-photo{width:60px!important}:is(#sm-home-fit-checker,#sm-fit-checker) .sm-finder-hub-purchase a{font-size:12px!important;padding:9px!important}}
+
+/* Compact color-guide pill; content and photo are owned by the Ecwid product. */
+html.sm-product-options-active .details-product-options .details-product-option__title > .sm-po-help-button.sm-po-color-help {
+  flex:0 0 auto!important;width:auto!important;min-width:0!important;
+  height:30px!important;min-height:30px!important;padding:0 10px!important;
+  border:1px solid #d94a1f!important;border-radius:999px!important;
+  color:#c94214!important;background:#fff!important;font-size:12px!important;
+  font-weight:700!important;line-height:1.2!important;white-space:nowrap!important;
+  align-self:center!important;position:relative!important;
+}
+html.sm-product-options-active .details-product-options .details-product-option__title:has(> .sm-po-color-help) {
+  align-items:center!important;flex-wrap:wrap!important;
+}
+html.sm-product-options-active .details-product-options .sm-po-color-help::before {
+  content:"";position:absolute;inset:-7px 0;
+}
+html.sm-product-options-active .details-product-options .sm-po-color-help:hover {background:#fff5ef!important}
+.sm-po-dialog .sm-trim-guide-content img {display:block;width:100%;max-width:100%;height:auto;border-radius:8px;margin:0 0 18px}
+.sm-po-dialog .sm-trim-guide-content h3 {font-size:18px;line-height:1.4;margin:0 0 10px;color:#202124;border:0;padding:0}
+.sm-po-dialog .sm-trim-guide-content p {margin:0 0 16px}
+.sm-po-dialog .sm-trim-guide-content ul {margin:0;padding-left:22px}
