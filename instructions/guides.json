@@ -120,12 +120,22 @@
     "id": "usb-hub",
     "category": "Accessories",
     "title": "USB-C Hub with Wireless Apple CarPlay and Android Auto",
-    "subtitle": "Installation instructions and general information",
-    "keywords": "USB A adapter connectivity",
+    "subtitle": "Setup, disassembly and firmware update instructions",
+    "keywords": "USB A adapter connectivity USB C wireless firmware updating OTA CarPlay Android Auto disassembly disassemble housing bezel change size swap take apart",
     "files": [
       {
         "label": "Setup and usage instructions",
         "url": "https://files.simplymichigan.co/wireless-usb-c-hub.pdf?v=20261029"
+      },
+      {
+        "label": "Disassembly and housing swap instructions",
+        "url": "https://files.simplymichigan.co/wireless-usb-c-hub-disassembly.pdf"
+      }
+    ],
+    "links": [
+      {
+        "label": "Firmware update instructions \u2192",
+        "url": "https://simplymichigan.co/blog/updating-usb-hub"
       }
     ]
   },
@@ -139,20 +149,6 @@
       {
         "label": "Software and maps update instructions",
         "url": "https://files.simplymichigan.co/sync-3-software-maps-update.pdf"
-      }
-    ]
-  },
-  {
-    "id": "usb-hub-firmware",
-    "category": "Software updates",
-    "title": "Updating USB-C Hub with Wireless Apple CarPlay and Android Auto",
-    "subtitle": "Instructions on how to update the firmware on your USB-C Hub with wireless Apple CarPlay and Android Auto",
-    "keywords": "USB C wireless firmware updating OTA CarPlay Android Auto",
-    "files": [],
-    "links": [
-      {
-        "label": "Read instructions \u2192",
-        "url": "https://simplymichigan.co/blog/updating-usb-hub"
       }
     ]
   },
