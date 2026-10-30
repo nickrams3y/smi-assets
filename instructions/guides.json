@@ -125,7 +125,7 @@
     "files": [
       {
         "label": "Setup and usage instructions",
-        "url": "https://files.simplymichigan.co/wireless-usb-c-hub.pdf?v=20261029"
+        "url": "https://files.simplymichigan.co/wireless-usb-c-hub.pdf?v=20261029b"
       },
       {
         "label": "Disassembly and housing swap instructions",
@@ -134,6 +134,7 @@
     ],
     "links": [
       {
+        "heading": "Firmware updating",
         "label": "Firmware update instructions \u2192",
         "url": "https://simplymichigan.co/blog/updating-usb-hub"
       }

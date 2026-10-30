@@ -55,7 +55,7 @@
     }catch(e){error.textContent='Use “View PDF” to open the guide, then save it from your browser.';error.hidden=false}finally{download.disabled=false;download.textContent='Download'}});
     file.append(make('span','sm-il-file-label',f.label));actions.append(view,download);file.append(actions,error);files.append(file)
    });
-   g.links.forEach(function(l){var actions=make('div','sm-il-actions'),link=make('a','sm-il-view sm-il-article',l.label||'Read instructions →');link.href=safeURL(l.url);link.setAttribute('aria-label','Read '+g.title);actions.append(link);files.append(actions)});
+   g.links.forEach(function(l){var actions=make('div','sm-il-actions'),link=make('a','sm-il-view sm-il-article',l.label||'Read instructions →');link.href=safeURL(l.url);link.setAttribute('aria-label','Read '+g.title);actions.append(link);if(l.heading){var section=make('div','sm-il-link');section.append(make('h3','sm-il-file-label sm-il-link-heading',l.heading),actions);files.append(section)}else files.append(actions)});
    card.append(files);grid.append(card)
   })
  }

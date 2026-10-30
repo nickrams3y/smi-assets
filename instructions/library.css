@@ -21,6 +21,7 @@
 #sm-install-library .sm-il-subtitle{font-size:14px;color:#626262;margin:0 0 23px}
 #sm-install-library .sm-il-files{margin-top:auto;display:grid;gap:15px}
 #sm-install-library .sm-il-file-label{font-size:14px;font-weight:700;display:block;margin-bottom:8px}
+#sm-install-library .sm-il-link-heading{margin:0 0 8px;padding:0;line-height:inherit;color:inherit}
 #sm-install-library .sm-il-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 #sm-install-library .sm-il-view{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:10px 15px;min-height:44px;background:#303030;border:1px solid #303030;color:white!important;text-decoration:none!important;border-radius:6px;font-size:14px;font-weight:600}
 #sm-install-library .sm-il-download{background:transparent;border:0;min-height:44px;padding:8px 0;color:#555;text-decoration:underline;text-underline-offset:3px;font-size:14px;cursor:pointer}
