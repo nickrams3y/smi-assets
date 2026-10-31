@@ -824,23 +824,6 @@ var SMI_PROCESSING_POLICY=(function(){
  SMI_DOM_RUNNER.add(enhance);mobile.addEventListener('change',enhance);
 })();
 
-/* Announce the newly available jump-seat configuration on the 12-inch kit only. */
-(function(){
- function seatAvailabilityBanner(){
-  var active=/\/products\/ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit\/?$/.test(location.pathname);
-  var details=active&&document.querySelector('.product-details');
-  document.querySelectorAll('.sm-seat-availability').forEach(function(banner){
-   if(!details||banner.nextElementSibling!==details)banner.remove();
-  });
-  if(!details||getComputedStyle(details).getPropertyValue('--sm-seat-availability').trim()!=='1'||details.previousElementSibling?.classList.contains('sm-seat-availability'))return;
-  var banner=document.createElement('div');banner.className='sm-seat-availability';banner.setAttribute('role','note');
-  banner.innerHTML='<span class="sm-seat-availability__check" aria-hidden="true">✓</span><span><strong>Fold down / bench seat configurations</strong> are now available in limited quantities.</span>';
-  details.before(banner);
- }
- SMI_DOM_RUNNER.add(seatAvailabilityBanner);
- document.addEventListener('load',function(event){if(event.target.tagName==='LINK')seatAvailabilityBanner()},true);
-})();
-
 /* The 12-inch fold-down center-seat kit is currently offered in silver only. */
 (function(){
  var locked=new WeakMap(),syncing=false,noteID='sm-bench-seat-color-note';
