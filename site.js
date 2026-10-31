@@ -696,7 +696,7 @@ var SMI_PROCESSING_POLICY=(function(){
 (function(){
  var nextID=0;
  var copy={
-  wired:{label:'Wired connection',features:['Apple CarPlay & Android Auto via USB cable','No connectivity upgrade charge'],note:'Plug your phone into a the included compatible USB hub to use CarPlay or Android Auto.'},
+  wired:{label:'Wired connection',features:['Apple CarPlay & Android Auto via USB cable','No connectivity upgrade charge'],note:'Plug your phone into the included compatible USB hub to use CarPlay or Android Auto.'},
   wireless:{label:'Wireless USB-C hub',features:['Wireless Apple CarPlay & Android Auto','USB-C and USB-A ports','Up to 30W fast charging','No separate adapter needed'],note:''},
   adapter:{label:'Wireless USB adapter',features:['Wireless Apple CarPlay & Android Auto','Plugs into a compatible USB port','No USB hub replacement needed'],note:'Adds wireless connectivity. It does not upgrade your USB ports or charging speed.'},
   standard:{label:'Dual USB-A hub',features:['Two USB-A ports','Wired Apple CarPlay & Android Auto'],note:'This hub does not add wireless connectivity. Connect your phone with a USB cable.'},
