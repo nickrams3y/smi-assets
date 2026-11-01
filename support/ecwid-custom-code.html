@@ -252,11 +252,6 @@
   #sm-support .sh-body .sh-vehicle-year li { font-size: 14px; }
 }
 /* End conversion parts guide. */
-
-/* Four quick-help destinations, with two columns on smaller screens. */
-#sm-support .sh-quick{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-#sm-support .sh-quick a{min-width:0;padding:4px 10px}
-@media(max-width:850px){#sm-support .sh-quick{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}#sm-support .sh-quick a:nth-child(2n){border-right:0}}
 </style>
 <section id="sm-support" data-native="true" aria-label="Support library">
 <div class="sh-wrap">
@@ -309,7 +304,6 @@
 </span>
 <span class="sh-arrow" aria-hidden="true">↗</span>
 </a>
-<a href="https://simplymichigan.co/troubleshoot"><span class="sh-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 7-7 7M5 13l-2 2a3 3 0 0 0 4 4l2-2M15 7l2-2a3 3 0 0 1 4 4l-2 2M8 4l12 12-4 4L4 8V4z"/></svg></span><span><strong>Troubleshooting guide</strong><small>Find your next step</small></span><span class="sh-arrow" aria-hidden="true">↗</span></a>
 <a href="https://simplymichigan.co/contact-us">
 <span class="sh-icon">
 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -329,7 +323,7 @@
 </section>
 <script>(function(){var root=document.querySelector('#sm-support[data-native]');if(!root)return;document.querySelectorAll('#sm-support:not([data-native])').forEach(function(x){x.remove()}
 );function start(){if(window.SMI_SUPPORT){window.SMI_SUPPORT.mount(root);return}
-var s=document.createElement('script');s.async=true;s.src='https://nickrams3y.github.io/smi-assets/support/hub.js?v=20261031';var timer=setTimeout(fail,15000);s.onload=function(){clearTimeout(timer);window.SMI_SUPPORT.mount(root)}
+var s=document.createElement('script');s.async=true;s.src='https://nickrams3y.github.io/smi-assets/support/hub.js?v=20261020c';var timer=setTimeout(fail,15000);s.onload=function(){clearTimeout(timer);window.SMI_SUPPORT.mount(root)}
 ;s.onerror=function(){clearTimeout(timer);fail()}
 ;document.head.appendChild(s)}
 function fail(){var n=root.querySelector('[data-loading]');if(n){n.innerHTML='Articles could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact support</a>.';n.querySelector('button').onclick=start}
