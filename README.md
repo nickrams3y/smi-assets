@@ -40,7 +40,7 @@ This runs early in `site.js` so browsers can cancel pending oversized downloads.
 
 ## Troubleshooting guide
 
-`/troubleshoot` loads `troubleshoot/tool.js` and `troubleshoot/tool.css` through the route-specific loader at the end of `site.js`. It mounts beneath Ecwid's existing `tile-text-ohZTvt` introduction. No navigation or homepage links are added. The page is publicly reachable by URL; this is not access control or a search-indexing restriction.
+`/troubleshoot` loads `troubleshoot/tool.js` and `troubleshoot/tool.css` through the route-specific loader at the end of `site.js`. It mounts beneath Ecwid's existing `tile-text-ohZTvt` introduction. The support page Quick help links and homepage support widget include the Troubleshooting guide (approved October 31). The page is publicly reachable by URL; this is not access control or a search-indexing restriction.
 
 Four paths cover sound, screen/touchscreen, Sync stability, and phone connectivity. October 18 review tightened the symptom rules: outcomes identify checks rather than establish a failed component. On October 31 Nick reported that replacing the amplifier resolved the customer case where the ACM replacement had not helped. This is a reported outcome for that vehicle; it does not make the symptom or speaker-test results a definitive ACM/amplifier discriminator. No sound path has a purchase link. APIM results retain a secondary catalog link for Sync 3 only, alongside the primary contact handoff, and explicitly call for software/power/connection review before ordering.
 
@@ -76,7 +76,7 @@ The heading, description, labels, placeholders, submit label, and photo-reply no
 
 All 74 source articles were copied on October 20, 2026. Four substantive changes were approved by Nick: current USB-C hub availability, wireless adapter/hub choices, ACM replacement service, and uncertain rather than definitive ACM diagnosis for no audio. Other article text is preserved; changing technical guidance or policies substantially requires Nick's review. Source backups and import scripts are in the parent workspace `work/2026-10-20-support-hub`.
 
-Search, topic filters, article permalinks, recommended/related articles, and copy-link controls use URL hashes so browser Back works without another Ecwid document navigation. No customer information, search analytics, accounts, or third-party search service are added. `/troubleshoot` is not promoted. The original HelpSite service remains available pending cutover/redirect decisions. The standalone `support/index.html` is a review preview; the production page uses the existing Ecwid header/footer.
+Search, topic filters, article permalinks, recommended/related articles, and copy-link controls use URL hashes so browser Back works without another Ecwid document navigation. No customer information, search analytics, accounts, or third-party search service are added. `/troubleshoot` is linked from the support page and homepage support widget following October 31 approval. The original HelpSite service remains available pending cutover/redirect decisions. The standalone `support/index.html` is a review preview; the production page uses the existing Ecwid header/footer.
 
 Run `node support/tests/catalog.cjs` for catalog, link, media and search checks. Bump the loader asset query after changes, and the catalog version in `hub.js` when changing article content.
 

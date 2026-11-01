@@ -929,7 +929,7 @@ var SMI_PROCESSING_POLICY=(function(){
  mobile.addEventListener('change',placeSKU);
 })();
 
-/* Load the unadvertised troubleshooting tool only on its own page. */
+/* Load the troubleshooting tool only on its own page. */
 (function(){
  var task=null,retryAt=0,attempt=0,base='https://nickrams3y.github.io/smi-assets/troubleshoot/';
  function active(){return /^\/(?:en\/)?troubleshoot\/?$/.test(location.pathname)}
@@ -982,7 +982,7 @@ var SMI_PROCESSING_POLICY=(function(){
   if(root.dataset.initialized)return;
   if(window.SMI_SUPPORT&&document.getElementById('sm-support-css')?.dataset.loaded==='true'){tile.hidden=true;window.SMI_SUPPORT.mount(root);return}
   if(task||failed)return;
-  task=Promise.all([asset('link','sm-support-css','hub.css?v=20261020c'),asset('script','sm-support-js','hub.js?v=20261020c')]).then(function(){task=null;mount()}).catch(function(){
+  task=Promise.all([asset('link','sm-support-css','hub.css?v=20261031'),asset('script','sm-support-js','hub.js?v=20261031')]).then(function(){task=null;mount()}).catch(function(){
    task=null;failed=true;if(!root.isConnected)return;
    root.innerHTML='<p style="text-align:center;padding:32px" role="status">The support library could not load. <button type="button">Try again</button> or <a href="https://simplymichigan.co/contact-us">contact us for help</a>.</p>';
    root.querySelector('button').onclick=function(){failed=false;mount()};
