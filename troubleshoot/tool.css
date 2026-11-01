@@ -105,3 +105,7 @@
 /* The guide already has support links; floating sales widgets obscure checks. */
 body:has(#sm-troubleshoot) #tile-contacts-widget,
 body:has(#sm-troubleshoot) #google-merchantwidget-iframe-wrapper{display:none!important}
+
+/* Required intake stays visible before the guided checks. */
+#sm-troubleshoot .sm-context-details h3{font-size:18px;line-height:1.4;margin:0 0 10px}
+#sm-troubleshoot .sm-context-fields select{max-width:100%}
