@@ -3922,8 +3922,8 @@ html body .product-details__product-description .sm-order-fact:has(> strong) > s
 html body .product-details__product-description .sm-order-fact > strong {grid-column:2;grid-row:1;margin:0}
 html body .product-details__product-description .sm-order-fact > small {grid-column:2;grid-row:2}
 
-/* Hub-size confirmation: retain Ecwid's checkbox and label behavior. */
-html.sm-product-options-active .details-product-options .sm-po-hub-size-confirmation .form-control--checkbox {
+/* Hub-size confirmation: retain Ecwid's native required option and label behavior. */
+html.sm-product-options-active .details-product-options .sm-po-hub-size-confirmation :is(.form-control--checkbox,.form-control--radio) {
   display:flex!important;
   align-items:flex-start!important;
   gap:10px!important;
@@ -3935,14 +3935,14 @@ html.sm-product-options-active .details-product-options .sm-po-hub-size-confirma
   border-radius:8px!important;
   background:#fff!important;
 }
-html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__checkbox-wrap {
+html.sm-product-options-active .sm-po-hub-size-confirmation :is(.form-control__checkbox-wrap,.form-control__radio-wrap) {
   position:relative!important;
   flex:0 0 20px!important;
   width:20px!important;
   height:20px!important;
   margin:1px 0 0!important;
 }
-html.sm-product-options-active .sm-po-hub-size-confirmation :is(.form-control__checkbox,.form-control__checkbox-view) {
+html.sm-product-options-active .sm-po-hub-size-confirmation :is(.form-control__checkbox,.form-control__checkbox-view,.form-control__radio,.form-control__radio-view) {
   width:20px!important;
   height:20px!important;
 }
@@ -3962,7 +3962,40 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__inlin
   white-space:normal!important;
   cursor:pointer;
 }
-html.sm-product-options-active .sm-po-hub-size-confirmation .form-control--checkbox:focus-within {
+html.sm-product-options-active .sm-po-hub-size-confirmation :is(.form-control--checkbox,.form-control--radio):focus-within {
   outline:2px solid #f15a24;
   outline-offset:2px;
+}
+/* A single required radio confirmation uses a checkbox appearance. */
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio-view {
+  box-sizing:border-box!important;
+  border:1px solid #8b9288!important;
+  border-radius:4px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio-view-inner {
+  display:none!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio-view::before {
+  display:none!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio-view::after {
+  background:transparent!important;
+  border-radius:0!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio:checked ~ .form-control__radio-view {
+  border-color:#2c914c!important;
+  background:#2c914c!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio:checked ~ .form-control__radio-view::after {
+  content:"";
+  position:absolute;
+  left:6px;
+  top:3px;
+  width:5px;
+  height:9px;
+  border:solid #fff!important;
+  border-width:0 2px 2px 0!important;
+  transform:rotate(45deg);
 }
