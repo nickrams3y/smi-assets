@@ -3921,3 +3921,48 @@ html body .product-details__product-description .sm-order-fact:has(> strong) {
 html body .product-details__product-description .sm-order-fact:has(> strong) > svg {grid-column:1;grid-row:1 / span 2}
 html body .product-details__product-description .sm-order-fact > strong {grid-column:2;grid-row:1;margin:0}
 html body .product-details__product-description .sm-order-fact > small {grid-column:2;grid-row:2}
+
+/* Hub-size confirmation: retain Ecwid's checkbox and label behavior. */
+html.sm-product-options-active .details-product-options .sm-po-hub-size-confirmation .form-control--checkbox {
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:10px!important;
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-height:44px!important;
+  padding:12px!important;
+  border:1px solid var(--sm-bubble-line)!important;
+  border-radius:8px!important;
+  background:#fff!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__checkbox-wrap {
+  position:relative!important;
+  flex:0 0 20px!important;
+  width:20px!important;
+  height:20px!important;
+  margin:1px 0 0!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation :is(.form-control__checkbox,.form-control__checkbox-view) {
+  width:20px!important;
+  height:20px!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__inline-label {
+  flex:1 1 0!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__inline-label label {
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:#343a33!important;
+  font-size:14px!important;
+  line-height:1.5!important;
+  white-space:normal!important;
+  cursor:pointer;
+}
+html.sm-product-options-active .sm-po-hub-size-confirmation .form-control--checkbox:focus-within {
+  outline:2px solid #f15a24;
+  outline-offset:2px;
+}
