@@ -4001,7 +4001,7 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
 }
 
 /* Mobile menu Support action: keep native links and social controls in place. */
-@media (max-width: 767px) {
+@media (max-width: 1199px) {
   .ins-tile--header.ins-tile--open-menu .ins-header__sidebar--menu:has(.ins-header__cta--mobile a[href="/support"]) {
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) auto;
@@ -4085,8 +4085,8 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
   24% { opacity: 1; box-shadow: 0 0 0 0 rgba(101, 213, 141, .45); }
   82%, 100% { opacity: 1; box-shadow: 0 0 0 7px rgba(101, 213, 141, 0); }
 }
-/* Give the desktop header the same Support treatment as the mobile menu. */
-.ins-header__cta--desktop a.ins-control[href="/support"] {
+/* Use the same Support treatment in the desktop header and mobile/tablet menus. */
+.ins-header__cta a.ins-control[href="/support"] {
   display: inline-flex !important;
   align-items: center;
   gap: 12px;
@@ -4100,17 +4100,17 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
   text-decoration: none !important;
   white-space: nowrap;
 }
-.ins-header__cta--desktop a.ins-control[href="/support"] .ins-control__wrap {
+.ins-header__cta a.ins-control[href="/support"] .ins-control__wrap {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.ins-header__cta--desktop a.ins-control[href="/support"] .ins-control__text {
+.ins-header__cta a.ins-control[href="/support"] .ins-control__text {
   font-size: 14px !important;
   font-weight: 600 !important;
   line-height: 1.4 !important;
 }
-.ins-header__cta--desktop a.ins-control[href="/support"]::before {
+.ins-header__cta a.ins-control[href="/support"]::before {
   content: "";
   flex: 0 0 8px;
   width: 8px;
@@ -4118,8 +4118,8 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
   border-radius: 50%;
   background: #65d58d;
 }
-.ins-header__cta--desktop a.ins-control[href="/support"]:hover { background: #38473e !important; }
-.ins-header__cta--desktop a.ins-control[href="/support"]:focus-visible { outline: 2px solid #65d58d; outline-offset: 4px; }
+.ins-header__cta a.ins-control[href="/support"]:hover { background: #38473e !important; }
+.ins-header__cta a.ins-control[href="/support"]:focus-visible { outline: 2px solid #65d58d; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) {
   #smi-home-support .smi-dot,
   #sm-support .sh-hero .sh-eyebrow::before,
