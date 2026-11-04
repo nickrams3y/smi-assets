@@ -4120,6 +4120,14 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
 }
 .ins-header__cta a.ins-control[href="/support"]:hover { background: #38473e !important; }
 .ins-header__cta a.ins-control[href="/support"]:focus-visible { outline: 2px solid #65d58d; outline-offset: 4px; }
+/* Let the desktop header show through without fading the label or signal. */
+.ins-header__cta--desktop a.ins-control[href="/support"] {
+  background: rgba(45, 53, 49, .72) !important;
+  border-color: rgba(81, 94, 86, .7) !important;
+}
+.ins-header__cta--desktop a.ins-control[href="/support"]:hover {
+  background: rgba(56, 71, 62, .88) !important;
+}
 @media (prefers-reduced-motion: reduce) {
   #smi-home-support .smi-dot,
   #sm-support .sh-hero .sh-eyebrow::before,
