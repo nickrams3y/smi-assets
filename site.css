@@ -4008,6 +4008,8 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
     grid-template-rows: minmax(min-content, 1fr) auto auto;
     align-items: center;
     column-gap: 16px;
+    /* Reserve room for the fixed Google store-rating badge and iPhone safe area. */
+    padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;
   }
   .ins-header__sidebar--menu:has(.ins-header__cta--mobile a[href="/support"]) > * {
     grid-column: 1 / -1;
