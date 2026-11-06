@@ -1,20 +1,34 @@
 /* Simply Michigan Infotainment storefront enhancements. */
 var SMI_DOM_RUNNER=(function(){
  var tasks=[],observer=null,timer=null,firstQueued=0,running=false,started=false;
+ var storeReady=!/^\/products(?:\/|$)/.test(location.pathname),storeEventsBound=false;
+ // Product markup may exist before Ecwid has hydrated it. Moving its children
+ // then makes native fields inherit our headings, help text and placeholders.
+ function bindStoreEvents(){
+  if(storeEventsBound)return;
+  var api=window.Ecwid;
+  if(!api||!api.OnPageLoad||!api.OnPageLoaded)return;
+  storeEventsBound=true;
+  api.OnPageLoad.add(function(){storeReady=false});
+  // Ecwid also calls late subscribers for the current completed page.
+  api.OnPageLoaded.add(function(){storeReady=true;schedule(0)});
+ }
  function observe(){observer.observe(document.body||document.documentElement,{childList:true,subtree:true})}
  function run(){
-  timer=null;firstQueued=0;if(running)return;running=true;observer.disconnect();
+  timer=null;firstQueued=0;bindStoreEvents();if(running||!storeReady)return;running=true;observer.disconnect();
   tasks.slice().forEach(function(task){try{task()}catch(error){console.error("SMI enhancement error",error)}});
   observe();running=false
  }
  function schedule(delay){
+  if(!started)return;
   var now=Date.now();if(!firstQueued)firstQueued=now;if(timer)clearTimeout(timer);
   timer=setTimeout(run,now-firstQueued>800?0:(delay==null?180:delay))
  }
- function start(){if(started)return;started=true;observer=new MutationObserver(function(){schedule(180)});observe();schedule(250)}
+ function start(){if(started)return;started=true;observer=new MutationObserver(function(){schedule(180)});observe();bindStoreEvents();schedule(250)}
+ var bindingTimer=setInterval(function(){bindStoreEvents();if(storeEventsBound)clearInterval(bindingTimer)},100);
  function ready(){setTimeout(start,350)}
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ready,{once:true});else ready();
- return{add:function(task){tasks.push(task);if(started)schedule(180)}}
+ return{add:function(task){tasks.push(task);if(started)schedule(180)},ready:function(){return storeReady}}
 })();
 
 /* Migrate remaining legacy support links in native Ecwid sections and SPA content. */
@@ -267,6 +281,7 @@ if(typeof SMI_DOM_RUNNER!=='undefined')SMI_DOM_RUNNER.add(mount);else mount();
   gallery.classList.remove('sm-mobile-gallery');
  }
  function enhance(){
+  if(!SMI_DOM_RUNNER.ready())return;
   document.querySelectorAll('.product-details__gallery').forEach(function(gallery){
    var state=states.get(gallery),scroller=gallery.querySelector('.details-gallery__thumbs');
    // Only enhance the native horizontal mobile layout, and only after our CSS is ready.
@@ -334,7 +349,12 @@ window.MutationObserver=function(callback){this.observe=function(){SMI_DOM_RUNNE
  button.setAttribute("aria-haspopup","dialog");
  button.setAttribute("aria-label",label+": bezel and trim color");
 }
-function l(){let s=location.pathname,l=o.test(s);if(e.documentElement.classList.toggle("sm-product-options-active",l),!l)return;let i=e.querySelector(".details-product-options");updateColorHelp(i);if(!i||i.dataset.sm===s)return;let r=[...i.querySelectorAll(":scope > .details-product-option")];if(!r.length)return;let c=4,p=["Vehicle Details","Optional Upgrades"];(s.includes("2019-2022-mustang-4-to-8")||s.includes("2019-2023-ranger-4-to-8")||s.includes("2017-2019-f-250-f-350-super-duty-4-to-8")||s.includes("2013-2014-f-150-4-to-8")||s.includes("2015-2017-f-150-4-to-8")||s.includes("2018-2020-f-150-4-to-8")||s.includes("2020-2022-f-250-350-super-duty-4-to-8"))?(c=Math.max(0,r.length-3),p=["Vehicle Details","Optional Upgrades"]):s.includes("8-to-12")?(c=r.findIndex(e=>/connectivity upgrade|extended warranty|upload a vin|include a complimentary sync 3\.4 update usb drive/.test(a((e.querySelector(".details-product-option__title")||e.querySelector("label")||{}).textContent))),c=c<0?r.length:c,p=["Truck & Upgrade Details","Optional Upgrades"]):s.includes("audio-control")?(c=9,p=["Vehicle Details","Optional Upgrades"]):s.includes("sync-3-usb-hub")?(c=r.findIndex(e=>/^are you trading in/.test(a((e.querySelector(".details-product-option__title")||{}).textContent))),c=c<0?r.length:c,p=["Choose Your Hub","Trade-In Details"]):s.includes("apim-replacement")&&(c=s.includes("without")?3:4,p=["Vehicle Details","Optional Upgrades"]),i.querySelectorAll(".sm-po-section-heading,.sm-po-section-intro").forEach(e=>e.remove());let f=s.includes("8-to-12")?r.findIndex(e=>/did you read the entire product page/.test(a((e.querySelector(".details-product-option__title")||e.querySelector("label")||{}).textContent))):-1;f<=c&&(f=-1);p.push("Review & Confirm");let d=!1;r.forEach((e,o)=>{if(0===o||o===c||o===f){let s=t("h3"),a=o===f?3:o?2:1;if(s.className="sm-po-section-heading",s.innerHTML=`<span class=sm-po-step-number>${a}</span><span>${p[a-1]}</span>`,i.insertBefore(s,e),!o&&c>0){let o=t("p");o.className="sm-po-section-intro",i.insertBefore(o,e)}}let l=e.querySelector(".details-product-option__title")||e.querySelector("label"),n=a(l&&l.textContent);e.classList.add("sm-po-card"),e.classList.toggle("sm-po-hub-size-confirmation",s.includes("sync-3-usb-hub")&&/measured.*usb hub/.test(n)),e.dataset.smPoKind=/replacement usb hub|which usb hub/.test(n)?"conditional":(s.includes("apim-and-screen")||s.includes("2019-2022-mustang-4-to-8")||s.includes("2019-2023-ranger-4-to-8")||s.includes("2017-2019-f-250-f-350-super-duty-4-to-8")||s.includes("2013-2014-f-150-4-to-8")||s.includes("2015-2017-f-150-4-to-8")||s.includes("2018-2020-f-150-4-to-8")||s.includes("2020-2022-f-250-350-super-duty-4-to-8"))&&o>=c||/4(?:"|-inch)?\s*to\s*8|simplycare|extended warranty|wireless|connectivity upgrade|authentic usb-c|upload a (?:picture|vin)/.test(n)?"optional":"required",e.dataset.smNote="vehicle model"===n?"vehicle":"vin"===n?"vin":s.includes("apim-and-screen")&&/choose your display/.test(n)?"display":/connectivity upgrade/.test(n)?"connectivity":/upload a vin/.test(n)?"vin-photo":"";let r=/upgrade path/.test(n)?"u":/bezel and trim color/.test(n)?"r":/choose your display/.test(n)?"d":/extended warranty|simplycare/.test(n)?"s":/4(?:"|-inch)?\s*to\s*8/.test(n)?"v":!d&&/connectivity upgrade|built-in wireless/.test(n)?"c":"";if(r&&l&&!l.querySelector(".sm-po-help-button")){d=d||"c"===r;let e=t("button");e.type="button",e.className="sm-po-help-button",e.dataset.help=r,e.textContent="?",l.append(e)}let u=/^vehicle model$/.test(n)?"Select your vehicle":/^model year$/.test(n)?"Select model year":/choose your display/.test(n)?"Select your display type":"vin"===n?"Enter your 17 character VIN":"",m=u&&e.querySelector(".form-control__placeholder-inner");m&&(m.textContent=u)}),i.dataset.sm=s}e.addEventListener("click",o=>{let a=o.target.closest(".sm-po-help-button");if(a){o.preventDefault(),o.stopPropagation();let l=a.dataset.help,n=e.querySelector(".sm-po-dialog");n||(n=t("dialog"),n.className="sm-po-dialog",e.body.append(n)),n.dataset.help=l,n.innerHTML=`<div class=sm-po-dialog__header><h2 class=sm-po-dialog__title>${s[l]}</h2><button type=button class=sm-po-dialog__close aria-label=Close>×</button></div><div class=sm-po-dialog__body>${"<p class=sm-po-copy><b></b><span></span></p>".repeat(3)}<a class=sm-po-dialog__link href=https://simplymichigan.co/support#article=104443-4-to-8-conversion-overview target=_blank>Read the conversion overview</a></div>`;if(l==="r"){
+function l(){if(!SMI_DOM_RUNNER.ready())return;let s=location.pathname,l=o.test(s);if(e.documentElement.classList.toggle("sm-product-options-active",l),!l)return;let i=e.querySelector(".details-product-options");updateColorHelp(i);if(!i)return;let r=[...i.querySelectorAll(":scope > .details-product-option")];if(!r.length)return;
+// Reconcile if Ecwid replaces rows or their labels without changing the URL.
+let previous=i.smOptionsState,titles=r.map(row=>{let title=row.querySelector(".details-product-option__title");if(!title)return "";let copy=title.cloneNode(true);copy.querySelectorAll(".sm-po-help-button").forEach(button=>button.remove());return a(copy.textContent)});
+if(previous&&previous.path===s&&previous.rows.length===r.length&&r.every((row,index)=>row===previous.rows[index]&&titles[index]===previous.titles[index]&&row.classList.contains("sm-po-card"))&&previous.additions.every(node=>i.contains(node)))return;
+i.querySelectorAll(".sm-po-help-button").forEach(button=>button.remove());
+let c=4,p=["Vehicle Details","Optional Upgrades"];(s.includes("2019-2022-mustang-4-to-8")||s.includes("2019-2023-ranger-4-to-8")||s.includes("2017-2019-f-250-f-350-super-duty-4-to-8")||s.includes("2013-2014-f-150-4-to-8")||s.includes("2015-2017-f-150-4-to-8")||s.includes("2018-2020-f-150-4-to-8")||s.includes("2020-2022-f-250-350-super-duty-4-to-8"))?(c=Math.max(0,r.length-3),p=["Vehicle Details","Optional Upgrades"]):s.includes("8-to-12")?(c=r.findIndex(e=>/connectivity upgrade|extended warranty|upload a vin|include a complimentary sync 3\.4 update usb drive/.test(a((e.querySelector(".details-product-option__title")||e.querySelector("label")||{}).textContent))),c=c<0?r.length:c,p=["Truck & Upgrade Details","Optional Upgrades"]):s.includes("audio-control")?(c=9,p=["Vehicle Details","Optional Upgrades"]):s.includes("sync-3-usb-hub")?(c=r.findIndex(e=>/^are you trading in/.test(a((e.querySelector(".details-product-option__title")||{}).textContent))),c=c<0?r.length:c,p=["Choose Your Hub","Trade-In Details"]):s.includes("apim-replacement")&&(c=s.includes("without")?3:4,p=["Vehicle Details","Optional Upgrades"]),i.querySelectorAll(".sm-po-section-heading,.sm-po-section-intro").forEach(e=>e.remove());let f=s.includes("8-to-12")?r.findIndex(e=>/did you read the entire product page/.test(a((e.querySelector(".details-product-option__title")||e.querySelector("label")||{}).textContent))):-1;f<=c&&(f=-1);p.push("Review & Confirm");let d=!1;r.forEach((e,o)=>{if(0===o||o===c||o===f){let s=t("h3"),a=o===f?3:o?2:1;if(s.className="sm-po-section-heading",s.innerHTML=`<span class=sm-po-step-number>${a}</span><span>${p[a-1]}</span>`,i.insertBefore(s,e),!o&&c>0){let o=t("p");o.className="sm-po-section-intro",i.insertBefore(o,e)}}let l=e.querySelector(".details-product-option__title")||e.querySelector("label"),n=a(l&&l.textContent);e.classList.add("sm-po-card"),e.classList.toggle("sm-po-hub-size-confirmation",s.includes("sync-3-usb-hub")&&/measured.*usb hub/.test(n)),e.dataset.smPoKind=/replacement usb hub|which usb hub/.test(n)?"conditional":(s.includes("apim-and-screen")||s.includes("2019-2022-mustang-4-to-8")||s.includes("2019-2023-ranger-4-to-8")||s.includes("2017-2019-f-250-f-350-super-duty-4-to-8")||s.includes("2013-2014-f-150-4-to-8")||s.includes("2015-2017-f-150-4-to-8")||s.includes("2018-2020-f-150-4-to-8")||s.includes("2020-2022-f-250-350-super-duty-4-to-8"))&&o>=c||/4(?:"|-inch)?\s*to\s*8|simplycare|extended warranty|wireless|connectivity upgrade|authentic usb-c|upload a (?:picture|vin)/.test(n)?"optional":"required",e.dataset.smNote="vehicle model"===n?"vehicle":"vin"===n?"vin":s.includes("apim-and-screen")&&/choose your display/.test(n)?"display":/connectivity upgrade/.test(n)?"connectivity":/upload a vin/.test(n)?"vin-photo":"";let r=/upgrade path/.test(n)?"u":/bezel and trim color/.test(n)?"r":/choose your display/.test(n)?"d":/extended warranty|simplycare/.test(n)?"s":/4(?:"|-inch)?\s*to\s*8/.test(n)?"v":!d&&/connectivity upgrade|built-in wireless/.test(n)?"c":"";if(r&&l&&!l.querySelector(".sm-po-help-button")){d=d||"c"===r;let e=t("button");e.type="button",e.className="sm-po-help-button",e.dataset.help=r,e.textContent="?",l.append(e)}let u=/^vehicle model$/.test(n)?"Select your vehicle":/^model year$/.test(n)?"Select model year":/choose your display/.test(n)?"Select your display type":"vin"===n?"Enter your 17 character VIN":"",m=u&&e.querySelector(".form-control__placeholder-inner");m&&(m.textContent=u)}),i.dataset.sm=s,i.smOptionsState={path:s,rows:r,titles:titles,additions:[...i.querySelectorAll(".sm-po-section-heading,.sm-po-section-intro,.sm-po-help-button")]} }e.addEventListener("click",o=>{let a=o.target.closest(".sm-po-help-button");if(a){o.preventDefault(),o.stopPropagation();let l=a.dataset.help,n=e.querySelector(".sm-po-dialog");n||(n=t("dialog"),n.className="sm-po-dialog",e.body.append(n)),n.dataset.help=l,n.innerHTML=`<div class=sm-po-dialog__header><h2 class=sm-po-dialog__title>${s[l]}</h2><button type=button class=sm-po-dialog__close aria-label=Close>×</button></div><div class=sm-po-dialog__body>${"<p class=sm-po-copy><b></b><span></span></p>".repeat(3)}<a class=sm-po-dialog__link href=https://simplymichigan.co/support#article=104443-4-to-8-conversion-overview target=_blank>Read the conversion overview</a></div>`;if(l==="r"){
  let source=e.getElementById("sm-trim-color-guide"),content=source&&source.querySelector(".sm-trim-guide-content");
  if(content){
   n.querySelector(".sm-po-dialog__title").textContent=source.getAttribute("data-sm-help-title");
@@ -343,7 +363,7 @@ function l(){let s=location.pathname,l=o.test(s);if(e.documentElement.classList.
   copy.querySelectorAll("img").forEach(img=>{img.loading="eager"});
  }
 }
-n.showModal()}let l=o.target.closest(".sm-po-dialog__close");l&&l.closest("dialog").close()}),new MutationObserver(()=>requestAnimationFrame(l)).observe(e.documentElement,{childList:!0,subtree:!0}),l()})();
+n.showModal()}let l=o.target.closest(".sm-po-dialog__close");l&&l.closest("dialog").close()}),new MutationObserver(l).observe(e.documentElement,{childList:!0,subtree:!0})})();
 
 window.MutationObserver=SMI_NATIVE_MUTATION_OBSERVER;
 
@@ -715,6 +735,7 @@ var SMI_PROCESSING_POLICY=(function(){
   return '';
  }
  function refresh(row){
+  if(!SMI_DOM_RUNNER.ready())return;
   var select=row.querySelector('select'),title=row.querySelector('.details-product-option__title');
   if(!select||!title||!/connectivity upgrade/i.test(title.textContent)||getComputedStyle(row).getPropertyValue('--sm-connectivity-card').trim()!=='1')return;
   var choices=Array.prototype.map.call(select.options,function(option){
@@ -1146,16 +1167,20 @@ SMI_DOM_RUNNER.add(function(){
 (function(){
  var mobile=window.matchMedia('(max-width:767px)');
  function arrange(){
+  if(!SMI_DOM_RUNNER.ready())return;
   var description=document.querySelector('.product-details__product-description');if(!description)return;
   var product=description.closest('.product-details');if(!product)return;
   var gallery=product.querySelector('.product-details__gallery'),price=product.querySelector('.product-details__product-price-row');
-  product.querySelectorAll('.sm-platform-logos').forEach(function(row){if(row.smSourceAnchor&&!description.contains(row.smSourceAnchor))row.remove()});
-  var badges=product.querySelector('.sm-platform-logos');
-  if(!badges){
-   var android=description.querySelector('img[alt="Android Auto"]'),apple=description.querySelector('img[alt="Apple CarPlay"]');
-   if(android&&apple&&android.parentElement===apple.parentElement){badges=android.parentElement;badges.smSourceAnchor=document.createComment('Compatibility artwork source');badges.before(badges.smSourceAnchor);badges.classList.add('sm-platform-logos');badges.setAttribute('aria-label','Apple CarPlay and Android Auto compatibility')}
+  var android=description.querySelector('img[alt="Android Auto"]'),apple=description.querySelector('img[alt="Apple CarPlay"]');
+  var source=android&&apple&&android.parentElement===apple.parentElement?android.parentElement:null;
+  // A description refresh can restore the original artwork while the old row
+  // still exists beside the price. Prefer the current source and remove stale rows.
+  product.querySelectorAll('.sm-platform-logos').forEach(function(row){if(row!==source&&(source||row.smSourceAnchor&&!description.contains(row.smSourceAnchor)))row.remove()});
+  var badges=source||product.querySelector('.sm-platform-logos');
+  if(source){
+   if(!source.smSourceAnchor||!description.contains(source.smSourceAnchor)){source.smSourceAnchor=document.createComment('Compatibility artwork source');source.before(source.smSourceAnchor)}
+   source.classList.add('sm-platform-logos');source.setAttribute('aria-label','Apple CarPlay and Android Auto compatibility');
   }
-  if(badges&&!badges.smSourceAnchor&&description.contains(badges)){badges.smSourceAnchor=document.createComment('Compatibility artwork source');badges.before(badges.smSourceAnchor)}
   if(badges&&gallery&&price){
    if(mobile.matches){if(badges.parentElement!==gallery)gallery.appendChild(badges)}
    else if(price.nextElementSibling!==badges)price.after(badges);
