@@ -31,6 +31,21 @@ var SMI_DOM_RUNNER=(function(){
  return{add:function(task){tasks.push(task);if(started)schedule(180)},ready:function(){return storeReady}}
 })();
 
+/* Recover the price row when Ecwid hydrates offer content into a breadcrumb node. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('.product-details__sidebar > .ec-breadcrumbs').forEach(function(row){
+  // The affected Safari page retained breadcrumb attributes on its price wrapper.
+  // Match the native offer and price together so real navigation is untouched.
+  var offer=row.querySelector(':scope > .product-details-module__content[itemprop="offers"]');
+  if(!offer||!offer.querySelector(':scope > .product-details__product-price[itemprop="price"]'))return;
+  row.classList.remove('ec-breadcrumbs');
+  row.classList.add('product-details-module','product-details__product-price-row');
+  if(row.getAttribute('itemprop')==='category')row.removeAttribute('itemprop');
+  if(row.getAttribute('aria-label')==='Breadcrumbs')row.removeAttribute('aria-label');
+  if(row.getAttribute('role')==='region')row.removeAttribute('role');
+ });
+});
+
 /* Migrate remaining legacy support links in native Ecwid sections and SPA content. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('a[href*="support.simplymichigan.co"]').forEach(function(link){
