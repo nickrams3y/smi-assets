@@ -4136,3 +4136,6 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
     opacity: 1;
   }
 }
+
+/* Signal that the complete product appearance is available before first reveal. */
+:root { --sm-product-layout-styles: 1; }

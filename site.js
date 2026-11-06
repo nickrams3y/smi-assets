@@ -9,7 +9,11 @@ var SMI_DOM_RUNNER=(function(){
   var api=window.Ecwid;
   if(!api||!api.OnPageLoad||!api.OnPageLoaded)return;
   storeEventsBound=true;
-  api.OnPageLoad.add(function(){storeReady=false});
+  api.OnPageLoad.add(function(page){
+   storeReady=false;
+   var paint=window.SMI_PRODUCT_BOOT;
+   if(paint){if(page&&page.type==='PRODUCT')paint.begin();else paint.cancel()}
+  });
   // Ecwid also calls late subscribers for the current completed page.
   api.OnPageLoaded.add(function(){storeReady=true;schedule(0)});
  }
@@ -17,6 +21,7 @@ var SMI_DOM_RUNNER=(function(){
  function run(){
   timer=null;firstQueued=0;bindStoreEvents();if(running||!storeReady)return;running=true;observer.disconnect();
   tasks.slice().forEach(function(task){try{task()}catch(error){console.error("SMI enhancement error",error)}});
+  if(document.querySelector('.product-details__sidebar')&&window.SMI_PRODUCT_BOOT)window.SMI_PRODUCT_BOOT.finish();
   observe();running=false
  }
  function schedule(delay){
@@ -24,9 +29,9 @@ var SMI_DOM_RUNNER=(function(){
   var now=Date.now();if(!firstQueued)firstQueued=now;if(timer)clearTimeout(timer);
   timer=setTimeout(run,now-firstQueued>800?0:(delay==null?180:delay))
  }
- function start(){if(started)return;started=true;observer=new MutationObserver(function(){schedule(180)});observe();bindStoreEvents();schedule(250)}
+ function start(){if(started)return;started=true;observer=new MutationObserver(function(){schedule(180)});observe();bindStoreEvents();schedule(0)}
  var bindingTimer=setInterval(function(){bindStoreEvents();if(storeEventsBound)clearInterval(bindingTimer)},100);
- function ready(){setTimeout(start,350)}
+ function ready(){start()}
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ready,{once:true});else ready();
  return{add:function(task){tasks.push(task);if(started)schedule(180)},ready:function(){return storeReady}}
 })();
