@@ -1,20 +1,2 @@
-<!-- Critical product paint: keep this in Ecwid's head code, before the body renders. -->
-<style id="sm-product-loading-style">
-#tile-product-details div.ecwid-productBrowser{background-color:#fff!important}
-html.sm-product-pending #tile-product-details .product-details__sidebar{position:relative;min-height:680px}
-html.sm-product-pending #tile-product-details .product-details__sidebar>*{visibility:hidden!important;pointer-events:none!important}
-html.sm-product-pending #tile-product-details .product-details__sidebar::before{content:"";position:absolute;top:0;left:0;right:0;height:620px;pointer-events:none;background:linear-gradient(#eceeec,#eceeec) 0 12px/88% 22px no-repeat,linear-gradient(#eceeec,#eceeec) 0 46px/72% 22px no-repeat,linear-gradient(#f2f3f1,#f2f3f1) 0 91px/38% 20px no-repeat,linear-gradient(#f2f3f1,#f2f3f1) 0 143px/100% 48px no-repeat,linear-gradient(#f5f6f4,#f5f6f4) 0 224px/100% 350px no-repeat}
-html.sm-product-pending #tile-product-details .product-details__product-description .sm-platform-logos{display:none!important}
-</style>
-<script id="sm-product-loading-boot">
-(function(){
- if(window.SMI_PRODUCT_BOOT)return;
- var root=document.documentElement,deadline=null,poll=null,requested=false;
- function reveal(){clearTimeout(deadline);clearInterval(poll);deadline=poll=null;requested=false;root.classList.remove('sm-product-pending')}
- function check(){if(requested&&getComputedStyle(root).getPropertyValue('--sm-product-layout-styles').trim()==='1')reveal()}
- function begin(){reveal();root.classList.add('sm-product-pending');deadline=setTimeout(reveal,6000);poll=setInterval(check,50)}
- window.SMI_PRODUCT_BOOT={begin:begin,cancel:reveal,finish:function(){if(root.classList.contains('sm-product-pending')){requested=true;check()}}};
- if(/^\/products(?:\/|$)/.test(location.pathname))begin();
- window.addEventListener('pageshow',function(event){if(event.persisted)reveal()});
-})();
-</script>
+<style id="sm-product-loading-style">#tile-product-details div.ecwid-productBrowser{background:#fff!important}html.sm-product-pending #tile-product-details .product-details__sidebar>*{visibility:hidden!important}html.sm-product-pending #tile-product-details .product-details__product-description .sm-platform-logos{display:none!important}</style>
+<script id="sm-product-loading-boot">(()=>{if(window.SMI_PRODUCT_BOOT)return;let r=document.documentElement,t,p,f=false,c='sm-product-pending';function end(){clearTimeout(t);clearInterval(p);f=false;r.classList.remove(c)}function check(){if(f&&getComputedStyle(r).getPropertyValue('--sm-product-layout-styles').trim()==='1')end()}function begin(){end();r.classList.add(c);t=setTimeout(end,6000);p=setInterval(check,50)}window.SMI_PRODUCT_BOOT={begin,cancel:end,finish(){if(r.classList.contains(c)){f=true;check()}}};if(/^\/products(?:\/|$)/.test(location.pathname))begin();addEventListener('pageshow',e=>{if(e.persisted)end()})})();</script>

@@ -4139,3 +4139,7 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
 
 /* Signal that the complete product appearance is available before first reveal. */
 :root { --sm-product-layout-styles: 1; }
+
+/* Product loading placeholder; visibility and fallback start in the inline head. */
+html.sm-product-pending #tile-product-details .product-details__sidebar{position:relative;min-height:680px}
+html.sm-product-pending #tile-product-details .product-details__sidebar::before{content:"";position:absolute;top:0;left:0;right:0;height:620px;pointer-events:none;background:linear-gradient(#eceeec,#eceeec) 0 12px/88% 22px no-repeat,linear-gradient(#eceeec,#eceeec) 0 46px/72% 22px no-repeat,linear-gradient(#f2f3f1,#f2f3f1) 0 91px/38% 20px no-repeat,linear-gradient(#f2f3f1,#f2f3f1) 0 143px/100% 48px no-repeat,linear-gradient(#f5f6f4,#f5f6f4) 0 224px/100% 350px no-repeat}
