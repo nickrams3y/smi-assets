@@ -4140,6 +4140,34 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
 /* Signal that the complete product appearance is available before first reveal. */
 :root { --sm-product-layout-styles: 1; }
 
+/* One field per line; preserve Ecwid's saved selections and native node order. */
+.ec-cart-item__options.sm-cart-options {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 4px;
+}
+.ec-cart-item__options.sm-cart-options > .ec-cart-item__option {
+  display: block !important;
+  float: none !important;
+  width: 100% !important;
+  min-width: 0;
+  margin: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere;
+  order: 4;
+}
+.ec-cart-item__options.sm-cart-options > [data-sm-cart-order="0"] { order: 0; }
+.ec-cart-item__options.sm-cart-options > [data-sm-cart-order="1"] { order: 1; }
+.ec-cart-item__options.sm-cart-options > [data-sm-cart-order="2"] { order: 2; }
+.ec-cart-item__options.sm-cart-options > [data-sm-cart-order="3"] { order: 3; }
+.ec-cart-item__options.sm-cart-options .ec-cart-option--key,
+.ec-cart-item__options.sm-cart-options .ec-cart-option--value {
+  display: inline !important;
+  float: none !important;
+  white-space: normal !important;
+}
+
 /* Product loading placeholder; visibility and fallback start in the inline head. */
 html.sm-product-pending #tile-product-details .product-details__sidebar{position:relative;min-height:680px}
 html.sm-product-pending #tile-product-details .product-details__sidebar::before{content:"";position:absolute;top:0;left:0;right:0;height:620px;pointer-events:none;background:linear-gradient(#eceeec,#eceeec) 0 12px/88% 22px no-repeat,linear-gradient(#eceeec,#eceeec) 0 46px/72% 22px no-repeat,linear-gradient(#f2f3f1,#f2f3f1) 0 91px/38% 20px no-repeat,linear-gradient(#f2f3f1,#f2f3f1) 0 143px/100% 48px no-repeat,linear-gradient(#f5f6f4,#f5f6f4) 0 224px/100% 350px no-repeat}

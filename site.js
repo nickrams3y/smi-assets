@@ -1249,3 +1249,16 @@ SMI_DOM_RUNNER.add(function(){
 document.addEventListener('mousedown',function(event){
  if(event.button===0&&event.target.closest('#smi-home-support .smi-results a'))event.preventDefault();
 });
+
+/* Keep cart summaries consistent without moving Ecwid's managed option nodes. */
+SMI_DOM_RUNNER.add(function(){
+ document.querySelectorAll('.ec-cart-item__options').forEach(function(options){
+  options.classList.add('sm-cart-options');
+  options.querySelectorAll(':scope > .ec-cart-item__option').forEach(function(row){
+   var key=row.querySelector('.ec-cart-option--key');
+   var label=key?key.textContent.replace(/:\s*$/, '').replace(/\s+/g,' ').trim().toLowerCase():'';
+   var order=/^(vehicle|truck) model$/.test(label)?0:/^(model|vehicle) year$/.test(label)?1:label==='vin'?2:/^(choose your )?display( type)?$/.test(label)?3:4;
+   if(row.dataset.smCartOrder!==String(order))row.dataset.smCartOrder=String(order);
+  });
+ });
+});
