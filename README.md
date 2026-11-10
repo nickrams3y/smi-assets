@@ -82,7 +82,7 @@ Contact-handoff validation intercepts the real `https://vuega.ecwid.com/contact-
 
 ## Contact page design
 
-The contact enhancement source is `troubleshoot/contact.js`, bundled near the start of `site.js` so `/contact-us` no longer waits for a second script download. Keep that bundled copy synchronized with the source. `site.css` targets both native Ecwid contact markup (form ZNGYK5) and the enhanced markup, so the card, columns, and fields are styled before JavaScript decoration. The script includes the same CSS as a fallback. It restyles Ecwid's existing form, preserves its controls, validation, honeypot, privacy text, and submit handler, and keeps the optional troubleshooting handoff. Desktop uses an introduction/sidebar beside the form; mobile stacks the fields. The upload mockup was not implemented: a note tells customers they can attach photos or military-discount proof when replying to our email. There is no upload input or new delivery service.
+The contact enhancement source is `troubleshoot/contact.js`, bundled near the start of `site.js` so `/contact-us` no longer waits for a second script download. Keep that bundled copy synchronized with the source. `site.css` targets both native Ecwid contact markup (form ZNGYK5) and the enhanced markup, so the card, columns, and fields are styled before JavaScript decoration. Contact styling has a single source in `site.css`; the duplicate JavaScript-injected copy was removed during the November 10 cleanup. It restyles Ecwid's existing form, preserves its controls, validation, honeypot, privacy text, and submit handler, and keeps the optional troubleshooting handoff. Desktop uses an introduction/sidebar beside the form; mobile stacks the fields. The upload mockup was not implemented: a note tells customers they can attach photos or military-discount proof when replying to our email. There is no upload input or new delivery service.
 
 If the enhancement cannot load, Ecwid's original form remains available. Missing or expired troubleshooting tokens still show handoff-specific guidance. The submit button's inherited contrast filter is explicitly disabled to retain readable white text. Verification is in `work/2026-10-19-contact-redesign` in the parent workspace; test submissions were intercepted before delivery.
 
@@ -147,3 +147,14 @@ Catalog titles, approved descriptions, Ecwid image references and hub prerequisi
 The shared script handles presentation and reads current USD prices from the matching SKU's public Ecwid Product JSON-LD only after a finder is submitted. Requests have bounded concurrency/timeouts, one network retry and a short in-memory cache. Failed price requests display “View current price”; the product link remains usable. No private API token is exposed. Styling is scoped to the existing finder containers.
 
 Validation and Ecwid field backups are in `../work/2026-10-29-checker-rollout`: 2,700 before/after routing comparisons, 80 desktop/tablet/mobile states, and all 19 approved descriptions with fresh-price, retry, fallback and cache checks. Publish the CSS/JS pair together and verify Ecwid's saved catalog data and both asset references independently of the GitHub deployment.
+
+
+## Audit follow-up cleanup (November 10, 2026)
+
+The early head link is the only shared `site.css` loader. The duplicate Instant Site CSS import was removed; its unrelated custom overrides remain in Ecwid. Do not reintroduce a second import.
+
+Product section boundaries now use named fields rather than option counts, including the ACM and amplifier. Both retain their native fields and validation: evidence uploads stay in Vehicle Details and warranty begins Optional Upgrades. Run `node tests/product-options.cjs` for the 17 observed layouts, additional-field cases, ACM/amplifier boundaries, and observer isolation. No product copy, prices, choices, or recommendation rules changed.
+
+Contact CSS lives only in the shared stylesheet. `troubleshoot/contact.js` and the bundled contact enhancer remain synchronized. Superseded SimplyCare/contact declarations were removed without changing the computed desktop/mobile presentation. Keep compatibility fallbacks when pruning CSS.
+
+The two largest instruction PDFs were optimized by recompressing embedded JPEG photos at their original dimensions. Text, page content streams, links, page count, and layout are unchanged. The public `files.simplymichigan.co` files and repository fallback copies are kept in sync. Original PDFs and validation evidence are in `../work/2026-11-10-site-cleanup`.

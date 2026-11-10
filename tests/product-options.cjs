@@ -3,8 +3,8 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
 const source=fs.readFileSync(path.join(__dirname,'../site.js'),'utf8');
 const fixtures=require('./product-option-fixtures.json');
-const start=source.indexOf('let c=4,p=["Vehicle Details","Optional Upgrades"];');
-const end=source.indexOf(',i.querySelectorAll(".sm-po-section-heading',start);
+const start=source.indexOf('let profile=s.includes("sync-3-usb-hub")');
+const end=source.indexOf('i.querySelectorAll(".sm-po-section-heading',start);
 assert(start>=0&&end>start,'Section boundary code must be present');
 function boundary(path,labels){
  const a=s=>(s||'').replace(/\s+/g,' ').trim().toLowerCase();
@@ -21,6 +21,13 @@ const fiesta='/products/ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fie
 assert.equal(boundary(fiesta,['APIM','VIN','Extended Warranty Coverage','4" to 8" Conversion Programming','Choose Your Connectivity Upgrade']),2);
 assert.equal(boundary(fiesta,['APIM','Model Year','VIN','Extended Warranty Coverage']),3);
 assert.equal(boundary(fiesta,['APIM','VIN']),2);
+// Inserting a required field or removing an optional field must not shift the boundary.
+for(const f of fixtures){
+ const labels=['Additional vehicle detail',...f.labels];
+ assert.equal(boundary(f.path,labels),boundary(f.path,f.labels)+1,f.path+' added field');
+}
+assert.equal(boundary('/products/amplifier-replacement',['VIN','Model','Model Year','Describe the issues','Upload VIN photo (optional)','Upload amplifier label (optional)','Extended Warranty Coverage']),6);
+assert.equal(boundary('/products/audio-control-module-acm-receiver',['VIN','Model','Extended Warranty Coverage']),2);
 // Register this enhancer without ever replacing the browser's global observer.
 const begin=source.indexOf('(()=>{const e=document,t=t=>e.createElement(t),o=/(apim-');
 const finish=source.indexOf('/* Keep the complimentary Sync 3.4 USB drive',begin);

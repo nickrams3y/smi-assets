@@ -59,7 +59,7 @@
     "labels": [
       "VIN",
       "Model Year",
-      "Is your vehicle a 2015-2017 F-250/F-350 with the * and # buttons next to your 4\" display?",
+      "Is your vehicle a 2017–2019 F-250/F-350 with the * and # buttons next to your 4\" display?",
       "Would you like factory navigation?",
       "An ELM327 cable (or similar) and FORScan is needed for this install, will this be a problem?",
       "Upload a clear photo of your current infotainment system and HVAC bezel. The screen and all surrounding trim pieces must be fully visible.",
@@ -210,6 +210,18 @@
       "Describe the issues you're having with your vehicle",
       "Upload a picture of the VIN to avoid possible delays due to typos (optional)",
       "Upload a picture of the label on the bottom of your ACM (optional)",
+      "Extended Warranty Coverage"
+    ]
+  },
+  {
+    "path": "/products/amplifier-replacement",
+    "labels": [
+      "VIN",
+      "Model",
+      "Model Year",
+      "Describe the issues you're having with your vehicle",
+      "Upload a picture of the VIN to avoid possible delays due to typos (optional)",
+      "Upload a picture of the label on the bottom of your amplifier (optional)",
       "Extended Warranty Coverage"
     ]
   }
