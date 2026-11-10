@@ -590,7 +590,8 @@ function home(){
  function has12(k,v){return b.value==="Ford"&&((k==="F-150"&&v>=2015&&v<=2020)||((k==="F-250"||k==="F-350")&&v>=2017&&v<=2022))}
  function actions(a){return finderCards(a,true)}
  function show(t,p,a,n){r.className="sm-home-fit__result"+(n?" sm-home-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-home-fit__result--eligible":"");r.innerHTML="<h3>"+t+"</h3><p>"+p+"</p>"+(a?actions(a):"")+finderOther(a,s.value,true);r.hidden=false;finderHydrate(r)}
- b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);system();
+ // Honor a Make selection made before the delayed enhancer attached its listeners.
+ b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);if(b.value&&!m.value)models();else system();
  f.addEventListener("submit",function(e){e.preventDefault();var k=m.value,a=base(),v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a make, model, year and current system.",0,1);return}
   if(z==="4"&&liteReplacement(b.value,k,v,show))return;
   if(z==="4"){
@@ -622,7 +623,8 @@ function init(){
  function years(){var k=key(),a=k&&V[b.value][k],end=a&&(isApim?a[1]:Math.max(a[1],conversionYearMax(b.value,k)));y.innerHTML='<option value="">Select model year</option>';y.disabled=!a;if(a)for(var i=a[0];i<=end;i++){var o=document.createElement("option");o.value=o.textContent=i;y.appendChild(o)}system()}
  function buttons(a){return finderCards(a,false)}
  function show(t,p,a,n){r.className="sm-fit__result"+(n?" sm-fit__result--notice":"")+(t==="Your vehicle is eligible"||/^We have a complete kit for your /.test(t)?" sm-fit__result--eligible":"");r.innerHTML="<h4>"+t+"</h4><p>"+p+"</p>"+(a?buttons(a):"")+finderOther(a,s.value,false);r.hidden=false;finderHydrate(r)}
- b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);system();
+ // Honor a Make selection made before the delayed enhancer attached its listeners.
+ b.addEventListener("change",models);m.addEventListener("change",years);y.addEventListener("change",system);if(b.value&&!m.value)models();else system();
  f.addEventListener("submit",function(e){e.preventDefault();var k=key(),a=k&&V[b.value][k],v=+y.value,z=s.value;if(!b.value||!k||!a||!v||!z){show("Please complete all four fields","Select a make, model, year and current system.",0,1);return}
  if(z==="4"&&liteReplacement(b.value,k,v,show))return;
  if(isApim){
