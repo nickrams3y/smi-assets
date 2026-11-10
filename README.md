@@ -8,13 +8,14 @@ The live site uses `site.js`, `site.css`, and the small synchronous `product-loa
 
 The November 10 audit found both a head stylesheet link (`site.css?v=8a586e1`) and an Instant Site custom-CSS import (`site.css?v=eb6e7e4`). Consolidating them is a separate task: preserve the custom overrides and inspect unpublished builder drafts first. Do not remove the early head stylesheet. The bootstrap remains `product-loading.js?v=2`.
 
-The audit fixes register product options directly with `SMI_DOM_RUNNER`, without replacing the browser's `MutationObserver`; locate Fiesta/Transit optional fields by their labels; and recognize the ACM's `Model` and software service's `Vehicle Model Year` labels in cart ordering. Native option nodes, values, and recommendation rules remain intact.
+The audit fixes register product options directly with `SMI_DOM_RUNNER`, without replacing the browser's `MutationObserver`; locate Fiesta/Transit optional fields by their labels; and recognize the ACM's `Model` and software service's `Vehicle Model Year` labels in cart ordering. Finder startup also honors a Make selection made before its listeners attach, preventing Model from staying disabled. Native option nodes, values, and recommendation rules remain intact.
 
 Before publishing product form changes, run:
 
 ```sh
 node tests/product-options.cjs
 node tests/cart-options.cjs
+node tests/finder-startup.cjs
 node support/tests/catalog.cjs
 node support/tests/search.cjs
 node troubleshoot/tests/routing.cjs
