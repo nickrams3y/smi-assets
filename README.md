@@ -6,7 +6,7 @@ Small browser-side assets used by the Simply Michigan Infotainment Ecwid storefr
 
 The live site uses `site.js`, `site.css`, and the small synchronous `product-loading.js` head bootstrap. Query parameters are cache keys, not immutable versions: publishing a file changes the underlying URL for every key. Back up and read back the complete Ecwid head/body fields for each release. Preserve the body finder catalog JSON, tracking tags, and merchant widget.
 
-The November 10 audit found both a head stylesheet link (`site.css?v=8a586e1`) and an Instant Site custom-CSS import (`site.css?v=eb6e7e4`). Consolidating them is a separate task: preserve the custom overrides and inspect unpublished builder drafts first. Do not remove the early head stylesheet. The bootstrap remains `product-loading.js?v=2`.
+The approved November 10 cleanup removed the duplicate Instant Site CSS import while preserving its unrelated overrides. The only shared stylesheet is the early head link. Active CSS and JS cache references are `8f137c3-1`; the bootstrap remains `product-loading.js?v=2`. Saved fields and deployed asset contents were verified separately. See `../work/2026-11-10-site-cleanup/cleanup-report.html` for verification and remaining Safari scope.
 
 The audit fixes register product options directly with `SMI_DOM_RUNNER`, without replacing the browser's `MutationObserver`; locate Fiesta/Transit optional fields by their labels; and recognize the ACM's `Model` and software service's `Vehicle Model Year` labels in cart ordering. Finder startup also honors a Make selection made before its listeners attach, preventing Model from staying disabled. Native option nodes, values, and recommendation rules remain intact.
 
