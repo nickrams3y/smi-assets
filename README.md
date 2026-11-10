@@ -2,13 +2,26 @@
 
 Small browser-side assets used by the Simply Michigan Infotainment Ecwid storefront.
 
-Ecwid loads the complete production bundle from:
+## Release and audit notes (2026-11-10)
 
-`https://nickrams3y.github.io/smi-assets/site.js?v=0306e05`
+The live site uses `site.js`, `site.css`, and the small synchronous `product-loading.js` head bootstrap. Query parameters are cache keys, not immutable versions: publishing a file changes the underlying URL for every key. Back up and read back the complete Ecwid head/body fields for each release. Preserve the body finder catalog JSON, tracking tags, and merchant widget.
 
-Ecwid loads the complete production stylesheet from:
+The November 10 audit found both a head stylesheet link (`site.css?v=8a586e1`) and an Instant Site custom-CSS import (`site.css?v=eb6e7e4`). Consolidating them is a separate task: preserve the custom overrides and inspect unpublished builder drafts first. Do not remove the early head stylesheet. The bootstrap remains `product-loading.js?v=2`.
 
-`https://nickrams3y.github.io/smi-assets/site.css?v=2719ee4` (header link; the custom CSS theme also imports `site.css?v=eb6e7e4`)
+The audit fixes register product options directly with `SMI_DOM_RUNNER`, without replacing the browser's `MutationObserver`; locate Fiesta/Transit optional fields by their labels; and recognize the ACM's `Model` and software service's `Vehicle Model Year` labels in cart ordering. Native option nodes, values, and recommendation rules remain intact.
+
+Before publishing product form changes, run:
+
+```sh
+node tests/product-options.cjs
+node tests/cart-options.cjs
+node support/tests/catalog.cjs
+node support/tests/search.cjs
+node troubleshoot/tests/routing.cjs
+node --check site.js
+```
+
+Product fixtures were captured from all 16 enhanced public product forms. Verify desktop and mobile behavior after deployment and after updating the Ecwid loader. A passing code test or successful GitHub deployment alone does not prove that the public storefront is using the release.
 
 ## Compatibility checker
 
@@ -24,7 +37,7 @@ The `L` table in `site.js` lists the published U.S. factory 4-inch SYNC 3 Lite r
 
 `site.js` is the production bundle. It contains the product-option enhancements and the compatibility checker, allowing Ecwid to use one short external loader instead of storing the application code in its limited editor.
 
-`site.css` contains the corresponding product-option and compatibility-checker styles. Ecwid loads it through a single `@import` line in the active custom CSS theme.
+`site.css` contains the corresponding product-option and compatibility-checker styles. See the release notes above for the audited live loading configuration.
 
 The four optimized images in `images/system-selector/` power the visual current-system choices used by both compatibility checkers.
 
