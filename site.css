@@ -3520,7 +3520,7 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   border-top:0;
   border-radius:0 0 10px 10px;
 }
-.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p:has(> br:only-child) + p > strong:only-child) {
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p + p > strong:only-child) {
   margin:12px 0 0!important;
   font-size:13px!important;
   line-height:1.5!important;
