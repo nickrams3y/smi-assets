@@ -3494,6 +3494,38 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 .sm-contact-shortcuts a{display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;min-height:60px;margin:0;padding:10px 9px;border:1px solid #dedfda;border-radius:9px;background:#fff;text-decoration:none!important;line-height:1.4}
 }
 
+/* Native contact phone-support notice: retain Ecwid copy and group its title/body. */
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child),
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) + p {
+  box-sizing:border-box;
+  background:#f0f1ee;
+  border:1px solid #dedfda;
+  text-align:left!important;
+  color:#484e48!important;
+  font-size:14px!important;
+  line-height:1.65!important;
+}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) {
+  margin:24px 0 0!important;
+  padding:18px 18px 8px;
+  border-bottom:0;
+  border-radius:10px 10px 0 0;
+  color:#252728!important;
+  font-size:15px!important;
+  line-height:1.4!important;
+}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) + p {
+  margin:0!important;
+  padding:0 18px 18px;
+  border-top:0;
+  border-radius:0 0 10px 10px;
+}
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p:has(> br:only-child) + p > strong:only-child) {
+  margin:12px 0 0!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+}
+
 /* Keep a real gap before Pay, independent of the note's injected margin. */
 .ec-cart-step--payment .ec-cart-step__section:has(> #sm-checkout-review-note) {
   padding-bottom: 20px !important;
