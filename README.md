@@ -28,6 +28,8 @@ Product fixtures were captured from all 16 enhanced public product forms. Verify
 
 The shared finder implementation in `site.js` powers the homepage, upgrade guide, Sync 2 to Sync 3 upgrades landing page, and APIM replacements landing page. `sync-3-compatibility-checker.js` and `c.js` are legacy snapshots, not the script used by these live finders. When a shopper follows a recommended product link, the current browser tab temporarily retains the vehicle selections so matching product fields can be prefilled.
 
+The 2016 Lincoln MKX can have Sync 2 or Sync 3. Its Sync 2 conversion eligibility extends through 2016; the shopper’s current-system choice determines complete conversion kits versus Sync 3 replacement hardware. Recessed display guidance is retained. Do not classify every 2016 MKX as already having Sync 3.
+
 All finders use the same selectable model/year catalog, built from replacement hardware ranges (`A`) plus Lite applications (`L`). The older Sync 2 conversion ranges (`D`) must not limit which years a replacement customer can select. System selection controls the recommendation; a listed year alone does not establish compatibility. Models without existing display guidance get a display-fitment contact link rather than an assumed screen.
 
 The 2019–2023 Ford Ranger with the factory 4-inch Base Sync system offers both the Sync 3 Lite APIM replacement and the Ranger 4-inch-to-8-inch complete conversion kit in all finders. The conversion link does not appear for existing 8-inch systems or uncertain system selections.
