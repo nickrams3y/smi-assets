@@ -3531,6 +3531,28 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 .section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) + p {margin-top:-8px!important}
 }
 
+/* Desktop quick answers sit above the form; mobile retains the native link grid. */
+.sm-contact-resources{display:none}
+@media(min-width:761px){
+ .section__content:has(#contact-us-ZNGYK5-message):has(a[href="https://simplymichigan.co/upgrade_guide"]) > .section__grid > .order-2{
+  position:relative;padding-top:184px!important;
+ }
+ .sm-contact-resources{
+  position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;
+ }
+ .sm-contact-resources h2{grid-column:1/-1;margin:0 0 4px!important;font-size:16px!important;line-height:22px!important;font-weight:600!important;color:#252728!important}
+ .sm-contact-resources a{
+  box-sizing:border-box;display:flex;align-items:center;justify-content:center;min-height:60px;padding:12px 16px;
+  border:1px solid #dedfda;border-radius:9px;background:#fff;color:#252728!important;
+  font-size:13px!important;line-height:1.4!important;font-weight:600;text-align:center;text-decoration:none!important;
+  transition:background-color .15s,border-color .15s;
+ }
+ .sm-contact-resources a:hover{background:#f0f1ee;border-color:#aeb5ac}
+ .sm-contact-resources a:focus-visible{outline:2px solid #777f79;outline-offset:3px}
+ .section__grid:has(> .order-2 > .sm-contact-resources) > .order-1 .sm-contact-description p:has(>a),
+ .section__grid:has(> .order-2 > .sm-contact-resources) > .order-1 .sm-contact-description p:has(+p+p>a):not(:has(a)) {display:none!important}
+}
+
 /* Keep a real gap before Pay, independent of the note's injected margin. */
 .ec-cart-step--payment .ec-cart-step__section:has(> #sm-checkout-review-note) {
   padding-bottom: 20px !important;

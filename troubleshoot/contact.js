@@ -23,6 +23,15 @@ function decorate(form,native){
  if(!description?.querySelector('a[href="https://simplymichigan.co/upgrade_guide"]')){
  const help=document.createElement('div');help.className='sm-contact-help';help.innerHTML='<p class="sm-contact-response">We typically reply within 24 hours.</p><div class="sm-contact-shortcuts"><p>Looking for a quick answer?</p><a href="https://simplymichigan.co/upgrade_guide">Upgrade guide <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/install">Installation instructions <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/support">Visit our support center <span aria-hidden="true">↗</span></a></div>';intro.append(help);
  }
+ // Desktop resources mirror the Ecwid-authored links; mobile keeps the native order.
+ const resourceLinks=description?Array.from(description.querySelectorAll('p > a')):[];
+ const resourceHeading=description?Array.from(description.querySelectorAll('p')).find(p=>p.textContent.trim()==='Looking for a quick answer?'):null;
+ if(resourceHeading&&resourceLinks.length===4){
+  const resources=document.createElement('nav');resources.className='sm-contact-resources';resources.setAttribute('aria-label','Quick answers');
+  const resourceTitle=document.createElement('h2');resourceTitle.textContent=resourceHeading.textContent;resources.append(resourceTitle);
+  resourceLinks.forEach(link=>resources.append(link.cloneNode(true)));
+  form.before(resources);
+ }
  const title=document.createElement('div');title.className='sm-contact-form-heading';title.innerHTML='<h2>Send us a message</h2><span>* Required</span>';form.prepend(title);
  // Copy and placeholders live in Ecwid, so the first render matches the enhanced form.
  ['name','email','additionalNote','message'].forEach(suffix=>{const input=form.querySelector('[id$="-'+suffix+'"]');if(!input)return;const field=input.parentElement;field.dataset.smContactField=suffix;if(input.required)field.dataset.smContactRequired='true';});
