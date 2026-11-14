@@ -3526,6 +3526,11 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   line-height:1.5!important;
 }
 
+/* Offset the native mobile quick-answer grid gap within this single notice. */
+@media(max-width:760px){
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) + p {margin-top:-8px!important}
+}
+
 /* Keep a real gap before Pay, independent of the note's injected margin. */
 .ec-cart-step--payment .ec-cart-step__section:has(> #sm-checkout-review-note) {
   padding-bottom: 20px !important;
