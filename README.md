@@ -164,3 +164,9 @@ The two largest instruction PDFs were optimized by recompressing embedded JPEG p
 ## Product coupon notices
 
 The price coupon box reads code-first announcements (`Use code HELLOFALL for 10% off`) and savings-first announcements (`Save 14% on most items with code BF26`, including a separate `Use code BF26` sentence). Both forms retain the Copy button. The 12-inch F-150/Super Duty upgrade page has the explicit Black Friday override `BF26-12` at 5%; remove or update that override when the promotion ends. These notices display offers only; coupon validity and product restrictions remain in Ecwid. Run `node tests/price-promo.cjs` for announcement-format regression checks.
+
+### Black Friday ticket style and gray-style restoration
+
+`PRICE_PROMO_THEME="black-friday"` in `site.js` enables the approved coupon-ticket design only for `BF26` and `BF26-12`. Both display `Ends 11/30`; no automatic expiry or coupon setting is changed. Other codes retain the original gray style. Set `PRICE_PROMO_THEME="gray"` and publish/bump the JavaScript cache reference to restore the gray boxes for both offers. The original gray markup and inline styles remain in `pricePromo()` and the original gray CSS remains in `site.css`; the ticket CSS is separately scoped. This switch changes presentation only. Remove/update expired offers separately when the sale ends.
+
+The exact pre-ticket asset copies are saved in the parent workspace under `work/2026-11-15-black-friday-ticket/original-gray/` (Git baseline `5ba6bdf`). Desktop and mobile display, actual clipboard values, and the gray-style switch are checked with that work folder's `check.cjs`, using staged, `--gray`, or `--live` modes.

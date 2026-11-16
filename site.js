@@ -463,19 +463,33 @@ function bannerPromo(text){
  var savingsFirst=text.match(/save\s+(\d+(?:\.\d+)?%)[^%]*?\b(?:with|use)\s+code\s+([a-z0-9_-]+)/i);
  return savingsFirst?{code:savingsFirst[2].toUpperCase(),amount:savingsFirst[1]}:null;
 }
+// Switch to "gray" after the sale; the original gray markup and styles remain below.
+var PRICE_PROMO_THEME="black-friday";
+function pricePromoTheme(code){return PRICE_PROMO_THEME==="black-friday"&&/^(BF26|BF26-12)$/.test(code)?"ticket":"gray"}
 function pricePromo(){
  var box=document.querySelector(".product-details__product-price-row .product-details-module__content");if(!box)return;
  var existing=box.querySelector(".sm-price-promo"),isTwelve=/\/products\/ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit\/?$/.test(location.pathname);
  var offer=isTwelve?{code:"BF26-12",amount:"5%"}:null;
  if(!offer)[].some.call(document.querySelectorAll(".ins-tile__text"),function(x){offer=bannerPromo(x.textContent);return !!offer});
  if(!offer){if(existing)existing.remove();return}
- var code=offer.code,amount=offer.amount,promo=existing;
- if(!promo){promo=document.createElement("div");box.appendChild(promo)}promo.className="sm-price-promo";promo.setAttribute("role","note");if(!promo.querySelector(".sm-price-promo__copy"))promo.innerHTML='<span class="sm-price-promo__text"></span><button class="sm-price-promo__copy" type="button">Copy</button><span class="sm-price-promo__status" role="status" aria-live="polite"></span>';
+ var code=offer.code,amount=offer.amount,promo=existing,theme=pricePromoTheme(code);
+ if(!promo){promo=document.createElement("div");box.appendChild(promo)}promo.className="sm-price-promo"+(theme==="ticket"?" sm-price-promo--ticket":"");promo.setAttribute("role","note");
+ if(promo.dataset.theme!==theme){
+  promo.innerHTML=theme==="ticket"?'<span class="sm-price-ticket__discount"><span class="sm-price-ticket__off">EXTRA</span><span class="sm-price-ticket__amount"></span><span class="sm-price-ticket__off">OFF</span></span><span class="sm-price-ticket__details"><span class="sm-price-ticket__label">BLACK FRIDAY</span><span class="sm-price-ticket__code-row"><span class="sm-price-ticket__code"></span><button class="sm-price-promo__copy" type="button">Copy</button></span><span class="sm-price-ticket__end">Ends 11/30</span></span><span class="sm-price-promo__status" role="status" aria-live="polite"></span>':'<span class="sm-price-promo__text"></span><button class="sm-price-promo__copy" type="button">Copy</button><span class="sm-price-promo__status" role="status" aria-live="polite"></span>';
+  promo.dataset.theme=theme;delete promo.dataset.code;delete promo.dataset.amount;
+ }
  var set=function(el,rules){if(!el)return;Object.keys(rules).forEach(function(k){el.style.setProperty(k,rules[k],"important")})},sale=box.querySelector(".product-details__product-on-sale"),label=box.querySelector(".product-details__label-container"),compare=box.querySelector(".details-product-price-compare__container"),paypal=box.querySelector(".ec-paypal-pay-later-message"),copy=promo.querySelector(".sm-price-promo__copy"),status=promo.querySelector(".sm-price-promo__status");
  box.querySelectorAll(".product-details__product-price-discount,.details-product-price-discount__text,.details-product-price-discount__value").forEach(function(x){x.remove()});
  set(box,{display:"grid","grid-template-columns":"max-content max-content minmax(0, 1fr)","grid-template-areas":'"price sale-label comparison" "promotion promotion promotion" "paypal paypal paypal"',"align-items":"center","column-gap":"9px","row-gap":"8px"});box.dataset.smPricePromoLayout="1";set(box.querySelector(".product-details__product-price"),{"grid-area":"price"});set(sale,{display:"contents"});set(label,{"grid-area":"sale-label","justify-self":"start"});set(compare,{"grid-area":"comparison",margin:"0"});set(paypal,{"grid-area":"paypal",width:"100%","max-width":"none",margin:"0","justify-self":"stretch"});
  set(promo,{"grid-area":"promotion",display:"flex",width:"100%","max-width":"100%","box-sizing":"border-box","align-items":"center","justify-content":"space-between",gap:"8px","justify-self":"stretch",margin:"0",padding:"7px 9px 7px 12px",color:"#222",background:"#f3f4f6",border:"1px solid #d7d9dd","border-radius":"10px","font-size":"13px","font-weight":"700","line-height":"1.25"});set(promo.querySelector(".sm-price-promo__text"),{"white-space":"normal","min-width":"0"});set(copy,{appearance:"none",flex:"0 0 auto","min-height":"28px",padding:"4px 9px",color:"#222",background:"#fff",border:"1px solid #b9bdc4","border-radius":"7px",font:"inherit","font-size":"12px","line-height":"1.2"});set(status,{position:"absolute",width:"1px",height:"1px",padding:"0",margin:"-1px",overflow:"hidden",clip:"rect(0, 0, 0, 0)","white-space":"nowrap",border:"0"});
- if(promo.dataset.code===code&&promo.dataset.amount===amount)return;promo.dataset.code=code;promo.dataset.amount=amount;promo.querySelector(".sm-price-promo__text").textContent="Extra "+amount+" off with code "+code;promo.querySelector(".sm-price-promo__copy").textContent="Copy";promo.querySelector(".sm-price-promo__status").textContent=""
+ if(theme==="ticket"){
+  set(promo,{display:"grid","grid-template-columns":"minmax(72px, 27%) minmax(0, 1fr)","align-items":"stretch",gap:"0",padding:"0",background:"#222526",color:"#fff",border:"1px solid #393d3e",overflow:"hidden"});
+  set(copy,{"min-height":"36px",padding:"9px 12px",border:"1px solid #fff","border-radius":"6px",color:"#222526"});
+ }
+ if(promo.dataset.code===code&&promo.dataset.amount===amount)return;promo.dataset.code=code;promo.dataset.amount=amount;
+ if(theme==="ticket"){promo.querySelector(".sm-price-ticket__amount").textContent=amount;promo.querySelector(".sm-price-ticket__code").textContent=code}else promo.querySelector(".sm-price-promo__text").textContent="Extra "+amount+" off with code "+code;
+ copy.setAttribute("aria-label","Copy coupon code "+code);copy.textContent="Copy";status.textContent=""
+
 }
 function lazyEmbeds(){
  document.querySelectorAll('iframe[src*="youtube.com/embed"],iframe[src*="youtube-nocookie.com/embed"]').forEach(function(frame){

@@ -14,3 +14,9 @@ for(const text of ['No current offer','Save 14%','Use code BF26','Save 10% today
  if(text.includes('NEW')){assert.equal(actual.amount,'20%');assert.equal(actual.code,'NEW')}else assert.equal(actual,null);
 }
 console.log('Coupon announcement format regressions passed.');
+
+const themeSource=source.slice(source.indexOf('var PRICE_PROMO_THEME='),source.indexOf('function pricePromo(){'));
+vm.runInContext(themeSource,context);
+assert.equal(context.pricePromoTheme('BF26'),'ticket');assert.equal(context.pricePromoTheme('BF26-12'),'ticket');assert.equal(context.pricePromoTheme('HELLOFALL'),'gray');
+vm.runInContext('PRICE_PROMO_THEME="gray"',context);assert.equal(context.pricePromoTheme('BF26'),'gray');assert.equal(context.pricePromoTheme('BF26-12'),'gray');
+console.log('Black Friday offer scoping and gray-style switch passed.');
