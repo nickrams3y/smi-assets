@@ -20,3 +20,29 @@ vm.runInContext(themeSource,context);
 assert.equal(context.pricePromoTheme('BF26'),'ticket');assert.equal(context.pricePromoTheme('BF26-12'),'ticket');assert.equal(context.pricePromoTheme('HELLOFALL'),'gray');
 vm.runInContext('PRICE_PROMO_THEME="gray"',context);assert.equal(context.pricePromoTheme('BF26'),'gray');assert.equal(context.pricePromoTheme('BF26-12'),'gray');
 console.log('Black Friday offer scoping and gray-style switch passed.');
+
+vm.runInContext(themeSource,context);
+const end=Date.parse('2026-12-01T05:00:00Z');
+assert.equal(context.PRICE_PROMO_END,end);
+assert.equal(context.pricePromoRemaining(end-((2*86400+3*3600+4*60+5)*1000)),'Ends in 2d 03:04:05');
+assert.equal(context.pricePromoRemaining(Date.parse('2026-11-30T00:00:00-05:00')),'Ends in 1d 00:00:00');
+assert.equal(context.pricePromoRemaining(end-1000),'Ends in 0d 00:00:01');
+assert.equal(context.pricePromoRemaining(end-1),'Ends in 0d 00:00:01');
+assert.equal(context.pricePromoRemaining(end),'Sale ended');
+assert.equal(context.pricePromoRemaining(end+86400000),'Sale ended');
+console.log('Countdown Eastern deadline, day rollover, and expiry passed.');
+
+// One interval per page; text-only ticks must not trigger the DOM rebuild observer.
+let clockNow=end-2500, ticks=0, clears=0, mounted=true;
+const clockNode={firstChild:{nodeType:3,data:''}};
+context.Date={parse:Date.parse,now:()=>clockNow};
+context.document={querySelectorAll:()=>mounted?[clockNode]:[],querySelector:()=>mounted?clockNode:null};
+context.setInterval=()=>{ticks++;return ticks};context.clearInterval=()=>{clears++};
+context.startPricePromoClock();context.startPricePromoClock();
+assert.equal(ticks,1);assert.equal(clockNode.firstChild.data,'Ends in 0d 00:00:03');
+clockNow=end-1500;context.updatePricePromoClock();assert.equal(clockNode.firstChild.data,'Ends in 0d 00:00:02');
+mounted=false;context.updatePricePromoClock();assert.equal(clears,1);
+mounted=true;context.startPricePromoClock();assert.equal(ticks,2);
+clockNow=end;context.updatePricePromoClock();assert.equal(clockNode.firstChild.data,'Sale ended');assert.equal(clears,2);
+context.startPricePromoClock();assert.equal(ticks,2);
+console.log('Countdown single interval, text updates, navigation cleanup, and expiry passed.');

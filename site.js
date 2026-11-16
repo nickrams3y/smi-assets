@@ -469,6 +469,26 @@ function bannerPromo(text){
 // Switch to "gray" after the sale; the original gray markup and styles remain below.
 var PRICE_PROMO_THEME="black-friday";
 function pricePromoTheme(code){return PRICE_PROMO_THEME==="black-friday"&&/^(BF26|BF26-12)$/.test(code)?"ticket":"gray"}
+// Both offers end after November 30, 2026 in Michigan (Eastern Standard Time).
+var PRICE_PROMO_END=Date.parse("2026-12-01T00:00:00-05:00"),pricePromoClock=null;
+function pricePromoRemaining(now){
+ var seconds=Math.max(0,Math.ceil((PRICE_PROMO_END-now)/1000));
+ if(!seconds)return "Sale ended";
+ var days=Math.floor(seconds/86400),hours=Math.floor(seconds%86400/3600),minutes=Math.floor(seconds%3600/60),pad=function(n){return String(n).padStart(2,"0")};
+ return "Ends in "+days+"d "+pad(hours)+":"+pad(minutes)+":"+pad(seconds%60);
+}
+function updatePricePromoClock(){
+ var clocks=document.querySelectorAll(".sm-price-ticket__countdown"),now=Date.now(),text=pricePromoRemaining(now);
+ clocks.forEach(function(clock){
+  // Update a text node so ticking does not rerun the storefront DOM enhancements.
+  if(clock.firstChild&&clock.firstChild.nodeType===3){if(clock.firstChild.data!==text)clock.firstChild.data=text}else clock.textContent=text;
+ });
+ if((!clocks.length||now>=PRICE_PROMO_END)&&pricePromoClock!==null){clearInterval(pricePromoClock);pricePromoClock=null}
+}
+function startPricePromoClock(){
+ updatePricePromoClock();
+ if(pricePromoClock===null&&Date.now()<PRICE_PROMO_END&&document.querySelector(".sm-price-ticket__countdown"))pricePromoClock=setInterval(updatePricePromoClock,1000);
+}
 function pricePromo(){
  var box=document.querySelector(".product-details__product-price-row .product-details-module__content");if(!box)return;
  var existing=box.querySelector(".sm-price-promo"),isTwelve=/\/products\/ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit\/?$/.test(location.pathname);
@@ -478,7 +498,7 @@ function pricePromo(){
  var code=offer.code,amount=offer.amount,promo=existing,theme=pricePromoTheme(code);
  if(!promo){promo=document.createElement("div");box.appendChild(promo)}promo.className="sm-price-promo"+(theme==="ticket"?" sm-price-promo--ticket":"");promo.setAttribute("role","note");
  if(promo.dataset.theme!==theme){
-  promo.innerHTML=theme==="ticket"?'<span class="sm-price-ticket__discount"><span class="sm-price-ticket__off">EXTRA</span><span class="sm-price-ticket__amount"></span><span class="sm-price-ticket__off">OFF</span></span><span class="sm-price-ticket__details"><span class="sm-price-ticket__label">BLACK FRIDAY</span><span class="sm-price-ticket__code-row"><span class="sm-price-ticket__code"></span><button class="sm-price-promo__copy" type="button">Copy</button></span><span class="sm-price-ticket__end">Ends 11/30</span></span><span class="sm-price-promo__status" role="status" aria-live="polite"></span>':'<span class="sm-price-promo__text"></span><button class="sm-price-promo__copy" type="button">Copy</button><span class="sm-price-promo__status" role="status" aria-live="polite"></span>';
+  promo.innerHTML=theme==="ticket"?'<span class="sm-price-ticket__discount"><span class="sm-price-ticket__off">EXTRA</span><span class="sm-price-ticket__amount"></span><span class="sm-price-ticket__off">OFF</span></span><span class="sm-price-ticket__details"><span class="sm-price-ticket__label">Black Friday Sale</span><span class="sm-price-ticket__code-row"><span class="sm-price-ticket__code"></span><button class="sm-price-promo__copy" type="button">Copy</button></span><span class="sm-price-ticket__end" title="Ends November 30, 2026 at 11:59 PM Eastern time"><svg class="sm-price-ticket__clock" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l3 2M9 2h6M12 2v3M18 6l2-2"></path></svg><span class="sm-price-ticket__countdown" role="timer" aria-live="off">Ends 11/30</span></span></span><span class="sm-price-promo__status" role="status" aria-live="polite"></span>':'<span class="sm-price-promo__text"></span><button class="sm-price-promo__copy" type="button">Copy</button><span class="sm-price-promo__status" role="status" aria-live="polite"></span>';
   promo.dataset.theme=theme;delete promo.dataset.code;delete promo.dataset.amount;
  }
  var set=function(el,rules){if(!el)return;Object.keys(rules).forEach(function(k){el.style.setProperty(k,rules[k],"important")})},sale=box.querySelector(".product-details__product-on-sale"),label=box.querySelector(".product-details__label-container"),compare=box.querySelector(".details-product-price-compare__container"),paypal=box.querySelector(".ec-paypal-pay-later-message"),copy=promo.querySelector(".sm-price-promo__copy"),status=promo.querySelector(".sm-price-promo__status");
@@ -489,6 +509,7 @@ function pricePromo(){
   set(promo,{display:"grid","grid-template-columns":"minmax(72px, 27%) minmax(0, 1fr)","align-items":"stretch",gap:"0",padding:"0",background:"#222526",color:"#fff",border:"1px solid #393d3e",overflow:"hidden"});
   set(copy,{"min-height":"36px",padding:"9px 12px",border:"1px solid #fff","border-radius":"6px",color:"#222526"});
  }
+ if(theme==="ticket")startPricePromoClock();
  if(promo.dataset.code===code&&promo.dataset.amount===amount)return;promo.dataset.code=code;promo.dataset.amount=amount;
  if(theme==="ticket"){promo.querySelector(".sm-price-ticket__amount").textContent=amount;promo.querySelector(".sm-price-ticket__code").textContent=code}else promo.querySelector(".sm-price-promo__text").textContent="Extra "+amount+" off with code "+code;
  copy.setAttribute("aria-label","Copy coupon code "+code);copy.textContent="Copy";status.textContent=""
