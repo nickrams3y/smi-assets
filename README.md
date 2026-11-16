@@ -160,3 +160,7 @@ Product section boundaries now use named fields rather than option counts, inclu
 Contact CSS lives only in the shared stylesheet. `troubleshoot/contact.js` and the bundled contact enhancer remain synchronized. Superseded SimplyCare/contact declarations were removed without changing the computed desktop/mobile presentation. Keep compatibility fallbacks when pruning CSS.
 
 The two largest instruction PDFs were optimized by recompressing embedded JPEG photos at their original dimensions. Text, page content streams, links, page count, and layout are unchanged. The public `files.simplymichigan.co` files and repository fallback copies are kept in sync. Original PDFs and validation evidence are in `../work/2026-11-10-site-cleanup`.
+
+## Product coupon notices
+
+The price coupon box reads code-first announcements (`Use code HELLOFALL for 10% off`) and savings-first announcements (`Save 14% on most items with code BF26`, including a separate `Use code BF26` sentence). Both forms retain the Copy button. The 12-inch F-150/Super Duty upgrade page has the explicit Black Friday override `BF26-12` at 5%; remove or update that override when the promotion ends. These notices display offers only; coupon validity and product restrictions remain in Ecwid. Run `node tests/price-promo.cjs` for announcement-format regression checks.

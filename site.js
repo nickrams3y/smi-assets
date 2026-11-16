@@ -456,12 +456,20 @@ function fitmentAlert(){
  document.addEventListener("click",function(e){var b=e.target.closest(".sm-fitment-alert");if(!b)return;e.preventDefault();e.stopPropagation();var d=document.querySelector(".sm-fitment-dialog");if(!d){d=document.createElement("dialog");d.className="sm-po-dialog sm-fitment-dialog";document.body.appendChild(d);d.addEventListener("click",function(x){if(x.target===d)d.close()});d.addEventListener("close",function(){document.documentElement.classList.remove("sm-po-modal-open")})}d.innerHTML='<div class="sm-po-dialog__header"><h2 class="sm-po-dialog__title">Lincoln MKZ and MKC Screen Fitment</h2><button type="button" class="sm-po-dialog__close" aria-label="Close">&times;</button></div><div class="sm-po-dialog__body"><p>Due to a redesigned display, MKZ and MKC vehicles will require bracket modification to complete the installation, as described <a href="https://simplymichigan.co/support#article=104288-screen-fitment-and-converting-mkc-and-mkz-vehicles">here</a>. If we have brackets in stock, your conversion kit will include replacement brackets. Please verify with us before purchase to ensure that we have these brackets stocked if you\'re depending on them to complete your installation.</p></div>';document.documentElement.classList.add("sm-po-modal-open");if(!d.open)d.showModal()});
  document.addEventListener("click",function(e){var c=e.target.closest(".sm-fitment-dialog .sm-po-dialog__close");if(c){var d=c.closest("dialog");if(d.open)d.close()}})
 }
+function bannerPromo(text){
+ // Accept code-first announcements and savings-first announcements.
+ var codeFirst=text.match(/use code\s+([a-z0-9_-]+)\s+for\s+(\d+(?:\.\d+)?%)\s+off/i);
+ if(codeFirst)return {code:codeFirst[1].toUpperCase(),amount:codeFirst[2]};
+ var savingsFirst=text.match(/save\s+(\d+(?:\.\d+)?%)[^%]*?\b(?:with|use)\s+code\s+([a-z0-9_-]+)/i);
+ return savingsFirst?{code:savingsFirst[2].toUpperCase(),amount:savingsFirst[1]}:null;
+}
 function pricePromo(){
  var box=document.querySelector(".product-details__product-price-row .product-details-module__content");if(!box)return;
  var existing=box.querySelector(".sm-price-promo"),isTwelve=/\/products\/ford-f-150-f-250-sync-3-8-to-12-screen-upgrade-kit\/?$/.test(location.pathname);
- if(isTwelve){if(!existing){existing=document.createElement("div");box.appendChild(existing)}existing.className="sm-price-promo sm-price-promo--excluded";existing.setAttribute("role","note");delete existing.dataset.code;delete existing.dataset.amount;existing.innerHTML='<span class="sm-price-promo__check" aria-hidden="true">✓</span><span class="sm-price-promo__text">Automatically discounted — additional coupons do not apply</span>';return}
- var banner=[].find.call(document.querySelectorAll(".ins-tile__text"),function(x){return /use code\s+[a-z0-9_-]+\s+for\s+\d+(?:\.\d+)?%\s+off/i.test(x.textContent)}),match=banner&&banner.textContent.match(/use code\s+([a-z0-9_-]+)\s+for\s+(\d+(?:\.\d+)?%)\s+off/i);if(!match)return;
- var code=match[1].toUpperCase(),amount=match[2],promo=existing;
+ var offer=isTwelve?{code:"BF26-12",amount:"5%"}:null;
+ if(!offer)[].some.call(document.querySelectorAll(".ins-tile__text"),function(x){offer=bannerPromo(x.textContent);return !!offer});
+ if(!offer){if(existing)existing.remove();return}
+ var code=offer.code,amount=offer.amount,promo=existing;
  if(!promo){promo=document.createElement("div");box.appendChild(promo)}promo.className="sm-price-promo";promo.setAttribute("role","note");if(!promo.querySelector(".sm-price-promo__copy"))promo.innerHTML='<span class="sm-price-promo__text"></span><button class="sm-price-promo__copy" type="button">Copy</button><span class="sm-price-promo__status" role="status" aria-live="polite"></span>';
  var set=function(el,rules){if(!el)return;Object.keys(rules).forEach(function(k){el.style.setProperty(k,rules[k],"important")})},sale=box.querySelector(".product-details__product-on-sale"),label=box.querySelector(".product-details__label-container"),compare=box.querySelector(".details-product-price-compare__container"),paypal=box.querySelector(".ec-paypal-pay-later-message"),copy=promo.querySelector(".sm-price-promo__copy"),status=promo.querySelector(".sm-price-promo__status");
  box.querySelectorAll(".product-details__product-price-discount,.details-product-price-discount__text,.details-product-price-discount__value").forEach(function(x){x.remove()});
