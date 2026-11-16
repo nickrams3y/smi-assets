@@ -58,7 +58,10 @@ SMI_DOM_RUNNER.add(function(){
    var old=new URL(link.getAttribute('href'),location.href);
    if(old.hostname!=="support.simplymichigan.co")return;
    var article=old.pathname.match(/^\/articles\/(\d+)/),category=old.pathname.match(/^\/categories\/(\d+)/);
-   link.setAttribute('href','https://simplymichigan.co/support'+(article?'#article='+article[1]:category?'#category='+category[1]:''));
+   var target=/^\/contact(?:-us)?\/?$/.test(old.pathname)?'https://simplymichigan.co/contact-us':
+    article&&article[1]==='104297'?'https://simplymichigan.co/install':
+    'https://simplymichigan.co/support'+(article?'#article='+article[1]:category?'#category='+category[1]:'');
+   link.setAttribute('href',target);
   }catch(error){}
  });
 });
