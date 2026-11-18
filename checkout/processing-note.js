@@ -23,7 +23,7 @@
   if(!note){
    note=document.createElement('aside');note.id=id;note.setAttribute('role','note');
    note.innerHTML='<svg class="sm-processing-clock" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'+
-    '<p><strong>Processing time:</strong> Most items require 5 business days before shipping, unless otherwise noted in the product description.</p>';
+    '<p><strong>Processing time:</strong> Most items require <span class="sm-processing-highlight">5 business days</span> before shipping, unless otherwise noted in the product description.</p>';
   }
   host.classList.add('sm-processing-note-host');
   // Append after native children so Elm's child indexes stay intact.

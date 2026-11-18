@@ -2967,14 +2967,16 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
 
 /* Hand-drawn marker behind the checkout referral question. */
 /* q79lne6 is the live "How did you first hear about us?" field. */
-.ec-size .ec-form__cell--q79lne6 > .ec-form__title {
+.ec-size .ec-form__cell--q79lne6 > .ec-form__title,
+#sm-checkout-processing-note .sm-processing-highlight {
   position: relative;
   isolation: isolate;
   width: fit-content;
   max-width: 100%;
 }
 
-.ec-size .ec-form__cell--q79lne6 > .ec-form__title::before {
+.ec-size .ec-form__cell--q79lne6 > .ec-form__title::before,
+#sm-checkout-processing-note .sm-processing-highlight::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -2983,6 +2985,7 @@ dialog.sm-upgrade-modal .sm-upgrade-modal__body a {
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 36' preserveAspectRatio='none'%3E%3Cpath d='M4 9 Q72 5 137 7 T268 5 L396 3 L393 28 Q337 32 272 29 T138 32 L2 30 Z' fill='%23ffe54f' fill-opacity='.65'/%3E%3Cpath d='M8 12 L105 9 Q195 12 287 7 L399 8 L395 30 L302 28 Q200 34 103 30 L5 33 Z' fill='%23ffe54f' fill-opacity='.38'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
   transform: rotate(-0.65deg);
 }
+#sm-checkout-processing-note .sm-processing-highlight { display: inline-block; }
 /* Mobile product image previews; Ecwid retains swipe and full-screen behavior. */
 .ec-size .ec-store .sm-gallery-previews { display: none; }
 @media (max-width: 767px) {
@@ -3692,7 +3695,27 @@ html body :is(#sm-fit-checker,#sm-home-fit-checker) :is(.sm-fit__result,.sm-home
 
 /* Checkout reminder, retaining the existing space above Pay. */
 html body #sm-checkout-review-note{position:relative;display:block;background:var(--sm-bubble-bg)!important;border:1px solid var(--sm-bubble-line)!important;border-radius:16px!important;margin-top:32px!important;padding:30px 20px 20px!important}
-html body #sm-checkout-review-note .sm-review-icon{position:absolute;top:-22px;left:18px;box-sizing:border-box;width:44px;height:44px;padding:6px;border:5px solid #fff;border-radius:50%;background:var(--sm-bubble-orange);color:#fff;margin:0}
+html body #sm-checkout-review-note::before {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 18px;
+  width: 44px;
+  height: 44px;
+  box-sizing: border-box;
+  border: 5px solid white;
+  border-radius: 50%;
+  background: var(--sm-bubble-orange);
+}
+html body #sm-checkout-review-note .sm-review-icon {
+  position: absolute;
+  top: -11px;
+  left: 29px;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  color: white;
+}
 @media(max-width:480px){
  html body .sm-bubble:not(details){padding:28px 16px 18px!important}
  html body .sm-bubble-support > span:last-child{grid-template-columns:1fr!important}
