@@ -55,7 +55,11 @@
  const quick=document.querySelector('#sm-support .sh-hero + .sh-quick');
  if(quick && !document.getElementById('smi-ai-support-card')) quick.before(createCard('support'));
  const description=document.querySelector('.sm-contact-description');
- if(description?.querySelector('a[href="'+chatURL+'"]') && !document.getElementById('smi-ai-contact-card')) description.after(createCard('contact'));
+ if(description?.querySelector('a[href="'+chatURL+'"]') && !document.getElementById('smi-ai-contact-card')){
+  // WebKit can attach the widget before its stylesheet participates in layout.
+  if(getComputedStyle(launcher).position === 'fixed') description.after(createCard('contact'));
+  else if(document.documentElement.classList.contains('sm-contact-loading')) queue();
+ }
  }
  function queue(){if(!scheduled){scheduled=true;requestAnimationFrame(position)}}
  new MutationObserver(queue).observe(document.body,{childList:true,subtree:true});window.addEventListener('resize',()=>{queue();sizePanel()});window.visualViewport?.addEventListener('resize',sizePanel);window.visualViewport?.addEventListener('scroll',sizePanel);window.addEventListener('hashchange',queue);queue();

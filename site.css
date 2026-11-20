@@ -3552,8 +3552,7 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 /* The saved AI link opens directly until the shared chat card is ready. */
 .section__grid > .order-1:has(a[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"])::after,
 .sm-contact-intro:has(.sm-contact-description a[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"]) > .sm-contact-help,
-.sm-contact-description p:is(:empty,:has(>br:only-child)){display:none!important}
-.section__content:has(#contact-us-ZNGYK5-message) .order-1 .section__grid > div.sm-contact-description p:has(+ p > a[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"]){margin-top:20px!important;font-size:14px!important}
+#tile-contact-us-ZNGYK5 .order-1 p:is(:empty,:has(>br:only-child)){display:none!important}
 
 @media(max-width:760px){
  .section__content:has(#contact-us-ZNGYK5-message) .order-1 .section__grid > div.sm-contact-description p{text-align:center!important}
@@ -3571,6 +3570,98 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   .sm-contact-phone[open]::details-content{height:auto}
  }
  @media(prefers-reduced-motion:reduce){.sm-contact-phone summary::after,.sm-contact-phone::details-content{transition:none}}
+}
+
+/* Match the required-fields legend that accompanies the enhanced form heading. */
+#tile-contact-us-ZNGYK5 form:not(:has(.sm-contact-form-heading)) { position: relative; }
+#tile-contact-us-ZNGYK5 form:not(:has(.sm-contact-form-heading))::after {
+  content: "* Required";
+  position: absolute;
+  top: 35px;
+  right: 28px;
+  color: #666966;
+  font-size: 11px;
+  line-height: 18px;
+}
+@media (max-width:760px) {
+  #tile-contact-us-ZNGYK5 form:not(:has(.sm-contact-form-heading))::after { top:29px; right:22px; }
+}
+@media (max-width:480px) {
+  #tile-contact-us-ZNGYK5 form:not(:has(.sm-contact-form-heading))::after { top:23px; right:19px; }
+}
+
+/* The native description arrives before Ecwid and the shared chat widget. */
+#tile-contact-us-ZNGYK5 .order-1 {
+  container: contact-intro / inline-size;
+}
+#tile-contact-us-ZNGYK5 .order-1 > .section__grid {
+  --contact-card-height: 167px;
+}
+@container contact-intro (min-width: 425px) {
+  #tile-contact-us-ZNGYK5 .order-1 > .section__grid { --contact-card-height: 146px; }
+}
+@container contact-intro (width < 347px) {
+  #tile-contact-us-ZNGYK5 .order-1 > .section__grid { --contact-card-height: 193px; }
+}
+@media (max-width: 600px) {
+  @container contact-intro (320px <= width < 347px) {
+    #tile-contact-us-ZNGYK5 .order-1 > .section__grid { --contact-card-height: 167px; }
+  }
+}
+@container contact-intro (width < 287px) {
+  #tile-contact-us-ZNGYK5 .order-1 > .section__grid { --contact-card-height: 214px; }
+}
+@container contact-intro (width < 248px) {
+  #tile-contact-us-ZNGYK5 .order-1 > .section__grid { --contact-card-height: 240px; }
+}
+#smi-ai-contact-card {
+  min-height: var(--contact-card-height);
+}
+html.sm-contact-loading #tile-contact-us-ZNGYK5 .order-1 p:has(> a:only-child[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"]) {
+  display: none;
+}
+html.sm-contact-loading #tile-contact-us-ZNGYK5 .order-1 > .section__grid:has(a[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"]):not(:has(#smi-ai-contact-card))::after {
+  content: "";
+  grid-column: 1/-1;
+  box-sizing: border-box;
+  height: var(--contact-card-height);
+  border: 1px solid #e1e4df;
+  border-radius: 14px;
+  background:
+    linear-gradient(#e7eae6, #e7eae6) 16px 16px / 36px 36px,
+    linear-gradient(#e7eae6, #e7eae6) 64px 19px / 49% 14px,
+    linear-gradient(#eef0ed, #eef0ed) 64px 47px / 58% 10px,
+    linear-gradient(#eef0ed, #eef0ed) 64px 65px / 40% 10px,
+    linear-gradient(#e7eae6, #e7eae6) center bottom 16px / calc(100% - 32px) 44px,
+    #f8f9f7;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 760px) {
+  html.sm-contact-loading #tile-contact-us-ZNGYK5 .section__content > .section__grid > .order-1 .section__grid > div:has(> p) p:has(+ p + p > strong:only-child) {
+    margin-top: 10px!important;
+    line-height: 1.65!important;
+  }
+  /* Reserve the height of the collapsed summary until it becomes interactive. */
+  html.sm-contact-loading #tile-contact-us-ZNGYK5 .section__content > .section__grid > .order-1 .section__grid > div:has(> p) p:has(> strong:only-child) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 48px;
+    margin: 16px 0 0!important;
+    padding: 10px 16px;
+    border: 1px solid #e1e3e5;
+    border-radius: 10px;
+    background: #f2f3f4;
+  }
+  html.sm-contact-loading #tile-contact-us-ZNGYK5 .order-1 p:has(> strong:only-child)::after {
+    content: "";
+    flex: 0 0 9px;
+  }
+  html.sm-contact-loading #tile-contact-us-ZNGYK5 .order-1 p:has(> strong:only-child) + p {
+    display: none;
+  }
 }
 
 /* Keep a real gap before Pay, independent of the note's injected margin. */
