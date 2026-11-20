@@ -3498,8 +3498,8 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
 }
 
 /* Native contact phone-support notice: retain Ecwid copy and group its title/body. */
-.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child),
-.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) + p {
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p) p:has(> strong:only-child),
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p) p:has(> strong:only-child) + p {
   box-sizing:border-box;
   background:#f0f1ee;
   border:1px solid #dedfda;
@@ -3508,7 +3508,7 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   font-size:14px!important;
   line-height:1.65!important;
 }
-.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) {
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p) p:has(> strong:only-child) {
   margin:24px 0 0!important;
   padding:18px 18px 8px;
   border-bottom:0;
@@ -3517,13 +3517,13 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
   font-size:15px!important;
   line-height:1.4!important;
 }
-.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(> strong:only-child) + p {
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p) p:has(> strong:only-child) + p {
   margin:0!important;
   padding:0 18px 18px;
   border-top:0;
   border-radius:0 0 10px 10px;
 }
-.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(+ p + p > strong:only-child) {
+.section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(> p) p:has(+ p + p > strong:only-child) {
   margin:12px 0 0!important;
   font-size:13px!important;
   line-height:1.5!important;
@@ -3547,6 +3547,30 @@ form:has(#contact-us-ZNGYK5-message):not(:has(.sm-contact-form-heading))::before
  }
  .section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(>a)>a:hover{background:#f0f1ee;border-color:#aeb5ac!important}
  .section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .section__grid > div:has(a[href="https://simplymichigan.co/upgrade_guide"]) p:has(>a)>a:focus-visible{outline:2px solid #777f79;outline-offset:3px}
+}
+
+/* The saved AI link opens directly until the shared chat card is ready. */
+.section__grid > .order-1:has(a[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"])::after,
+.sm-contact-intro:has(.sm-contact-description a[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"]) > .sm-contact-help,
+.sm-contact-description p:is(:empty,:has(>br:only-child)){display:none!important}
+.section__content:has(#contact-us-ZNGYK5-message) .order-1 .section__grid > div.sm-contact-description p:has(+ p > a[href="https://simply-michigan-support.s98wfrdp7b.workers.dev/"]){margin-top:20px!important;font-size:14px!important}
+
+@media(max-width:760px){
+ .section__content:has(#contact-us-ZNGYK5-message) .order-1 .section__grid > div.sm-contact-description p{text-align:center!important}
+ .section__content:has(#contact-us-ZNGYK5-message) .order-1 .section__grid > div.sm-contact-description p:has(+ p + .sm-contact-phone){margin-top:10px!important;font-size:13px!important}
+ .sm-contact-phone{margin-top:16px;background:#f2f3f4;border:1px solid #e1e3e5;border-radius:10px;text-align:left}
+ .sm-contact-phone summary{display:flex;align-items:center;justify-content:space-between;gap:12px;box-sizing:border-box;min-height:46px;padding:10px 16px;color:#252728;font-size:15px;line-height:1.4;list-style:none;cursor:pointer}
+ .sm-contact-phone summary::-webkit-details-marker{display:none}
+ .sm-contact-phone summary::after{content:'';width:9px;height:9px;flex:none;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s}
+ .sm-contact-phone[open] summary::after{transform:rotate(225deg)}
+ .sm-contact-phone summary:focus-visible{outline:2px solid #315b40;outline-offset:2px;border-radius:9px}
+ .section__content:has(#contact-us-ZNGYK5-message) > .section__grid > .order-1 .sm-contact-description details.sm-contact-phone > p{padding:0 16px 14px;font-size:14px!important;line-height:1.6!important;text-align:left!important}
+ @supports (interpolate-size:allow-keywords){
+  .sm-contact-phone{interpolate-size:allow-keywords}
+  .sm-contact-phone::details-content{height:0;overflow:hidden;transition:height .2s,content-visibility .2s allow-discrete}
+  .sm-contact-phone[open]::details-content{height:auto}
+ }
+ @media(prefers-reduced-motion:reduce){.sm-contact-phone summary::after,.sm-contact-phone::details-content{transition:none}}
 }
 
 /* Keep a real gap before Pay, independent of the note's injected margin. */

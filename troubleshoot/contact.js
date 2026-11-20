@@ -9,6 +9,30 @@ function read(){
  }catch(e){return null;}
 }
 function setValue(el,value){const proto=el.tagName==='TEXTAREA'?HTMLTextAreaElement.prototype:HTMLInputElement.prototype;Object.getOwnPropertyDescriptor(proto,'value').set.call(el,value);el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));}
+const mobileContact = matchMedia('(max-width:760px)');
+function syncPhoneNote(description){
+ if (!description) return;
+ const disclosure = description.querySelector('.sm-contact-phone');
+ if (mobileContact.matches) {
+  if (disclosure) return;
+  const heading = Array.from(description.querySelectorAll('p > strong:only-child'))
+   .find(strong => strong.textContent.trim() === 'A quick note about phone support');
+  const title = heading?.parentElement;
+  const body = title?.nextElementSibling;
+  if (body?.tagName !== 'P' || !body.textContent.trim()) return;
+  const details = document.createElement('details');
+  details.className = 'sm-contact-phone';
+  const summary = document.createElement('summary');
+  title.before(details);
+  summary.append(...title.childNodes);
+  details.append(summary, body);
+  title.remove();
+ } else if (disclosure) {
+  const title = document.createElement('p');
+  title.append(...disclosure.querySelector('summary').childNodes);
+  disclosure.replaceWith(title, disclosure.querySelector('p'));
+ }
+}
 // Restyle Ecwid's existing controls without replacing its form or submit handler.
 function decorate(form,native){
  if(form.dataset.smContactDesign)return;
@@ -19,10 +43,6 @@ function decorate(form,native){
  const heading=intro.querySelector('h1'),description=intro.querySelector('h1')?.parentElement.nextElementSibling;
  if(description)description.classList.add('sm-contact-description');
  const eyebrow=document.createElement('p');eyebrow.className='sm-contact-eyebrow';eyebrow.textContent='Here to help';heading.before(eyebrow);
- // Quick-answer links are saved in Ecwid; retain fallback for older cached page HTML.
- if(!description?.querySelector('a[href="https://simplymichigan.co/upgrade_guide"]')){
- const help=document.createElement('div');help.className='sm-contact-help';help.innerHTML='<p class="sm-contact-response">We typically reply within 24 hours.</p><div class="sm-contact-shortcuts"><p>Looking for a quick answer?</p><a href="https://simplymichigan.co/upgrade_guide">Upgrade guide <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/install">Installation instructions <span aria-hidden="true">↗</span></a><a href="https://simplymichigan.co/support">Visit our support center <span aria-hidden="true">↗</span></a></div>';intro.append(help);
- }
  const title=document.createElement('div');title.className='sm-contact-form-heading';title.innerHTML='<h2>Send us a message</h2><span>* Required</span>';form.prepend(title);
  // Copy and placeholders live in Ecwid, so the first render matches the enhanced form.
  ['name','email','additionalNote','message'].forEach(suffix=>{const input=form.querySelector('[id$="-'+suffix+'"]');if(!input)return;const field=input.parentElement;field.dataset.smContactField=suffix;if(input.required)field.dataset.smContactRequired='true';});
@@ -39,6 +59,7 @@ function mount(){
  const native=document.querySelector('textarea[id^="contact-us-"][id$="-message"]'),form=native?.closest('form');
  if(!form)return;
  decorate(form,native);
+ syncPhoneNote(document.querySelector('.sm-contact-description'));
  if(form.dataset.smTroubleshooting)return;
  if(!data){if(new URL(location.href).searchParams.has('troubleshooting')&&!document.getElementById('sm-results-unavailable')){const warning=document.createElement('p');warning.id='sm-results-unavailable';warning.setAttribute('role','status');warning.append('Your troubleshooting results are no longer available in this tab. ');const resume=document.createElement('a');resume.href='https://simplymichigan.co/troubleshoot';resume.textContent='Return to the guide';warning.append(resume,' or paste your copied results into the message below.');form.prepend(warning);}return;}
  form.dataset.smTroubleshooting='true';
@@ -68,6 +89,7 @@ function mount(){
  });
  observer.observe(document.body,{childList:true,subtree:true});
 }
+mobileContact.addEventListener('change', mount);
 window.SMI_TROUBLESHOOT_CONTACT={mount};
 // Let Ecwid finish hydrating its native form before attaching behavior.
 // The native-markup stylesheet already supplies the layout during this interval.
