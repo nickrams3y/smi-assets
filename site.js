@@ -36,6 +36,30 @@ var SMI_DOM_RUNNER=(function(){
  return{add:function(task){tasks.push(task);if(started)schedule(180)},ready:function(){return storeReady}}
 })();
 
+/* Keep the mobile footer links clear of the floating launchers. */
+(function () {
+  const mobile = window.matchMedia('(max-width: 1199px)');
+  const root = document.documentElement;
+  let footer = null;
+  const observer = new IntersectionObserver(function (entries) {
+    for (const entry of entries) {
+      if (entry.target === footer) root.classList.toggle('sm-footer-in-view', entry.isIntersecting);
+    }
+  });
+
+  function syncFooter() {
+    const next = mobile.matches ? document.querySelector('.ins-tile--footer footer') : null;
+    if (next === footer) return;
+    observer.disconnect();
+    root.classList.remove('sm-footer-in-view');
+    footer = next;
+    if (footer) observer.observe(footer);
+  }
+  syncFooter();
+  SMI_DOM_RUNNER.add(syncFooter);
+  mobile.addEventListener('change', syncFooter);
+})();
+
 /* Recover the price row when Ecwid hydrates offer content into a breadcrumb node. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('.product-details__sidebar > .ec-breadcrumbs').forEach(function(row){

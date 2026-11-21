@@ -4198,7 +4198,7 @@ html.sm-product-options-active .sm-po-hub-size-confirmation .form-control__radio
 
 /* Mobile menu Support action: keep native links and social controls in place. */
 @media (max-width: 1199px) {
-  body:has(.ins-tile--header.ins-tile--open-menu) :is(
+  :is(html.sm-footer-in-view, body:has(.ins-tile--header.ins-tile--open-menu)) :is(
     .smi-ai-launcher,
     #google-merchantwidget-iframe-wrapper,
     #tile-contacts-widget
