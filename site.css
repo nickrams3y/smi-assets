@@ -3675,19 +3675,13 @@ html.sm-contact-loading #tile-contact-us-ZNGYK5 .order-1 > .section__grid:has(a[
 /* The pastel number grid from the printed cards, behind Ecwid's footer links. */
 .ins-tile--footer footer {
   --links-color: #fff;
-  background-color: #17191b;
+  background-color: #0f0f0f;
   background-image: linear-gradient(rgb(15 17 20 / 54%), rgb(15 17 20 / 54%)),
-    url("./images/branding/footer-pastel-grid.webp");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center 83%;
-}
-
-@media (max-width: 510px) {
-  .ins-tile--footer footer {
-    background-size: cover, auto 150%;
-    background-position: center, center bottom;
-  }
+    url("./images/branding/footer-pastel-grid.svg");
+  /* Size the grid by height so wide screens reveal more columns and retain the crest. */
+  background-size: 100% 100%, auto min(100%, 124px);
+  background-repeat: no-repeat, repeat-x;
+  background-position: left bottom;
 }
 
 /* Hide the Instant Site platform credit across the shared footer. */
