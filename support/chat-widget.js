@@ -18,7 +18,7 @@
  html.smi-ai-chat-page,html.smi-ai-chat-page body{height:100%;min-height:0;overflow:hidden!important;overscroll-behavior:none;background:#f5f5f2}
  html.smi-ai-chat-page body{position:fixed;inset:0;margin:0;padding:0}
  html.smi-ai-chat-page body>:not(#smi-ai-dialog){display:none!important}
- .smi-ai-dialog.smi-ai-full-page{position:relative;inset:auto;width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}
+ .smi-ai-dialog.smi-ai-full-page{position:fixed;inset:0 auto auto 0;width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}
  .smi-ai-dialog .smi-ai-close:focus-visible{outline:2px solid #315b40;outline-offset:-3px}
  .smi-ai-card{display:flex;align-items:center;gap:18px;margin:0 0 26px;padding:24px 28px;border:1px solid #d6e0d4;border-radius:16px;background:#f3f6f1;text-align:left;font-family:inherit;box-sizing:border-box}
  .smi-ai-card-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:46px;height:46px;border-radius:12px;background:#e4ede2;color:#315b40}
@@ -39,6 +39,10 @@
   if(!dialog?.open)return;
   const viewport=window.visualViewport;
   if(fullPage){
+   // A focused field can pan Safari's visible area independently of its height.
+   // Keep native pinch-to-zoom panning available.
+   if(viewport && viewport.scale>1.01)return;
+   dialog.style.top=Math.max(0,viewport?.offsetTop||0)+'px';
    dialog.style.height=(viewport?.height||innerHeight)+'px';
   }else if(matchMedia('(max-width:600px)').matches){
    dialog.style.top=((viewport?.offsetTop||0)+8)+'px';
