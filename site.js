@@ -60,6 +60,89 @@ var SMI_DOM_RUNNER=(function(){
   mobile.addEventListener('change', syncFooter);
 })();
 
+/* Match the display to the fitment printed in the kit's Vehicle Model menu. */
+(function () {
+  const modelSelector = 'select[aria-label="Vehicle Model"]';
+  const displaySelector = 'select[aria-label="Choose Your Display"]';
+  const states = new WeakMap();
+
+  function setOption(select, value) {
+    if (select.value === value) return;
+    select.value = value;
+    select.dispatchEvent(new Event('input', { bubbles: true }));
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function showNotice(display, show) {
+    const row = display.closest('.details-product-option');
+    let note = row.querySelector('.sm-display-fit-notice');
+    if (show && !note) {
+      note = document.createElement('p');
+      note.className = 'sm-display-fit-notice';
+      note.setAttribute('role', 'status');
+      row.append(note);
+      note.textContent = 'A standard screen won’t fit this vehicle. Choose a recessed 8.0″ or 8.46″ display.';
+    } else if (!show && note) {
+      note.remove();
+    }
+  }
+
+  function sync(box, event) {
+    const model = box.querySelector(modelSelector);
+    const display = box.querySelector(displaySelector);
+    if (!model || !display) return;
+    const previous = states.get(box);
+    const requiresRecess = /\brecessed\s+display\b/i.test(model.value);
+    if (!requiresRecess && !previous) return;
+
+    if (!requiresRecess) {
+      states.delete(box);
+      showNotice(display, false);
+      // Ask for a fresh choice when leaving a recessed vehicle.
+      if (/^recessed\b/i.test(display.value)) setOption(display, display.options[0].value);
+      return;
+    }
+
+    const base = Array.from(display.options).find(opt => /^recessed\s+8\.0\b/i.test(opt.value));
+    if (!base) return;
+    const changedModel = previous ? previous.model !== model.value : event?.target === model;
+    const state = previous || {};
+    states.set(box, state);
+    state.model = model.value;
+    if (changedModel) state.last = null;
+
+    if (event?.target === display && /^standard\b/i.test(display.value)) {
+      // Ecwid's handlers must receive the restored choice, including its price modifier.
+      display.value = state.last || base.value;
+      state.last = display.value;
+      showNotice(display, true);
+      return;
+    }
+
+    const compatible = /^recessed\b/i.test(display.value);
+    if (changedModel || !compatible) {
+      showNotice(display, false);
+      state.last = base.value;
+      setOption(display, base.value);
+    } else {
+      if (state.last !== display.value) showNotice(display, false);
+      state.last = display.value;
+    }
+  }
+
+  function onSelection(event) {
+    if (!event.target.matches?.(modelSelector + ', ' + displaySelector)) return;
+    const box = event.target.closest('.details-product-options');
+    if (box) sync(box, event);
+  }
+
+  document.addEventListener('input', onSelection, true);
+  document.addEventListener('change', onSelection, true);
+  SMI_DOM_RUNNER.add(function () {
+    document.querySelectorAll('.details-product-options').forEach(box => sync(box));
+  });
+})();
+
 /* Recover the price row when Ecwid hydrates offer content into a breadcrumb node. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('.product-details__sidebar > .ec-breadcrumbs').forEach(function(row){

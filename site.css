@@ -4421,3 +4421,15 @@ html.sm-product-pending #tile-product-details .product-details__sidebar::before{
 
 .product-details__product-price-row .sm-price-ticket__clock{display:block!important;flex:0 0 16px!important;width:16px!important;height:16px!important;color:inherit!important}
 .product-details__product-price-row .sm-price-ticket__countdown{font:inherit!important;color:inherit!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important;letter-spacing:0!important}
+
+/* Inline fitment feedback under the native kit display selector. */
+.details-product-option .sm-display-fit-notice {
+  margin: 8px 0 0;
+  padding: 8px 12px;
+  border-left: 3px solid #b86128;
+  border-radius: 3px;
+  background: #fff3e8;
+  color: #673615;
+  font-size: 14px;
+  line-height: 1.4;
+}
