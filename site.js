@@ -73,37 +73,50 @@ var SMI_DOM_RUNNER=(function(){
     select.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
-  function showNotice(display, show) {
+  function showNotice(display, fit) {
     const row = display.closest('.details-product-option');
     let note = row.querySelector('.sm-display-fit-notice');
-    if (show && !note) {
+    if (!fit) {
+      note?.remove();
+      return;
+    }
+    if (note?.dataset.fit === fit) return;
+    if (!note) {
       note = document.createElement('p');
       note.className = 'sm-display-fit-notice';
       note.setAttribute('role', 'status');
       row.append(note);
-      note.textContent = 'A standard screen won’t fit this vehicle. Choose a recessed 8.0″ or 8.46″ display.';
-    } else if (!show && note) {
-      note.remove();
     }
+    note.dataset.fit = fit;
+    if (fit === 'separate') {
+      const link = document.createElement('a');
+      link.href = '/products/ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit';
+      link.textContent = 'View the Fiesta and Transit kit';
+      note.replaceChildren('This vehicle uses a different display. ', link, '.');
+      return;
+    }
+    const wrong = fit === 'standard' ? 'recessed' : 'standard';
+    note.textContent = 'A ' + wrong + ' screen won’t fit this vehicle. Choose a ' + fit + ' 8.0″ or 8.46″ display.';
   }
 
   function sync(box, event) {
     const model = box.querySelector(modelSelector);
     const display = box.querySelector(displaySelector);
-    if (!model || !display) return;
+    if (!model || !display || !display.options.length) return;
     const previous = states.get(box);
-    const requiresRecess = /\brecessed\s+display\b/i.test(model.value);
-    if (!requiresRecess && !previous) return;
-
-    if (!requiresRecess) {
-      states.delete(box);
-      showNotice(display, false);
-      // Ask for a fresh choice when leaving a recessed vehicle.
-      if (/^recessed\b/i.test(display.value)) setOption(display, display.options[0].value);
+    const fit = model.value.match(/\b(standard|recessed)\s+display\b/i)?.[1].toLowerCase();
+    if (!fit) {
+      const separate = /\b(?:fiesta|transit)\b.*check separate product listing/i.test(model.value);
+      if (separate || previous) {
+        if (separate) states.set(box, {model: model.value});
+        else states.delete(box);
+        showNotice(display, separate ? 'separate' : null);
+        setOption(display, display.options[0].value);
+      }
       return;
     }
 
-    const base = Array.from(display.options).find(opt => /^recessed\s+8\.0\b/i.test(opt.value));
+    const base = Array.from(display.options).find(opt => opt.value.toLowerCase().startsWith(fit + ' 8.0'));
     if (!base) return;
     const changedModel = previous ? previous.model !== model.value : event?.target === model;
     const state = previous || {};
@@ -111,21 +124,21 @@ var SMI_DOM_RUNNER=(function(){
     state.model = model.value;
     if (changedModel) state.last = null;
 
-    if (event?.target === display && /^standard\b/i.test(display.value)) {
-      // Ecwid's handlers must receive the restored choice, including its price modifier.
+    const chosen = display.value.match(/^(standard|recessed)\b/i)?.[1].toLowerCase();
+    if (event?.target === display && chosen && chosen !== fit) {
+      // Deliver only the compatible value to Ecwid's price and cart handlers.
       display.value = state.last || base.value;
       state.last = display.value;
-      showNotice(display, true);
+      showNotice(display, fit);
       return;
     }
 
-    const compatible = /^recessed\b/i.test(display.value);
-    if (changedModel || !compatible) {
-      showNotice(display, false);
+    if (changedModel || chosen !== fit) {
+      showNotice(display, null);
       state.last = base.value;
       setOption(display, base.value);
     } else {
-      if (state.last !== display.value) showNotice(display, false);
+      if (state.last !== display.value) showNotice(display, null);
       state.last = display.value;
     }
   }
