@@ -15,7 +15,10 @@
  .smi-ai-dialog-bar:focus{outline:none}
  .smi-ai-dialog-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 16px}
  .smi-ai-dialog-bar a{display:inline-flex;align-items:center;min-height:36px}
- .smi-ai-dialog.smi-ai-full-page{inset:0;width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}
+ html.smi-ai-chat-page,html.smi-ai-chat-page body{height:100%;min-height:0;overflow:hidden!important;overscroll-behavior:none;background:#f5f5f2}
+ html.smi-ai-chat-page body{position:fixed;inset:0;margin:0;padding:0}
+ html.smi-ai-chat-page body>:not(#smi-ai-dialog){display:none!important}
+ .smi-ai-dialog.smi-ai-full-page{position:relative;inset:auto;width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}
  .smi-ai-dialog .smi-ai-close:focus-visible{outline:2px solid #315b40;outline-offset:-3px}
  .smi-ai-card{display:flex;align-items:center;gap:18px;margin:0 0 26px;padding:24px 28px;border:1px solid #d6e0d4;border-radius:16px;background:#f3f6f1;text-align:left;font-family:inherit;box-sizing:border-box}
  .smi-ai-card-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:46px;height:46px;border-radius:12px;background:#e4ede2;color:#315b40}
@@ -32,7 +35,17 @@
  `;document.head.append(style);
  var launcher=document.createElement('a');launcher.className='smi-ai-launcher';launcher.href=fullPageURL;launcher.target='_blank';launcher.rel='noopener';launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-controls','smi-ai-dialog');launcher.setAttribute('aria-expanded','false');launcher.innerHTML=icon+'<span>AI Support</span>';if(!fullPage)document.body.append(launcher);
  var dialog,frame,previousFocus,savedOverflow,resizeObserver,observedContacts,scheduled=false;
- function sizePanel(){if(!dialog?.open)return;if(matchMedia('(max-width:600px)').matches){var v=window.visualViewport,gutter=fullPage?0:8;dialog.style.top=((v?.offsetTop||0)+gutter)+'px';dialog.style.height=Math.max(160,(v?.height||innerHeight)-2*gutter)+'px';dialog.style.bottom='auto'}else{dialog.style.top='';dialog.style.height='';dialog.style.bottom=''}}
+ function sizePanel(){
+  if(!dialog?.open)return;
+  const viewport=window.visualViewport;
+  if(fullPage){
+   dialog.style.height=(viewport?.height||innerHeight)+'px';
+  }else if(matchMedia('(max-width:600px)').matches){
+   dialog.style.top=((viewport?.offsetTop||0)+8)+'px';
+   dialog.style.height=Math.max(160,(viewport?.height||innerHeight)-16)+'px';
+   dialog.style.bottom='auto';
+  }else{dialog.style.top='';dialog.style.height='';dialog.style.bottom=''}
+ }
  function close(){if(!dialog?.open)return;if(fullPage){location.replace(supportURL);return}dialog.close();document.body.style.overflow=savedOverflow;launcher.setAttribute('aria-expanded','false');previousFocus?.isConnected&&previousFocus.focus({preventScroll:true});}
  function open(event){if(event){if(event.button>0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault()}previousFocus=event?.currentTarget || document.activeElement;if(!dialog){
    dialog=document.createElement('dialog');dialog.id='smi-ai-dialog';dialog.className='smi-ai-dialog';dialog.setAttribute('aria-label','Simply Michigan AI support');
@@ -52,7 +65,20 @@
        previousFocus.focus({preventScroll:true});
      }
    }));
-   dialog.addEventListener('cancel',e=>{e.preventDefault();close()});dialog.addEventListener('click',e=>{if(e.target===dialog){var r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}})}if(dialog.open)return;savedOverflow=document.body.style.overflow;document.body.style.overflow='hidden';dialog.showModal();launcher.setAttribute('aria-expanded','true');sizePanel();
+   dialog.addEventListener('cancel',e=>{e.preventDefault();close()});dialog.addEventListener('click',e=>{if(e.target===dialog){var r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}})}
+   if(dialog.open)return;
+   if(fullPage){
+    // A standalone page has no storefront underneath it for Safari to reveal on overscroll.
+    document.documentElement.classList.add('smi-ai-chat-page');
+    dialog.show();
+    dialog.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();close()}});
+   }else{
+    savedOverflow=document.body.style.overflow;
+    document.body.style.overflow='hidden';
+    dialog.showModal();
+    launcher.setAttribute('aria-expanded','true');
+   }
+   sizePanel();
    // Pointer users see the toolbar without a ring. Enter moves focus to Close.
    const initialFocus = fullPage || event?.detail > 0 ? '.smi-ai-dialog-bar' : '.smi-ai-close';
    dialog.querySelector(initialFocus).focus({preventScroll:true});
