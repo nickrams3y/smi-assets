@@ -2,6 +2,10 @@
 (function(){'use strict';
  if(window.SMI_CHAT_WIDGET)return;
  var chatURL='https://simply-michigan-support.s98wfrdp7b.workers.dev/',chatOrigin=new URL(chatURL).origin;
+ const supportURL='https://simplymichigan.co/support';
+ const fullPageURL=supportURL+'?chat=1';
+ const contactURL='https://simplymichigan.co/contact-us';
+ const fullPage=/^\/support\/?$/.test(location.pathname) && new URLSearchParams(location.search).get('chat')==='1';
  var icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-6 4V6a2 2 0 0 1 2-2Z"/><path d="M7 9h10M7 13h6"/></svg>';
  var style=document.createElement('style');style.id='smi-chat-widget-style';style.textContent=`
  .smi-ai-launcher,.smi-ai-open{font-family:inherit;line-height:1.3;display:inline-flex;align-items:center;justify-content:center;gap:9px;background:#315b40;color:#fff!important;border:1px solid #315b40;border-radius:999px;padding:13px 20px;min-height:48px;text-decoration:none!important;box-sizing:border-box;cursor:pointer}
@@ -9,6 +13,9 @@
  .smi-ai-launcher[hidden]{display:none}.smi-ai-launcher svg,.smi-ai-card-icon svg{width:21px;height:21px;flex-shrink:0}.smi-ai-launcher:hover,.smi-ai-open:hover{background:#244a31}
  .smi-ai-launcher:focus-visible,.smi-ai-open:focus-visible,.smi-ai-dialog a:focus-visible{outline:3px solid #f36b32;outline-offset:3px}
  .smi-ai-dialog-bar:focus{outline:none}
+ .smi-ai-dialog-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 16px}
+ .smi-ai-dialog-bar a{display:inline-flex;align-items:center;min-height:36px}
+ .smi-ai-dialog.smi-ai-full-page{inset:0;width:100%;height:100dvh;border:0;border-radius:0;box-shadow:none}
  .smi-ai-dialog .smi-ai-close:focus-visible{outline:2px solid #315b40;outline-offset:-3px}
  .smi-ai-card{display:flex;align-items:center;gap:18px;margin:0 0 26px;padding:24px 28px;border:1px solid #d6e0d4;border-radius:16px;background:#f3f6f1;text-align:left;font-family:inherit;box-sizing:border-box}
  .smi-ai-card-icon{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:46px;height:46px;border-radius:12px;background:#e4ede2;color:#315b40}
@@ -23,11 +30,22 @@
  #smi-ai-contact-card .smi-ai-open{grid-column:1/-1;width:100%;min-height:44px}
  .sm-contact-description:has(+ #smi-ai-contact-card) p:has(> a[href="${chatURL}"]:only-child){display:none}
  `;document.head.append(style);
- var launcher=document.createElement('a');launcher.className='smi-ai-launcher';launcher.href=chatURL;launcher.target='_blank';launcher.rel='noopener';launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-controls','smi-ai-dialog');launcher.setAttribute('aria-expanded','false');launcher.innerHTML=icon+'<span>AI Support</span>';document.body.append(launcher);
+ var launcher=document.createElement('a');launcher.className='smi-ai-launcher';launcher.href=fullPageURL;launcher.target='_blank';launcher.rel='noopener';launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-controls','smi-ai-dialog');launcher.setAttribute('aria-expanded','false');launcher.innerHTML=icon+'<span>AI Support</span>';if(!fullPage)document.body.append(launcher);
  var dialog,frame,previousFocus,savedOverflow,resizeObserver,observedContacts,scheduled=false;
- function sizePanel(){if(!dialog?.open)return;if(matchMedia('(max-width:600px)').matches){var v=window.visualViewport;dialog.style.top=((v?.offsetTop||0)+8)+'px';dialog.style.height=Math.max(160,(v?.height||innerHeight)-16)+'px';dialog.style.bottom='auto'}else{dialog.style.top='';dialog.style.height='';dialog.style.bottom=''}}
- function close(){if(!dialog?.open)return;dialog.close();document.body.style.overflow=savedOverflow;launcher.setAttribute('aria-expanded','false');previousFocus?.isConnected&&previousFocus.focus({preventScroll:true});}
- function open(event){if(event){if(event.button>0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault()}previousFocus=event?.currentTarget || document.activeElement;if(!dialog){dialog=document.createElement('dialog');dialog.id='smi-ai-dialog';dialog.className='smi-ai-dialog';dialog.setAttribute('aria-label','Simply Michigan AI support');dialog.innerHTML='<div class="smi-ai-dialog-bar" tabindex="-1"><a href="'+chatURL+'" target="_blank" rel="noopener noreferrer">Open in a full page</a><button class="smi-ai-close" type="button" aria-label="Close AI chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>';frame=document.createElement('iframe');frame.className='smi-ai-frame';frame.title='Simply Michigan AI support assistant';frame.referrerPolicy='no-referrer';frame.src=chatURL;dialog.append(frame);document.body.append(dialog);dialog.querySelector('button').onclick=close;
+ function sizePanel(){if(!dialog?.open)return;if(matchMedia('(max-width:600px)').matches){var v=window.visualViewport,gutter=fullPage?0:8;dialog.style.top=((v?.offsetTop||0)+gutter)+'px';dialog.style.height=Math.max(160,(v?.height||innerHeight)-2*gutter)+'px';dialog.style.bottom='auto'}else{dialog.style.top='';dialog.style.height='';dialog.style.bottom=''}}
+ function close(){if(!dialog?.open)return;if(fullPage){location.replace(supportURL);return}dialog.close();document.body.style.overflow=savedOverflow;launcher.setAttribute('aria-expanded','false');previousFocus?.isConnected&&previousFocus.focus({preventScroll:true});}
+ function open(event){if(event){if(event.button>0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault()}previousFocus=event?.currentTarget || document.activeElement;if(!dialog){
+   dialog=document.createElement('dialog');dialog.id='smi-ai-dialog';dialog.className='smi-ai-dialog';dialog.setAttribute('aria-label','Simply Michigan AI support');
+   const primaryLink=fullPage
+     ? '<a href="'+supportURL+'">Back to support</a>'
+     : '<a href="'+fullPageURL+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
+   const toolbarEnd=fullPage
+     ? '<a href="'+chatURL+'" target="_blank" rel="noopener noreferrer">Open chat directly</a>'
+     : '<button class="smi-ai-close" type="button" aria-label="Close AI chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>';
+   dialog.innerHTML='<div class="smi-ai-dialog-bar" tabindex="-1"><div class="smi-ai-dialog-links">'+primaryLink+'<a href="'+contactURL+'" target="_blank" rel="noopener noreferrer">Contact support</a></div>'+toolbarEnd+'</div>';
+   if(fullPage)dialog.classList.add('smi-ai-full-page');
+   else dialog.querySelector('button').onclick=close;
+   frame=document.createElement('iframe');frame.className='smi-ai-frame';frame.title='Simply Michigan AI support assistant';frame.referrerPolicy='no-referrer';frame.src=chatURL;dialog.append(frame);document.body.append(dialog);
    // WebKit can keep the page inert until it dispatches the native close event.
    dialog.addEventListener('close', () => requestAnimationFrame(() => {
      if (!dialog.open && document.activeElement === document.body && previousFocus?.isConnected) {
@@ -36,7 +54,7 @@
    }));
    dialog.addEventListener('cancel',e=>{e.preventDefault();close()});dialog.addEventListener('click',e=>{if(e.target===dialog){var r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}})}if(dialog.open)return;savedOverflow=document.body.style.overflow;document.body.style.overflow='hidden';dialog.showModal();launcher.setAttribute('aria-expanded','true');sizePanel();
    // Pointer users see the toolbar without a ring. Enter moves focus to Close.
-   const initialFocus = event?.detail > 0 ? '.smi-ai-dialog-bar' : '.smi-ai-close';
+   const initialFocus = fullPage || event?.detail > 0 ? '.smi-ai-dialog-bar' : '.smi-ai-close';
    dialog.querySelector(initialFocus).focus({preventScroll:true});
  }
  launcher.addEventListener('click',open);
@@ -47,7 +65,7 @@
   card.id='smi-ai-'+page+'-card';
   card.className='smi-ai-card';
   card.setAttribute('aria-labelledby',titleId);
-  card.innerHTML='<div class="smi-ai-card-icon">'+icon+'</div><div class="smi-ai-card-copy"><h2 id="'+titleId+'">Ask our AI support assistant</h2><p>Find the right part or troubleshoot your Sync system.</p></div><a class="smi-ai-open" href="'+chatURL+'" target="_blank" rel="noopener" aria-haspopup="dialog" aria-controls="smi-ai-dialog">Open chat</a>';
+  card.innerHTML='<div class="smi-ai-card-icon">'+icon+'</div><div class="smi-ai-card-copy"><h2 id="'+titleId+'">Ask our AI support assistant</h2><p>Find the right part or troubleshoot your Sync system.</p></div><a class="smi-ai-open" href="'+fullPageURL+'" target="_blank" rel="noopener" aria-haspopup="dialog" aria-controls="smi-ai-dialog">Open chat</a>';
   card.querySelector('a').addEventListener('click',open);
   return card;
  }
@@ -62,6 +80,13 @@
  }
  }
  function queue(){if(!scheduled){scheduled=true;requestAnimationFrame(position)}}
- new MutationObserver(queue).observe(document.body,{childList:true,subtree:true});window.addEventListener('resize',()=>{queue();sizePanel()});window.visualViewport?.addEventListener('resize',sizePanel);window.visualViewport?.addEventListener('scroll',sizePanel);window.addEventListener('hashchange',queue);queue();
+ if(fullPage){
+  document.title='AI Support | Simply Michigan';
+  open();
+ }else{
+  new MutationObserver(queue).observe(document.body,{childList:true,subtree:true});
+  window.addEventListener('resize',queue);window.addEventListener('hashchange',queue);queue();
+ }
+ window.addEventListener('resize',sizePanel);window.visualViewport?.addEventListener('resize',sizePanel);window.visualViewport?.addEventListener('scroll',sizePanel);
  window.SMI_CHAT_WIDGET={open,close};
 })();
