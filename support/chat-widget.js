@@ -52,10 +52,10 @@
    const primaryLink=fullPage
      ? '<a href="'+supportURL+'">Back to support</a>'
      : '<a href="'+fullPageURL+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
-   const toolbarEnd=fullPage
-     ? '<a href="'+chatURL+'" target="_blank" rel="noopener noreferrer">Open chat directly</a>'
+   const closeButton=fullPage
+     ? ''
      : '<button class="smi-ai-close" type="button" aria-label="Close AI chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>';
-   dialog.innerHTML='<div class="smi-ai-dialog-bar" tabindex="-1"><div class="smi-ai-dialog-links">'+primaryLink+'<a href="'+contactURL+'" target="_blank" rel="noopener noreferrer">Contact support</a></div>'+toolbarEnd+'</div>';
+   dialog.innerHTML='<div class="smi-ai-dialog-bar" tabindex="-1"><div class="smi-ai-dialog-links">'+primaryLink+'<a href="'+contactURL+'" target="_blank" rel="noopener noreferrer">Contact support</a></div>'+closeButton+'</div>';
    if(fullPage)dialog.classList.add('smi-ai-full-page');
    else dialog.querySelector('button').onclick=close;
    frame=document.createElement('iframe');frame.className='smi-ai-frame';frame.title='Simply Michigan AI support assistant';frame.referrerPolicy='no-referrer';frame.src=chatURL;dialog.append(frame);document.body.append(dialog);

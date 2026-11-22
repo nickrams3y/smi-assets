@@ -1347,7 +1347,7 @@ document.addEventListener('mousedown',function(event){
 });
 
 /* Lazy AI chat interface; the Worker itself loads only when chat is opened. */
-(function(){if(document.getElementById('smi-chat-widget-script'))return;var s=document.createElement('script');s.id='smi-chat-widget-script';s.src='https://nickrams3y.github.io/smi-assets/support/chat-widget.js?v=20261121-scroll';s.async=true;document.head.append(s)})();
+(function(){if(document.getElementById('smi-chat-widget-script'))return;var s=document.createElement('script');s.id='smi-chat-widget-script';s.src='https://nickrams3y.github.io/smi-assets/support/chat-widget.js?v=20261121-toolbar';s.async=true;document.head.append(s)})();
 /* Keep cart summaries consistent without moving Ecwid's managed option nodes. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('.ec-cart-item__options').forEach(function(options){
