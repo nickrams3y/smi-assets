@@ -4001,7 +4001,7 @@ html.sm-product-options-active body .details-product-options .details-product-op
 html body .details-product-option:is(.sm-bench-color-locked,.sm-hub-trade-locked) .form-control__text{background:transparent!important;color:#6b6b6b!important;-webkit-text-fill-color:#6b6b6b!important;cursor:not-allowed!important}
 html body .details-product-option:is(.sm-bench-color-locked,.sm-hub-trade-locked) .form-control__select{cursor:not-allowed!important}
 html body .details-product-option:is(.sm-bench-color-locked,.sm-hub-trade-locked) .form-control__arrow{opacity:.35}
-html body .details-product-option .sm-bench-color-note{margin:8px 0 0!important;color:#626762!important;font-size:13px!important;line-height:1.45!important}
+html body .details-product-option :is(.sm-bench-color-note, .sm-display-fit-notice){margin:8px 0 0!important;color:#626762!important;font-size:13px!important;line-height:1.45!important}
 
 /* Combined ordering policies, with a prominent neutral disclosure footer. */
 html body .product-details__product-description details.sm-order-source{display:none!important}
@@ -4421,15 +4421,3 @@ html.sm-product-pending #tile-product-details .product-details__sidebar::before{
 
 .product-details__product-price-row .sm-price-ticket__clock{display:block!important;flex:0 0 16px!important;width:16px!important;height:16px!important;color:inherit!important}
 .product-details__product-price-row .sm-price-ticket__countdown{font:inherit!important;color:inherit!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important;letter-spacing:0!important}
-
-/* Inline fitment feedback under the native kit display selector. */
-.details-product-option .sm-display-fit-notice {
-  margin: 8px 0 0;
-  padding: 8px 12px;
-  border-left: 3px solid #b86128;
-  border-radius: 3px;
-  background: #fff3e8;
-  color: #673615;
-  font-size: 14px;
-  line-height: 1.4;
-}

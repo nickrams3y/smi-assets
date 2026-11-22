@@ -92,11 +92,11 @@ var SMI_DOM_RUNNER=(function(){
       const link = document.createElement('a');
       link.href = '/products/ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit';
       link.textContent = 'View the Fiesta and Transit kit';
-      note.replaceChildren('This vehicle uses a different display. ', link, '.');
+      note.replaceChildren('⚠️ This vehicle uses a different display. ', link, '.');
       return;
     }
     const wrong = fit === 'standard' ? 'recessed' : 'standard';
-    note.textContent = 'A ' + wrong + ' screen won’t fit this vehicle. Choose a ' + fit + ' 8.0″ or 8.46″ display.';
+    note.textContent = '⚠️ A ' + wrong + ' screen won’t fit this vehicle. Choose a ' + fit + ' 8.0″ or 8.46″ display.';
   }
 
   function sync(box, event) {
