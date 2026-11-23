@@ -112,7 +112,11 @@
   card.querySelector('a').addEventListener('click',open);
   return card;
  }
- function position(){scheduled=false;var contacts=document.getElementById('tile-contacts-widget');if(contacts!==observedContacts){resizeObserver?.disconnect();observedContacts=contacts;if(contacts&&window.ResizeObserver){resizeObserver=new ResizeObserver(queue);resizeObserver.observe(contacts)}}var rect=contacts?.getBoundingClientRect(),visible=rect&&rect.height>0&&rect.bottom>0&&getComputedStyle(contacts).visibility!=='hidden';launcher.hidden=!!(visible&&rect.height>110);var bottom=visible?Math.max(16,innerHeight-rect.top+12):20;var value=bottom+'px';if(launcher.style.bottom!==value)launcher.style.bottom=value;
+ function updateLauncherLink(){
+  const href=withProduct(fullPageURL,pageProduct());
+  if(launcher.href!==href)launcher.href=href;
+ }
+ function position(){scheduled=false;updateLauncherLink();var contacts=document.getElementById('tile-contacts-widget');if(contacts!==observedContacts){resizeObserver?.disconnect();observedContacts=contacts;if(contacts&&window.ResizeObserver){resizeObserver=new ResizeObserver(queue);resizeObserver.observe(contacts)}}var rect=contacts?.getBoundingClientRect(),visible=rect&&rect.height>0&&rect.bottom>0&&getComputedStyle(contacts).visibility!=='hidden';launcher.hidden=!!(visible&&rect.height>110);var bottom=visible?Math.max(16,innerHeight-rect.top+12):20;var value=bottom+'px';if(launcher.style.bottom!==value)launcher.style.bottom=value;
  const quick=document.querySelector('#sm-support .sh-hero + .sh-quick');
  if(quick && !document.getElementById('smi-ai-support-card')) quick.before(createCard('support'));
  const description=document.querySelector('.sm-contact-description');
@@ -123,8 +127,10 @@
  }
  }
  function queue(){if(!scheduled){scheduled=true;requestAnimationFrame(position)}}
- launcher.href=withProduct(fullPageURL,pageProduct());
- window.addEventListener('pointerdown',e=>{if(launcher.contains(e.target))launcher.href=withProduct(fullPageURL,pageProduct())});
+ updateLauncherLink();
+ for(const event of ['focus','pointerdown','contextmenu'])launcher.addEventListener(event,updateLauncherLink);
+ window.addEventListener('popstate',updateLauncherLink);
+ window.navigation?.addEventListener('currententrychange',updateLauncherLink);
  if(fullPage){
   document.title='AI Support | Simply Michigan';
   open();
