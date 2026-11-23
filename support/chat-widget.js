@@ -6,6 +6,11 @@
  const fullPageURL=supportURL+'?chat=1';
  const contactURL='https://simplymichigan.co/contact-us';
  const fullPage=/^\/support\/?$/.test(location.pathname) && new URLSearchParams(location.search).get('chat')==='1';
+ function pageProduct(){
+  const slug=fullPage ? new URLSearchParams(location.hash.slice(1)).get('product') : location.pathname.match(/^\/products\/([a-z0-9-]+)\/?$/i)?.[1];
+  return slug && /^[a-z0-9-]{1,180}$/.test(slug) ? slug : '';
+ }
+ function withProduct(url,slug){return slug ? url+'#product='+encodeURIComponent(slug) : url}
  var icon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-6 4V6a2 2 0 0 1 2-2Z"/><path d="M7 9h10M7 13h6"/></svg>';
  var style=document.createElement('style');style.id='smi-chat-widget-style';style.textContent=`
  .smi-ai-launcher,.smi-ai-open{font-family:inherit;line-height:1.3;display:inline-flex;align-items:center;justify-content:center;gap:9px;background:#315b40;color:#fff!important;border:1px solid #315b40;border-radius:999px;padding:13px 20px;min-height:48px;text-decoration:none!important;box-sizing:border-box;cursor:pointer}
@@ -55,14 +60,14 @@
    dialog=document.createElement('dialog');dialog.id='smi-ai-dialog';dialog.className='smi-ai-dialog';dialog.setAttribute('aria-label','Simply Michigan AI support');
    const primaryLink=fullPage
      ? '<a href="'+supportURL+'">Back to support</a>'
-     : '<a href="'+fullPageURL+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
+     : '<a class="smi-chat-full-link" href="'+withProduct(fullPageURL,pageProduct())+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
    const closeButton=fullPage
      ? ''
      : '<button class="smi-ai-close" type="button" aria-label="Close AI chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>';
    dialog.innerHTML='<div class="smi-ai-dialog-bar" tabindex="-1"><div class="smi-ai-dialog-links">'+primaryLink+'<a href="'+contactURL+'" target="_blank" rel="noopener noreferrer">Contact support</a></div>'+closeButton+'</div>';
    if(fullPage)dialog.classList.add('smi-ai-full-page');
    else dialog.querySelector('button').onclick=close;
-   frame=document.createElement('iframe');frame.className='smi-ai-frame';frame.title='Simply Michigan AI support assistant';frame.referrerPolicy='no-referrer';frame.src=chatURL;dialog.append(frame);document.body.append(dialog);
+   frame=document.createElement('iframe');frame.className='smi-ai-frame';frame.title='Simply Michigan AI support assistant';frame.referrerPolicy='no-referrer';frame.src=withProduct(chatURL,pageProduct());dialog.append(frame);document.body.append(dialog);
    // WebKit can keep the page inert until it dispatches the native close event.
    dialog.addEventListener('close', () => requestAnimationFrame(() => {
      if (!dialog.open && document.activeElement === document.body && previousFocus?.isConnected) {
@@ -71,6 +76,7 @@
    }));
    dialog.addEventListener('cancel',e=>{e.preventDefault();close()});dialog.addEventListener('click',e=>{if(e.target===dialog){var r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}})}
    if(dialog.open)return;
+   frame.contentWindow?.postMessage({type:'smi-chat-page',product:pageProduct()},chatOrigin);
    if(fullPage){
     // A standalone page has no storefront underneath it for Safari to reveal on overscroll.
     document.documentElement.classList.add('smi-ai-chat-page');
@@ -88,7 +94,14 @@
    dialog.querySelector(initialFocus).focus({preventScroll:true});
  }
  launcher.addEventListener('click',open);
- window.addEventListener('message',e=>{if(e.origin===chatOrigin&&e.source===frame?.contentWindow&&e.data?.type==='smi-chat-close')close()});
+ window.addEventListener('message',e=>{
+  if(e.origin!==chatOrigin||e.source!==frame?.contentWindow)return;
+  if(e.data?.type==='smi-chat-close')close();
+  if(e.data?.type==='smi-chat-start-page'){
+   const link=dialog.querySelector('.smi-chat-full-link'),slug=e.data.product;
+   if(link)link.href=withProduct(fullPageURL,typeof slug==='string'&&/^[a-z0-9-]{1,180}$/.test(slug)?slug:'');
+  }
+ });
  function createCard(page){
   const card=document.createElement('section');
   const titleId='smi-ai-'+page+'-title';
@@ -110,6 +123,8 @@
  }
  }
  function queue(){if(!scheduled){scheduled=true;requestAnimationFrame(position)}}
+ launcher.href=withProduct(fullPageURL,pageProduct());
+ window.addEventListener('pointerdown',e=>{if(launcher.contains(e.target))launcher.href=withProduct(fullPageURL,pageProduct())});
  if(fullPage){
   document.title='AI Support | Simply Michigan';
   open();
