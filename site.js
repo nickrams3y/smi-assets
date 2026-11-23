@@ -182,7 +182,7 @@ var SMI_DOM_RUNNER=(function(){
     const listed = entries.some(([, name, first, last = first]) =>
       family.startsWith(name.toLowerCase() + ' ') && year >= first && year <= last);
     if (listed && year >= modelYears[1] && (!modelYears[2] || year <= modelYears[2])) return '';
-    return 'The smaller Ford OEM USB-C hub won’t fit this vehicle with our available bezels, even with the separate wireless adapter. For USB-C, choose the hub with built-in wireless Apple CarPlay and Android Auto. It fits all vehicles.';
+    return "Unfortunately the Ford OEM USB-C hub won't fit this vehicle with our available bezels. For USB-C, please choose the hub with built in wireless Apple CarPlay and Android Auto as these will fit all vehicles.";
   }
 
   function sync(select, event) {
