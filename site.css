@@ -1568,61 +1568,104 @@ html.sm-faq-modal-open {
   margin: 0 !important;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] {
-  flex-direction: row !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 8px !important;
-  margin: 0 !important;
-  padding: 9px 11px !important;
+/* Category callouts share the neutral surface used by product-page promos.
+   The original category descriptions include inline styles for both cards. */
+.grid__description [role="note"]:is([aria-label="Audio Control Module replacement"], [aria-label="Vehicle upgrade eligibility"]) {
+  padding: 14px !important;
+  margin: 18px 0 0 !important;
+  background: #f2f3f4 !important;
+  border: 1px solid #e1e3e5 !important;
+  border-radius: 10px !important;
   text-align: left !important;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:first-child {
-  flex: 0 0 28px !important;
-  width: 28px !important;
-  height: 28px !important;
-  font-size: 17px !important;
-  transform: translateX(8px);
+.grid__description [aria-label="Vehicle upgrade eligibility"] {
+  display: block !important;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child > strong {
-  margin: 0 0 1px !important;
-  font-size: 15px !important;
-  line-height: 1.3 !important;
+.grid__description [aria-label="Vehicle upgrade eligibility"] > [aria-hidden="true"] {
+  display: none !important;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child {
-  flex: 1 1 auto !important;
-  text-align: center !important;
+.grid__description [aria-label="Vehicle upgrade eligibility"] a {
+  color: #333 !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child > span {
+.grid__description [aria-label="Audio Control Module replacement"] > span {
+  flex: 0 0 88px !important;
+  width: 88px !important;
+}
+
+.grid__description [aria-label="Audio Control Module replacement"] > div > span:first-child {
+  color: #575c61 !important;
   font-size: 13px !important;
-  line-height: 1.4 !important;
+  font-weight: 500 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] > span:last-child > span:not(.sm-eligibility-contact) {
-  display: inline !important;
-}
-
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] .sm-eligibility-contact {
-  display: inline !important;
-  margin: 0 !important;
+.grid__description [aria-label="Audio Control Module replacement"] > div > span:last-of-type {
   color: #555 !important;
-  font-weight: 400 !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
 }
 
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] span.sm-eligibility-contact::before {
-  content: " ";
-}
-
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] a.sm-eligibility-contact,
-.ec-store__category-page--39980905 [role="note"][aria-label="Vehicle upgrade eligibility"] .sm-eligibility-contact a {
-  color: inherit !important;
+.grid__description [aria-label="Audio Control Module replacement"] a {
+  background: #242424 !important;
+  border: 0 !important;
+  border-radius: 7px !important;
+  padding: 9px 13px !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
   font-weight: 600 !important;
-  text-decoration: underline !important;
-  text-underline-offset: 2px;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  white-space: normal !important;
+}
+
+.grid__description [aria-label="Audio Control Module replacement"] a:hover {
+  background: #414141 !important;
+}
+
+@media (max-width: 600px) {
+  .grid__description [aria-label="Audio Control Module replacement"] {
+    display: grid !important;
+    grid-template-columns: 66px minmax(0, 1fr);
+    gap: 4px 12px !important;
+  }
+
+  .grid__description [aria-label="Audio Control Module replacement"] > span {
+    width: 66px !important;
+    height: 66px !important;
+    grid-row: 1 / span 2;
+  }
+
+  .grid__description [aria-label="Audio Control Module replacement"] > div {
+    display: contents !important;
+  }
+
+  .grid__description [aria-label="Audio Control Module replacement"] > div > span:first-child {
+    align-self: end;
+    margin: 0 !important;
+  }
+
+  .grid__description [aria-label="Audio Control Module replacement"] strong {
+    align-self: start;
+    margin: 0 !important;
+  }
+
+  .grid__description [aria-label="Audio Control Module replacement"] > div > span:last-of-type {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+  }
+
+  .grid__description [aria-label="Audio Control Module replacement"] a {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
 }
 
 .ec-store__category-page--39980905 .sm-contact-card {
@@ -3884,8 +3927,6 @@ html.sm-product-options-active .details-product-options .sm-po-card .form-contro
 
 /* Retire only the wireless hub description banner; retain catalog stock labels. */
 html body .product-details__product-description [role="note"][aria-label="Back in stock"]{display:none!important}
-/* Leave clearance for the category eligibility badge beneath the FAQ button. */
-html body .grid__description [role="note"][aria-label="Vehicle upgrade eligibility"].sm-bubble{margin-top:32px!important;padding-top:28px!important}
 
 /* Military discount advert: approved red, white and blue card with a linked footer. */
 html body [role="note"][aria-label="Military and first responder discounts"]{display:block!important;position:relative!important;box-sizing:border-box!important;width:100%!important;max-width:none!important;padding:34px 24px 0!important;margin:32px 0 24px!important;background:#f8fafc!important;border:1px solid #d9dfe8!important;border-radius:17px!important;box-shadow:none!important;color:#16325c!important;text-align:left!important;overflow:visible!important}

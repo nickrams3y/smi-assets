@@ -1215,7 +1215,7 @@ var SMI_PROCESSING_POLICY=(function(){
   var label=box.getAttribute('aria-label')||'';
   // Keep Nick's original policies, promos, kit contents and green benefit cards.
   var original=/^(Warranty|Processing Time|Shipping|Returns(?: and Cancellations)?|SimplyCare)/i.test(title)||
-   /^(Kit contents|Military and first responder discounts|Audio Control Module replacement|Back in stock)$/i.test(label)||
+   /^(Kit contents|Military and first responder discounts|Vehicle upgrade eligibility|Audio Control Module replacement|Back in stock)$/i.test(label)||
    box.id==='sm-12-inch-upgrade-ad'||
    (parseFloat(box.style.borderTopWidth)>=3&&box.querySelector(':scope > [aria-hidden]'));
   if(original){
