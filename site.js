@@ -156,6 +156,80 @@ var SMI_DOM_RUNNER=(function(){
   });
 })();
 
+/* Use the OEM hub fitment list in each complete kit's product description. */
+(function () {
+  const kits = '.ec-store__product-page--438297220, .ec-store__product-page--438667764';
+  const modelSelector = 'select[aria-label="Vehicle Model"]';
+  const yearSelector = 'select[aria-label="Model Year"]';
+  const hubSelector = 'select[aria-label="Choose Your Connectivity Upgrade"]';
+  const states = new WeakMap();
+  const oem = /^Ford OEM USB-C Hub\b/i;
+
+  function fitmentMessage(kit, model, year) {
+    const modelYears = model.match(/\((20\d{2})(?:-(20\d{2})|\+)?\)/);
+    if (!modelYears || !/^20\d{2}$/.test(year)) {
+      return 'Choose your vehicle model and year so we can check whether the Ford OEM USB-C hub fits.';
+    }
+    // Match trims to the family names in the chart, including police and Super Duty models.
+    const family = model.replace(/^(?:Ford|Lincoln)\s+/i, '')
+      .replace(/^Police Interceptor (?:Sedan|Utility) \((Taurus|Explorer)\)/i, '$1')
+      .replace(/^F-(?:250|350|450)\b/i, 'Super Duty').toLowerCase();
+    const chart = kit.querySelector('dialog:is(#sm-upgrade-nav-oem, #sm-upgrade-non-nav-oem) .sm-upgrade-modal__body');
+    const entries = chart ? Array.from(chart.querySelectorAll('div > div'), cell =>
+      cell.textContent.trim().match(/^([a-z][a-z\d -]*?)\s+(20\d{2})(?:\s*[–—-]\s*(20\d{2}))?$/i)
+    ).filter(Boolean) : [];
+    if (!entries.length) return 'We couldn’t verify the OEM hub fit for this vehicle. Choose the USB-C hub with built-in wireless for a fit that works with all vehicles.';
+    const listed = entries.some(([, name, first, last = first]) =>
+      family.startsWith(name.toLowerCase() + ' ') && year >= first && year <= last);
+    if (listed && year >= modelYears[1] && (!modelYears[2] || year <= modelYears[2])) return '';
+    return 'The smaller Ford OEM USB-C hub won’t fit this vehicle with our available bezels, even with the separate wireless adapter. For USB-C, choose the hub with built-in wireless Apple CarPlay and Android Auto. It fits all vehicles.';
+  }
+
+  function sync(select, event) {
+    const kit = select.closest(kits);
+    const box = select.closest('.details-product-options');
+    if (!kit || !box) return;
+    const model = box.querySelector(modelSelector)?.value;
+    const year = box.querySelector(yearSelector)?.value;
+    if (model == null || year == null) return;
+    const row = select.closest('.details-product-option');
+    const note = row.querySelector('.sm-hub-fit-notice');
+    const previous = states.get(select);
+    const details = model + '|' + year;
+    const warning = oem.test(select.value) && fitmentMessage(kit, model, year);
+    if (!warning) {
+      if (previous?.details !== details || previous?.value !== select.value) note?.remove();
+      states.set(select, { details, value: select.value });
+      return;
+    }
+
+    const wired = Array.from(select.options).find(option => /^No upgrade\b/i.test(option.value));
+    const prior = previous && !oem.test(previous.value) && Array.from(select.options).find(option => option.value === previous.value && option.index > 0);
+    const fallback = prior || wired || select.options[0];
+    select.value = fallback.value;
+    states.set(select, { details, value: select.value });
+    if (!event || event.target !== select) {
+      // Ecwid must also remove the surcharge when the vehicle changes or a saved choice is restored.
+      select.dispatchEvent(new Event('input', { bubbles: true }));
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    const message = note || document.createElement('p');
+    message.className = 'sm-hub-fit-notice';
+    message.setAttribute('role', 'status');
+    message.textContent = '⚠️ ' + warning;
+    row.insertBefore(message, row.querySelector('.sm-connectivity-summary'));
+  }
+
+  function onSelection(event) {
+    if (!event.target.matches?.([modelSelector, yearSelector, hubSelector].join(','))) return;
+    const hub = event.target.closest('.details-product-options')?.querySelector(hubSelector);
+    if (hub) sync(hub, event);
+  }
+  document.addEventListener('input', onSelection, true);
+  document.addEventListener('change', onSelection, true);
+  SMI_DOM_RUNNER.add(() => document.querySelectorAll(hubSelector).forEach(select => sync(select)));
+})();
+
 /* Recover the price row when Ecwid hydrates offer content into a breadcrumb node. */
 SMI_DOM_RUNNER.add(function(){
  document.querySelectorAll('.product-details__sidebar > .ec-breadcrumbs').forEach(function(row){

@@ -4071,7 +4071,7 @@ html.sm-product-options-active body .details-product-options .details-product-op
 html body .details-product-option:is(.sm-bench-color-locked,.sm-hub-trade-locked) .form-control__text{background:transparent!important;color:#6b6b6b!important;-webkit-text-fill-color:#6b6b6b!important;cursor:not-allowed!important}
 html body .details-product-option:is(.sm-bench-color-locked,.sm-hub-trade-locked) .form-control__select{cursor:not-allowed!important}
 html body .details-product-option:is(.sm-bench-color-locked,.sm-hub-trade-locked) .form-control__arrow{opacity:.35}
-html body .details-product-option :is(.sm-bench-color-note, .sm-display-fit-notice){margin:8px 0 0!important;color:#626762!important;font-size:13px!important;line-height:1.45!important}
+html body .details-product-option :is(.sm-bench-color-note, .sm-display-fit-notice, .sm-hub-fit-notice){margin:8px 0 0!important;color:#626762!important;font-size:13px!important;line-height:1.45!important}
 
 /* Combined ordering policies, with a prominent neutral disclosure footer. */
 html body .product-details__product-description details.sm-order-source{display:none!important}
