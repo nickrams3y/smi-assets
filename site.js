@@ -88,6 +88,10 @@ var SMI_DOM_RUNNER=(function(){
       row.append(note);
     }
     note.dataset.fit = fit;
+    if (fit === 'lincoln-8.0') {
+      note.textContent = '⚠️ Choose the standard 8.0″ Sync 3 display for this vehicle. The 8.46″ display won’t fit its screen brackets.';
+      return;
+    }
     if (fit === 'separate') {
       const link = document.createElement('a');
       link.href = '/products/ford-sync-3-apim-and-screen-complete-upgrade-kit-for-fiesta-transit';
@@ -125,15 +129,18 @@ var SMI_DOM_RUNNER=(function(){
     if (changedModel) state.last = null;
 
     const chosen = display.value.match(/^(standard|recessed)\b/i)?.[1].toLowerCase();
-    if (event?.target === display && chosen && chosen !== fit) {
+    const baseOnly = /^Lincoln (?:MKC|MKZ)\b/i.test(model.value) &&
+      box.closest('.ec-store__product-page--438297220, .ec-store__product-page--438667764');
+    const compatible = chosen === fit && (!baseOnly || display.value === base.value);
+    if (event?.target === display && chosen && !compatible) {
       // Deliver only the compatible value to Ecwid's price and cart handlers.
-      display.value = state.last || base.value;
+      display.value = baseOnly ? base.value : (state.last || base.value);
       state.last = display.value;
-      showNotice(display, fit);
+      showNotice(display, baseOnly ? 'lincoln-8.0' : fit);
       return;
     }
 
-    if (changedModel || chosen !== fit) {
+    if (changedModel || !compatible) {
       showNotice(display, null);
       state.last = base.value;
       setOption(display, base.value);
