@@ -20,6 +20,10 @@
  .smi-ai-dialog-bar:focus{outline:none}
  .smi-ai-dialog-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 16px}
  .smi-ai-dialog-bar a{display:inline-flex;align-items:center;min-height:36px}
+ .smi-ai-load-status{margin:0}.smi-ai-load-status:not(:empty){padding:12px 16px 0;font-size:14px;line-height:1.45}
+ .smi-ai-recovery:not([hidden]){display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:0 16px 6px;border-bottom:1px solid #dce2d8}
+ .smi-ai-recovery a,.smi-ai-recovery button{display:inline-flex;align-items:center;min-height:44px;padding:0;border:0;background:transparent;color:#315b40;font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
+ .smi-ai-recovery button:focus-visible{outline:2px solid #315b40;outline-offset:2px}
  html.smi-ai-chat-page,html.smi-ai-chat-page body{height:100%;min-height:0;overflow:hidden!important;overscroll-behavior:none;background:#f5f5f2}
  html.smi-ai-chat-page body{position:fixed;inset:0;margin:0;padding:0}
  html.smi-ai-chat-page body>:not(#smi-ai-dialog){display:none!important}
@@ -40,6 +44,54 @@
  `;document.head.append(style);
  var launcher=document.createElement('a');launcher.className='smi-ai-launcher';launcher.href=fullPageURL;launcher.target='_blank';launcher.rel='noopener';launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-controls','smi-ai-dialog');launcher.setAttribute('aria-expanded','false');launcher.innerHTML=icon+'<span>AI Support</span>';if(!fullPage)document.body.append(launcher);
  var dialog,frame,previousFocus,savedOverflow,resizeObserver,observedContacts,scheduled=false;
+ let loadTimer,frameReady=false,loadStatus,recoveryActions,openingProduct,openerCardId,pressedRecovery;
+ function setLoadStatus(message,offerRecovery=false){
+  clearTimeout(loadTimer);
+  if(!offerRecovery && dialog.open && recoveryActions.contains(document.activeElement)){
+   dialog.querySelector('.smi-ai-toolbar-contact').focus({preventScroll:true});
+  }
+  loadStatus.textContent=message;
+  recoveryActions.hidden=!offerRecovery;
+ }
+ function finishRecoveryPress(){
+  pressedRecovery=undefined;
+  if(frameReady && !recoveryActions.hidden)setLoadStatus('');
+ }
+ function watchFrame(){
+  clearTimeout(loadTimer);
+  if(!frameReady && recoveryActions.hidden)loadTimer=setTimeout(()=>{
+   if(dialog.open && !frameReady)setLoadStatus('Chat is taking longer than usual to open. You can keep waiting or contact us for help.',true);
+  },12000);
+ }
+ function loadFrame(){
+  // A cross-origin error page can fire "load". Only the chat's own startup
+  // message confirms that it initialized. A slow frame stays in place.
+  setLoadStatus(frame ? 'Opening chat again…' : '');
+  frameReady=false;
+  const next=document.createElement('iframe');
+  next.className='smi-ai-frame';next.title='Simply Michigan AI support assistant';next.referrerPolicy='no-referrer';
+  next.addEventListener('error',()=>{
+   if(frame===next && !frameReady)setLoadStatus('Chat couldn’t open here. Try again or contact us for help.',true);
+  });
+  next.src=withProduct(chatURL,openingProduct);
+  const old=frame;
+  frame=next;
+  if(old)old.replaceWith(next);else dialog.append(next);
+  if(dialog.open)watchFrame();
+ }
+ function returnToContactForm(event){
+  if(event.button!==0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)return;
+  if(!/^\/(?:en\/)?contact-us\/?$/.test(location.pathname))return;
+  const form=document.querySelector('textarea[id^="contact-us-"][id$="-message"]')?.form;
+  if(!form?.getClientRects().length || getComputedStyle(form).visibility!=='visible')return;
+  event.preventDefault();
+  // Closing restores focus. Send it to the existing form without opening the mobile keyboard.
+  const target=form.querySelector('.sm-contact-form-heading h2') || form;
+  if(!target.hasAttribute('tabindex'))target.tabIndex=-1;
+  previousFocus=target;
+  close();
+  target.scrollIntoView({block:'nearest'});
+ }
  function sizePanel(){
   if(!dialog?.open)return;
   const viewport=window.visualViewport;
@@ -55,28 +107,70 @@
    dialog.style.bottom='auto';
   }else{dialog.style.top='';dialog.style.height='';dialog.style.bottom=''}
  }
- function close(){if(!dialog?.open)return;if(fullPage){location.replace(supportURL);return}dialog.close();document.body.style.overflow=savedOverflow;launcher.setAttribute('aria-expanded','false');previousFocus?.isConnected&&previousFocus.focus({preventScroll:true});}
- function open(event){if(event){if(event.button>0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault()}previousFocus=event?.currentTarget || document.activeElement;if(!dialog){
+ function restoreFocus(){
+  // The storefront can redraw its support or contact card while the dialog is open.
+  const currentOpener=openerCardId && document.getElementById(openerCardId)?.querySelector('.smi-ai-open');
+  const target=[previousFocus,currentOpener,launcher].find(el=>el?.isConnected && el.getClientRects().length && getComputedStyle(el).visibility==='visible');
+  target?.focus({preventScroll:true});
+ }
+ function close(){
+  if(!dialog?.open)return;
+  clearTimeout(loadTimer);pressedRecovery=undefined;
+  if(fullPage){location.replace(supportURL);return}
+  dialog.close();document.body.style.overflow=savedOverflow;
+  launcher.setAttribute('aria-expanded','false');restoreFocus();
+  if(frameReady && !recoveryActions.hidden)setLoadStatus('');
+ }
+ function open(event){
+  if(event){if(event.button>0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault()}
+  if(dialog?.open)return;
+  previousFocus=event?.currentTarget || document.activeElement;
+  openerCardId=previousFocus?.closest?.('.smi-ai-card')?.id;
+  openingProduct=pageProduct();
+  if(!dialog){
    dialog=document.createElement('dialog');dialog.id='smi-ai-dialog';dialog.className='smi-ai-dialog';dialog.setAttribute('aria-label','Simply Michigan AI support');
    const primaryLink=fullPage
      ? '<a href="'+supportURL+'">Back to support</a>'
-     : '<a class="smi-chat-full-link" href="'+withProduct(fullPageURL,pageProduct())+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
+     : '<a class="smi-chat-full-link" href="'+withProduct(fullPageURL,openingProduct)+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
    const closeButton=fullPage
      ? ''
      : '<button class="smi-ai-close" type="button" aria-label="Close AI chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>';
-   dialog.innerHTML='<div class="smi-ai-dialog-bar" tabindex="-1"><div class="smi-ai-dialog-links">'+primaryLink+'<a href="'+contactURL+'" target="_blank" rel="noopener noreferrer">Contact support</a></div>'+closeButton+'</div>';
+   dialog.innerHTML='<div class="smi-ai-dialog-bar" tabindex="-1"><div class="smi-ai-dialog-links">'+primaryLink+'<a class="smi-ai-toolbar-contact" href="'+contactURL+'" target="_blank" rel="noopener noreferrer">Contact support</a></div>'+closeButton+'</div>'+
+     '<p class="smi-ai-load-status" role="status"></p><div class="smi-ai-recovery" hidden><button type="button">Try again</button><a href="'+contactURL+'" target="_blank" rel="noopener noreferrer">Contact Us</a></div>';
    if(fullPage)dialog.classList.add('smi-ai-full-page');
-   else dialog.querySelector('button').onclick=close;
-   frame=document.createElement('iframe');frame.className='smi-ai-frame';frame.title='Simply Michigan AI support assistant';frame.referrerPolicy='no-referrer';frame.src=withProduct(chatURL,pageProduct());dialog.append(frame);document.body.append(dialog);
+   else dialog.querySelector('.smi-ai-close').onclick=close;
+   loadStatus=dialog.querySelector('.smi-ai-load-status');
+   recoveryActions=dialog.querySelector('.smi-ai-recovery');
+   // Keep the pressed control in place through its native click, even if startup finishes.
+   window.addEventListener('pointerdown',event=>{
+    if(!event.isPrimary || event.button!==0)return;
+    const control=event.target.closest?.('a,button');
+    if(control && recoveryActions.contains(control))pressedRecovery={id:event.pointerId,control};
+    else if(pressedRecovery)finishRecoveryPress();
+   },true);
+   window.addEventListener('pointerup',event=>{
+    if(pressedRecovery?.id!==event.pointerId)return;
+    // Touch browsers may deliver the click later. Keep its target until activation.
+    if(!pressedRecovery.control.contains(document.elementFromPoint(event.clientX,event.clientY)))finishRecoveryPress();
+   },true);
+   recoveryActions.addEventListener('pointerout',event=>{
+    if(pressedRecovery?.id===event.pointerId && event.buttons && (!event.relatedTarget || event.relatedTarget===frame))finishRecoveryPress();
+   });
+   window.addEventListener('pointercancel',event=>{if(pressedRecovery?.id===event.pointerId)finishRecoveryPress()},true);
+   window.addEventListener('blur',()=>{if(pressedRecovery)finishRecoveryPress()});
+   recoveryActions.addEventListener('dragend',finishRecoveryPress);
+   recoveryActions.addEventListener('click',finishRecoveryPress);
+   recoveryActions.querySelector('button').onclick=()=>{if(!frameReady)loadFrame()};
+   recoveryActions.querySelector('a').onclick=returnToContactForm;
+   dialog.querySelector('.smi-ai-toolbar-contact').onclick=returnToContactForm;
+   loadFrame();document.body.append(dialog);
    // WebKit can keep the page inert until it dispatches the native close event.
    dialog.addEventListener('close', () => requestAnimationFrame(() => {
-     if (!dialog.open && document.activeElement === document.body && previousFocus?.isConnected) {
-       previousFocus.focus({preventScroll:true});
-     }
+     if (!dialog.open && document.activeElement === document.body)restoreFocus();
    }));
    dialog.addEventListener('cancel',e=>{e.preventDefault();close()});dialog.addEventListener('click',e=>{if(e.target===dialog){var r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}})}
-   if(dialog.open)return;
-   frame.contentWindow?.postMessage({type:'smi-chat-page',product:pageProduct()},chatOrigin);
+   if(!frameReady && !fullPage)dialog.querySelector('.smi-chat-full-link').href=withProduct(fullPageURL,openingProduct);
+   frame.contentWindow?.postMessage({type:'smi-chat-page',product:openingProduct},chatOrigin);
    if(fullPage){
     // A standalone page has no storefront underneath it for Safari to reveal on overscroll.
     document.documentElement.classList.add('smi-ai-chat-page');
@@ -88,7 +182,7 @@
     dialog.showModal();
     launcher.setAttribute('aria-expanded','true');
    }
-   sizePanel();
+   watchFrame();sizePanel();
    // Pointer users see the toolbar without a ring. Enter moves focus to Close.
    const initialFocus = fullPage || event?.detail > 0 ? '.smi-ai-dialog-bar' : '.smi-ai-close';
    dialog.querySelector(initialFocus).focus({preventScroll:true});
@@ -98,6 +192,12 @@
   if(e.origin!==chatOrigin||e.source!==frame?.contentWindow)return;
   if(e.data?.type==='smi-chat-close')close();
   if(e.data?.type==='smi-chat-start-page'){
+   if(!frameReady){
+    frameReady=true;
+    if(pressedRecovery===undefined)setLoadStatus('');
+    // An open on a second product can happen before the iframe installs its listener.
+    frame.contentWindow.postMessage({type:'smi-chat-page',product:openingProduct},chatOrigin);
+   }
    const link=dialog.querySelector('.smi-chat-full-link'),slug=e.data.product;
    if(link)link.href=withProduct(fullPageURL,typeof slug==='string'&&/^[a-z0-9-]{1,180}$/.test(slug)?slug:'');
   }
