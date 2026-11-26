@@ -4542,11 +4542,34 @@ html.sm-product-pending #tile-product-details .product-details__sidebar::before{
   #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track {
     background: #eef3ef; overflow-wrap: anywhere;
   }
-  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track a,
   #ecwid_body .ec-size .ec-store__account-page .ec-signin-form .form-control__button {
     border-radius: 7px; background: var(--account-green); color: white; border-color: var(--account-green);
   }
-  #ecwid_body .ec-size .ec-store__account-page .sm-account-track { padding: 9px 14px; }
+  /* Ecwid nests two button wrappers, each with its own top margin. */
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track > div,
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track .form-control--button {
+    margin: 0 !important;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track .form-control--button {
+    display: flex; align-items: center; justify-content: center;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track a {
+    display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box;
+    min-height: 44px; height: auto; padding: 9px 16px; border-radius: 7px;
+    background: var(--account-green) !important; border: 0 !important; color: #fff !important;
+    font-size: 15px; line-height: 1.4; font-weight: 600; text-decoration: none;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track .form-control__button-text {
+    color: inherit; font: inherit; line-height: inherit;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track a:hover {
+    background: #2c4933 !important;
+  }
+  @media (max-width: 600px) {
+    #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track > div,
+    #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track .form-control--button,
+    #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track a { width: 100%; }
+  }
   #ecwid_body .ec-size .ec-store__account-page .sm-account-help { background: white; max-width: 1080px; margin: 16px auto; box-sizing: border-box; }
   #ecwid_body .ec-size .ec-store__account-page .sm-account-help a { color: var(--account-green); text-decoration: underline; }
   #ecwid_body .ec-size .ec-store__account-page .ec-cart--anonymous { grid-template-columns: minmax(0,1fr); }
