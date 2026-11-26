@@ -4494,12 +4494,17 @@ html.sm-product-pending #tile-product-details .product-details__sidebar::before{
 
 /* Customer accounts retain Ecwid's controls, menus, OTP form and print actions. */
 @media screen {
+  #ecwid_body .ins-tile--product-browser:has(.ec-store__account-page) {
+    --sm-account-background: #f8f9f6;
+    background-color: var(--sm-account-background);
+  }
+  #ecwid_body .ins-tile--product-browser:has(.ec-store__account-page) > .ins-tile__wrap {
+    margin-block: clamp(20px, 3vw, 40px);
+  }
   #ecwid_body .ec-size .ec-store.ec-store__account-page {
     --account-line: #dce1db;
     --account-green: #395940;
-    background: #f8f9f6;
-    box-shadow: 0 0 0 100vmax #f8f9f6;
-    clip-path: inset(0 -100vmax);
+    background: var(--sm-account-background, #f8f9f6);
   }
   #ecwid_body .ec-size .ec-store__account-page .ec-cart {
     display: grid;
