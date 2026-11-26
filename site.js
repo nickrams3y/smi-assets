@@ -1441,3 +1441,118 @@ SMI_DOM_RUNNER.add(function(){
   });
  });
 });
+
+/* Style the native account flow and route each parcel using its own displayed number. */
+(function () {
+  const trackSection = '.ec-confirmation__section--track';
+  const nativeLinks = new WeakMap();
+  let accountRoot = null;
+  const trackingChanges = new MutationObserver(records => {
+    const sections = new Set(records.map(record => {
+      const element = record.target.nodeType === 1 ? record.target : record.target.parentElement;
+      return element?.closest(trackSection);
+    }));
+    sections.forEach(section => { if (section) updateTracking(section); });
+  });
+
+  function carrierFor(number) {
+    if (/^1Z[A-Z0-9]{6}\d{2}[A-Z0-9]{7}\d$/.test(number)) return 'UPS';
+    if (/^(?:9[2-5]\d{18}(?:\d{2})?|[A-Z]{2}\d{9}US)$/.test(number)) return 'USPS';
+    return '';
+  }
+
+  function carrierHost(href) {
+    try { return new URL(href).hostname; } catch { return ''; }
+  }
+
+  function updateTracking(section) {
+    // Ecwid renders the number in the first row and the optional link in a separate button.
+    const number = (section.querySelector(':scope > div:first-child > span')?.textContent || '')
+      .toUpperCase().replace(/[\s-]/g, '');
+    const carrier = carrierFor(number);
+    const native = section.querySelector('a:not(.sm-account-track)');
+    let added = section.querySelector('.sm-account-track');
+    if (added && (native || !carrier)) { added.remove(); added = null; }
+    if (native) {
+      let state = nativeLinks.get(native);
+      const href = native.getAttribute('href');
+      if (!state || href !== state.applied) {
+        state = {original: href, applied: href, label: state?.label};
+        nativeLinks.set(native, state);
+      }
+      // Preserve working postal links (including postal formats shared with other carriers).
+      // Use the original Ecwid link for unrecognized or ambiguous numbers.
+      let destination = state.original;
+      if (carrier) {
+        const originalHost = carrierHost(state.original);
+        const postalLink = /(^|\.)usps\.com$/i.test(originalHost);
+        const upsLink = /(^|\.)ups\.com$/i.test(originalHost);
+        if (carrier === 'UPS') destination = 'https://www.ups.com/track?tracknum=' + number;
+        else if (postalLink || upsLink || !state.original) destination = 'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + number;
+      }
+      state.applied = destination;
+      if (destination !== href) {
+        if (destination === null) native.removeAttribute('href');
+        else native.setAttribute('href', destination);
+      }
+      const host = carrierHost(destination);
+      const displayCarrier = carrier === 'UPS' ? 'UPS' : /(^|\.)usps\.com$/i.test(host) ? 'USPS' : '';
+      const label = native.querySelector('.form-control__button-text') || native;
+      if (!label.childElementCount && /^track (?:package|your package|with UPS|with USPS)$/i.test(label.textContent.trim())) {
+        if (!state.label) state.label = label.textContent;
+        const nextLabel = displayCarrier ? 'Track with ' + displayCarrier : state.label;
+        if (label.textContent !== nextLabel) label.textContent = nextLabel;
+      }
+    } else if (carrier) {
+      if (!added) {
+        added = document.createElement('a');
+        added.className = 'sm-account-track';
+        added.target = '_blank';
+        added.rel = 'noopener noreferrer';
+        section.append(added);
+      }
+      const href = carrier === 'UPS' ? 'https://www.ups.com/track?tracknum=' + number :
+        'https://tools.usps.com/go/TrackConfirmAction?tLabels=' + number;
+      if (added.href !== href) added.href = href;
+      if (added.textContent !== 'Track with ' + carrier) added.textContent = 'Track with ' + carrier;
+    }
+  }
+
+  function enhanceAccount() {
+    const root = document.querySelector('.ec-store__account-page');
+    if (accountRoot !== root) {
+      trackingChanges.disconnect();
+      accountRoot = root;
+      if (root) trackingChanges.observe(root, {subtree:true, attributes:true, attributeFilter:['href'], characterData:true});
+    }
+    if (!root) return;
+    root.querySelectorAll(trackSection).forEach(updateTracking);
+    const form = root.querySelector('.ec-cart--anonymous .ec-signin-form');
+    if (form && !form.querySelector('.sm-account-intro')) {
+      const intro = document.createElement('div');
+      intro.className = 'sm-account-intro';
+      intro.innerHTML = '<h2>Check your order</h2><p>Find your order details, shipping updates, and tracking in one place.</p>';
+      form.append(intro);
+    }
+    const signIn = form?.querySelector('.ec-signin-form__content');
+    if (signIn?.querySelector('input[type="email"]')) {
+      const heading = signIn.querySelector('h2');
+      const description = signIn.querySelector('.ec-signin-form__description');
+      const label = signIn.querySelector('button .form-control__button-text');
+      if (heading?.textContent.trim() === 'Join us or sign in') heading.textContent = 'Sign in by email';
+      if (description?.textContent.trim().startsWith('For a sign-in,')) {
+        description.textContent = 'Enter the email address you used at checkout. We’ll send you a one-time sign-in code. An account will be created if you don’t have one yet.';
+      }
+      if (label?.textContent.trim() === 'Continue') label.textContent = 'Send sign-in code';
+    }
+    if (!root.querySelector('.sm-account-help')) {
+      const cart = root.querySelector('.ec-cart');
+      if (!cart) return;
+      const help = document.createElement('aside');
+      help.className = 'sm-account-help';
+      help.innerHTML = '<strong>Need help with your order?</strong><a href="/contact-us">Contact Simply Michigan ↗</a>';
+      cart.after(help);
+    }
+  }
+  SMI_DOM_RUNNER.add(enhanceAccount);
+})();

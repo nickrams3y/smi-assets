@@ -4491,3 +4491,97 @@ html.sm-product-pending #tile-product-details .product-details__sidebar::before{
 
 .product-details__product-price-row .sm-price-ticket__clock{display:block!important;flex:0 0 16px!important;width:16px!important;height:16px!important;color:inherit!important}
 .product-details__product-price-row .sm-price-ticket__countdown{font:inherit!important;color:inherit!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important;letter-spacing:0!important}
+
+/* Customer accounts retain Ecwid's controls, menus, OTP form and print actions. */
+@media screen {
+  #ecwid_body .ec-size .ec-store.ec-store__account-page {
+    --account-line: #dce1db;
+    --account-green: #395940;
+    background: #f8f9f6;
+    box-shadow: 0 0 0 100vmax #f8f9f6;
+    clip-path: inset(0 -100vmax);
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart {
+    display: grid;
+    grid-template-columns: minmax(230px, .7fr) minmax(0, 1.6fr);
+    align-items: start;
+    gap: 24px;
+    margin: 0 auto 16px;
+    max-width: 1080px;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart > :is(.ec-cart__body, .ec-cart__sidebar),
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__body-inner,
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__sidebar-inner {
+    width: 100%; min-width: 0; max-width: none; padding: 0; margin: 0; border: 0;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__sidebar-inner,
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__order {
+    box-sizing: border-box; border: 1px solid var(--account-line);
+    border-radius: 14px; background: #fff; padding: clamp(18px, 2.3vw, 28px);
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__order { margin: 0 0 18px; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__order > .ec-confirmation__step {
+    margin: 0; padding: 0; border: none;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__sidebar .page-title__name,
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__sidebar .ec-cart-step__title {
+    overflow-wrap: break-word; letter-spacing: -.025em;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__sidebar .page-title__name { font-size: 30px; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart__sidebar .ec-header-h4 { font-size: 21px; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track,
+  #ecwid_body .ec-size .ec-store__account-page .sm-account-help {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 10px; border: 1px solid var(--account-line); border-radius: 10px; padding: 14px 18px;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track {
+    background: #eef3ef; overflow-wrap: anywhere;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-confirmation__section--track a,
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form .form-control__button {
+    border-radius: 7px; background: var(--account-green); color: white; border-color: var(--account-green);
+  }
+  #ecwid_body .ec-size .ec-store__account-page .sm-account-track { padding: 9px 14px; }
+  #ecwid_body .ec-size .ec-store__account-page .sm-account-help { background: white; max-width: 1080px; margin: 16px auto; box-sizing: border-box; }
+  #ecwid_body .ec-size .ec-store__account-page .sm-account-help a { color: var(--account-green); text-decoration: underline; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart--anonymous { grid-template-columns: minmax(0,1fr); }
+  #ecwid_body .ec-size .ec-store__account-page .ec-cart--anonymous .ec-cart__body { grid-row: 1; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form:has(.sm-account-intro) {
+    display: grid; grid-template-columns: .94fr 1.06fr; align-items: stretch; padding: 0;
+    width: 100%; max-width: none; margin: 0; background: #fff; border: 1px solid var(--account-line);
+    border-radius: 18px;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form:has(.sm-account-intro) .ec-vertical-line { display: none; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form .sm-account-intro {
+    grid-area: 1 / 1; box-sizing: border-box; padding: clamp(24px, 4vw, 48px) clamp(24px, 4vw, 46px) 100px;
+    border-radius: 17px 0 0 17px; color: white;
+    background: linear-gradient(180deg,#222a27,transparent 40%) center bottom / 100% 90px no-repeat,
+      url("./images/branding/footer-pastel-grid.webp") center bottom / 100% 90px no-repeat, #222a27;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .sm-account-intro::before {
+    content: ''; display: block; width: 46px; height: 46px; margin-bottom: 21px;
+    border-radius: 13px; border: 1px solid #63756a;
+    background: #35423a url("./images/email-status/shipment.png") center / 28px no-repeat;
+    background-blend-mode: screen;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .sm-account-intro h2 { color: white; margin: 0 0 12px; font-size: clamp(36px,4vw,55px); line-height: 1.05; letter-spacing: -.045em; }
+  #ecwid_body .ec-size .ec-store__account-page .sm-account-intro p { color: #e2e7e1; font-size: 18px; line-height: 1.5; max-width: 340px; margin: 0; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form:has(.sm-account-intro) .ec-signin-form__content {
+    grid-area: 1 / 2; align-self: center; padding: clamp(24px, 4vw, 48px); width: 100%; min-width: 0;
+    box-sizing: border-box; max-width: none; margin: 0;
+  }
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form__content .page-title__name { font-size: 30px; letter-spacing: -.035em; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form__features { display: none; }
+  #ecwid_body .ec-size .ec-store__account-page .ec-signin-form .form-control--primary .form-control__button {
+    background: var(--account-green) !important;
+  }
+  @media (max-width: 740px) {
+    #ecwid_body .ec-size .ec-store__account-page .ec-cart { display: flex; flex-direction: column; gap: 16px; }
+    #ecwid_body .ec-size .ec-store__account-page .ec-cart .ec-cart__body { order: -1; }
+    #ecwid_body .ec-size .ec-store__account-page .ec-signin-form:has(.sm-account-intro) { grid-template-columns: minmax(0,1fr); }
+    #ecwid_body .ec-size .ec-store__account-page .ec-signin-form .sm-account-intro { border-radius: 17px 17px 0 0; padding: 24px 20px 44px; background-size: 100% 40px, 100% 40px; }
+    #ecwid_body .ec-size .ec-store__account-page .sm-account-intro p { font-size: 15px; }
+    #ecwid_body .ec-size .ec-store__account-page .ec-signin-form:has(.sm-account-intro) .ec-signin-form__content { grid-area: 2 / 1; padding: 22px 14px; }
+  }
+}
+@media print { .sm-account-help, .sm-account-intro { display:none !important; } }
