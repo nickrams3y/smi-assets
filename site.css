@@ -456,7 +456,7 @@ body .smi-ai-launcher,
  * Sync 2 to Sync 3 landing page: its description supplies the customer-facing
  * heading, so hide only Ecwid's duplicate category title.
  */
-.ec-store__category-page--39980905 .ec-page-title {
+.ec-store__category-page--209633740 .ec-page-title {
   display: none !important;
 }
 
@@ -1172,7 +1172,7 @@ body .smi-ai-launcher,
   transform: rotate(45deg);
 }
 
-.ec-store__category-page--39980905 .sm-system-picker__label {
+.ec-store__category-page--209633740 .sm-system-picker__label {
   margin-bottom: 6px;
   font-size: 14px;
 }
@@ -1209,11 +1209,11 @@ body .smi-ai-launcher,
   pointer-events: none;
 }
 
-.ec-store__category-page--39980905 .sm-system-picker__value strong {
+.ec-store__category-page--209633740 .sm-system-picker__value strong {
   font-size: 16px;
 }
 
-.ec-store__category-page--39980905 .sm-system-picker__chevron {
+.ec-store__category-page--209633740 .sm-system-picker__chevron {
   width: 0;
   height: 0;
   top: 50%;
@@ -1431,7 +1431,7 @@ body .smi-ai-launcher,
 }
 
 /* Compact FAQ launcher and modal for the Sync 2 to Sync 3 landing page. */
-.ec-store__category-page--39980905 .sm-faq-launcher {
+.ec-store__category-page--209633740 .sm-faq-launcher {
   display: flex;
   width: 100%;
   min-height: 46px;
@@ -1452,11 +1452,11 @@ body .smi-ai-launcher,
   line-height: 1.35;
 }
 
-.ec-store__category-page--39980905 .sm-faq-launcher:hover {
+.ec-store__category-page--209633740 .sm-faq-launcher:hover {
   background: #e9e9e9;
 }
 
-.ec-store__category-page--39980905 .sm-faq-launcher__icon {
+.ec-store__category-page--209633740 .sm-faq-launcher__icon {
   display: inline-flex;
   flex: 0 0 24px;
   width: 24px;
@@ -1560,7 +1560,7 @@ html.sm-faq-modal-open {
 }
 
 /* Keep the eligibility reminder visible without taking over the page. */
-.ec-store__category-page--39980905 .sm-support-row {
+.ec-store__category-page--209633740 .sm-support-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 12px;
@@ -1697,7 +1697,7 @@ html.sm-faq-modal-open {
   }
 }
 
-.ec-store__category-page--39980905 .sm-contact-card {
+.ec-store__category-page--209633740 .sm-contact-card {
   display: flex;
   min-width: 0;
   align-items: center;
@@ -1715,11 +1715,11 @@ html.sm-faq-modal-open {
   text-decoration: none !important;
 }
 
-.ec-store__category-page--39980905 .sm-contact-card:hover {
+.ec-store__category-page--209633740 .sm-contact-card:hover {
   background: #eeeeee;
 }
 
-.ec-store__category-page--39980905 .sm-contact-card__icon {
+.ec-store__category-page--209633740 .sm-contact-card__icon {
   display: inline-flex;
   flex: 0 0 28px;
   width: 28px;
@@ -1731,7 +1731,7 @@ html.sm-faq-modal-open {
   color: #fff !important;
 }
 
-.ec-store__category-page--39980905 .sm-contact-card__icon svg {
+.ec-store__category-page--209633740 .sm-contact-card__icon svg {
   width: 14px;
   height: 14px;
   fill: none;
@@ -1742,11 +1742,11 @@ html.sm-faq-modal-open {
 }
 
 @media (max-width: 560px) {
-  .ec-store__category-page--39980905 .sm-faq-launcher {
+  .ec-store__category-page--209633740 .sm-faq-launcher {
     margin-bottom: 9px !important;
   }
 
-  .ec-store__category-page--39980905 .sm-support-row {
+  .ec-store__category-page--209633740 .sm-support-row {
     grid-template-columns: 1fr;
     gap: 9px;
   }
