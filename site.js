@@ -1453,6 +1453,16 @@ SMI_DOM_RUNNER.add(function(){
       return element?.closest(trackSection);
     }));
     sections.forEach(section => { if (section) updateTracking(section); });
+    // The shared runner handles replaced elements. Ecwid can also update text in place.
+    const orders = new Set();
+    for (const {target} of records) {
+      const element = target.nodeType === 1 ? target : target.parentElement;
+      if (element?.closest('.ec-confirmation__status, ' + trackSection)) {
+        const order = element.closest('.ec-cart__order');
+        if (order) orders.add(order);
+      }
+    }
+    orders.forEach(updateOrderProgress);
   });
 
   function carrierFor(number) {
@@ -1518,6 +1528,59 @@ SMI_DOM_RUNNER.add(function(){
     }
   }
 
+  const milestones = [
+    ['Received', '<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM8 7h8M8 11h6"/>'],
+    ['Processing', '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3m6-3v3m-6 12v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3"/><rect x="10" y="10" width="4" height="4"/>'],
+    ['Packing', '<path d="m3 7 9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10M8 5l9 4"/>'],
+    ['Shipped', '<path d="M2 5h12v12H2zM14 9h4l4 4v4h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>'],
+    ['Delivered', '<path d="m3 11 9-8 9 8M5 10v10h14V10m-10 4 2 2 4-4"/>']
+  ];
+  // Only recognized fulfillment labels advance the timeline. Payment is independent.
+  const stages = new Map([
+    ['awaiting processing', {step:0, title:'Order received', message:'We’ve received your order and will update its status as we prepare it.'}],
+    ['processing', {step:1, title:'Processing your order', message:'Your order is being prepared.'}],
+    ['preparing programming', {step:1, title:'In the programming queue', message:'Your hardware is set aside for your vehicle.', timing:'Usually <strong>about 5 business days</strong>, unless your product page lists a different processing time.'}],
+    ['preparing for shipment', {step:2, title:'Getting ready to ship', message:'We’re finishing your order. Watch for a separate email with tracking details.'}],
+    ['shipped', {step:3, title:'Your order has shipped', message:'Watch for your shipping email with tracking details.', timing:'Allow up to <strong>24 hours</strong> for tracking to update.'}],
+    ['delivered', {step:4, title:'Delivered', message:'Your package is marked as delivered.'}],
+    ['on hold - pending instructions', {step:0, held:true, title:'Waiting for your reply', message:'We need a little more information. Please check your inbox and spam folder and reply to our email.'}],
+    ['on hold - awaiting inventory', {step:0, held:true, title:'Waiting for inventory', message:'Once stock arrives, we’ll set aside your hardware and move your order into processing.'}]
+  ]);
+
+  function updateOrderProgress(order) {
+    const existing = order.querySelector('.sm-order-progress');
+    let state, row, key;
+    for (const label of order.querySelectorAll('.ec-confirmation__status:not([class*="--custom-payment-status-"])')) {
+      key = label.textContent.trim().toLowerCase().replace(/\s*[-–—]\s*/g, ' - ').replace(/\s+/g, ' ').replace(/^processing - /, '');
+      state = stages.get(key);
+      if (state) {
+        row = label.closest('.ec-confirmation__section');
+        break;
+      }
+    }
+    if (!row) { existing?.remove(); return; }
+    const hasTracking = state.step === 3 && !!order.querySelector(trackSection + ' a[href]');
+    const version = key + (hasTracking ? '/tracking' : '');
+    if (existing?.dataset.stage === version && row.nextElementSibling === existing) return;
+    const panel = existing || document.createElement('section');
+    panel.className = 'sm-order-progress';
+    panel.dataset.stage = version;
+    panel.classList.toggle('sm-order-progress--held', !!state.held);
+    panel.setAttribute('aria-label', 'Order progress');
+    const steps = milestones.map(([name, icon], index) => {
+      const current = index === state.step;
+      const marker = current && state.held ? '<path d="M8 5v14m8-14v14" stroke-width="3"/>' : icon;
+      const status = current ? ' aria-current="step"' : index < state.step ? ' class="sm-step-done"' : '';
+      return '<li' + status + '><span class="sm-step-icon"><svg viewBox="0 0 24 24" aria-hidden="true">' + marker +
+        '</svg></span><span class="sm-step-label">' + name + '</span></li>';
+    }).join('');
+    const message = hasTracking ? 'Use the carrier link in your shipping details to track your package.' : state.message;
+    // The markup contains only our fixed milestone names, icons and copy.
+    panel.innerHTML = '<ol role="list" aria-label="Fulfillment milestones">' + steps + '</ol><h3>' + state.title +
+      '</h3><p>' + message + '</p>' + (state.timing ? '<p>' + state.timing + '</p>' : '');
+    if (row.nextElementSibling !== panel) row.after(panel);
+  }
+
   function enhanceAccount() {
     const root = document.querySelector('.ec-store__account-page');
     if (accountRoot !== root) {
@@ -1527,6 +1590,7 @@ SMI_DOM_RUNNER.add(function(){
     }
     if (!root) return;
     root.querySelectorAll(trackSection).forEach(updateTracking);
+    root.querySelectorAll('.ec-cart__order').forEach(updateOrderProgress);
     const form = root.querySelector('.ec-cart--anonymous .ec-signin-form');
     if (form && !form.querySelector('.sm-account-intro')) {
       const intro = document.createElement('div');

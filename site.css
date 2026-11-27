@@ -4614,3 +4614,42 @@ html.sm-product-pending #tile-product-details .product-details__sidebar::before{
   }
 }
 @media print { .sm-account-help, .sm-account-intro { display:none !important; } }
+
+/* Forest timeline, inserted below the native status and order actions. */
+@media screen {
+  .ec-size .ec-store__account-page .sm-order-progress {
+    --forest-accent: #365e49;
+    box-sizing: border-box; margin: 15px 0 18px; padding: 16px;
+    border: 1px solid #d9e2d8; border-radius: 10px; background: #f1f5ef; color: #253d2d;
+  }
+  .ec-size .sm-order-progress.sm-order-progress--held { --forest-accent: #865a24; }
+  .ec-size .sm-order-progress ol {
+    display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); margin: 0 0 12px;
+    padding: 0 0 13px; list-style: none; border-bottom: 1px solid #d6e0d5;
+  }
+  .ec-size .sm-order-progress li {
+    position: relative; margin: 0; padding: 0; list-style: none; text-align: center;
+    font-size: clamp(10px,1.5vw,13px); line-height: 1.4; color: #526357;
+  }
+  .ec-size .sm-order-progress li + li::before {
+    content: ""; position: absolute; top: 15px; left: -50%; width: 100%; height: 2px; background: #ced9d0;
+  }
+  .ec-size .sm-order-progress li:is(.sm-step-done,[aria-current])::before { background: var(--forest-accent); }
+  .ec-size .sm-order-progress .sm-step-icon {
+    position: relative; z-index: 1; display: inline-grid; place-items: center;
+    box-sizing: border-box; width: 31px; height: 31px; border: 1px solid #aebeb1; border-radius: 50%; background: #f1f5ef;
+  }
+  .ec-size .sm-order-progress .sm-step-done .sm-step-icon { background: #dce9dd; color: #355e47; border-color: #89a68e; }
+  .ec-size .sm-order-progress [aria-current] { color: var(--forest-accent); font-weight: 700; }
+  .ec-size .sm-order-progress [aria-current] .sm-step-icon {
+    background: var(--forest-accent); color: white; border-color: var(--forest-accent); box-shadow: 0 0 0 3px #f1f5ef;
+  }
+  .ec-size .sm-order-progress svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; }
+  .ec-size .sm-order-progress .sm-step-label { display: block; margin-top: 5px; }
+  .ec-size .sm-order-progress h3 { margin: 0; color: #253d2d; font-size: 18px; line-height: 1.25; font-weight: 700; }
+  .ec-size .sm-order-progress p { margin: 5px 0 0; color: #35493b; font-size: 14px; line-height: 1.5; }
+  @media (max-width: 450px) {
+    .ec-size .ec-store__account-page .sm-order-progress { padding: 12px 8px; }
+  }
+}
+@media print { .sm-order-progress { display: none !important; } }
