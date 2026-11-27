@@ -1530,7 +1530,7 @@ SMI_DOM_RUNNER.add(function(){
 
   const milestones = [
     ['Received', '<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2zM8 7h8M8 11h6"/>'],
-    ['Processing', '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3m6-3v3m-6 12v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3"/><rect x="10" y="10" width="4" height="4"/>'],
+    ['Processing', '<rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="m6.5 9 3 3-3 3M13 15h4"/>'],
     ['Packing', '<path d="m3 7 9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10M8 5l9 4"/>'],
     ['Shipped', '<path d="M2 5h12v12H2zM14 9h4l4 4v4h-8"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>'],
     ['Delivered', '<path d="m3 11 9-8 9 8M5 10v10h14V10m-10 4 2 2 4-4"/>']
@@ -1538,7 +1538,7 @@ SMI_DOM_RUNNER.add(function(){
   // Only recognized fulfillment labels advance the timeline. Payment is independent.
   const stages = new Map([
     ['awaiting processing', {step:0, title:'Order received', message:'We’ve received your order and will update its status as we prepare it.'}],
-    ['processing', {step:1, title:'Processing your order', message:'Your order is being prepared.'}],
+    ['processing', {step:1, title:'Processing your order', message:'We’re preparing your order for shipment. This usually takes <strong>about 5 business days</strong>, unless your product page lists a different processing time.'}],
     ['preparing programming', {step:1, title:'In the programming queue', message:'Your hardware is set aside for your vehicle.', timing:'Usually <strong>about 5 business days</strong>, unless your product page lists a different processing time.'}],
     ['preparing for shipment', {step:2, title:'Getting ready to ship', message:'We’re finishing your order. Watch for a separate email with tracking details.'}],
     ['shipped', {step:3, title:'Your order has shipped', message:'Watch for your shipping email with tracking details.', timing:'Allow up to <strong>24 hours</strong> for tracking to update.'}],
