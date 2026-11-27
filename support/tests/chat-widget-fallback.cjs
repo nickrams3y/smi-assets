@@ -532,3 +532,18 @@ test('Floating visits track once, keep test markers and exclude support card ope
   assert.deepEqual(activity.map(e=>e.stage),['seen','opened','sent']);
   assert.ok(activity.every(e=>e.test && e.id===activity[0].id));
 });
+
+test('Toolbar actions keep their destinations and fit beside Close on a small phone',async t=>{
+  const device={...devices['iPhone 13'],viewport:{width:320,height:640}};
+  const {launcher,panel}=await fixture(t,{device});
+  await launcher.click();
+  const full=panel.getByRole('link',{name:'Open in a full page'});
+  const support=panel.locator('.smi-ai-dialog-bar').getByRole('link',{name:'Contact support'});
+  assert.equal(new URL(await full.getAttribute('href')).pathname,'/support');
+  assert.equal(await support.getAttribute('href'),shop+'/contact-us');
+  const close=panel.getByRole('button',{name:'Close AI chat'});
+  const [a,b,c]=await Promise.all([full.boundingBox(),support.boundingBox(),close.boundingBox()]);
+  assert.equal(a.y,b.y);
+  assert.ok(a.height>=44 && b.height>=44 && a.x+a.width<=b.x && b.x+b.width<=c.x);
+  assert.equal(await full.evaluate(el=>getComputedStyle(el).borderTopStyle),'solid');
+});
