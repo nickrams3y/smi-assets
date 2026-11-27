@@ -16,7 +16,7 @@ after(async () => { await browser?.close(); });
 async function fixture(t, { url = shop+'/products/'+product, device, replies = ['ready'], storefront = shell } = {}) {
   const context = await browser.newContext(device || { viewport:{ width:1280, height:850 } });
   const page = await context.newPage();
-  const requests = [], errors = [];
+  const requests = [], errors = [], activity = [];
   let release;
   const delayed = new Promise(resolve => { release = resolve; });
   t.after(async () => {
@@ -28,6 +28,10 @@ async function fixture(t, { url = shop+'/products/'+product, device, replies = [
   await context.route('**/*', async route => {
     const target = new URL(route.request().url());
     if (target.origin === shop) return route.fulfill({ contentType:'text/html', body:storefront });
+    if(target.origin===worker && target.pathname==='/api/launcher-activity'){
+      activity.push(route.request().postDataJSON());
+      return route.fulfill({status:204,headers:{'Access-Control-Allow-Origin':shop}});
+    }
     if (target.origin !== worker || target.pathname !== '/') return route.abort();
     const mode = replies[requests.length];
     requests.push(target.href);
@@ -47,7 +51,7 @@ async function fixture(t, { url = shop+'/products/'+product, device, replies = [
   await page.addScriptTag({ path:script });
   const panel = page.locator('#smi-ai-dialog');
   return { page, context, panel, status:panel.getByRole('status'), actions:panel.locator('.smi-ai-recovery'),
-    launcher:page.locator('.smi-ai-launcher'), input:page.frameLocator('.smi-ai-frame').getByRole('textbox'), requests, release };
+    launcher:page.locator('.smi-ai-launcher'), input:page.frameLocator('.smi-ai-frame').getByRole('textbox'), requests, release, activity };
 }
 
 test('Healthy chat is lazy, retains drafts and restores focus to the actual opener', async t => {
@@ -173,7 +177,7 @@ test('Retry keeps the product from opening, including after a fresh open on anot
   await unavailable.waitFor();
   await panel.getByRole('button',{name:'Close AI chat'}).click();
   await launcher.click();
-  assert.equal(await panel.locator('.smi-chat-full-link').getAttribute('href'),shop+'/support?chat=1#product=different-product');
+  assert.equal(await panel.locator('.smi-chat-full-link').getAttribute('href'),shop+'/support?chat=1&from=launcher#product=different-product');
   await page.clock.fastForward(15000);
   await changePage('third-product');
   await retry.click();
@@ -507,4 +511,24 @@ test('A late startup signal preserves the draft, selection and typing focus insi
   await page.keyboard.insertText('disconnects');
   assert.equal(await input.inputValue(),'Sync disconnects');
   assert.equal(requests.length,1);
+});
+
+test('Floating visits track once, keep test markers and exclude support card opens',async t=>{
+  const {page,launcher,panel,activity}=await fixture(t,{url:shop+'/support?chat_test=1'});
+  const card=page.locator('#smi-ai-support-card .smi-ai-open');
+  await card.waitFor();
+  await card.click();
+  await panel.getByRole('button',{name:'Close AI chat'}).click();
+  assert.ok(activity.every(e=>e.stage==='seen'));
+  assert.equal(await launcher.innerText(),'Ask a question');
+  await launcher.click();
+  const frame=page.frames().find(f=>f.url().startsWith(worker));
+  const submitted=page.waitForResponse(r=>r.url().endsWith('/api/launcher-activity') && r.request().postDataJSON().stage==='sent');
+  await frame.evaluate(origin=>{
+    parent.postMessage({type:'smi-chat-submitted',test:true},origin);
+    parent.postMessage({type:'smi-chat-submitted',test:true},origin);
+  },shop);
+  await submitted;
+  assert.deepEqual(activity.map(e=>e.stage),['seen','opened','sent']);
+  assert.ok(activity.every(e=>e.test && e.id===activity[0].id));
 });

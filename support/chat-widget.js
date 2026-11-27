@@ -42,9 +42,50 @@
  #smi-ai-contact-card .smi-ai-open{grid-column:1/-1;width:100%;min-height:44px}
  .sm-contact-description:has(+ #smi-ai-contact-card) p:has(> a[href="${chatURL}"]:only-child){display:none}
  `;document.head.append(style);
- var launcher=document.createElement('a');launcher.className='smi-ai-launcher';launcher.href=fullPageURL;launcher.target='_blank';launcher.rel='noopener';launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-controls','smi-ai-dialog');launcher.setAttribute('aria-expanded','false');launcher.innerHTML=icon+'<span>AI Support</span>';if(!fullPage)document.body.append(launcher);
+ var launcher=document.createElement('a');launcher.className='smi-ai-launcher';launcher.href=fullPageURL;launcher.target='_blank';launcher.rel='noopener';launcher.setAttribute('aria-haspopup','dialog');launcher.setAttribute('aria-controls','smi-ai-dialog');launcher.setAttribute('aria-expanded','false');launcher.innerHTML=icon+'<span>Ask a question</span>';if(!fullPage)document.body.append(launcher);
  var dialog,frame,previousFocus,savedOverflow,resizeObserver,observedContacts,scheduled=false;
  let loadTimer,frameReady=false,loadStatus,recoveryActions,openingProduct,openerCardId,pressedRecovery;
+ const launcherURL=fullPageURL+'&from=launcher';
+ const query=new URLSearchParams(location.search);
+ const testVisit=navigator.webdriver===true || query.get('chat_test')==='1';
+ const activityKey='smi.chat.launcher.visit';
+ const visitTimeout=30*60*1000;
+ let recentVisit,activeLauncherVisit,seen=false;
+ function visit(){
+  if(navigator.globalPrivacyControl || navigator.doNotTrack==='1' || !window.crypto?.randomUUID)return null;
+  const now=Date.now();
+  let entry=recentVisit;
+  try{entry=JSON.parse(localStorage.getItem(activityKey)) || entry}catch{}
+  if(!entry?.id || now-entry.last>=visitTimeout)entry={id:crypto.randomUUID(),test:false};
+  entry.last=now;
+  entry.test=!!(entry.test || testVisit);
+  recentVisit=entry;
+  try{localStorage.setItem(activityKey,JSON.stringify(entry))}catch{}
+  return entry;
+ }
+ const reported=new Map();
+ function report(entry,stage,marked=false){
+  if(!entry)return;
+  if(marked && !entry.test){
+   entry.test=true;
+   try{const stored=JSON.parse(localStorage.getItem(activityKey));if(stored?.id===entry.id)localStorage.setItem(activityKey,JSON.stringify({...stored,test:true}))}catch{}
+  }
+  const key=entry.id+':'+stage+':'+entry.test;
+  if(reported.has(key))return;
+  reported.set(key,true);
+  async function deliver(retry){
+   try{
+    const response=await fetch(chatOrigin+'/api/launcher-activity',{method:'POST',credentials:'omit',referrerPolicy:'no-referrer',keepalive:true,
+     body:JSON.stringify({id:entry.id,stage,test:entry.test})});
+    if(response.ok)return;
+    if(response.status<500)return;
+   }catch{}
+   if(retry)setTimeout(()=>deliver(false),2000);
+   else reported.delete(key);
+  }
+  deliver(true);
+ }
+ function panelURL(){return activeLauncherVisit ? launcherURL : fullPageURL}
  function setLoadStatus(message,offerRecovery=false){
   clearTimeout(loadTimer);
   if(!offerRecovery && dialog.open && recoveryActions.contains(document.activeElement)){
@@ -125,13 +166,15 @@
   if(event){if(event.button>0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault()}
   if(dialog?.open)return;
   previousFocus=event?.currentTarget || document.activeElement;
+  activeLauncherVisit=previousFocus===launcher || (fullPage && query.get('from')==='launcher') ? visit() : null;
+  report(activeLauncherVisit,'opened');
   openerCardId=previousFocus?.closest?.('.smi-ai-card')?.id;
   openingProduct=pageProduct();
   if(!dialog){
    dialog=document.createElement('dialog');dialog.id='smi-ai-dialog';dialog.className='smi-ai-dialog';dialog.setAttribute('aria-label','Simply Michigan AI support');
    const primaryLink=fullPage
      ? '<a href="'+supportURL+'">Back to support</a>'
-     : '<a class="smi-chat-full-link" href="'+withProduct(fullPageURL,openingProduct)+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
+     : '<a class="smi-chat-full-link" href="'+withProduct(panelURL(),openingProduct)+'" target="_blank" rel="noopener noreferrer">Open in a full page</a>';
    const closeButton=fullPage
      ? ''
      : '<button class="smi-ai-close" type="button" aria-label="Close AI chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>';
@@ -169,7 +212,7 @@
      if (!dialog.open && document.activeElement === document.body)restoreFocus();
    }));
    dialog.addEventListener('cancel',e=>{e.preventDefault();close()});dialog.addEventListener('click',e=>{if(e.target===dialog){var r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close()}})}
-   if(!frameReady && !fullPage)dialog.querySelector('.smi-chat-full-link').href=withProduct(fullPageURL,openingProduct);
+   if(!fullPage){const link=dialog.querySelector('.smi-chat-full-link');const slug=frameReady ? new URLSearchParams(link.hash.slice(1)).get('product') : openingProduct;link.href=withProduct(panelURL(),slug)}
    frame.contentWindow?.postMessage({type:'smi-chat-page',product:openingProduct},chatOrigin);
    if(fullPage){
     // A standalone page has no storefront underneath it for Safari to reveal on overscroll.
@@ -190,6 +233,10 @@
  launcher.addEventListener('click',open);
  window.addEventListener('message',e=>{
   if(e.origin!==chatOrigin||e.source!==frame?.contentWindow)return;
+  if(e.data?.type==='smi-chat-submitted' && dialog?.open){
+   if(activeLauncherVisit)report(activeLauncherVisit,'sent',e.data.test===true);
+   else if(e.data.test===true)report(visit(),'seen',true);
+  }
   if(e.data?.type==='smi-chat-close')close();
   if(e.data?.type==='smi-chat-start-page'){
    if(!frameReady){
@@ -199,7 +246,7 @@
     frame.contentWindow.postMessage({type:'smi-chat-page',product:openingProduct},chatOrigin);
    }
    const link=dialog.querySelector('.smi-chat-full-link'),slug=e.data.product;
-   if(link)link.href=withProduct(fullPageURL,typeof slug==='string'&&/^[a-z0-9-]{1,180}$/.test(slug)?slug:'');
+   if(link)link.href=withProduct(panelURL(),typeof slug==='string'&&/^[a-z0-9-]{1,180}$/.test(slug)?slug:'');
   }
  });
  function createCard(page){
@@ -213,10 +260,14 @@
   return card;
  }
  function updateLauncherLink(){
-  const href=withProduct(fullPageURL,pageProduct());
+  const href=withProduct(launcherURL,pageProduct());
   if(launcher.href!==href)launcher.href=href;
  }
  function position(){scheduled=false;updateLauncherLink();var contacts=document.getElementById('tile-contacts-widget');if(contacts!==observedContacts){resizeObserver?.disconnect();observedContacts=contacts;if(contacts&&window.ResizeObserver){resizeObserver=new ResizeObserver(queue);resizeObserver.observe(contacts)}}var rect=contacts?.getBoundingClientRect(),visible=rect&&rect.height>0&&rect.bottom>0&&getComputedStyle(contacts).visibility!=='hidden';launcher.hidden=!!(visible&&rect.height>110);var bottom=visible?Math.max(16,innerHeight-rect.top+12):20;var value=bottom+'px';if(launcher.style.bottom!==value)launcher.style.bottom=value;
+ if(!seen && !fullPage && !launcher.hidden && document.visibilityState==='visible'){
+  const bounds=launcher.getBoundingClientRect();
+  if(bounds.width && bounds.bottom>0 && bounds.top<innerHeight){seen=true;report(visit(),'seen')}
+ }
  const quick=document.querySelector('#sm-support .sh-hero + .sh-quick');
  if(quick && !document.getElementById('smi-ai-support-card')) quick.before(createCard('support'));
  const description=document.querySelector('.sm-contact-description');
@@ -236,6 +287,7 @@
   open();
  }else{
   new MutationObserver(queue).observe(document.body,{childList:true,subtree:true});
+  document.addEventListener('visibilitychange',queue);
   window.addEventListener('resize',queue);window.addEventListener('hashchange',queue);queue();
  }
  window.addEventListener('resize',sizePanel);window.visualViewport?.addEventListener('resize',sizePanel);window.visualViewport?.addEventListener('scroll',sizePanel);
