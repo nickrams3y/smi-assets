@@ -4764,9 +4764,31 @@ html.sm-product-pending #tile-product-details .product-details__sidebar::before{
     text-decoration: underline;
     text-underline-offset: 3px;
   }
+  #ecwid_body .ec-size .ec-cart__steps .ec-cart-step--done .ec-cart-step__text {
+    color: #35443b;
+  }
+  #ecwid_body .ec-size .ec-cart-step--delivery.ec-cart-step--current .ec-radiogroup__item--checked {
+    background-color: #f3f7f3 !important;
+    box-shadow: 0 0 0 1px #88a68e !important;
+  }
+  #ecwid_body .ec-size .ec-cart-step--delivery .ec-radiogroup__item--checked :is(.ec-radiogroup__title, .ec-radiogroup__data-title) {
+    color: var(--sm-step-ink) !important;
+  }
+  #ecwid_body .ec-size .ec-cart-step--delivery .ec-radiogroup__item--checked .form-control__radio-view::after {
+    background-color: var(--sm-step-ink) !important;
+    border-color: var(--sm-step-ink) !important;
+  }
+  #ecwid_body .ec-size .ec-cart-step--delivery .ec-radiogroup__item:has(input:focus-visible) {
+    outline: 2px solid var(--sm-step-ink);
+    outline-offset: -2px;
+  }
   #ecwid_body .ec-size .ec-cart__steps .sm-processing-note-host > #sm-checkout-processing-note {
     width: auto;
     margin: 14px var(--sm-step-inset) 0;
+    padding: 9px 12px;
+    background: #f7f9f6;
+    border-inline-start: 3px solid #a1b6a4;
+    color: var(--sm-step-ink);
   }
   #ecwid_body .ec-size .ec-cart-step--payment .ec-cart-step__section:has(> p > a.ec-link):has(> p.ec-cart-step__subtitle) {
     --sm-step-tint: #f1f5fa;
